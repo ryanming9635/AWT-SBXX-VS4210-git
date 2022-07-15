@@ -1,0 +1,1432 @@
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"audio.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.ChangeVol,"ax",%progbits
+  16              		.align	1
+  17              		.global	ChangeVol
+  18              		.arch armv7-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	ChangeVol:
+  25              	.LVL0:
+  26              	.LFB71:
+  27              		.file 1 "VS4210/audio.c"
+   1:VS4210/audio.c **** //============ Audio ====================================================
+   2:VS4210/audio.c **** #include "VXIS_Extern_Define.h"
+   3:VS4210/audio.c **** 
+   4:VS4210/audio.c **** #include "tpinc/Device_Rx.h"
+   5:VS4210/audio.c **** #include "tpinc/TP2802.h"
+   6:VS4210/audio.c **** #include "stdlib.h"
+   7:VS4210/audio.c **** #include "VX_swi2c.h"
+   8:VS4210/audio.c **** #include "VS4210.h"
+   9:VS4210/audio.c **** 
+  10:VS4210/audio.c **** //#include "Config.h"
+  11:VS4210/audio.c **** //#include "typedefs.h"
+  12:VS4210/audio.c **** #include "main.h"
+  13:VS4210/audio.c **** //#include "i2c.h"
+  14:VS4210/audio.c **** #include "printf.h"
+  15:VS4210/audio.c **** #include "etc_eep.h"
+  16:VS4210/audio.c **** #include "keyremo.h"
+  17:VS4210/audio.c **** #include "audio.h"
+  18:VS4210/audio.c **** #include "VX_OSD_Simple.h"
+  19:VS4210/audio.c **** 
+  20:VS4210/audio.c **** /*
+  21:VS4210/audio.c **** #include "Config.h"
+  22:VS4210/audio.c **** 
+  23:VS4210/audio.c **** #include	"reg.h"
+  24:VS4210/audio.c **** #include	"typedefs.h"
+  25:VS4210/audio.c **** #include	"i2c.h"
+  26:VS4210/audio.c **** #include	"main.h"
+  27:VS4210/audio.c **** #include    "dispinfo.h"
+  28:VS4210/audio.c **** #include	"osdmenu.h"
+  29:VS4210/audio.c **** #include	"debug.h"
+  30:VS4210/audio.c **** #include    "printf.h"
+  31:VS4210/audio.c **** #include	"tw88.h"
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s 			page 2
+
+
+  32:VS4210/audio.c **** #include	"etc_eep.h"
+  33:VS4210/audio.c **** #include 	"audio.h"
+  34:VS4210/audio.c **** #include 	"HS_IOdef.h"
+  35:VS4210/audio.c **** #include "HS_keyremo.h"
+  36:VS4210/audio.c **** */
+  37:VS4210/audio.c **** BYTE AudioVol = 50;
+  38:VS4210/audio.c **** BYTE PCAudioVol = 50;
+  39:VS4210/audio.c **** // extern CODE struct RegisterInfo UserRange;
+  40:VS4210/audio.c **** CODE struct RegisterInfo UserRange = {0, 100, 50};
+  41:VS4210/audio.c **** CODE struct RegisterInfo UserRangeBacklight = {0, 100, 100};
+  42:VS4210/audio.c **** 
+  43:VS4210/audio.c **** extern BYTE PowerFlag;
+  44:VS4210/audio.c **** extern struct RegisterInfo AudioVolRange;
+  45:VS4210/audio.c **** extern BYTE TriggerFlag;
+  46:VS4210/audio.c **** 
+  47:VS4210/audio.c **** #if 0
+  48:VS4210/audio.c **** 					AudioBalance = 50, 
+  49:VS4210/audio.c **** 					AudioBass = 50,
+  50:VS4210/audio.c **** 					AudioTreble = 46;
+  51:VS4210/audio.c **** 					//AudioEffect = 0;
+  52:VS4210/audio.c **** 		bit   TVTunerAudioActive=0;
+  53:VS4210/audio.c **** static  bit   AudioMuteOn=0;
+  54:VS4210/audio.c **** 
+  55:VS4210/audio.c **** CODE struct RegisterInfo MSPVolRange=     {0x50, 0x7d,0x66};				
+  56:VS4210/audio.c **** CODE struct RegisterInfo MSPBalanceRange= {-127,  127,   0};				
+  57:VS4210/audio.c **** CODE struct RegisterInfo MSPBassRange=    { -12,   12,   0};				
+  58:VS4210/audio.c **** CODE struct RegisterInfo MSPTrebleRange=  { -12,   15,   2};				
+  59:VS4210/audio.c **** 
+  60:VS4210/audio.c **** BYTE ResetMSP(void)
+  61:VS4210/audio.c **** {
+  62:VS4210/audio.c **** 	BYTE mspdata[3];
+  63:VS4210/audio.c **** 
+  64:VS4210/audio.c **** #ifdef DEBUG_AUDIO
+  65:VS4210/audio.c **** 	dPrintf("\r\n++(ResetMSP)\r\nTVVol:%d", (WORD)AudioVol);
+  66:VS4210/audio.c **** #endif
+  67:VS4210/audio.c **** 
+  68:VS4210/audio.c **** 	AudioVol     = GetAudioVolEE();
+  69:VS4210/audio.c **** 	AudioBalance = GetAudioBalanceEE();
+  70:VS4210/audio.c **** 	AudioBass    = GetAudioBassEE();
+  71:VS4210/audio.c **** 	AudioTreble  = GetAudioTrebleEE();
+  72:VS4210/audio.c **** 	//AudioEffect  = GetAudioEffectEE();
+  73:VS4210/audio.c **** 
+  74:VS4210/audio.c **** 	mspdata[0] = 0;
+  75:VS4210/audio.c **** 	mspdata[1] = 0x80;
+  76:VS4210/audio.c **** 	mspdata[2] = 0;
+  77:VS4210/audio.c **** 	WriteI2Cn_(MSPI2CAddress, mspdata, 3);
+  78:VS4210/audio.c **** 
+  79:VS4210/audio.c **** 	mspdata[0] = 0;
+  80:VS4210/audio.c **** 	mspdata[1] = 0;
+  81:VS4210/audio.c **** 	mspdata[2] = 0;
+  82:VS4210/audio.c **** 	WriteI2Cn_(MSPI2CAddress, mspdata, 3);
+  83:VS4210/audio.c **** 
+  84:VS4210/audio.c **** #ifdef DEBUG_AUDIO
+  85:VS4210/audio.c **** 	dPuts("\r\n__(ResetMSP)");
+  86:VS4210/audio.c **** #endif
+  87:VS4210/audio.c **** 	return 0;
+  88:VS4210/audio.c **** }
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s 			page 3
+
+
+  89:VS4210/audio.c **** 
+  90:VS4210/audio.c **** void SetMSPVol(void)
+  91:VS4210/audio.c **** {
+  92:VS4210/audio.c **** 	BYTE voldata[5];
+  93:VS4210/audio.c **** 	int vol;
+  94:VS4210/audio.c **** 
+  95:VS4210/audio.c **** 	Mapping1( AudioVol, &UserRange, &vol, &MSPVolRange );
+  96:VS4210/audio.c **** 
+  97:VS4210/audio.c **** 	voldata[0] = 0x12;
+  98:VS4210/audio.c **** 	voldata[1] = 0;
+  99:VS4210/audio.c **** 	voldata[2] = 0;
+ 100:VS4210/audio.c **** 	voldata[3] = (BYTE)vol;
+ 101:VS4210/audio.c **** 	voldata[4] = 0;
+ 102:VS4210/audio.c **** 	WriteI2Cn_(MSPI2CAddress, voldata, 5);	//LJY010202
+ 103:VS4210/audio.c **** 
+ 104:VS4210/audio.c **** #ifdef DEBUG_AUDIO
+ 105:VS4210/audio.c **** 	dPrintf("\r\n++(SetMSPVol)MSPVol:0x%x, AudioVol:%d__", (WORD)vol, (WORD)AudioVol);
+ 106:VS4210/audio.c **** #endif
+ 107:VS4210/audio.c **** }
+ 108:VS4210/audio.c **** 
+ 109:VS4210/audio.c **** void SetMSPBalance(void)
+ 110:VS4210/audio.c **** {
+ 111:VS4210/audio.c **** 	BYTE valdata[5];
+ 112:VS4210/audio.c **** 	int val;
+ 113:VS4210/audio.c **** 
+ 114:VS4210/audio.c **** 	Mapping1( AudioBalance, &UserRange, &val, &MSPBalanceRange );
+ 115:VS4210/audio.c **** 	
+ 116:VS4210/audio.c **** 	valdata[0] = 0x12;
+ 117:VS4210/audio.c **** 	valdata[1] = 0;		
+ 118:VS4210/audio.c **** 	valdata[2] = 1;
+ 119:VS4210/audio.c **** 	valdata[3] = (BYTE)val;
+ 120:VS4210/audio.c **** 	valdata[4] = 0;
+ 121:VS4210/audio.c **** 	WriteI2Cn_(MSPI2CAddress, valdata, 5);
+ 122:VS4210/audio.c **** 
+ 123:VS4210/audio.c **** #ifdef DEBUG_AUDIO
+ 124:VS4210/audio.c **** 	dPrintf("\r\n++(SetMSPBalance)MSPBal:0x%x, AudioBalance:%d__", (WORD)val, (WORD)AudioBalance);
+ 125:VS4210/audio.c **** #endif
+ 126:VS4210/audio.c **** }
+ 127:VS4210/audio.c **** 
+ 128:VS4210/audio.c **** void SetMSPBass(void)
+ 129:VS4210/audio.c **** {
+ 130:VS4210/audio.c **** 	BYTE valdata[5];
+ 131:VS4210/audio.c **** 	int val;
+ 132:VS4210/audio.c **** 
+ 133:VS4210/audio.c **** 	Mapping1( AudioBass, &UserRange, &val, &MSPBassRange );
+ 134:VS4210/audio.c **** 	
+ 135:VS4210/audio.c **** 	valdata[0] = 0x12;
+ 136:VS4210/audio.c **** 	valdata[1] = 0;
+ 137:VS4210/audio.c **** 	valdata[2] = 2;
+ 138:VS4210/audio.c **** 	valdata[3] = (BYTE)val;
+ 139:VS4210/audio.c **** 	valdata[4] = 0;
+ 140:VS4210/audio.c **** 	WriteI2Cn_(MSPI2CAddress, valdata, 5);
+ 141:VS4210/audio.c **** 
+ 142:VS4210/audio.c **** #ifdef DEBUG_AUDIO
+ 143:VS4210/audio.c **** 	dPrintf("\r\n++(SetMSPBass)MSPBass:0x%x, AudioBass:%d__", (WORD)val, (WORD)AudioBass);
+ 144:VS4210/audio.c **** #endif
+ 145:VS4210/audio.c **** }
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s 			page 4
+
+
+ 146:VS4210/audio.c **** 
+ 147:VS4210/audio.c **** void SetMSPTreble(void)
+ 148:VS4210/audio.c **** {
+ 149:VS4210/audio.c **** 	BYTE valdata[5];
+ 150:VS4210/audio.c **** 	int val;
+ 151:VS4210/audio.c **** 
+ 152:VS4210/audio.c **** 	Mapping1( AudioTreble, &UserRange, &val, &MSPTrebleRange );
+ 153:VS4210/audio.c **** 	
+ 154:VS4210/audio.c **** 	valdata[0] = 0x12;
+ 155:VS4210/audio.c **** 	valdata[1] = 0;
+ 156:VS4210/audio.c **** 	valdata[2] = 3;
+ 157:VS4210/audio.c **** 	valdata[3] = (BYTE)val;
+ 158:VS4210/audio.c **** 	valdata[4] = 0;
+ 159:VS4210/audio.c **** 	WriteI2Cn_(MSPI2CAddress, valdata, 5);
+ 160:VS4210/audio.c **** 
+ 161:VS4210/audio.c **** #ifdef DEBUG_AUDIO
+ 162:VS4210/audio.c **** 	dPrintf("\r\n++(SetMSPTreble)MSPTreble:0x%x, AudioTreble:%d__", (WORD)val, (WORD)AudioTreble);
+ 163:VS4210/audio.c **** #endif
+ 164:VS4210/audio.c **** }
+ 165:VS4210/audio.c **** 
+ 166:VS4210/audio.c **** void AudioOff(void)
+ 167:VS4210/audio.c **** {
+ 168:VS4210/audio.c **** 	BYTE mspdata[5];
+ 169:VS4210/audio.c **** 
+ 170:VS4210/audio.c **** #ifdef DEBUG_AUDIO
+ 171:VS4210/audio.c **** 	dPuts("\r\n++(AudioOff)--");
+ 172:VS4210/audio.c **** #endif
+ 173:VS4210/audio.c **** 
+ 174:VS4210/audio.c **** 	mspdata[0] = 0x12;
+ 175:VS4210/audio.c **** 	mspdata[1] = 0x00;
+ 176:VS4210/audio.c **** 	mspdata[2] = 0x00;
+ 177:VS4210/audio.c **** 	mspdata[3] = 0xff;
+ 178:VS4210/audio.c **** 	mspdata[4] = 0x00;
+ 179:VS4210/audio.c **** 	WriteI2Cn_(MSPI2CAddress, mspdata, 5);
+ 180:VS4210/audio.c **** }
+ 181:VS4210/audio.c **** 
+ 182:VS4210/audio.c **** #define END_OF_LOOP 0xff
+ 183:VS4210/audio.c **** 
+ 184:VS4210/audio.c **** BYTE AudioAutoStdDetection(void)
+ 185:VS4210/audio.c **** {
+ 186:VS4210/audio.c **** 	BYTE mspdata[5], loop=0;
+ 187:VS4210/audio.c **** 	WORD ret;
+ 188:VS4210/audio.c **** 
+ 189:VS4210/audio.c **** 	mspdata[0] = 0x10;
+ 190:VS4210/audio.c **** 	mspdata[1] = 0x00;
+ 191:VS4210/audio.c **** 	mspdata[2] = 0x20;				// Standard selection
+ 192:VS4210/audio.c **** 	mspdata[3] = 0x00;
+ 193:VS4210/audio.c **** 	mspdata[4] = 0x01;				// Auto Std Detection
+ 194:VS4210/audio.c **** 	WriteI2Cn_(MSPI2CAddress, mspdata, 5);
+ 195:VS4210/audio.c **** 	do {
+ 196:VS4210/audio.c **** 		mspdata[0] = 0x00;
+ 197:VS4210/audio.c **** 		mspdata[1] = 0x7E;
+ 198:VS4210/audio.c **** 		I2CReadByteMSP(MSPI2CAddress, 0x11, mspdata, 2);
+ 199:VS4210/audio.c **** 		if( loop==END_OF_LOOP )
+ 200:VS4210/audio.c **** 			break;
+ 201:VS4210/audio.c **** 		loop++;
+ 202:VS4210/audio.c **** 		ret = mspdata[0];
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s 			page 5
+
+
+ 203:VS4210/audio.c **** 		ret = ( ret << 8 ) | mspdata[1];
+ 204:VS4210/audio.c **** 	} while( ret > 0x7ff );
+ 205:VS4210/audio.c **** #ifdef DEBUG_AUDIO
+ 206:VS4210/audio.c **** 	dPrintf("\r\n(AudioAutoStdDetection)Auto Detection:0x%x", (WORD)ret );
+ 207:VS4210/audio.c **** #endif
+ 208:VS4210/audio.c **** 
+ 209:VS4210/audio.c **** 	if( loop==END_OF_LOOP )		ret = 0;
+ 210:VS4210/audio.c **** 
+ 211:VS4210/audio.c **** 	return ret;
+ 212:VS4210/audio.c **** }
+ 213:VS4210/audio.c **** 
+ 214:VS4210/audio.c **** void ExtAudio(void)
+ 215:VS4210/audio.c **** {
+ 216:VS4210/audio.c **** 	BYTE mspdata[5], loop=0;
+ 217:VS4210/audio.c **** 	WORD ret;
+ 218:VS4210/audio.c **** 
+ 219:VS4210/audio.c **** 	AudioOff();
+ 220:VS4210/audio.c **** 
+ 221:VS4210/audio.c **** 	mspdata[0] = 0x10;
+ 222:VS4210/audio.c **** 	mspdata[1] = 0x00;
+ 223:VS4210/audio.c **** 	mspdata[2] = 0x30;				// MODUS register: Automatic-on
+ 224:VS4210/audio.c **** 	mspdata[3] = 0x20;
+ 225:VS4210/audio.c **** 	mspdata[4] = 0x03;
+ 226:VS4210/audio.c **** 	WriteI2Cn_(MSPI2CAddress, mspdata, 5);
+ 227:VS4210/audio.c **** 
+ 228:VS4210/audio.c **** 	mspdata[0] = 0x12;
+ 229:VS4210/audio.c **** 	mspdata[1] = 0x00;
+ 230:VS4210/audio.c **** 	mspdata[2] = 0x13;				// SCART switch
+ 231:VS4210/audio.c **** 	mspdata[3] = 0x00;				
+ 232:VS4210/audio.c **** 	mspdata[4] = 0x00;				
+ 233:VS4210/audio.c **** 	WriteI2Cn_(MSPI2CAddress, mspdata, 5);
+ 234:VS4210/audio.c **** 
+ 235:VS4210/audio.c **** 	mspdata[0] = 0x12;
+ 236:VS4210/audio.c **** 	mspdata[1] = 0x00;
+ 237:VS4210/audio.c **** 	mspdata[2] = 0x08;				// source select
+ 238:VS4210/audio.c **** 	mspdata[3] = 0x02;				// SCART input
+ 239:VS4210/audio.c **** 	mspdata[4] = 0x20;				// stereo(transparent)
+ 240:VS4210/audio.c **** 	WriteI2Cn_(MSPI2CAddress, mspdata, 5);
+ 241:VS4210/audio.c **** 
+ 242:VS4210/audio.c **** 	mspdata[0] = 0x12;
+ 243:VS4210/audio.c **** 	mspdata[1] = 0x00;
+ 244:VS4210/audio.c **** 	mspdata[2] = 0x0d;				// SCART input prescale
+ 245:VS4210/audio.c **** 	mspdata[3] = 0x50;
+ 246:VS4210/audio.c **** 	mspdata[4] = 0x00;
+ 247:VS4210/audio.c **** 	WriteI2Cn_(MSPI2CAddress, mspdata, 5);
+ 248:VS4210/audio.c **** 	ret = AudioAutoStdDetection();
+ 249:VS4210/audio.c **** 
+ 250:VS4210/audio.c **** #ifdef DEBUG_AUDIO
+ 251:VS4210/audio.c **** 	if( !ret ) {
+ 252:VS4210/audio.c **** 		dPuts("\r\n--Fail to Audio AutoDetect");
+ 253:VS4210/audio.c **** 	}
+ 254:VS4210/audio.c **** #endif
+ 255:VS4210/audio.c **** 	AudioOn();			//SetMSPVol();
+ 256:VS4210/audio.c **** }
+ 257:VS4210/audio.c **** 
+ 258:VS4210/audio.c **** #ifdef SUPPORT_PC
+ 259:VS4210/audio.c **** /*
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s 			page 6
+
+
+ 260:VS4210/audio.c **** void PCAudio(void)
+ 261:VS4210/audio.c **** {
+ 262:VS4210/audio.c **** 	BYTE mspdata[5], loop=0;
+ 263:VS4210/audio.c **** 	WORD ret;
+ 264:VS4210/audio.c **** 
+ 265:VS4210/audio.c **** 	AudioOff();
+ 266:VS4210/audio.c **** 
+ 267:VS4210/audio.c **** 	mspdata[0] = 0x10;
+ 268:VS4210/audio.c **** 	mspdata[1] = 0x00;
+ 269:VS4210/audio.c **** 	mspdata[2] = 0x30;				// MODUS register: Automatic-on
+ 270:VS4210/audio.c **** 	mspdata[3] = 0x20;
+ 271:VS4210/audio.c **** 	mspdata[4] = 0x03;
+ 272:VS4210/audio.c **** 	WriteI2Cn_(MSPI2CAddress, mspdata, 5);
+ 273:VS4210/audio.c **** 
+ 274:VS4210/audio.c **** 	mspdata[0] = 0x12;
+ 275:VS4210/audio.c **** 	mspdata[1] = 0x00;
+ 276:VS4210/audio.c **** 	mspdata[2] = 0x13;				// SCART switch
+ 277:VS4210/audio.c **** 	mspdata[3] = 0x02;				// SCART2->DSP
+ 278:VS4210/audio.c **** 	mspdata[4] = 0x00;				
+ 279:VS4210/audio.c **** 	WriteI2Cn_(MSPI2CAddress, mspdata, 5);
+ 280:VS4210/audio.c **** 
+ 281:VS4210/audio.c **** 	mspdata[0] = 0x12;
+ 282:VS4210/audio.c **** 	mspdata[1] = 0x00;
+ 283:VS4210/audio.c **** 	mspdata[2] = 0x08;				// source select
+ 284:VS4210/audio.c **** 	mspdata[3] = 0x02;				// SCART input
+ 285:VS4210/audio.c **** 	mspdata[4] = 0x20;				// stereo(transparent)
+ 286:VS4210/audio.c **** 	WriteI2Cn_(MSPI2CAddress, mspdata, 5);
+ 287:VS4210/audio.c **** 
+ 288:VS4210/audio.c **** 	mspdata[0] = 0x12;
+ 289:VS4210/audio.c **** 	mspdata[1] = 0x00;
+ 290:VS4210/audio.c **** 	mspdata[2] = 0x0d;				// SCART input prescale
+ 291:VS4210/audio.c **** 	mspdata[3] = 0x50;
+ 292:VS4210/audio.c **** 	mspdata[4] = 0x00;
+ 293:VS4210/audio.c **** 	WriteI2Cn_(MSPI2CAddress, mspdata, 5);
+ 294:VS4210/audio.c **** 
+ 295:VS4210/audio.c **** 	ret = AudioAutoStdDetection();
+ 296:VS4210/audio.c **** 
+ 297:VS4210/audio.c **** 	#ifdef DEBUG_AUDIO
+ 298:VS4210/audio.c **** 	if( !ret ) {
+ 299:VS4210/audio.c **** 		Puts("\r\n--Fail to Audio AutoDetect");
+ 300:VS4210/audio.c **** 	}
+ 301:VS4210/audio.c **** 	#endif
+ 302:VS4210/audio.c **** 	AudioOn();			//SetMSPVol();
+ 303:VS4210/audio.c **** }
+ 304:VS4210/audio.c **** */
+ 305:VS4210/audio.c **** #endif
+ 306:VS4210/audio.c **** 
+ 307:VS4210/audio.c **** BYTE GetAudioVol(void)
+ 308:VS4210/audio.c **** {
+ 309:VS4210/audio.c **** 	return AudioVol;
+ 310:VS4210/audio.c **** }
+ 311:VS4210/audio.c **** #endif
+ 312:VS4210/audio.c **** void AUDIO_SELECT(BYTE sel)
+ 313:VS4210/audio.c **** {
+ 314:VS4210/audio.c **** 	AudioMute(ON);
+ 315:VS4210/audio.c **** 
+ 316:VS4210/audio.c **** 	switch (sel)
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s 			page 7
+
+
+ 317:VS4210/audio.c **** 	{
+ 318:VS4210/audio.c **** 	case VS4210_LOOP_MODE0_w0: /// CAMA_AUD:
+ 319:VS4210/audio.c **** 	case VS4210_LOOP_MODE10_123:
+ 320:VS4210/audio.c **** 	case VS4210_LOOP_MODE8:
+ 321:VS4210/audio.c **** 	case VS4210_LOOP_MODE12_12:
+ 322:VS4210/audio.c **** 	case VS4210_LOOP_MODE12_13:
+ 323:VS4210/audio.c **** 	case VS4210_LOOP_MODE8_123:
+ 324:VS4210/audio.c **** 		AUD_SEL1(0);
+ 325:VS4210/audio.c **** 		AUD_SEL2(0);
+ 326:VS4210/audio.c **** 		break;
+ 327:VS4210/audio.c **** 
+ 328:VS4210/audio.c **** 	case VS4210_LOOP_MODE0_w1: /// CAMB_AUD:
+ 329:VS4210/audio.c **** 	case VS4210_LOOP_MODE12_21:
+ 330:VS4210/audio.c **** 	case VS4210_LOOP_MODE12_23:
+ 331:VS4210/audio.c **** 	case VS4210_LOOP_MODE8_213:
+ 332:VS4210/audio.c **** 		AUD_SEL1(0);
+ 333:VS4210/audio.c **** 		AUD_SEL2(1);
+ 334:VS4210/audio.c **** 		break;
+ 335:VS4210/audio.c **** 
+ 336:VS4210/audio.c **** 	case VS4210_LOOP_MODE0_w2: /// CAMC_AUD:
+ 337:VS4210/audio.c **** 	case VS4210_LOOP_MODE0_w4: /// CAMD_AUD:
+ 338:VS4210/audio.c **** 
+ 339:VS4210/audio.c **** 	case VS4210_LOOP_MODE12_31:
+ 340:VS4210/audio.c **** 	case VS4210_LOOP_MODE12_32:
+ 341:VS4210/audio.c **** 	case VS4210_LOOP_MODE8_312:
+ 342:VS4210/audio.c **** 		AUD_SEL1(1);
+ 343:VS4210/audio.c **** 		AUD_SEL2(1);
+ 344:VS4210/audio.c **** 		break;
+ 345:VS4210/audio.c **** 
+ 346:VS4210/audio.c **** 	case VS4210_LOOP_MODE0_w3: /// CAMR_AUD:
+ 347:VS4210/audio.c **** 	case VS4210_LOOP_MODE1:
+ 348:VS4210/audio.c **** 	case VS4210_LOOP_MODE2:
+ 349:VS4210/audio.c **** 	case VS4210_LOOP_MODE9:
+ 350:VS4210/audio.c **** 	case VS4210_LOOP_MODE12_34:
+ 351:VS4210/audio.c **** 	case VS4210_LOOP_MODE12_14:
+ 352:VS4210/audio.c **** 	case VS4210_LOOP_MODE12_42:
+ 353:VS4210/audio.c **** 	case VS4210_LOOP_MODE12_43:
+ 354:VS4210/audio.c **** 	case VS4210_LOOP_MODE12_24:
+ 355:VS4210/audio.c **** 	case VS4210_LOOP_MODE8_412:
+ 356:VS4210/audio.c **** 	case VS4210_LOOP_MODE8_124:
+ 357:VS4210/audio.c **** 	case VS4210_LOOP_MODE8_134:
+ 358:VS4210/audio.c **** 	case VS4210_LOOP_MODE8_214:
+ 359:VS4210/audio.c **** 	case VS4210_LOOP_MODE8_234:
+ 360:VS4210/audio.c **** 	case VS4210_LOOP_MODE8_314:
+ 361:VS4210/audio.c **** 	case VS4210_LOOP_MODE8_324:
+ 362:VS4210/audio.c **** 	case VS4210_LOOP_MODE10_412:
+ 363:VS4210/audio.c **** 	case VS4210_LOOP_MODE10_413:
+ 364:VS4210/audio.c **** 	case VS4210_LOOP_MODE10_423:
+ 365:VS4210/audio.c **** 	case VS4210_LOOP_MODE8_413:
+ 366:VS4210/audio.c **** 	case VS4210_LOOP_MODE8_423:
+ 367:VS4210/audio.c **** 	case VS4210_LOOP_MODE9_412:
+ 368:VS4210/audio.c **** 	case VS4210_LOOP_MODE12_41:
+ 369:VS4210/audio.c **** 		AUD_SEL1(1);
+ 370:VS4210/audio.c **** 		AUD_SEL2(0);
+ 371:VS4210/audio.c **** 		break;
+ 372:VS4210/audio.c **** 
+ 373:VS4210/audio.c **** 	default:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s 			page 8
+
+
+ 374:VS4210/audio.c **** 		AUD_SEL1(1); // CAMR_AUD:
+ 375:VS4210/audio.c **** 		AUD_SEL2(1);
+ 376:VS4210/audio.c **** 		break;
+ 377:VS4210/audio.c **** 	}
+ 378:VS4210/audio.c **** 
+ 379:VS4210/audio.c **** 	// AudioMute(OFF);
+ 380:VS4210/audio.c **** }
+ 381:VS4210/audio.c **** 
+ 382:VS4210/audio.c **** void AUDIO_SELECT_MUTE(BYTE sel)
+ 383:VS4210/audio.c **** {
+ 384:VS4210/audio.c **** 
+ 385:VS4210/audio.c **** #if (_DEBUG_MESSAGE_Audio == ON)
+ 386:VS4210/audio.c **** 	Printf("(AUDIO_SELECT_MUTE=%02x)", (WORD)sel);
+ 387:VS4210/audio.c **** #endif
+ 388:VS4210/audio.c **** 
+ 389:VS4210/audio.c **** 	AudioMute(ON);
+ 390:VS4210/audio.c **** 
+ 391:VS4210/audio.c **** 	switch (sel)
+ 392:VS4210/audio.c **** 	{
+ 393:VS4210/audio.c **** 	case VS4210_LOOP_MODE0_w0: /// CAMA_AUD:
+ 394:VS4210/audio.c **** 	case VS4210_LOOP_MODE10_123:
+ 395:VS4210/audio.c **** 	case VS4210_LOOP_MODE8:
+ 396:VS4210/audio.c **** 	case VS4210_LOOP_MODE12_12:
+ 397:VS4210/audio.c **** 	case VS4210_LOOP_MODE12_13:
+ 398:VS4210/audio.c **** 	case VS4210_LOOP_MODE8_123:
+ 399:VS4210/audio.c **** 		AUD_SEL1(0);
+ 400:VS4210/audio.c **** 		AUD_SEL2(1);
+ 401:VS4210/audio.c **** 		break;
+ 402:VS4210/audio.c **** 
+ 403:VS4210/audio.c **** 	case VS4210_LOOP_MODE0_w1: /// CAMB_AUD:
+ 404:VS4210/audio.c **** 	case VS4210_LOOP_MODE12_21:
+ 405:VS4210/audio.c **** 	case VS4210_LOOP_MODE12_23:
+ 406:VS4210/audio.c **** 	case VS4210_LOOP_MODE8_213:
+ 407:VS4210/audio.c **** 		AUD_SEL1(1);
+ 408:VS4210/audio.c **** 		AUD_SEL2(0);
+ 409:VS4210/audio.c **** 		break;
+ 410:VS4210/audio.c **** 
+ 411:VS4210/audio.c **** 	case VS4210_LOOP_MODE0_w2: /// CAMC_AUD:
+ 412:VS4210/audio.c **** 	case VS4210_LOOP_MODE0_w4: /// CAMD_AUD:
+ 413:VS4210/audio.c **** 
+ 414:VS4210/audio.c **** 	case VS4210_LOOP_MODE12_31:
+ 415:VS4210/audio.c **** 	case VS4210_LOOP_MODE12_32:
+ 416:VS4210/audio.c **** 	case VS4210_LOOP_MODE8_312:
+ 417:VS4210/audio.c **** 		AUD_SEL1(0);
+ 418:VS4210/audio.c **** 		AUD_SEL2(0);
+ 419:VS4210/audio.c **** 		break;
+ 420:VS4210/audio.c **** 
+ 421:VS4210/audio.c **** 	case VS4210_LOOP_MODE0_w3: /// CAMR_AUD:
+ 422:VS4210/audio.c **** 	case VS4210_LOOP_MODE1:
+ 423:VS4210/audio.c **** 	case VS4210_LOOP_MODE2:
+ 424:VS4210/audio.c **** 	case VS4210_LOOP_MODE9:
+ 425:VS4210/audio.c **** 	case VS4210_LOOP_MODE12_34:
+ 426:VS4210/audio.c **** 	case VS4210_LOOP_MODE12_14:
+ 427:VS4210/audio.c **** 	case VS4210_LOOP_MODE12_41:
+ 428:VS4210/audio.c **** 	case VS4210_LOOP_MODE12_42:
+ 429:VS4210/audio.c **** 	case VS4210_LOOP_MODE12_43:
+ 430:VS4210/audio.c **** 	case VS4210_LOOP_MODE12_24:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s 			page 9
+
+
+ 431:VS4210/audio.c **** 	case VS4210_LOOP_MODE8_412:
+ 432:VS4210/audio.c **** 	case VS4210_LOOP_MODE8_124:
+ 433:VS4210/audio.c **** 	case VS4210_LOOP_MODE8_134:
+ 434:VS4210/audio.c **** 	case VS4210_LOOP_MODE8_214:
+ 435:VS4210/audio.c **** 	case VS4210_LOOP_MODE8_234:
+ 436:VS4210/audio.c **** 	case VS4210_LOOP_MODE8_314:
+ 437:VS4210/audio.c **** 	case VS4210_LOOP_MODE8_324:
+ 438:VS4210/audio.c **** 	case VS4210_LOOP_MODE10_412:
+ 439:VS4210/audio.c **** 	case VS4210_LOOP_MODE10_413:
+ 440:VS4210/audio.c **** 	case VS4210_LOOP_MODE10_423:
+ 441:VS4210/audio.c **** 	case VS4210_LOOP_MODE8_413:
+ 442:VS4210/audio.c **** 	case VS4210_LOOP_MODE8_423:
+ 443:VS4210/audio.c **** 	case VS4210_LOOP_MODE9_412:
+ 444:VS4210/audio.c **** 		AUD_SEL1(1);
+ 445:VS4210/audio.c **** 		AUD_SEL2(1);
+ 446:VS4210/audio.c **** 		break;
+ 447:VS4210/audio.c **** 
+ 448:VS4210/audio.c **** 	default:
+ 449:VS4210/audio.c **** 		AUD_SEL1(1); // CAMR_AUD:
+ 450:VS4210/audio.c **** 		AUD_SEL2(1);
+ 451:VS4210/audio.c **** 		break;
+ 452:VS4210/audio.c **** 	}
+ 453:VS4210/audio.c **** 
+ 454:VS4210/audio.c **** 	// AudioMute(OFF);
+ 455:VS4210/audio.c **** }
+ 456:VS4210/audio.c **** 
+ 457:VS4210/audio.c **** void AudioMute(bit mute)
+ 458:VS4210/audio.c **** {
+ 459:VS4210/audio.c **** 	// WORD temp;
+ 460:VS4210/audio.c **** 	// mute  0 Audio OFF		mute 1 Audio ON
+ 461:VS4210/audio.c **** 	//	AUDIO_MUTE(mute);
+ 462:VS4210/audio.c **** 
+ 463:VS4210/audio.c **** 	if (mute == ON)
+ 464:VS4210/audio.c **** 	{
+ 465:VS4210/audio.c **** 		//	SET_ALC122(0x02,(GET_ALC122(0x02)|0x8080));
+ 466:VS4210/audio.c **** 		SET_ALC122(0x02, 0x8080);
+ 467:VS4210/audio.c **** 	}
+ 468:VS4210/audio.c **** 	else
+ 469:VS4210/audio.c **** 	{
+ 470:VS4210/audio.c **** 		// SET_ALC122(0x02,0x0F0F);
+ 471:VS4210/audio.c **** 		ChangeVol(0);
+ 472:VS4210/audio.c **** 	}
+ 473:VS4210/audio.c **** 
+ 474:VS4210/audio.c **** #if 0 /// def ALC106
+ 475:VS4210/audio.c **** 	if(mute==0)
+ 476:VS4210/audio.c **** 	{
+ 477:VS4210/audio.c **** 		WriteALC106(0x02,0x9F9F);
+ 478:VS4210/audio.c **** 		//WriteALC106(0x02,ReadALC106(0x02)||0x8080);
+ 479:VS4210/audio.c **** 	}
+ 480:VS4210/audio.c **** 	else
+ 481:VS4210/audio.c **** 	{
+ 482:VS4210/audio.c **** 		ChangeVol(0);
+ 483:VS4210/audio.c **** 		//WriteALC106(0x02,ReadALC106(0x02)&&0x7F7F);
+ 484:VS4210/audio.c **** 	}
+ 485:VS4210/audio.c **** #else // william-990729
+ 486:VS4210/audio.c **** /*
+ 487:VS4210/audio.c **** 	if(mute==0)
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s 			page 10
+
+
+ 488:VS4210/audio.c **** 		Audio_Mute=1;// 0;		//Audio ON
+ 489:VS4210/audio.c **** 	else
+ 490:VS4210/audio.c **** 		Audio_Mute=0;// 1;		//Audio OFF
+ 491:VS4210/audio.c **** 		*/
+ 492:VS4210/audio.c **** #endif
+ 493:VS4210/audio.c **** 
+ 494:VS4210/audio.c **** #if 0
+ 495:VS4210/audio.c **** 	if(mute==0)
+ 496:VS4210/audio.c **** 		TW2835Cmd("\n\rmute 0\n\r");
+ 497:VS4210/audio.c **** 	else
+ 498:VS4210/audio.c **** 		TW2835Cmd("\n\rmute 1\n\r");
+ 499:VS4210/audio.c **** #endif
+ 500:VS4210/audio.c **** }
+ 501:VS4210/audio.c **** /*
+ 502:VS4210/audio.c **** BYTE GetAudioVolEE(void)
+ 503:VS4210/audio.c **** {
+ 504:VS4210/audio.c **** 	return ReadEEP( EEP_AUDIOPVOL );
+ 505:VS4210/audio.c **** }
+ 506:VS4210/audio.c **** 
+ 507:VS4210/audio.c **** void SetAudioVolEE( BYTE vol )
+ 508:VS4210/audio.c **** {
+ 509:VS4210/audio.c **** 	WriteEEP( EEP_AUDIOPVOL, vol );
+ 510:VS4210/audio.c **** }
+ 511:VS4210/audio.c **** */
+ 512:VS4210/audio.c **** 
+ 513:VS4210/audio.c **** BYTE ChangeVol(char amount)
+ 514:VS4210/audio.c **** {
+  28              		.loc 1 514 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 8
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 514 1 is_stmt 0 view .LVU1
+  33 0000 10B5     		push	{r4, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 4, -8
+  37              		.cfi_offset 14, -4
+  38 0002 82B0     		sub	sp, sp, #8
+  39              	.LCFI1:
+  40              		.cfi_def_cfa_offset 16
+ 515:VS4210/audio.c **** 
+ 516:VS4210/audio.c **** 	WORD val = 0;
+  41              		.loc 1 516 2 is_stmt 1 view .LVU2
+  42              	.LVL1:
+ 517:VS4210/audio.c **** 	int regv;
+  43              		.loc 1 517 2 view .LVU3
+ 518:VS4210/audio.c **** 	BYTE AudioTemp; //,AudioTemp2;  //Pinchi disable for compiler warning
+  44              		.loc 1 518 2 view .LVU4
+ 519:VS4210/audio.c **** 					//	WORD ALC106Volume;  //Pinchi disable for compiler warning
+ 520:VS4210/audio.c **** 
+ 521:VS4210/audio.c **** 	// if(VGAAudio)
+ 522:VS4210/audio.c **** 	//{
+ 523:VS4210/audio.c **** 	// AudioTemp=PCAudioVol;
+ 524:VS4210/audio.c **** 	// }
+ 525:VS4210/audio.c **** 	// else
+ 526:VS4210/audio.c **** 	//{
+ 527:VS4210/audio.c **** 	AudioTemp = AudioVol;
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s 			page 11
+
+
+  45              		.loc 1 527 2 view .LVU5
+  46              		.loc 1 527 12 is_stmt 0 view .LVU6
+  47 0004 1C4B     		ldr	r3, .L14
+  48 0006 1C78     		ldrb	r4, [r3]	@ zero_extendqisi2
+  49              	.LVL2:
+ 528:VS4210/audio.c **** 	//}
+ 529:VS4210/audio.c **** 	if (amount == UP)
+  50              		.loc 1 529 2 is_stmt 1 view .LVU7
+  51              		.loc 1 529 5 is_stmt 0 view .LVU8
+  52 0008 0128     		cmp	r0, #1
+  53 000a 1CD0     		beq	.L10
+ 530:VS4210/audio.c **** 	{
+ 531:VS4210/audio.c **** 		if (AudioTemp < 100)
+ 532:VS4210/audio.c **** 			AudioTemp += 1;
+ 533:VS4210/audio.c **** 		else
+ 534:VS4210/audio.c **** 			AudioTemp = 100;
+ 535:VS4210/audio.c **** 	}
+ 536:VS4210/audio.c **** 	else if (amount == DN)
+  54              		.loc 1 536 7 is_stmt 1 view .LVU9
+  55              		.loc 1 536 10 is_stmt 0 view .LVU10
+  56 000c 0228     		cmp	r0, #2
+  57 000e 1FD0     		beq	.L11
+  58              	.LVL3:
+  59              	.L3:
+ 537:VS4210/audio.c **** 	{
+ 538:VS4210/audio.c **** 		if (AudioTemp > 1)
+ 539:VS4210/audio.c **** 			AudioTemp -= 1;
+ 540:VS4210/audio.c **** 		else
+ 541:VS4210/audio.c **** 			AudioTemp = 0;
+ 542:VS4210/audio.c **** 	}
+ 543:VS4210/audio.c **** 
+ 544:VS4210/audio.c **** 	Mapping1(AudioTemp, &UserRange, &regv, &AudioVolRange);
+  60              		.loc 1 544 2 is_stmt 1 view .LVU11
+  61 0010 1A4B     		ldr	r3, .L14+4
+  62 0012 01AA     		add	r2, sp, #4
+  63 0014 1A49     		ldr	r1, .L14+8
+  64 0016 2046     		mov	r0, r4
+  65              	.LVL4:
+  66              		.loc 1 544 2 is_stmt 0 view .LVU12
+  67 0018 FFF7FEFF 		bl	Mapping1
+  68              	.LVL5:
+ 545:VS4210/audio.c **** 
+ 546:VS4210/audio.c **** 	// Printf("\r\nAudio OSD val=%02x Regv=%02x",(WORD) AudioTemp,(WORD) regv);
+ 547:VS4210/audio.c **** 	////�q�o�̼g�J��ƨ�Ȧs��
+ 548:VS4210/audio.c **** 	val = regv;
+  69              		.loc 1 548 2 is_stmt 1 view .LVU13
+  70              		.loc 1 548 6 is_stmt 0 view .LVU14
+  71 001c 0199     		ldr	r1, [sp, #4]
+  72              	.LVL6:
+ 549:VS4210/audio.c **** 	val <<= 8;
+  73              		.loc 1 549 2 is_stmt 1 view .LVU15
+ 550:VS4210/audio.c **** 	val |= regv;
+  74              		.loc 1 550 2 view .LVU16
+ 551:VS4210/audio.c **** 	//	val=((GET_ALC122(0x02))|val);
+ 552:VS4210/audio.c **** 	SET_ALC122(0x02, val);
+  75              		.loc 1 552 2 view .LVU17
+  76 001e 41EA0121 		orr	r1, r1, r1, lsl #8
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s 			page 12
+
+
+  77              	.LVL7:
+  78              		.loc 1 552 2 is_stmt 0 view .LVU18
+  79 0022 0220     		movs	r0, #2
+  80 0024 FFF7FEFF 		bl	SET_ALC122
+  81              	.LVL8:
+ 553:VS4210/audio.c **** 
+ 554:VS4210/audio.c **** 	//	WriteAD5110(AD5110_CMD_Write_Data_To_RDAC ,AD5110_setp[regv]);
+ 555:VS4210/audio.c **** 
+ 556:VS4210/audio.c **** 	//		return regv;
+ 557:VS4210/audio.c **** 
+ 558:VS4210/audio.c **** 	if ((AudioTemp == 0 || PowerFlag == 0) && (TriggerFlag == OFF))
+  82              		.loc 1 558 2 is_stmt 1 view .LVU19
+  83              		.loc 1 558 5 is_stmt 0 view .LVU20
+  84 0028 14B1     		cbz	r4, .L4
+  85              		.loc 1 558 35 discriminator 2 view .LVU21
+  86 002a 164B     		ldr	r3, .L14+12
+  87 002c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  88              		.loc 1 558 22 discriminator 2 view .LVU22
+  89 002e 13B9     		cbnz	r3, .L5
+  90              	.L4:
+  91              		.loc 1 558 57 discriminator 3 view .LVU23
+  92 0030 154B     		ldr	r3, .L14+16
+  93 0032 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  94              		.loc 1 558 41 discriminator 3 view .LVU24
+  95 0034 ABB1     		cbz	r3, .L12
+  96              	.L5:
+ 559:VS4210/audio.c **** 		AudioMute(ON); // Audio_Mute = 0;		//�}���R��...... Abel 960122
+ 560:VS4210/audio.c **** 
+ 561:VS4210/audio.c **** 		//	{
+ 562:VS4210/audio.c **** 		//	AudioMute(1);	//Audio_Mute = 1;			//�����R��...... Abel 9601222
+ 563:VS4210/audio.c **** 		//}
+ 564:VS4210/audio.c **** 
+ 565:VS4210/audio.c **** #if 0
+ 566:VS4210/audio.c **** 	if(AudioTemp==0 || PowerFlag==0)
+ 567:VS4210/audio.c **** 	 	AudioMute(0);	// Audio_Mute = 0;		//�}���R��...... Abel 960122
+ 568:VS4210/audio.c **** 	else	
+ 569:VS4210/audio.c **** 		{
+ 570:VS4210/audio.c **** 	  	AudioMute(1);	//Audio_Mute = 1;			//�����R��...... Abel 9601222  	
+ 571:VS4210/audio.c **** 		}
+ 572:VS4210/audio.c **** 	if( amount>0 ) 
+ 573:VS4210/audio.c **** 	{
+ 574:VS4210/audio.c **** 		if( ((AudioTemp+amount) <= UserRange.Max) ) 
+ 575:VS4210/audio.c **** 			chg=1;
+ 576:VS4210/audio.c **** 	}
+ 577:VS4210/audio.c **** 	else 
+ 578:VS4210/audio.c **** 	{
+ 579:VS4210/audio.c **** 		if( AudioTemp>UserRange.Min	) 
+ 580:VS4210/audio.c **** 			chg=1;
+ 581:VS4210/audio.c **** 	}
+ 582:VS4210/audio.c **** 
+ 583:VS4210/audio.c **** 	if( chg ) 
+ 584:VS4210/audio.c **** 	
+ 585:VS4210/audio.c **** 	{
+ 586:VS4210/audio.c **** 			AudioTemp += amount;
+ 587:VS4210/audio.c **** 			
+ 588:VS4210/audio.c **** 		//	if(AudioTemp==UserRange.Max) 
+ 589:VS4210/audio.c **** 			  //VCOM=0xFD;			 
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s 			page 13
+
+
+ 590:VS4210/audio.c **** 			//else
+ 591:VS4210/audio.c **** 			 // VCOM=( (((WORD)AudioTemp*0xFD))/100);
+ 592:VS4210/audio.c **** 	
+ 593:VS4210/audio.c **** 			/*
+ 594:VS4210/audio.c **** 			WriteI2C( TW88I2CAddress,0xff,0x01);
+ 595:VS4210/audio.c **** 			
+ 596:VS4210/audio.c **** 			WriteI2C( TW88I2CAddress,0xb4,VCOM);
+ 597:VS4210/audio.c **** 		
+ 598:VS4210/audio.c **** 			WriteI2C( TW88I2CAddress,0xff,0x00);   
+ 599:VS4210/audio.c **** 		*/	
+ 600:VS4210/audio.c **** 		   // if(AudioVol==0)
+ 601:VS4210/audio.c **** 		//		Audio_Mute = 1; 				  //�}���R��...... Abel 960122
+ 602:VS4210/audio.c **** 		//	  else		
+ 603:VS4210/audio.c **** 		 // 	Audio_Mute = 0; 				  //�����R��...... Abel 9601222
+ 604:VS4210/audio.c **** 	
+ 605:VS4210/audio.c **** 			//#ifdef Hs_debug
+ 606:VS4210/audio.c **** 			//Printf("\r\nVCOM=%x",(WORD)VCOM);  
+ 607:VS4210/audio.c **** 			// #endif
+ 608:VS4210/audio.c **** 		}
+ 609:VS4210/audio.c **** #endif
+ 610:VS4210/audio.c **** #if 0
+ 611:VS4210/audio.c **** 		CCAP4H=120-AudioTemp;
+ 612:VS4210/audio.c **** #ifdef ALC106
+ 613:VS4210/audio.c **** 		AudioTemp2=33-(AudioTemp/3);
+ 614:VS4210/audio.c **** 		if(AudioTemp2>0x1f)
+ 615:VS4210/audio.c **** 			AudioTemp2=0x1f;
+ 616:VS4210/audio.c **** 		ALC106Volume=AudioTemp2;
+ 617:VS4210/audio.c **** 		ALC106Volume=ALC106Volume<<8;
+ 618:VS4210/audio.c **** 		ALC106Volume|=AudioTemp2;
+ 619:VS4210/audio.c **** 		WriteALC106(0x02,ALC106Volume);
+ 620:VS4210/audio.c **** 		Printf("\r\nALC106Volume=%x",(WORD)ALC106Volume);
+ 621:VS4210/audio.c **** #endif
+ 622:VS4210/audio.c **** #endif
+ 623:VS4210/audio.c **** 	/*
+ 624:VS4210/audio.c **** 		#ifdef Hs_debug
+ 625:VS4210/audio.c **** 		Printf("\r\nAudioTemp=%x",(WORD)AudioTemp);
+ 626:VS4210/audio.c **** 		#endif
+ 627:VS4210/audio.c **** 
+ 628:VS4210/audio.c **** 		if(AudioTemp==0||PowerFlag==0)
+ 629:VS4210/audio.c **** 			AudioMute(0);	// Audio_Mute = 0;		//�}���R��...... Abel 960122
+ 630:VS4210/audio.c **** 		else
+ 631:VS4210/audio.c **** 			AudioMute(1);
+ 632:VS4210/audio.c **** 	*/
+ 633:VS4210/audio.c **** 	//	SetAudioVolEE( AudioTemp );
+ 634:VS4210/audio.c **** 
+ 635:VS4210/audio.c **** 	if (AudioVol != AudioTemp)
+  97              		.loc 1 635 2 is_stmt 1 view .LVU25
+  98              		.loc 1 635 15 is_stmt 0 view .LVU26
+  99 0036 104B     		ldr	r3, .L14
+ 100 0038 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 101              		.loc 1 635 5 view .LVU27
+ 102 003a A342     		cmp	r3, r4
+ 103 003c 15D1     		bne	.L13
+ 104              	.L6:
+ 636:VS4210/audio.c **** 	{
+ 637:VS4210/audio.c **** 		// Printf("\r\SetAudioVolEE=%x",(WORD)AudioTemp);
+ 638:VS4210/audio.c **** 		AudioVol = AudioTemp;
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s 			page 14
+
+
+ 639:VS4210/audio.c **** 		SetAudioVolEE(AudioTemp);
+ 640:VS4210/audio.c **** 	}
+ 641:VS4210/audio.c **** 
+ 642:VS4210/audio.c **** 	//	if(VGAAudio)
+ 643:VS4210/audio.c **** 	//		return PCAudioVol;
+ 644:VS4210/audio.c **** 	//	else
+ 645:VS4210/audio.c **** 	return AudioVol;
+ 105              		.loc 1 645 2 is_stmt 1 view .LVU28
+ 646:VS4210/audio.c **** }
+ 106              		.loc 1 646 1 is_stmt 0 view .LVU29
+ 107 003e 0E4B     		ldr	r3, .L14
+ 108 0040 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 109 0042 02B0     		add	sp, sp, #8
+ 110              	.LCFI2:
+ 111              		.cfi_remember_state
+ 112              		.cfi_def_cfa_offset 8
+ 113              		@ sp needed
+ 114 0044 10BD     		pop	{r4, pc}
+ 115              	.LVL9:
+ 116              	.L10:
+ 117              	.LCFI3:
+ 118              		.cfi_restore_state
+ 531:VS4210/audio.c **** 			AudioTemp += 1;
+ 119              		.loc 1 531 3 is_stmt 1 view .LVU30
+ 531:VS4210/audio.c **** 			AudioTemp += 1;
+ 120              		.loc 1 531 6 is_stmt 0 view .LVU31
+ 121 0046 632C     		cmp	r4, #99
+ 122 0048 07D8     		bhi	.L7
+ 532:VS4210/audio.c **** 		else
+ 123              		.loc 1 532 4 is_stmt 1 view .LVU32
+ 532:VS4210/audio.c **** 		else
+ 124              		.loc 1 532 14 is_stmt 0 view .LVU33
+ 125 004a 0134     		adds	r4, r4, #1
+ 126              	.LVL10:
+ 532:VS4210/audio.c **** 		else
+ 127              		.loc 1 532 14 view .LVU34
+ 128 004c E4B2     		uxtb	r4, r4
+ 129              	.LVL11:
+ 532:VS4210/audio.c **** 		else
+ 130              		.loc 1 532 14 view .LVU35
+ 131 004e DFE7     		b	.L3
+ 132              	.L11:
+ 538:VS4210/audio.c **** 			AudioTemp -= 1;
+ 133              		.loc 1 538 3 is_stmt 1 view .LVU36
+ 538:VS4210/audio.c **** 			AudioTemp -= 1;
+ 134              		.loc 1 538 6 is_stmt 0 view .LVU37
+ 135 0050 012C     		cmp	r4, #1
+ 136 0052 04D9     		bls	.L8
+ 539:VS4210/audio.c **** 		else
+ 137              		.loc 1 539 4 is_stmt 1 view .LVU38
+ 539:VS4210/audio.c **** 		else
+ 138              		.loc 1 539 14 is_stmt 0 view .LVU39
+ 139 0054 013C     		subs	r4, r4, #1
+ 140              	.LVL12:
+ 539:VS4210/audio.c **** 		else
+ 141              		.loc 1 539 14 view .LVU40
+ 142 0056 E4B2     		uxtb	r4, r4
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s 			page 15
+
+
+ 143              	.LVL13:
+ 539:VS4210/audio.c **** 		else
+ 144              		.loc 1 539 14 view .LVU41
+ 145 0058 DAE7     		b	.L3
+ 146              	.L7:
+ 534:VS4210/audio.c **** 	}
+ 147              		.loc 1 534 14 view .LVU42
+ 148 005a 6424     		movs	r4, #100
+ 149              	.LVL14:
+ 534:VS4210/audio.c **** 	}
+ 150              		.loc 1 534 14 view .LVU43
+ 151 005c D8E7     		b	.L3
+ 152              	.LVL15:
+ 153              	.L8:
+ 541:VS4210/audio.c **** 	}
+ 154              		.loc 1 541 14 view .LVU44
+ 155 005e 0024     		movs	r4, #0
+ 156              	.LVL16:
+ 541:VS4210/audio.c **** 	}
+ 157              		.loc 1 541 14 view .LVU45
+ 158 0060 D6E7     		b	.L3
+ 159              	.LVL17:
+ 160              	.L12:
+ 559:VS4210/audio.c **** 
+ 161              		.loc 1 559 3 is_stmt 1 view .LVU46
+ 162 0062 0120     		movs	r0, #1
+ 163 0064 FFF7FEFF 		bl	AudioMute
+ 164              	.LVL18:
+ 165 0068 E5E7     		b	.L5
+ 166              	.L13:
+ 638:VS4210/audio.c **** 		SetAudioVolEE(AudioTemp);
+ 167              		.loc 1 638 3 view .LVU47
+ 638:VS4210/audio.c **** 		SetAudioVolEE(AudioTemp);
+ 168              		.loc 1 638 12 is_stmt 0 view .LVU48
+ 169 006a 034B     		ldr	r3, .L14
+ 170 006c 1C70     		strb	r4, [r3]
+ 639:VS4210/audio.c **** 	}
+ 171              		.loc 1 639 3 is_stmt 1 view .LVU49
+ 172 006e 2046     		mov	r0, r4
+ 173 0070 FFF7FEFF 		bl	SetAudioVolEE
+ 174              	.LVL19:
+ 175 0074 E3E7     		b	.L6
+ 176              	.L15:
+ 177 0076 00BF     		.align	2
+ 178              	.L14:
+ 179 0078 00000000 		.word	.LANCHOR0
+ 180 007c 00000000 		.word	AudioVolRange
+ 181 0080 00000000 		.word	.LANCHOR1
+ 182 0084 00000000 		.word	PowerFlag
+ 183 0088 00000000 		.word	TriggerFlag
+ 184              		.cfi_endproc
+ 185              	.LFE71:
+ 187              		.section	.text.AudioMute,"ax",%progbits
+ 188              		.align	1
+ 189              		.global	AudioMute
+ 190              		.syntax unified
+ 191              		.thumb
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s 			page 16
+
+
+ 192              		.thumb_func
+ 193              		.fpu softvfp
+ 195              	AudioMute:
+ 196              	.LVL20:
+ 197              	.LFB70:
+ 458:VS4210/audio.c **** 	// WORD temp;
+ 198              		.loc 1 458 1 view -0
+ 199              		.cfi_startproc
+ 200              		@ args = 0, pretend = 0, frame = 0
+ 201              		@ frame_needed = 0, uses_anonymous_args = 0
+ 458:VS4210/audio.c **** 	// WORD temp;
+ 202              		.loc 1 458 1 is_stmt 0 view .LVU51
+ 203 0000 08B5     		push	{r3, lr}
+ 204              	.LCFI4:
+ 205              		.cfi_def_cfa_offset 8
+ 206              		.cfi_offset 3, -8
+ 207              		.cfi_offset 14, -4
+ 463:VS4210/audio.c **** 	{
+ 208              		.loc 1 463 2 is_stmt 1 view .LVU52
+ 463:VS4210/audio.c **** 	{
+ 209              		.loc 1 463 5 is_stmt 0 view .LVU53
+ 210 0002 0128     		cmp	r0, #1
+ 211 0004 03D0     		beq	.L20
+ 471:VS4210/audio.c **** 	}
+ 212              		.loc 1 471 3 is_stmt 1 view .LVU54
+ 213 0006 0020     		movs	r0, #0
+ 214              	.LVL21:
+ 471:VS4210/audio.c **** 	}
+ 215              		.loc 1 471 3 is_stmt 0 view .LVU55
+ 216 0008 FFF7FEFF 		bl	ChangeVol
+ 217              	.LVL22:
+ 218              	.L16:
+ 500:VS4210/audio.c **** /*
+ 219              		.loc 1 500 1 view .LVU56
+ 220 000c 08BD     		pop	{r3, pc}
+ 221              	.LVL23:
+ 222              	.L20:
+ 466:VS4210/audio.c **** 	}
+ 223              		.loc 1 466 3 is_stmt 1 view .LVU57
+ 224 000e 48F28001 		movw	r1, #32896
+ 225 0012 0220     		movs	r0, #2
+ 226              	.LVL24:
+ 466:VS4210/audio.c **** 	}
+ 227              		.loc 1 466 3 is_stmt 0 view .LVU58
+ 228 0014 FFF7FEFF 		bl	SET_ALC122
+ 229              	.LVL25:
+ 230 0018 F8E7     		b	.L16
+ 231              		.cfi_endproc
+ 232              	.LFE70:
+ 234              		.section	.text.AUDIO_SELECT,"ax",%progbits
+ 235              		.align	1
+ 236              		.global	AUDIO_SELECT
+ 237              		.syntax unified
+ 238              		.thumb
+ 239              		.thumb_func
+ 240              		.fpu softvfp
+ 242              	AUDIO_SELECT:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s 			page 17
+
+
+ 243              	.LVL26:
+ 244              	.LFB68:
+ 313:VS4210/audio.c **** 	AudioMute(ON);
+ 245              		.loc 1 313 1 is_stmt 1 view -0
+ 246              		.cfi_startproc
+ 247              		@ args = 0, pretend = 0, frame = 0
+ 248              		@ frame_needed = 0, uses_anonymous_args = 0
+ 313:VS4210/audio.c **** 	AudioMute(ON);
+ 249              		.loc 1 313 1 is_stmt 0 view .LVU60
+ 250 0000 10B5     		push	{r4, lr}
+ 251              	.LCFI5:
+ 252              		.cfi_def_cfa_offset 8
+ 253              		.cfi_offset 4, -8
+ 254              		.cfi_offset 14, -4
+ 255 0002 0446     		mov	r4, r0
+ 314:VS4210/audio.c **** 
+ 256              		.loc 1 314 2 is_stmt 1 view .LVU61
+ 257 0004 0120     		movs	r0, #1
+ 258              	.LVL27:
+ 314:VS4210/audio.c **** 
+ 259              		.loc 1 314 2 is_stmt 0 view .LVU62
+ 260 0006 FFF7FEFF 		bl	AudioMute
+ 261              	.LVL28:
+ 316:VS4210/audio.c **** 	{
+ 262              		.loc 1 316 2 is_stmt 1 view .LVU63
+ 263 000a 262C     		cmp	r4, #38
+ 264 000c 45D8     		bhi	.L22
+ 265 000e DFE804F0 		tbb	[pc, r4]
+ 266              	.L24:
+ 267 0012 14       		.byte	(.L27-.L24)/2
+ 268 0013 20       		.byte	(.L26-.L24)/2
+ 269 0014 2C       		.byte	(.L25-.L24)/2
+ 270 0015 38       		.byte	(.L23-.L24)/2
+ 271 0016 2C       		.byte	(.L25-.L24)/2
+ 272 0017 38       		.byte	(.L23-.L24)/2
+ 273 0018 38       		.byte	(.L23-.L24)/2
+ 274 0019 14       		.byte	(.L27-.L24)/2
+ 275 001a 14       		.byte	(.L27-.L24)/2
+ 276 001b 38       		.byte	(.L23-.L24)/2
+ 277 001c 14       		.byte	(.L27-.L24)/2
+ 278 001d 38       		.byte	(.L23-.L24)/2
+ 279 001e 38       		.byte	(.L23-.L24)/2
+ 280 001f 38       		.byte	(.L23-.L24)/2
+ 281 0020 38       		.byte	(.L23-.L24)/2
+ 282 0021 38       		.byte	(.L23-.L24)/2
+ 283 0022 20       		.byte	(.L26-.L24)/2
+ 284 0023 20       		.byte	(.L26-.L24)/2
+ 285 0024 38       		.byte	(.L23-.L24)/2
+ 286 0025 14       		.byte	(.L27-.L24)/2
+ 287 0026 2C       		.byte	(.L25-.L24)/2
+ 288 0027 2C       		.byte	(.L25-.L24)/2
+ 289 0028 38       		.byte	(.L23-.L24)/2
+ 290 0029 14       		.byte	(.L27-.L24)/2
+ 291 002a 38       		.byte	(.L23-.L24)/2
+ 292 002b 38       		.byte	(.L23-.L24)/2
+ 293 002c 20       		.byte	(.L26-.L24)/2
+ 294 002d 38       		.byte	(.L23-.L24)/2
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s 			page 18
+
+
+ 295 002e 38       		.byte	(.L23-.L24)/2
+ 296 002f 2C       		.byte	(.L25-.L24)/2
+ 297 0030 38       		.byte	(.L23-.L24)/2
+ 298 0031 38       		.byte	(.L23-.L24)/2
+ 299 0032 38       		.byte	(.L23-.L24)/2
+ 300 0033 38       		.byte	(.L23-.L24)/2
+ 301 0034 38       		.byte	(.L23-.L24)/2
+ 302 0035 38       		.byte	(.L23-.L24)/2
+ 303 0036 38       		.byte	(.L23-.L24)/2
+ 304 0037 44       		.byte	(.L22-.L24)/2
+ 305 0038 38       		.byte	(.L23-.L24)/2
+ 306 0039 00       		.p2align 1
+ 307              	.L27:
+ 324:VS4210/audio.c **** 		AUD_SEL2(0);
+ 308              		.loc 1 324 3 view .LVU64
+ 309 003a 0022     		movs	r2, #0
+ 310 003c 0421     		movs	r1, #4
+ 311 003e 1D48     		ldr	r0, .L30
+ 312 0040 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 313              	.LVL29:
+ 325:VS4210/audio.c **** 		break;
+ 314              		.loc 1 325 3 view .LVU65
+ 315 0044 0022     		movs	r2, #0
+ 316 0046 4FF48051 		mov	r1, #4096
+ 317 004a 1B48     		ldr	r0, .L30+4
+ 318 004c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 319              	.LVL30:
+ 326:VS4210/audio.c **** 
+ 320              		.loc 1 326 3 view .LVU66
+ 321              	.L21:
+ 380:VS4210/audio.c **** 
+ 322              		.loc 1 380 1 is_stmt 0 view .LVU67
+ 323 0050 10BD     		pop	{r4, pc}
+ 324              	.L26:
+ 332:VS4210/audio.c **** 		AUD_SEL2(1);
+ 325              		.loc 1 332 3 is_stmt 1 view .LVU68
+ 326 0052 0022     		movs	r2, #0
+ 327 0054 0421     		movs	r1, #4
+ 328 0056 1748     		ldr	r0, .L30
+ 329 0058 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 330              	.LVL31:
+ 333:VS4210/audio.c **** 		break;
+ 331              		.loc 1 333 3 view .LVU69
+ 332 005c 0122     		movs	r2, #1
+ 333 005e 4FF48051 		mov	r1, #4096
+ 334 0062 1548     		ldr	r0, .L30+4
+ 335 0064 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 336              	.LVL32:
+ 334:VS4210/audio.c **** 
+ 337              		.loc 1 334 3 view .LVU70
+ 338 0068 F2E7     		b	.L21
+ 339              	.L25:
+ 342:VS4210/audio.c **** 		AUD_SEL2(1);
+ 340              		.loc 1 342 3 view .LVU71
+ 341 006a 0122     		movs	r2, #1
+ 342 006c 0421     		movs	r1, #4
+ 343 006e 1148     		ldr	r0, .L30
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s 			page 19
+
+
+ 344 0070 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 345              	.LVL33:
+ 343:VS4210/audio.c **** 		break;
+ 346              		.loc 1 343 3 view .LVU72
+ 347 0074 0122     		movs	r2, #1
+ 348 0076 4FF48051 		mov	r1, #4096
+ 349 007a 0F48     		ldr	r0, .L30+4
+ 350 007c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 351              	.LVL34:
+ 344:VS4210/audio.c **** 
+ 352              		.loc 1 344 3 view .LVU73
+ 353 0080 E6E7     		b	.L21
+ 354              	.L23:
+ 369:VS4210/audio.c **** 		AUD_SEL2(0);
+ 355              		.loc 1 369 3 view .LVU74
+ 356 0082 0122     		movs	r2, #1
+ 357 0084 0421     		movs	r1, #4
+ 358 0086 0B48     		ldr	r0, .L30
+ 359 0088 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 360              	.LVL35:
+ 370:VS4210/audio.c **** 		break;
+ 361              		.loc 1 370 3 view .LVU75
+ 362 008c 0022     		movs	r2, #0
+ 363 008e 4FF48051 		mov	r1, #4096
+ 364 0092 0948     		ldr	r0, .L30+4
+ 365 0094 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 366              	.LVL36:
+ 371:VS4210/audio.c **** 
+ 367              		.loc 1 371 3 view .LVU76
+ 368 0098 DAE7     		b	.L21
+ 369              	.L22:
+ 374:VS4210/audio.c **** 		AUD_SEL2(1);
+ 370              		.loc 1 374 3 view .LVU77
+ 371 009a 0122     		movs	r2, #1
+ 372 009c 0421     		movs	r1, #4
+ 373 009e 0548     		ldr	r0, .L30
+ 374 00a0 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 375              	.LVL37:
+ 375:VS4210/audio.c **** 		break;
+ 376              		.loc 1 375 3 view .LVU78
+ 377 00a4 0122     		movs	r2, #1
+ 378 00a6 4FF48051 		mov	r1, #4096
+ 379 00aa 0348     		ldr	r0, .L30+4
+ 380 00ac FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 381              	.LVL38:
+ 376:VS4210/audio.c **** 	}
+ 382              		.loc 1 376 3 view .LVU79
+ 380:VS4210/audio.c **** 
+ 383              		.loc 1 380 1 is_stmt 0 view .LVU80
+ 384 00b0 CEE7     		b	.L21
+ 385              	.L31:
+ 386 00b2 00BF     		.align	2
+ 387              	.L30:
+ 388 00b4 00140140 		.word	1073812480
+ 389 00b8 00100140 		.word	1073811456
+ 390              		.cfi_endproc
+ 391              	.LFE68:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s 			page 20
+
+
+ 393              		.section	.rodata.AUDIO_SELECT_MUTE.str1.4,"aMS",%progbits,1
+ 394              		.align	2
+ 395              	.LC0:
+ 396 0000 28415544 		.ascii	"(AUDIO_SELECT_MUTE=%02x)\000"
+ 396      494F5F53 
+ 396      454C4543 
+ 396      545F4D55 
+ 396      54453D25 
+ 397              		.section	.text.AUDIO_SELECT_MUTE,"ax",%progbits
+ 398              		.align	1
+ 399              		.global	AUDIO_SELECT_MUTE
+ 400              		.syntax unified
+ 401              		.thumb
+ 402              		.thumb_func
+ 403              		.fpu softvfp
+ 405              	AUDIO_SELECT_MUTE:
+ 406              	.LVL39:
+ 407              	.LFB69:
+ 383:VS4210/audio.c **** 
+ 408              		.loc 1 383 1 is_stmt 1 view -0
+ 409              		.cfi_startproc
+ 410              		@ args = 0, pretend = 0, frame = 0
+ 411              		@ frame_needed = 0, uses_anonymous_args = 0
+ 383:VS4210/audio.c **** 
+ 412              		.loc 1 383 1 is_stmt 0 view .LVU82
+ 413 0000 10B5     		push	{r4, lr}
+ 414              	.LCFI6:
+ 415              		.cfi_def_cfa_offset 8
+ 416              		.cfi_offset 4, -8
+ 417              		.cfi_offset 14, -4
+ 418 0002 0446     		mov	r4, r0
+ 386:VS4210/audio.c **** #endif
+ 419              		.loc 1 386 2 is_stmt 1 view .LVU83
+ 420 0004 0146     		mov	r1, r0
+ 421 0006 2D48     		ldr	r0, .L41
+ 422              	.LVL40:
+ 386:VS4210/audio.c **** #endif
+ 423              		.loc 1 386 2 is_stmt 0 view .LVU84
+ 424 0008 FFF7FEFF 		bl	Printf
+ 425              	.LVL41:
+ 389:VS4210/audio.c **** 
+ 426              		.loc 1 389 2 is_stmt 1 view .LVU85
+ 427 000c 0120     		movs	r0, #1
+ 428 000e FFF7FEFF 		bl	AudioMute
+ 429              	.LVL42:
+ 391:VS4210/audio.c **** 	{
+ 430              		.loc 1 391 2 view .LVU86
+ 431 0012 262C     		cmp	r4, #38
+ 432 0014 45D8     		bhi	.L33
+ 433 0016 DFE804F0 		tbb	[pc, r4]
+ 434              	.L35:
+ 435 001a 14       		.byte	(.L38-.L35)/2
+ 436 001b 20       		.byte	(.L37-.L35)/2
+ 437 001c 2C       		.byte	(.L36-.L35)/2
+ 438 001d 38       		.byte	(.L34-.L35)/2
+ 439 001e 2C       		.byte	(.L36-.L35)/2
+ 440 001f 38       		.byte	(.L34-.L35)/2
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s 			page 21
+
+
+ 441 0020 38       		.byte	(.L34-.L35)/2
+ 442 0021 14       		.byte	(.L38-.L35)/2
+ 443 0022 14       		.byte	(.L38-.L35)/2
+ 444 0023 38       		.byte	(.L34-.L35)/2
+ 445 0024 14       		.byte	(.L38-.L35)/2
+ 446 0025 38       		.byte	(.L34-.L35)/2
+ 447 0026 38       		.byte	(.L34-.L35)/2
+ 448 0027 38       		.byte	(.L34-.L35)/2
+ 449 0028 38       		.byte	(.L34-.L35)/2
+ 450 0029 38       		.byte	(.L34-.L35)/2
+ 451 002a 20       		.byte	(.L37-.L35)/2
+ 452 002b 20       		.byte	(.L37-.L35)/2
+ 453 002c 38       		.byte	(.L34-.L35)/2
+ 454 002d 14       		.byte	(.L38-.L35)/2
+ 455 002e 2C       		.byte	(.L36-.L35)/2
+ 456 002f 2C       		.byte	(.L36-.L35)/2
+ 457 0030 38       		.byte	(.L34-.L35)/2
+ 458 0031 14       		.byte	(.L38-.L35)/2
+ 459 0032 38       		.byte	(.L34-.L35)/2
+ 460 0033 38       		.byte	(.L34-.L35)/2
+ 461 0034 20       		.byte	(.L37-.L35)/2
+ 462 0035 38       		.byte	(.L34-.L35)/2
+ 463 0036 38       		.byte	(.L34-.L35)/2
+ 464 0037 2C       		.byte	(.L36-.L35)/2
+ 465 0038 38       		.byte	(.L34-.L35)/2
+ 466 0039 38       		.byte	(.L34-.L35)/2
+ 467 003a 38       		.byte	(.L34-.L35)/2
+ 468 003b 38       		.byte	(.L34-.L35)/2
+ 469 003c 38       		.byte	(.L34-.L35)/2
+ 470 003d 38       		.byte	(.L34-.L35)/2
+ 471 003e 38       		.byte	(.L34-.L35)/2
+ 472 003f 44       		.byte	(.L33-.L35)/2
+ 473 0040 38       		.byte	(.L34-.L35)/2
+ 474 0041 00       		.p2align 1
+ 475              	.L38:
+ 399:VS4210/audio.c **** 		AUD_SEL2(1);
+ 476              		.loc 1 399 3 view .LVU87
+ 477 0042 0022     		movs	r2, #0
+ 478 0044 0421     		movs	r1, #4
+ 479 0046 1E48     		ldr	r0, .L41+4
+ 480 0048 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 481              	.LVL43:
+ 400:VS4210/audio.c **** 		break;
+ 482              		.loc 1 400 3 view .LVU88
+ 483 004c 0122     		movs	r2, #1
+ 484 004e 4FF48051 		mov	r1, #4096
+ 485 0052 1C48     		ldr	r0, .L41+8
+ 486 0054 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 487              	.LVL44:
+ 401:VS4210/audio.c **** 
+ 488              		.loc 1 401 3 view .LVU89
+ 489              	.L32:
+ 455:VS4210/audio.c **** 
+ 490              		.loc 1 455 1 is_stmt 0 view .LVU90
+ 491 0058 10BD     		pop	{r4, pc}
+ 492              	.L37:
+ 407:VS4210/audio.c **** 		AUD_SEL2(0);
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s 			page 22
+
+
+ 493              		.loc 1 407 3 is_stmt 1 view .LVU91
+ 494 005a 0122     		movs	r2, #1
+ 495 005c 0421     		movs	r1, #4
+ 496 005e 1848     		ldr	r0, .L41+4
+ 497 0060 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 498              	.LVL45:
+ 408:VS4210/audio.c **** 		break;
+ 499              		.loc 1 408 3 view .LVU92
+ 500 0064 0022     		movs	r2, #0
+ 501 0066 4FF48051 		mov	r1, #4096
+ 502 006a 1648     		ldr	r0, .L41+8
+ 503 006c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 504              	.LVL46:
+ 409:VS4210/audio.c **** 
+ 505              		.loc 1 409 3 view .LVU93
+ 506 0070 F2E7     		b	.L32
+ 507              	.L36:
+ 417:VS4210/audio.c **** 		AUD_SEL2(0);
+ 508              		.loc 1 417 3 view .LVU94
+ 509 0072 0022     		movs	r2, #0
+ 510 0074 0421     		movs	r1, #4
+ 511 0076 1248     		ldr	r0, .L41+4
+ 512 0078 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 513              	.LVL47:
+ 418:VS4210/audio.c **** 		break;
+ 514              		.loc 1 418 3 view .LVU95
+ 515 007c 0022     		movs	r2, #0
+ 516 007e 4FF48051 		mov	r1, #4096
+ 517 0082 1048     		ldr	r0, .L41+8
+ 518 0084 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 519              	.LVL48:
+ 419:VS4210/audio.c **** 
+ 520              		.loc 1 419 3 view .LVU96
+ 521 0088 E6E7     		b	.L32
+ 522              	.L34:
+ 444:VS4210/audio.c **** 		AUD_SEL2(1);
+ 523              		.loc 1 444 3 view .LVU97
+ 524 008a 0122     		movs	r2, #1
+ 525 008c 0421     		movs	r1, #4
+ 526 008e 0C48     		ldr	r0, .L41+4
+ 527 0090 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 528              	.LVL49:
+ 445:VS4210/audio.c **** 		break;
+ 529              		.loc 1 445 3 view .LVU98
+ 530 0094 0122     		movs	r2, #1
+ 531 0096 4FF48051 		mov	r1, #4096
+ 532 009a 0A48     		ldr	r0, .L41+8
+ 533 009c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 534              	.LVL50:
+ 446:VS4210/audio.c **** 
+ 535              		.loc 1 446 3 view .LVU99
+ 536 00a0 DAE7     		b	.L32
+ 537              	.L33:
+ 449:VS4210/audio.c **** 		AUD_SEL2(1);
+ 538              		.loc 1 449 3 view .LVU100
+ 539 00a2 0122     		movs	r2, #1
+ 540 00a4 0421     		movs	r1, #4
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s 			page 23
+
+
+ 541 00a6 0648     		ldr	r0, .L41+4
+ 542 00a8 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 543              	.LVL51:
+ 450:VS4210/audio.c **** 		break;
+ 544              		.loc 1 450 3 view .LVU101
+ 545 00ac 0122     		movs	r2, #1
+ 546 00ae 4FF48051 		mov	r1, #4096
+ 547 00b2 0448     		ldr	r0, .L41+8
+ 548 00b4 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 549              	.LVL52:
+ 451:VS4210/audio.c **** 	}
+ 550              		.loc 1 451 3 view .LVU102
+ 455:VS4210/audio.c **** 
+ 551              		.loc 1 455 1 is_stmt 0 view .LVU103
+ 552 00b8 CEE7     		b	.L32
+ 553              	.L42:
+ 554 00ba 00BF     		.align	2
+ 555              	.L41:
+ 556 00bc 00000000 		.word	.LC0
+ 557 00c0 00140140 		.word	1073812480
+ 558 00c4 00100140 		.word	1073811456
+ 559              		.cfi_endproc
+ 560              	.LFE69:
+ 562              		.global	UserRangeBacklight
+ 563              		.global	UserRange
+ 564              		.global	PCAudioVol
+ 565              		.global	AudioVol
+ 566              		.section	.data.AudioVol,"aw"
+ 567              		.set	.LANCHOR0,. + 0
+ 570              	AudioVol:
+ 571 0000 32       		.byte	50
+ 572              		.section	.data.PCAudioVol,"aw"
+ 575              	PCAudioVol:
+ 576 0000 32       		.byte	50
+ 577              		.section	.data.UserRange,"aw"
+ 578              		.align	2
+ 579              		.set	.LANCHOR1,. + 0
+ 582              	UserRange:
+ 583 0000 00000000 		.word	0
+ 584 0004 64000000 		.word	100
+ 585 0008 32000000 		.word	50
+ 586              		.section	.data.UserRangeBacklight,"aw"
+ 587              		.align	2
+ 590              	UserRangeBacklight:
+ 591 0000 00000000 		.word	0
+ 592 0004 64000000 		.word	100
+ 593 0008 64000000 		.word	100
+ 594              		.text
+ 595              	.Letext0:
+ 596              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 597              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 598              		.file 4 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 599              		.file 5 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\lib\\gcc\\arm-none-eabi
+ 600              		.file 6 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 601              		.file 7 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 602              		.file 8 "VS4210/VXIS_Extern_Define.h"
+ 603              		.file 9 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s 			page 24
+
+
+ 604              		.file 10 "sw_i2c/VX_swi2c.h"
+ 605              		.file 11 "VS4210/VS4210.h"
+ 606              		.file 12 "Drivers/CMSIS/Include/core_cm3.h"
+ 607              		.file 13 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h"
+ 608              		.file 14 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
+ 609              		.file 15 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ 610              		.file 16 "VS4210/audio.h"
+ 611              		.file 17 "VS4210/VX_OSD_Simple.h"
+ 612              		.file 18 "VS4210/printf.h"
+ 613              		.file 19 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h"
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s 			page 25
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 audio.c
+C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s:16     .text.ChangeVol:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s:24     .text.ChangeVol:00000000 ChangeVol
+C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s:195    .text.AudioMute:00000000 AudioMute
+C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s:179    .text.ChangeVol:00000078 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s:188    .text.AudioMute:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s:235    .text.AUDIO_SELECT:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s:242    .text.AUDIO_SELECT:00000000 AUDIO_SELECT
+C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s:267    .text.AUDIO_SELECT:00000012 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s:388    .text.AUDIO_SELECT:000000b4 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s:394    .rodata.AUDIO_SELECT_MUTE.str1.4:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s:398    .text.AUDIO_SELECT_MUTE:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s:405    .text.AUDIO_SELECT_MUTE:00000000 AUDIO_SELECT_MUTE
+C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s:435    .text.AUDIO_SELECT_MUTE:0000001a $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s:556    .text.AUDIO_SELECT_MUTE:000000bc $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s:590    .data.UserRangeBacklight:00000000 UserRangeBacklight
+C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s:582    .data.UserRange:00000000 UserRange
+C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s:575    .data.PCAudioVol:00000000 PCAudioVol
+C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s:570    .data.AudioVol:00000000 AudioVol
+C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s:578    .data.UserRange:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s:587    .data.UserRangeBacklight:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s:306    .text.AUDIO_SELECT:00000039 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s:306    .text.AUDIO_SELECT:0000003a $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s:474    .text.AUDIO_SELECT_MUTE:00000041 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccKv5u4h.s:474    .text.AUDIO_SELECT_MUTE:00000042 $t
+
+UNDEFINED SYMBOLS
+Mapping1
+SET_ALC122
+SetAudioVolEE
+AudioVolRange
+PowerFlag
+TriggerFlag
+HAL_GPIO_WritePin
+Printf

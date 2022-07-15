@@ -1,0 +1,824 @@
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"VS4210_param_Mode88.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.global	VS4210_bt656_PAL_800x480_mode0_w0_88param
+  16              		.global	VS4210_bt656_PAL_800x480_mode0_w0_mirrorH_88param
+  17              		.global	VS4210_bt656_PAL_720P_mode0_w0_88param
+  18              		.global	VS4210_bt656_PAL_720P_mode0_w0_mirrorH_88param
+  19              		.global	VS4210_bt656_PAL_1080P_mode0_w0_88param
+  20              		.global	VS4210_bt656_PAL_1080P_mode0_w0_mirrorH_88param
+  21              		.global	VS4210_bt656_NTSC_800x480_mode0_w0_88param
+  22              		.global	VS4210_bt656_NTSC_800x480_mode0_w0_mirrorH_88param
+  23              		.global	VS4210_bt656_NTSC_720P_mode0_w0_88param
+  24              		.global	VS4210_bt656_NTSC_720P_mode0_w0_mirrorH_88param
+  25              		.global	VS4210_bt656_NTSC_1080P_mode0_w0_88param
+  26              		.global	VS4210_bt656_NTSC_1080P_mode0_w0_mirrorH_88param
+  27              		.global	VS4210_bt656_720P_800x480_mode0_w0_88param
+  28              		.global	VS4210_bt656_720P_800x480_mode0_w0_mirrorH_88param
+  29              		.global	VS4210_bt656_720P_720P_mode0_w0_88param
+  30              		.global	VS4210_bt656_720P_720P_mode0_w0_mirrorH_88param
+  31              		.global	VS4210_bt656_720P_1080P_mode0_w0_88param
+  32              		.global	VS4210_bt656_720P_1080P_mode0_w0_mirrorH_88param
+  33              		.global	VS4210_bt656_1080P_800x480_mode0_w0_88param
+  34              		.global	VS4210_bt656_1080P_800x480_mode0_w0_mirrorH_88param
+  35              		.global	VS4210_bt656_1080P_720P_mode0_w0_88param
+  36              		.global	VS4210_bt656_1080P_720P_mode0_w0_mirrorH_88param
+  37              		.global	VS4210_bt656_1080P_1080P_mode0_w0_88param
+  38              		.global	VS4210_bt656_1080P_1080P_mode0_w0_mirrorH_88param
+  39              		.global	VS4210_Addr_88param
+  40              		.section	.rodata.VS4210_Addr_88param,"a"
+  41              		.align	2
+  44              	VS4210_Addr_88param:
+  45 0000 02030405 		.ascii	"\002\003\004\005\006\007\010\011\012\013\014\015\020"
+  45      06070809 
+  45      0A0B0C0D 
+  45      10
+  46 000d 11151617 		.ascii	"\021\025\026\027\030\031\032\034\035\036()*+,-t~\177"
+  46      18191A1C 
+  46      1D1E2829 
+  46      2A2B2C2D 
+  46      747E7F
+  47 0020 80818283 		.ascii	"\200\201\202\203\204\205\206\207\210\211\212\213\214"
+  47      84858687 
+  47      88898A8B 
+  47      8C
+  48 002d 8D8E8F90 		.ascii	"\215\216\217\220\221\222\223\224\225\227\230\231\233"
+  48      91929394 
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s 			page 2
+
+
+  48      95979899 
+  48      9B
+  49 003a 9C9D9E9F 		.ascii	"\234\235\236\237\240\241\242\243\244\245\246\247\250"
+  49      A0A1A2A3 
+  49      A4A5A6A7 
+  49      A8
+  50 0047 A9AAABAF 		.ascii	"\251\252\253\257\300\326\327\330\346\347\350\351\352"
+  50      C0D6D7D8 
+  50      E6E7E8E9 
+  50      EA
+  51 0054 EBECEDEE 		.ascii	"\353\354\355\356"
+  52              		.section	.rodata.VS4210_bt656_1080P_1080P_mode0_w0_88param,"a"
+  53              		.align	2
+  56              	VS4210_bt656_1080P_1080P_mode0_w0_88param:
+  57 0000 00751880 		.ascii	"\000u\030\200 \014 \012 \012\000 \200\203x\376\000\300"
+  57      200C200A 
+  57      200A0020 
+  57      808378FE 
+  57      00C0
+  58 0012 00360000 		.ascii	"\0006\000\000 \360\000\000\021\000\000\000\200\000\000"
+  58      20F00000 
+  58      11000000 
+  58      800000
+  59 0021 34000500 		.ascii	"4\000\005\000\375\004$\224X\000~\003,\214\000\314A\304"
+  59      FD042494 
+  59      58007E03 
+  59      2C8C00CC 
+  59      41C4
+  60 0033 84988070 		.ascii	"\204\230\200p)\220\004\000\000\004e\200\330\230\207"
+  60      29900400 
+  60      00046580 
+  60      D89887
+  61 0042 00800070 		.ascii	"\000\200\000p@\036,\000\231\000\000\000\000\000\000"
+  61      401E2C00 
+  61      99000000 
+  61      000000
+  62 0051 00000000 		.ascii	"\000\000\000\000\210\000\000"
+  62      880000
+  63              		.section	.rodata.VS4210_bt656_1080P_1080P_mode0_w0_mirrorH_88param,"a"
+  64              		.align	2
+  67              	VS4210_bt656_1080P_1080P_mode0_w0_mirrorH_88param:
+  68 0000 00751880 		.ascii	"\000u\030\200 \014 \012 \012\000 \204\203x\376\000\300"
+  68      200C200A 
+  68      200A0020 
+  68      848378FE 
+  68      00C0
+  69 0012 00360000 		.ascii	"\0006\000\000 \360\000\000\021\000\000\000\200\000\000"
+  69      20F00000 
+  69      11000000 
+  69      800000
+  70 0021 34000500 		.ascii	"4\000\005\000\375\004$\224X\000~\003,\214\000\314A\304"
+  70      FD042494 
+  70      58007E03 
+  70      2C8C00CC 
+  70      41C4
+  71 0033 84988070 		.ascii	"\204\230\200p)\220\004\000\000\004e\200\330\230\207"
+  71      29900400 
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s 			page 3
+
+
+  71      00046580 
+  71      D89887
+  72 0042 00800070 		.ascii	"\000\200\000p@\036,\000\231\000\000\000\000\000\000"
+  72      401E2C00 
+  72      99000000 
+  72      000000
+  73 0051 00000000 		.ascii	"\000\000\000\000\210\000\000"
+  73      880000
+  74              		.section	.rodata.VS4210_bt656_1080P_720P_mode0_w0_88param,"a"
+  75              		.align	2
+  78              	VS4210_bt656_1080P_720P_mode0_w0_88param:
+  79 0000 00751880 		.ascii	"\000u\030\200 \014 \012 \012\000 \200\203x\376\000\300"
+  79      200C200A 
+  79      200A0020 
+  79      808378FE 
+  79      00C0
+  80 0012 00300000 		.ascii	"\0000\000\000 \360\000\000\000\177@\000\200\000\000"
+  80      20F00000 
+  80      007F4000 
+  80      800000
+  81 0021 34000500 		.ascii	"4\000\005\000\374\005\024\334n\000~\003(\214\000\314"
+  81      FC0514DC 
+  81      6E007E03 
+  81      288C00CC 
+  82 0031 41C484AF 		.ascii	"A\304\204\257\200p\032\220\004\000\000\002\356?nre\000"
+  82      80701A90 
+  82      04000002 
+  82      EE3F6E72 
+  82      6500
+  83 0043 3E3F1440 		.ascii	">?\024@\036.\000\231\000\001\000\000\000\000\000\000"
+  83      1E2E0099 
+  83      00010000 
+  83      00000000 
+  84 0053 00008800 		.ascii	"\000\000\210\000\000"
+  84      00
+  85              		.section	.rodata.VS4210_bt656_1080P_720P_mode0_w0_mirrorH_88param,"a"
+  86              		.align	2
+  89              	VS4210_bt656_1080P_720P_mode0_w0_mirrorH_88param:
+  90 0000 00751880 		.ascii	"\000u\030\200 \014 \012 \012\000 \204\203x\376\000\300"
+  90      200C200A 
+  90      200A0020 
+  90      848378FE 
+  90      00C0
+  91 0012 00300000 		.ascii	"\0000\000\000 \360\000\000\000\177@\000\200\000\000"
+  91      20F00000 
+  91      007F4000 
+  91      800000
+  92 0021 34000500 		.ascii	"4\000\005\000\374\005\024\334n\000~\003(\214\000\314"
+  92      FC0514DC 
+  92      6E007E03 
+  92      288C00CC 
+  93 0031 41C484AF 		.ascii	"A\304\204\257\200p\032\220\004\000\000\002\356?nre\000"
+  93      80701A90 
+  93      04000002 
+  93      EE3F6E72 
+  93      6500
+  94 0043 3E3F1440 		.ascii	">?\024@\036.\000\231\000\001\000\000\000\000\000\000"
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s 			page 4
+
+
+  94      1E2E0099 
+  94      00010000 
+  94      00000000 
+  95 0053 00008800 		.ascii	"\000\000\210\000\000"
+  95      00
+  96              		.section	.rodata.VS4210_bt656_1080P_800x480_mode0_w0_88param,"a"
+  97              		.align	2
+ 100              	VS4210_bt656_1080P_800x480_mode0_w0_88param:
+ 101 0000 00751880 		.ascii	"\000u\030\200 \014@\011!\010\010 \200\203\210\001\002"
+ 101      200C4009 
+ 101      21080820 
+ 101      80838801 
+ 101      02
+ 102 0011 C0003500 		.ascii	"\300\0005\000\000 \360@\200\021D4\000\000\000\000\000"
+ 102      0020F040 
+ 102      80114434 
+ 102      00000000 
+ 102      00
+ 103 0022 0003ABEB 		.ascii	"\000\003\253\353\024\364\334n\000~\003(l@\314A\3042"
+ 103      14F4DC6E 
+ 103      007E0328 
+ 103      6C40CC41 
+ 103      C432
+ 104 0034 54203029 		.ascii	"T 0)\220\004\010\000\002\015~'\2473\000~\247p@\036."
+ 104      90040800 
+ 104      020D7E27 
+ 104      A733007E 
+ 104      A770401E 
+ 105 0049 009B0001 		.ascii	"\000\233\000\001\020\000\000\000\000\000\000\000x\377"
+ 105      10000000 
+ 105      00000000 
+ 105      78FF
+ 106 0057 00       		.ascii	"\000"
+ 107              		.section	.rodata.VS4210_bt656_1080P_800x480_mode0_w0_mirrorH_88param,"a"
+ 108              		.align	2
+ 111              	VS4210_bt656_1080P_800x480_mode0_w0_mirrorH_88param:
+ 112 0000 00751880 		.ascii	"\000u\030\200 \014@\011!\010\010 \204\203\210\001\002"
+ 112      200C4009 
+ 112      21080820 
+ 112      84838801 
+ 112      02
+ 113 0011 C0003500 		.ascii	"\300\0005\000\000 \360@\200\021D4\000\000\000\000\000"
+ 113      0020F040 
+ 113      80114434 
+ 113      00000000 
+ 113      00
+ 114 0022 0003ABEB 		.ascii	"\000\003\253\353\024\364\334n\000~\003(l@\314A\3042"
+ 114      14F4DC6E 
+ 114      007E0328 
+ 114      6C40CC41 
+ 114      C432
+ 115 0034 54203029 		.ascii	"T 0)\220\004\010\000\002\015~&\2473\000~\247p@\036,"
+ 115      90040800 
+ 115      020D7E26 
+ 115      A733007E 
+ 115      A770401E 
+ 116 0049 009B0001 		.ascii	"\000\233\000\001\020\000\000\006\000\000\000\000w\377"
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s 			page 5
+
+
+ 116      10000006 
+ 116      00000000 
+ 116      77FF
+ 117 0057 FA       		.ascii	"\372"
+ 118              		.section	.rodata.VS4210_bt656_720P_1080P_mode0_w0_88param,"a"
+ 119              		.align	2
+ 122              	VS4210_bt656_720P_1080P_mode0_w0_88param:
+ 123 0000 00751880 		.ascii	"\000u\030\200 \010 \012 \012\000 \200\203x\376\000\300"
+ 123      2008200A 
+ 123      200A0020 
+ 123      808378FE 
+ 123      00C0
+ 124 0012 00360000 		.ascii	"\0006\000\000 \360\000\000\000\000\000\000\200\000\000"
+ 124      20F00000 
+ 124      00000000 
+ 124      800000
+ 125 0021 34000500 		.ascii	"4\000\005\000\375\004$\224X\000~\003,\214\000\314A\304"
+ 125      FD042494 
+ 125      58007E03 
+ 125      2C8C00CC 
+ 125      41C4
+ 126 0033 62780050 		.ascii	"bx\000P\032\220\004\000\000\004eU\330\230\207DU\031"
+ 126      1A900400 
+ 126      00046555 
+ 126      D8988744 
+ 126      5519
+ 127 0045 70401E2E 		.ascii	"p@\036.\000\231\000\000\020\000\000\000\000\000\000"
+ 127      00990000 
+ 127      10000000 
+ 127      000000
+ 128 0054 00880000 		.ascii	"\000\210\000\000"
+ 129              		.section	.rodata.VS4210_bt656_720P_1080P_mode0_w0_mirrorH_88param,"a"
+ 130              		.align	2
+ 133              	VS4210_bt656_720P_1080P_mode0_w0_mirrorH_88param:
+ 134 0000 00751880 		.ascii	"\000u\030\200 \010 \012 \012\000 \204\203x\376\000\300"
+ 134      2008200A 
+ 134      200A0020 
+ 134      848378FE 
+ 134      00C0
+ 135 0012 00360000 		.ascii	"\0006\000\000 \360\000\000\000\000\000\000\200\000\000"
+ 135      20F00000 
+ 135      00000000 
+ 135      800000
+ 136 0021 34000500 		.ascii	"4\000\005\000\375\004$\224X\000~\003,\214\000\314A\304"
+ 136      FD042494 
+ 136      58007E03 
+ 136      2C8C00CC 
+ 136      41C4
+ 137 0033 62780050 		.ascii	"bx\000P\032\220\004\000\000\004eU\330\230\207DU\031"
+ 137      1A900400 
+ 137      00046555 
+ 137      D8988744 
+ 137      5519
+ 138 0045 70401E2E 		.ascii	"p@\036.\000\231\000\000\020\000\000\000\000\000\000"
+ 138      00990000 
+ 138      10000000 
+ 138      000000
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s 			page 6
+
+
+ 139 0054 00880000 		.ascii	"\000\210\000\000"
+ 140              		.section	.rodata.VS4210_bt656_720P_720P_mode0_w0_88param,"a"
+ 141              		.align	2
+ 144              	VS4210_bt656_720P_720P_mode0_w0_88param:
+ 145 0000 00751880 		.ascii	"\000u\030\200 \011 \012 \012\000 \200\203x\376\000\300"
+ 145      2009200A 
+ 145      200A0020 
+ 145      808378FE 
+ 145      00C0
+ 146 0012 00340000 		.ascii	"\0004\000\000 \360\000\000\000\000\000\000\200\000\000"
+ 146      20F00000 
+ 146      00000000 
+ 146      800000
+ 147 0021 34000500 		.ascii	"4\000\005\000\374\005\024\334n\000~\003(\214\000\314"
+ 147      FC0514DC 
+ 147      6E007E03 
+ 147      288C00CC 
+ 148 0031 41C46272 		.ascii	"A\304br\000P\032\220\004\000\000\002\356\200nre\000"
+ 148      00501A90 
+ 148      04000002 
+ 148      EE806E72 
+ 148      6500
+ 149 0043 80007040 		.ascii	"\200\000p@\036,\000\231\000\001\020\000\000\000\000"
+ 149      1E2C0099 
+ 149      00011000 
+ 149      000000
+ 150 0052 00000088 		.ascii	"\000\000\000\210\000\000"
+ 150      0000
+ 151              		.section	.rodata.VS4210_bt656_720P_720P_mode0_w0_mirrorH_88param,"a"
+ 152              		.align	2
+ 155              	VS4210_bt656_720P_720P_mode0_w0_mirrorH_88param:
+ 156 0000 00751880 		.ascii	"\000u\030\200 \011 \012 \012\000 \204\203x\376\000\300"
+ 156      2009200A 
+ 156      200A0020 
+ 156      848378FE 
+ 156      00C0
+ 157 0012 00340000 		.ascii	"\0004\000\000 \360\000\000\000\000\000\000\200\000\000"
+ 157      20F00000 
+ 157      00000000 
+ 157      800000
+ 158 0021 34000500 		.ascii	"4\000\005\000\374\005\024\334n\000~\003(\214\000\314"
+ 158      FC0514DC 
+ 158      6E007E03 
+ 158      288C00CC 
+ 159 0031 41C46272 		.ascii	"A\304br\000P\032\220\004\000\000\002\356\200nre\000"
+ 159      00501A90 
+ 159      04000002 
+ 159      EE806E72 
+ 159      6500
+ 160 0043 80007040 		.ascii	"\200\000p@\036,\000\231\000\001\020\000\000\000\000"
+ 160      1E2C0099 
+ 160      00011000 
+ 160      000000
+ 161 0052 00000088 		.ascii	"\000\000\000\210\000\000"
+ 161      0000
+ 162              		.section	.rodata.VS4210_bt656_720P_800x480_mode0_w0_88param,"a"
+ 163              		.align	2
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s 			page 7
+
+
+ 166              	VS4210_bt656_720P_800x480_mode0_w0_88param:
+ 167 0000 00751880 		.ascii	"\000u\030\200 \014@\011!\010\010 \200\203\210\001\002"
+ 167      200C4009 
+ 167      21080820 
+ 167      80838801 
+ 167      02
+ 168 0011 C0003500 		.ascii	"\300\0005\000\000 \360@\200\000\203N\000\000\000\000"
+ 168      0020F040 
+ 168      8000834E 
+ 168      00000000 
+ 169 0021 000003A9 		.ascii	"\000\000\003\251\353\024\364\334n\000~\003(l@\314A\304"
+ 169      EB14F4DC 
+ 169      6E007E03 
+ 169      286C40CC 
+ 169      41C4
+ 170 0033 32542030 		.ascii	"2T 0)\220\004\010\000\002\015~$\2473\000~\247p@\036"
+ 170      29900408 
+ 170      00020D7E 
+ 170      24A73300 
+ 170      7EA77040 
+ 171 0048 2E009B00 		.ascii	".\000\233\000\001\020\000\000\000\000\000\000\000x\377"
+ 171      01100000 
+ 171      00000000 
+ 171      0078FF
+ 172 0057 00       		.ascii	"\000"
+ 173              		.section	.rodata.VS4210_bt656_720P_800x480_mode0_w0_mirrorH_88param,"a"
+ 174              		.align	2
+ 177              	VS4210_bt656_720P_800x480_mode0_w0_mirrorH_88param:
+ 178 0000 00751880 		.ascii	"\000u\030\200 \014@\011!\010\010 \204\203\210\001\002"
+ 178      200C4009 
+ 178      21080820 
+ 178      84838801 
+ 178      02
+ 179 0011 C0003500 		.ascii	"\300\0005\000\000 \360@\200\000\203N\000\000\000\000"
+ 179      0020F040 
+ 179      8000834E 
+ 179      00000000 
+ 180 0021 000003A9 		.ascii	"\000\000\003\251\353\024\364\334n\000~\003(l@\314A\304"
+ 180      EB14F4DC 
+ 180      6E007E03 
+ 180      286C40CC 
+ 180      41C4
+ 181 0033 32542030 		.ascii	"2T 0)\220\004\010\000\002\015~$\2473\000~\247p@\036"
+ 181      29900408 
+ 181      00020D7E 
+ 181      24A73300 
+ 181      7EA77040 
+ 182 0048 2C009B00 		.ascii	",\000\233\000\001\020\000\000\006\000\000\000\000w\377"
+ 182      01100000 
+ 182      06000000 
+ 182      0077FF
+ 183 0057 FA       		.ascii	"\372"
+ 184              		.section	.rodata.VS4210_bt656_NTSC_1080P_mode0_w0_88param,"a"
+ 185              		.align	2
+ 188              	VS4210_bt656_NTSC_1080P_mode0_w0_88param:
+ 189 0000 00751880 		.ascii	"\000u\030\200 \010 \012 \012\000 \240\203x\376\000\300"
+ 189      2008200A 
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s 			page 8
+
+
+ 189      200A0020 
+ 189      A08378FE 
+ 189      00C0
+ 190 0012 00300000 		.ascii	"\0000\000\000 \360\000\000\000\377\000\000\200\000\000"
+ 190      20F00000 
+ 190      00FF0000 
+ 190      800000
+ 191 0021 34000500 		.ascii	"4\000\005\000\374\004$\224X\000~\003,\214\000\314A\304"
+ 191      FC042494 
+ 191      58007E03 
+ 191      2C8C00CC 
+ 191      41C4
+ 192 0033 91DABC70 		.ascii	"\221\332\274p\020\220\004\000\000\004e\002\326\230\207"
+ 192      10900400 
+ 192      00046502 
+ 192      D69887
+ 193 0042 D437ED54 		.ascii	"\3247\355T@\036.\000\231\000\000\020\000\000\000\000"
+ 193      401E2E00 
+ 193      99000010 
+ 193      00000000 
+ 194 0052 00000088 		.ascii	"\000\000\000\210\000\000"
+ 194      0000
+ 195              		.section	.rodata.VS4210_bt656_NTSC_1080P_mode0_w0_mirrorH_88param,"a"
+ 196              		.align	2
+ 199              	VS4210_bt656_NTSC_1080P_mode0_w0_mirrorH_88param:
+ 200 0000 00751880 		.ascii	"\000u\030\200 \010 \012 \012\000 \244\203x\376\000\300"
+ 200      2008200A 
+ 200      200A0020 
+ 200      A48378FE 
+ 200      00C0
+ 201 0012 00300000 		.ascii	"\0000\000\000 \360\000\000\000\377\000\000\200\000\000"
+ 201      20F00000 
+ 201      00FF0000 
+ 201      800000
+ 202 0021 34000500 		.ascii	"4\000\005\000\374\004$\224X\000~\003,\214\000\314A\304"
+ 202      FC042494 
+ 202      58007E03 
+ 202      2C8C00CC 
+ 202      41C4
+ 203 0033 91DABC70 		.ascii	"\221\332\274p\020\220\004\000\000\004e\002\326\230\207"
+ 203      10900400 
+ 203      00046502 
+ 203      D69887
+ 204 0042 D437ED54 		.ascii	"\3247\355T@\036.\000\231\000\000\020\000\000\000\000"
+ 204      401E2E00 
+ 204      99000010 
+ 204      00000000 
+ 205 0052 00000087 		.ascii	"\000\000\000\207\000\362"
+ 205      00F2
+ 206              		.section	.rodata.VS4210_bt656_NTSC_720P_mode0_w0_88param,"a"
+ 207              		.align	2
+ 210              	VS4210_bt656_NTSC_720P_mode0_w0_88param:
+ 211 0000 00751880 		.ascii	"\000u\030\200 \011 \012 \012\000 \240\203x\376\000\300"
+ 211      2009200A 
+ 211      200A0020 
+ 211      A08378FE 
+ 211      00C0
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s 			page 9
+
+
+ 212 0012 00300000 		.ascii	"\0000\000\000 \360\000\000\000\000\000\000\200\000\000"
+ 212      20F00000 
+ 212      00000000 
+ 212      800000
+ 213 0021 340005FA 		.ascii	"4\000\005\372\374\005\024\334n\000~\003(l\000\314A\304"
+ 213      FC0514DC 
+ 213      6E007E03 
+ 213      286C00CC 
+ 213      41C4
+ 214 0033 91C0BC70 		.ascii	"\221\300\274p\021\220\004\000\000\002\356Dnre\000T\256"
+ 214      11900400 
+ 214      0002EE44 
+ 214      6E726500 
+ 214      54AE
+ 215 0045 54401E2E 		.ascii	"T@\036.\000\231\000\001\020\000\000\000\000\000\000"
+ 215      00990001 
+ 215      10000000 
+ 215      000000
+ 216 0054 008700FE 		.ascii	"\000\207\000\376"
+ 217              		.section	.rodata.VS4210_bt656_NTSC_720P_mode0_w0_mirrorH_88param,"a"
+ 218              		.align	2
+ 221              	VS4210_bt656_NTSC_720P_mode0_w0_mirrorH_88param:
+ 222 0000 00751880 		.ascii	"\000u\030\200 \011 \012 \012\000 \244\203x\376\000\300"
+ 222      2009200A 
+ 222      200A0020 
+ 222      A48378FE 
+ 222      00C0
+ 223 0012 00300000 		.ascii	"\0000\000\000 \360\000\000\000\000\000\000\200\000\000"
+ 223      20F00000 
+ 223      00000000 
+ 223      800000
+ 224 0021 340005FA 		.ascii	"4\000\005\372\374\005\024\334n\000~\003(l\000\314A\304"
+ 224      FC0514DC 
+ 224      6E007E03 
+ 224      286C00CC 
+ 224      41C4
+ 225 0033 91C0BC70 		.ascii	"\221\300\274p\021\220\004\000\000\002\356Dnre\000T\256"
+ 225      11900400 
+ 225      0002EE44 
+ 225      6E726500 
+ 225      54AE
+ 226 0045 54401E2E 		.ascii	"T@\036.\000\231\000\001\020\000\000\000\000\000\000"
+ 226      00990001 
+ 226      10000000 
+ 226      000000
+ 227 0054 008700FA 		.ascii	"\000\207\000\372"
+ 228              		.section	.rodata.VS4210_bt656_NTSC_800x480_mode0_w0_88param,"a"
+ 229              		.align	2
+ 232              	VS4210_bt656_NTSC_800x480_mode0_w0_88param:
+ 233 0000 00751880 		.ascii	"\000u\030\200 \014@\011!\010\010 \240\203\210\001\002"
+ 233      200C4009 
+ 233      21080820 
+ 233      A0838801 
+ 233      02
+ 234 0011 C0003500 		.ascii	"\300\0005\000\000 \360@\200\001\0007\000\000\000\000"
+ 234      0020F040 
+ 234      80010037 
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s 			page 10
+
+
+ 234      00000000 
+ 235 0021 000003AB 		.ascii	"\000\000\003\253\353\024\364\334n\000~\003(l@\314A\304"
+ 235      EB14F4DC 
+ 235      6E007E03 
+ 235      286C40CC 
+ 235      41C4
+ 236 0033 32542030 		.ascii	"2T 0)\220\004\010\000\002\015\177&\2473\000~\247p@\036"
+ 236      29900408 
+ 236      00020D7F 
+ 236      26A73300 
+ 236      7EA77040 
+ 237 0048 2E009B00 		.ascii	".\000\233\000\001\020\000\000\000\000\000\000\000x\377"
+ 237      01100000 
+ 237      00000000 
+ 237      0078FF
+ 238 0057 00       		.ascii	"\000"
+ 239              		.section	.rodata.VS4210_bt656_NTSC_800x480_mode0_w0_mirrorH_88param,"a"
+ 240              		.align	2
+ 243              	VS4210_bt656_NTSC_800x480_mode0_w0_mirrorH_88param:
+ 244 0000 00751880 		.ascii	"\000u\030\200 \014@\011!\010\010 \244\203\210\001\002"
+ 244      200C4009 
+ 244      21080820 
+ 244      A4838801 
+ 244      02
+ 245 0011 C0003500 		.ascii	"\300\0005\000\000 \360@\200\001\0009\000\000\000\000"
+ 245      0020F040 
+ 245      80010039 
+ 245      00000000 
+ 246 0021 000003A8 		.ascii	"\000\000\003\250\353\024\364\334n\000~\003(l@\314A\304"
+ 246      EB14F4DC 
+ 246      6E007E03 
+ 246      286C40CC 
+ 246      41C4
+ 247 0033 32542030 		.ascii	"2T 0)\220\004\012\000\002\015~%\2473\000\177\247p@\036"
+ 247      2990040A 
+ 247      00020D7E 
+ 247      25A73300 
+ 247      7FA77040 
+ 248 0048 2C009B00 		.ascii	",\000\233\000\001\020\000\000\006\000\000\000\000w\377"
+ 248      01100000 
+ 248      06000000 
+ 248      0077FF
+ 249 0057 FA       		.ascii	"\372"
+ 250              		.section	.rodata.VS4210_bt656_PAL_1080P_mode0_w0_88param,"a"
+ 251              		.align	2
+ 254              	VS4210_bt656_PAL_1080P_mode0_w0_88param:
+ 255 0000 00751880 		.ascii	"\000u\030\200 \010 \012 \013\000 \240\203x\370\001\300"
+ 255      2008200A 
+ 255      200B0020 
+ 255      A08378F8 
+ 255      01C0
+ 256 0012 00340000 		.ascii	"\0004\000\000 \360\000\000\000\377\000\000\200\000\000"
+ 256      20F00000 
+ 256      00FF0000 
+ 256      800000
+ 257 0021 340005FA 		.ascii	"4\000\005\372\375\004$\224X\000~\003,l\000\314A\304"
+ 257      FD042494 
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s 			page 11
+
+
+ 257      58007E03 
+ 257      2C6C00CC 
+ 257      41C4
+ 258 0033 9248BC70 		.ascii	"\222H\274p\025\220\004\000\000\004e\003\320\230\207"
+ 258      15900400 
+ 258      00046503 
+ 258      D09887
+ 259 0042 0040B550 		.ascii	"\000@\265P@\036.\000\233\000\000\020\000\000\000\000"
+ 259      401E2E00 
+ 259      9B000010 
+ 259      00000000 
+ 260 0052 00000088 		.ascii	"\000\000\000\210\000\000"
+ 260      0000
+ 261              		.section	.rodata.VS4210_bt656_PAL_1080P_mode0_w0_mirrorH_88param,"a"
+ 262              		.align	2
+ 265              	VS4210_bt656_PAL_1080P_mode0_w0_mirrorH_88param:
+ 266 0000 00751880 		.ascii	"\000u\030\200 \010 \012 \013\000 \244\203x\370\001\300"
+ 266      2008200A 
+ 266      200B0020 
+ 266      A48378F8 
+ 266      01C0
+ 267 0012 00340000 		.ascii	"\0004\000\000 \360\000\000\000\377\000\000\200\000\000"
+ 267      20F00000 
+ 267      00FF0000 
+ 267      800000
+ 268 0021 340005FA 		.ascii	"4\000\005\372\375\004$\224X\000~\003,l\000\314A\304"
+ 268      FD042494 
+ 268      58007E03 
+ 268      2C6C00CC 
+ 268      41C4
+ 269 0033 9248BC70 		.ascii	"\222H\274p\025\220\004\000\000\004e\003\320\230\207"
+ 269      15900400 
+ 269      00046503 
+ 269      D09887
+ 270 0042 0040B550 		.ascii	"\000@\265P@\036.\000\233\000\000\020\000\000\000\000"
+ 270      401E2E00 
+ 270      9B000010 
+ 270      00000000 
+ 271 0052 00000087 		.ascii	"\000\000\000\207\000\362"
+ 271      00F2
+ 272              		.section	.rodata.VS4210_bt656_PAL_720P_mode0_w0_88param,"a"
+ 273              		.align	2
+ 276              	VS4210_bt656_PAL_720P_mode0_w0_88param:
+ 277 0000 00751880 		.ascii	"\000u\030\200 \011 \012 \012\000 \240\203x\376\000\300"
+ 277      2009200A 
+ 277      200A0020 
+ 277      A08378FE 
+ 277      00C0
+ 278 0012 00300000 		.ascii	"\0000\000\000 \360\000\000\000\000\000\000\200\000\000"
+ 278      20F00000 
+ 278      00000000 
+ 278      800000
+ 279 0021 340005FA 		.ascii	"4\000\005\372\374\005\024\334n\000~\003(l\000\314A\304"
+ 279      FC0514DC 
+ 279      6E007E03 
+ 279      286C00CC 
+ 279      41C4
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s 			page 12
+
+
+ 280 0033 8228BC70 		.ascii	"\202(\274p\021\220\004\000\000\002\356Dnre\000e7T@\036"
+ 280      11900400 
+ 280      0002EE44 
+ 280      6E726500 
+ 280      65375440 
+ 281 0048 2E009900 		.ascii	".\000\231\000\001\020\000\000\000\000\000\000\000\210"
+ 281      01100000 
+ 281      00000000 
+ 281      0088
+ 282 0056 0000     		.ascii	"\000\000"
+ 283              		.section	.rodata.VS4210_bt656_PAL_720P_mode0_w0_mirrorH_88param,"a"
+ 284              		.align	2
+ 287              	VS4210_bt656_PAL_720P_mode0_w0_mirrorH_88param:
+ 288 0000 00751880 		.ascii	"\000u\030\200 \011 \012 \012\000 \244\203x\376\000\300"
+ 288      2009200A 
+ 288      200A0020 
+ 288      A48378FE 
+ 288      00C0
+ 289 0012 00300000 		.ascii	"\0000\000\000 \360\000\000\000\000\000\000\200\000\000"
+ 289      20F00000 
+ 289      00000000 
+ 289      800000
+ 290 0021 340005FA 		.ascii	"4\000\005\372\374\005\024\334n\000~\003(l\000\314A\304"
+ 290      FC0514DC 
+ 290      6E007E03 
+ 290      286C00CC 
+ 290      41C4
+ 291 0033 8228BC70 		.ascii	"\202(\274p\021\220\004\000\000\002\356Dnre\000e7T@\036"
+ 291      11900400 
+ 291      0002EE44 
+ 291      6E726500 
+ 291      65375440 
+ 292 0048 2E009900 		.ascii	".\000\231\000\001\020\000\000\000\000\000\000\000\207"
+ 292      01100000 
+ 292      00000000 
+ 292      0087
+ 293 0056 00FA     		.ascii	"\000\372"
+ 294              		.section	.rodata.VS4210_bt656_PAL_800x480_mode0_w0_88param,"a"
+ 295              		.align	2
+ 298              	VS4210_bt656_PAL_800x480_mode0_w0_88param:
+ 299 0000 00751880 		.ascii	"\000u\030\200 \014@\011!\010\010 \240\203\210\001\002"
+ 299      200C4009 
+ 299      21080820 
+ 299      A0838801 
+ 299      02
+ 300 0011 C0003500 		.ascii	"\300\0005\000\000 \360@\200\0015>\000\000\000\000\000"
+ 300      0020F040 
+ 300      8001353E 
+ 300      00000000 
+ 300      00
+ 301 0022 0003ACEB 		.ascii	"\000\003\254\353\024\364\334n\000~\003(l@\314A\3042"
+ 301      14F4DC6E 
+ 301      007E0328 
+ 301      6C40CC41 
+ 301      C432
+ 302 0034 54203029 		.ascii	"T 0)\220\004\010\000\002\015{'\2473\000~\247p@\036."
+ 302      90040800 
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s 			page 13
+
+
+ 302      020D7B27 
+ 302      A733007E 
+ 302      A770401E 
+ 303 0049 009B0001 		.ascii	"\000\233\000\001\020\000\000\000\000\000\000\000x\377"
+ 303      10000000 
+ 303      00000000 
+ 303      78FF
+ 304 0057 00       		.ascii	"\000"
+ 305              		.section	.rodata.VS4210_bt656_PAL_800x480_mode0_w0_mirrorH_88param,"a"
+ 306              		.align	2
+ 309              	VS4210_bt656_PAL_800x480_mode0_w0_mirrorH_88param:
+ 310 0000 00751880 		.ascii	"\000u\030\200 \014@\011!\010\010 \244\203\210\001\002"
+ 310      200C4009 
+ 310      21080820 
+ 310      A4838801 
+ 310      02
+ 311 0011 C0003500 		.ascii	"\300\0005\000\000 \360@\200\0015>\000\000\000\000\000"
+ 311      0020F040 
+ 311      8001353E 
+ 311      00000000 
+ 311      00
+ 312 0022 0003ADEB 		.ascii	"\000\003\255\353\024\364\334n\000~\003(l@\314A\3042"
+ 312      14F4DC6E 
+ 312      007E0328 
+ 312      6C40CC41 
+ 312      C432
+ 313 0034 54203029 		.ascii	"T 0)\220\004\010\000\002\015{@\2473\"\177\247p@\036"
+ 313      90040800 
+ 313      020D7B40 
+ 313      A733227F 
+ 313      A770401E 
+ 314 0048 2C009B00 		.ascii	",\000\233\000\001\020\000\000\006\000\000\000\000w\377"
+ 314      01100000 
+ 314      06000000 
+ 314      0077FF
+ 315 0057 FA       		.ascii	"\372"
+ 316              		.text
+ 317              	.Letext0:
+ 318              		.file 1 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 319              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 320              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\lib\\gcc\\arm-none-eabi
+ 321              		.file 4 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 322              		.file 5 "VS4210/VXIS_Extern_Define.h"
+ 323              		.file 6 "VS4210/VS4210_param_Mode88.c"
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s 			page 14
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 VS4210_param_Mode88.c
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:298    .rodata.VS4210_bt656_PAL_800x480_mode0_w0_88param:00000000 VS4210_bt656_PAL_800x480_mode0_w0_88param
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:309    .rodata.VS4210_bt656_PAL_800x480_mode0_w0_mirrorH_88param:00000000 VS4210_bt656_PAL_800x480_mode0_w0_mirrorH_88param
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:276    .rodata.VS4210_bt656_PAL_720P_mode0_w0_88param:00000000 VS4210_bt656_PAL_720P_mode0_w0_88param
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:287    .rodata.VS4210_bt656_PAL_720P_mode0_w0_mirrorH_88param:00000000 VS4210_bt656_PAL_720P_mode0_w0_mirrorH_88param
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:254    .rodata.VS4210_bt656_PAL_1080P_mode0_w0_88param:00000000 VS4210_bt656_PAL_1080P_mode0_w0_88param
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:265    .rodata.VS4210_bt656_PAL_1080P_mode0_w0_mirrorH_88param:00000000 VS4210_bt656_PAL_1080P_mode0_w0_mirrorH_88param
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:232    .rodata.VS4210_bt656_NTSC_800x480_mode0_w0_88param:00000000 VS4210_bt656_NTSC_800x480_mode0_w0_88param
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:243    .rodata.VS4210_bt656_NTSC_800x480_mode0_w0_mirrorH_88param:00000000 VS4210_bt656_NTSC_800x480_mode0_w0_mirrorH_88param
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:210    .rodata.VS4210_bt656_NTSC_720P_mode0_w0_88param:00000000 VS4210_bt656_NTSC_720P_mode0_w0_88param
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:221    .rodata.VS4210_bt656_NTSC_720P_mode0_w0_mirrorH_88param:00000000 VS4210_bt656_NTSC_720P_mode0_w0_mirrorH_88param
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:188    .rodata.VS4210_bt656_NTSC_1080P_mode0_w0_88param:00000000 VS4210_bt656_NTSC_1080P_mode0_w0_88param
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:199    .rodata.VS4210_bt656_NTSC_1080P_mode0_w0_mirrorH_88param:00000000 VS4210_bt656_NTSC_1080P_mode0_w0_mirrorH_88param
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:166    .rodata.VS4210_bt656_720P_800x480_mode0_w0_88param:00000000 VS4210_bt656_720P_800x480_mode0_w0_88param
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:177    .rodata.VS4210_bt656_720P_800x480_mode0_w0_mirrorH_88param:00000000 VS4210_bt656_720P_800x480_mode0_w0_mirrorH_88param
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:144    .rodata.VS4210_bt656_720P_720P_mode0_w0_88param:00000000 VS4210_bt656_720P_720P_mode0_w0_88param
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:155    .rodata.VS4210_bt656_720P_720P_mode0_w0_mirrorH_88param:00000000 VS4210_bt656_720P_720P_mode0_w0_mirrorH_88param
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:122    .rodata.VS4210_bt656_720P_1080P_mode0_w0_88param:00000000 VS4210_bt656_720P_1080P_mode0_w0_88param
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:133    .rodata.VS4210_bt656_720P_1080P_mode0_w0_mirrorH_88param:00000000 VS4210_bt656_720P_1080P_mode0_w0_mirrorH_88param
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:100    .rodata.VS4210_bt656_1080P_800x480_mode0_w0_88param:00000000 VS4210_bt656_1080P_800x480_mode0_w0_88param
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:111    .rodata.VS4210_bt656_1080P_800x480_mode0_w0_mirrorH_88param:00000000 VS4210_bt656_1080P_800x480_mode0_w0_mirrorH_88param
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:78     .rodata.VS4210_bt656_1080P_720P_mode0_w0_88param:00000000 VS4210_bt656_1080P_720P_mode0_w0_88param
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:89     .rodata.VS4210_bt656_1080P_720P_mode0_w0_mirrorH_88param:00000000 VS4210_bt656_1080P_720P_mode0_w0_mirrorH_88param
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:56     .rodata.VS4210_bt656_1080P_1080P_mode0_w0_88param:00000000 VS4210_bt656_1080P_1080P_mode0_w0_88param
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:67     .rodata.VS4210_bt656_1080P_1080P_mode0_w0_mirrorH_88param:00000000 VS4210_bt656_1080P_1080P_mode0_w0_mirrorH_88param
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:44     .rodata.VS4210_Addr_88param:00000000 VS4210_Addr_88param
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:41     .rodata.VS4210_Addr_88param:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:53     .rodata.VS4210_bt656_1080P_1080P_mode0_w0_88param:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:64     .rodata.VS4210_bt656_1080P_1080P_mode0_w0_mirrorH_88param:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:75     .rodata.VS4210_bt656_1080P_720P_mode0_w0_88param:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:86     .rodata.VS4210_bt656_1080P_720P_mode0_w0_mirrorH_88param:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:97     .rodata.VS4210_bt656_1080P_800x480_mode0_w0_88param:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:108    .rodata.VS4210_bt656_1080P_800x480_mode0_w0_mirrorH_88param:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:119    .rodata.VS4210_bt656_720P_1080P_mode0_w0_88param:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:130    .rodata.VS4210_bt656_720P_1080P_mode0_w0_mirrorH_88param:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:141    .rodata.VS4210_bt656_720P_720P_mode0_w0_88param:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:152    .rodata.VS4210_bt656_720P_720P_mode0_w0_mirrorH_88param:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:163    .rodata.VS4210_bt656_720P_800x480_mode0_w0_88param:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:174    .rodata.VS4210_bt656_720P_800x480_mode0_w0_mirrorH_88param:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:185    .rodata.VS4210_bt656_NTSC_1080P_mode0_w0_88param:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:196    .rodata.VS4210_bt656_NTSC_1080P_mode0_w0_mirrorH_88param:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:207    .rodata.VS4210_bt656_NTSC_720P_mode0_w0_88param:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:218    .rodata.VS4210_bt656_NTSC_720P_mode0_w0_mirrorH_88param:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:229    .rodata.VS4210_bt656_NTSC_800x480_mode0_w0_88param:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:240    .rodata.VS4210_bt656_NTSC_800x480_mode0_w0_mirrorH_88param:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:251    .rodata.VS4210_bt656_PAL_1080P_mode0_w0_88param:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:262    .rodata.VS4210_bt656_PAL_1080P_mode0_w0_mirrorH_88param:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:273    .rodata.VS4210_bt656_PAL_720P_mode0_w0_88param:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:284    .rodata.VS4210_bt656_PAL_720P_mode0_w0_mirrorH_88param:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:295    .rodata.VS4210_bt656_PAL_800x480_mode0_w0_88param:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccLG3R1S.s:306    .rodata.VS4210_bt656_PAL_800x480_mode0_w0_mirrorH_88param:00000000 $d
+
+NO UNDEFINED SYMBOLS

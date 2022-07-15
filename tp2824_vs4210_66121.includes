@@ -1,0 +1,10 @@
+Drivers/CMSIS/Device/ST/STM32F1xx/Include
+Drivers/CMSIS/Include
+Drivers/STM32F1xx_HAL_Driver/Inc
+Drivers/STM32F1xx_HAL_Driver/Inc/Legacy
+HDMI_DVI_TXsrc
+Inc
+sw_i2c
+TP2824/tpinc
+VS4210
+.

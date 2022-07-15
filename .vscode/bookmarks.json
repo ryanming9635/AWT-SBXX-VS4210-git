@@ -1,0 +1,104 @@
+{
+	"files": [
+		{
+			"path": "VS4210/VXIS_Extern_Define.h",
+			"bookmarks": [
+				{
+					"line": 22,
+					"column": 5,
+					"label": "Debug Message Settting"
+				},
+				{
+					"line": 29,
+					"column": 30,
+					"label": "Panel Select"
+				}
+			]
+		},
+		{
+			"path": "Src/main.c",
+			"bookmarks": [
+				{
+					"line": 1407,
+					"column": 6,
+					"label": "print firmware reversion"
+				},
+				{
+					"line": 1870,
+					"column": 22,
+					"label": "Powr off work loop"
+				},
+				{
+					"line": 2241,
+					"column": 20,
+					"label": "Main loop"
+				}
+			]
+		},
+		{
+			"path": "VS4210/keyremo.c",
+			"bookmarks": [
+				{
+					"line": 3282,
+					"column": 23,
+					"label": "Trigger Function"
+				}
+			]
+		},
+		{
+			"path": "TP2824/TP2802.c",
+			"bookmarks": [
+				{
+					"line": 1799,
+					"column": 16,
+					"label": "TP2824 EQ loop"
+				}
+			]
+		},
+		{
+			"path": "VS4210/etc_eep.c",
+			"bookmarks": [
+				{
+					"line": 138,
+					"column": 24,
+					"label": "EEPROM Reset"
+				}
+			]
+		},
+		{
+			"path": "VS4210/monitor.c",
+			"bookmarks": [
+				{
+					"line": 796,
+					"column": 18,
+					"label": "Monitor function"
+				}
+			]
+		},
+		{
+			"path": "VS4210/SysTimer.c",
+			"bookmarks": [
+				{
+					"line": 608,
+					"column": 40,
+					"label": "SEQ2_system"
+				}
+			]
+		},
+		{
+			"path": "VS4210/VX_OSD_Simple.c",
+			"bookmarks": [
+				{
+					"line": 3207,
+					"column": 42,
+					"label": "SEQ3_showJUMPOSD"
+				},
+				{
+					"line": 6264,
+					"column": 0,
+					"label": "SEQ1"
+				}
+			]
+		}
+	]
+}

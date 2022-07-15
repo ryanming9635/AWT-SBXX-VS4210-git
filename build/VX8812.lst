@@ -1,0 +1,4048 @@
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"VX8812.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.VX8812_BlueScreen,"ax",%progbits
+  16              		.align	1
+  17              		.global	VX8812_BlueScreen
+  18              		.arch armv7-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	VX8812_BlueScreen:
+  25              	.LFB68:
+  26              		.file 1 "VS4210/VX8812.c"
+   1:VS4210/VX8812.c **** /** @file VX8812.c
+   2:VS4210/VX8812.c ****  * @brief VX8812 setup program
+   3:VS4210/VX8812.c ****  *
+   4:VS4210/VX8812.c ****  * Processing CCIR656/VGA/YPbPr, output rgb / yuv 24bits to HDMI.
+   5:VS4210/VX8812.c ****  *
+   6:VS4210/VX8812.c ****  * @author Cunu-Yu
+   7:VS4210/VX8812.c ****  * @date 2011/12/19
+   8:VS4210/VX8812.c ****  */
+   9:VS4210/VX8812.c **** //#include "VXIS_Extern_Define.h"
+  10:VS4210/VX8812.c **** //#include "./isp/VX8812_param.h"
+  11:VS4210/VX8812.c **** 
+  12:VS4210/VX8812.c **** #include "VXIS_Extern_Define.h"
+  13:VS4210/VX8812.c **** #include "VS4210.h"
+  14:VS4210/VX8812.c **** #include "main.h"
+  15:VS4210/VX8812.c **** #include "VX_OSD_Simple.h"
+  16:VS4210/VX8812.c **** #include "VX_swi2c.h"
+  17:VS4210/VX8812.c **** 
+  18:VS4210/VX8812.c **** #include "VS4210_param_Mode88.h"
+  19:VS4210/VX8812.c **** #include "VS4210_param_Modex26.h"
+  20:VS4210/VX8812.c **** 
+  21:VS4210/VX8812.c **** #include "keyremo.h"
+  22:VS4210/VX8812.c **** #include "tpinc/TP2802.h"
+  23:VS4210/VX8812.c **** #include "Printf.h"
+  24:VS4210/VX8812.c **** 
+  25:VS4210/VX8812.c **** extern tiByte gbVXIS_OuputModeflg;
+  26:VS4210/VX8812.c **** extern bit I2CWrite(unsigned char maddr, unsigned char saddr, unsigned char value);
+  27:VS4210/VX8812.c **** ////////////////////////////////////////////////////////////////
+  28:VS4210/VX8812.c **** void VX8812_BlueScreen(void)
+  29:VS4210/VX8812.c **** {
+  27              		.loc 1 29 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 2
+
+
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  30:VS4210/VX8812.c **** #if 0
+  31:VS4210/VX8812.c **** 	I2CWrite(VX8812_ADDR ,0x45,0x09) ; //padj
+  32:VS4210/VX8812.c **** 	I2CWrite(VX8812_ADDR ,0x3B,0x00) ; //R
+  33:VS4210/VX8812.c **** 	I2CWrite(VX8812_ADDR ,0x3C,0x00) ; //G
+  34:VS4210/VX8812.c **** #endif
+  35:VS4210/VX8812.c **** }
+  32              		.loc 1 35 1 view .LVU1
+  33 0000 7047     		bx	lr
+  34              		.cfi_endproc
+  35              	.LFE68:
+  37              		.section	.text.VXIS_fVX8812_Set_HDMI_in_OutCCIR656_NTSC,"ax",%progbits
+  38              		.align	1
+  39              		.global	VXIS_fVX8812_Set_HDMI_in_OutCCIR656_NTSC
+  40              		.syntax unified
+  41              		.thumb
+  42              		.thumb_func
+  43              		.fpu softvfp
+  45              	VXIS_fVX8812_Set_HDMI_in_OutCCIR656_NTSC:
+  46              	.LVL0:
+  47              	.LFB69:
+  36:VS4210/VX8812.c **** 
+  37:VS4210/VX8812.c **** #if 0
+  38:VS4210/VX8812.c **** 
+  39:VS4210/VX8812.c **** static void VX8812_init( tByte *Addrn, tByte *Valn , tByte Len)
+  40:VS4210/VX8812.c **** {
+  41:VS4210/VX8812.c **** /*
+  42:VS4210/VX8812.c **** tByte i ; 
+  43:VS4210/VX8812.c **** tByte addr ;
+  44:VS4210/VX8812.c **** tByte val ;
+  45:VS4210/VX8812.c **** */
+  46:VS4210/VX8812.c **** 
+  47:VS4210/VX8812.c **** 	I2CWrite(VX8812_ADDR, 0x01, 0x5A); 
+  48:VS4210/VX8812.c **** 
+  49:VS4210/VX8812.c **** 	for (i=0 ; i< Len ; i++)
+  50:VS4210/VX8812.c **** 	{	
+  51:VS4210/VX8812.c **** 		addr = Addrn[i] ;
+  52:VS4210/VX8812.c **** 		val  = Valn[i];
+  53:VS4210/VX8812.c **** 	 	I2CWrite(VX8812_ADDR, addr  ,val);
+  54:VS4210/VX8812.c **** 	}								  
+  55:VS4210/VX8812.c **** 
+  56:VS4210/VX8812.c **** 	I2CWrite(VX8812_ADDR, 0x01 ,0xA5) ;
+  57:VS4210/VX8812.c **** 	I2CWrite(VX8812_ADDR ,0xF0,0x00) ;
+  58:VS4210/VX8812.c **** 
+  59:VS4210/VX8812.c **** 
+  60:VS4210/VX8812.c **** 	if (Color_PIN == 1 )
+  61:VS4210/VX8812.c **** 	{
+  62:VS4210/VX8812.c **** 		I2CWrite(VX8812_ADDR, 0x31 ,0x80) ;
+  63:VS4210/VX8812.c **** 		I2CWrite(VX8812_ADDR, 0x32 ,0x80) ;
+  64:VS4210/VX8812.c **** 		I2CWrite(VX8812_ADDR, 0x33 ,0x80) ;
+  65:VS4210/VX8812.c **** 	}
+  66:VS4210/VX8812.c **** 	else
+  67:VS4210/VX8812.c **** 	{
+  68:VS4210/VX8812.c **** 		I2CWrite(VX8812_ADDR, 0x31 ,0x8C) ;
+  69:VS4210/VX8812.c **** 		I2CWrite(VX8812_ADDR, 0x32 ,0x8C) ;
+  70:VS4210/VX8812.c **** 		I2CWrite(VX8812_ADDR, 0x33 ,0xC8) ;
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 3
+
+
+  71:VS4210/VX8812.c **** 	}
+  72:VS4210/VX8812.c **** 
+  73:VS4210/VX8812.c **** 
+  74:VS4210/VX8812.c **** 	I2CWrite(VX8812_ADDR ,0x45,0x00) ; //padj
+  75:VS4210/VX8812.c **** 	I2CWrite(VX8812_ADDR ,0x3B,0x80) ; //R
+  76:VS4210/VX8812.c **** 	I2CWrite(VX8812_ADDR ,0x3C,0x80) ; //G
+  77:VS4210/VX8812.c **** 
+  78:VS4210/VX8812.c **** }
+  79:VS4210/VX8812.c **** #endif
+  80:VS4210/VX8812.c **** 
+  81:VS4210/VX8812.c **** void VXIS_fVX8812_Set_HDMI_in_OutCCIR656_NTSC(tByte tbMode)
+  82:VS4210/VX8812.c **** {
+  48              		.loc 1 82 1 view -0
+  49              		.cfi_startproc
+  50              		@ args = 0, pretend = 0, frame = 0
+  51              		@ frame_needed = 0, uses_anonymous_args = 0
+  52              		@ link register save eliminated.
+  83:VS4210/VX8812.c **** 
+  84:VS4210/VX8812.c **** #if 0
+  85:VS4210/VX8812.c **** 	switch(tbMode)
+  86:VS4210/VX8812.c **** 	{
+  87:VS4210/VX8812.c **** 	case _OSD_1280X720P60 :
+  88:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_720P_to_NTSC_param,VX8812_CCIR656_NUMBER) ; 	
+  89:VS4210/VX8812.c **** 	break ;
+  90:VS4210/VX8812.c **** 
+  91:VS4210/VX8812.c **** 	case _OSD_1280X720P50 :
+  92:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_720P_to_NTSC_param,VX8812_CCIR656_NUMBER) ; 	
+  93:VS4210/VX8812.c **** 	break ;
+  94:VS4210/VX8812.c **** 	
+  95:VS4210/VX8812.c **** 	case _OSD_1920X1080P60 :
+  96:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1080P60_to_NTSC_param,VX8812_CCIR656_NUMBER) ; 
+  97:VS4210/VX8812.c **** 	break ;
+  98:VS4210/VX8812.c **** 
+  99:VS4210/VX8812.c **** 	case _OSD_1920X1080P50 :
+ 100:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1080P50_to_NTSC_param,VX8812_CCIR656_NUMBER) ; 
+ 101:VS4210/VX8812.c **** 	break ;
+ 102:VS4210/VX8812.c **** 	
+ 103:VS4210/VX8812.c **** 	case _OSD_1920X1080P24 :
+ 104:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1080P24_to_NTSC_param,VX8812_CCIR656_NUMBER) ; 
+ 105:VS4210/VX8812.c **** 	break ;
+ 106:VS4210/VX8812.c **** 
+ 107:VS4210/VX8812.c **** 	case _OSD_1920X1080P25 :
+ 108:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1080P25_to_NTSC_param,VX8812_CCIR656_NUMBER) ; 
+ 109:VS4210/VX8812.c **** 	break ;
+ 110:VS4210/VX8812.c **** 
+ 111:VS4210/VX8812.c **** 	case _OSD_1920X1080P30 :
+ 112:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1080P30_to_NTSC_param,VX8812_CCIR656_NUMBER) ; 
+ 113:VS4210/VX8812.c **** 	break ;
+ 114:VS4210/VX8812.c **** 
+ 115:VS4210/VX8812.c **** 
+ 116:VS4210/VX8812.c **** 	case _OSD_1920X1080I50 :
+ 117:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1080i_to_NTSC_param,VX8812_CCIR656_NUMBER) ; 
+ 118:VS4210/VX8812.c **** 	break ;
+ 119:VS4210/VX8812.c **** 
+ 120:VS4210/VX8812.c **** 	case _OSD_1920X1080I60 :
+ 121:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1080i_to_NTSC_param,VX8812_CCIR656_NUMBER) ; 
+ 122:VS4210/VX8812.c **** 	break ;
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 4
+
+
+ 123:VS4210/VX8812.c **** 	
+ 124:VS4210/VX8812.c **** 	case _OSD_720X480I60 :
+ 125:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_480i60_to_NTSC_param,VX8812_CCIR656_NUMBER) ;
+ 126:VS4210/VX8812.c **** 	break ;
+ 127:VS4210/VX8812.c **** 	
+ 128:VS4210/VX8812.c **** 	case _OSD_720X480P60 :
+ 129:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_480P60_to_NTSC_param,VX8812_CCIR656_NUMBER) ;
+ 130:VS4210/VX8812.c **** 	break ;
+ 131:VS4210/VX8812.c **** 	
+ 132:VS4210/VX8812.c **** 	case _OSD_720X576I50 :
+ 133:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_576i50_to_NTSC_param,VX8812_CCIR656_NUMBER) ;
+ 134:VS4210/VX8812.c **** 	break ;
+ 135:VS4210/VX8812.c **** 
+ 136:VS4210/VX8812.c **** 	case _OSD_720X576P50 :
+ 137:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_576P50_to_NTSC_param,VX8812_CCIR656_NUMBER) ;
+ 138:VS4210/VX8812.c **** 	break ;
+ 139:VS4210/VX8812.c **** 	
+ 140:VS4210/VX8812.c **** 	case _OSD_VESA_800x600:
+ 141:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_800x600_to_NTSC_param,VX8812_CCIR656_NUMBER) ;
+ 142:VS4210/VX8812.c **** 	break ;
+ 143:VS4210/VX8812.c **** 	case _OSD_VESA_1366x768:
+ 144:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1366x768_to_NTSC_param,VX8812_CCIR656_NUMBER) ;
+ 145:VS4210/VX8812.c **** 	break ;
+ 146:VS4210/VX8812.c **** 	case _OSD_VESA_1024x768:
+ 147:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1024x768_to_NTSC_param,VX8812_CCIR656_NUMBER) ;
+ 148:VS4210/VX8812.c **** 	break ;
+ 149:VS4210/VX8812.c **** 	case _OSD_VESA_1440x900:
+ 150:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1440x900_to_NTSC_param,VX8812_CCIR656_NUMBER) ;
+ 151:VS4210/VX8812.c **** 	break ;
+ 152:VS4210/VX8812.c **** 	case _OSD_VESA_1280x960:
+ 153:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1280x960_to_NTSC_param,VX8812_CCIR656_NUMBER) ;
+ 154:VS4210/VX8812.c **** 	break ;
+ 155:VS4210/VX8812.c **** 	case _OSD_VESA_1280x1024:
+ 156:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1280x1024_to_NTSC_param,VX8812_CCIR656_NUMBER) ;
+ 157:VS4210/VX8812.c **** 	break ;
+ 158:VS4210/VX8812.c **** 	case _OSD_VESA_1680x1050:
+ 159:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1680x1050_to_NTSC_param,VX8812_CCIR656_NUMBER) ;
+ 160:VS4210/VX8812.c **** 	break ;
+ 161:VS4210/VX8812.c **** 	case _OSD_VESA_1400x1050:
+ 162:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1400x1050_to_NTSC_param,VX8812_CCIR656_NUMBER) ;
+ 163:VS4210/VX8812.c **** 	break ;
+ 164:VS4210/VX8812.c **** 	case _OSD_VESA_1920x1200:
+ 165:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1920x1200_to_NTSC_param,VX8812_CCIR656_NUMBER) ;
+ 166:VS4210/VX8812.c **** 	break ;
+ 167:VS4210/VX8812.c **** 	case _OSD_VESA_1600x1200:
+ 168:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1600x1200_to_NTSC_param,VX8812_CCIR656_NUMBER) ;
+ 169:VS4210/VX8812.c **** 	break ;
+ 170:VS4210/VX8812.c **** 	
+ 171:VS4210/VX8812.c **** 	case _OSD_VESA_640x480:
+ 172:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_640x480_to_NTSC_param,VX8812_CCIR656_NUMBER) ;
+ 173:VS4210/VX8812.c **** 	break ;
+ 174:VS4210/VX8812.c **** 	
+ 175:VS4210/VX8812.c **** 	case 100 :
+ 176:VS4210/VX8812.c **** 		VX8812_BlueScreen();
+ 177:VS4210/VX8812.c **** 	break ;
+ 178:VS4210/VX8812.c **** 	}
+ 179:VS4210/VX8812.c **** #endif
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 5
+
+
+ 180:VS4210/VX8812.c **** }
+  53              		.loc 1 180 1 view .LVU3
+  54 0000 7047     		bx	lr
+  55              		.cfi_endproc
+  56              	.LFE69:
+  58              		.section	.text.VXIS_fVX8812_Set_HDMI_in_OutCCIR656_PAL,"ax",%progbits
+  59              		.align	1
+  60              		.global	VXIS_fVX8812_Set_HDMI_in_OutCCIR656_PAL
+  61              		.syntax unified
+  62              		.thumb
+  63              		.thumb_func
+  64              		.fpu softvfp
+  66              	VXIS_fVX8812_Set_HDMI_in_OutCCIR656_PAL:
+  67              	.LVL1:
+  68              	.LFB70:
+ 181:VS4210/VX8812.c **** 
+ 182:VS4210/VX8812.c **** void VXIS_fVX8812_Set_HDMI_in_OutCCIR656_PAL(tByte tbMode)
+ 183:VS4210/VX8812.c **** {
+  69              		.loc 1 183 1 view -0
+  70              		.cfi_startproc
+  71              		@ args = 0, pretend = 0, frame = 0
+  72              		@ frame_needed = 0, uses_anonymous_args = 0
+  73              		@ link register save eliminated.
+ 184:VS4210/VX8812.c **** #if 0
+ 185:VS4210/VX8812.c **** 	switch(tbMode)
+ 186:VS4210/VX8812.c **** 	{
+ 187:VS4210/VX8812.c **** 	case _OSD_1280X720P60 :
+ 188:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_720P_to_PAL_param,VX8812_CCIR656_NUMBER) ; 
+ 189:VS4210/VX8812.c **** 	break ;
+ 190:VS4210/VX8812.c **** 
+ 191:VS4210/VX8812.c **** 	case _OSD_1280X720P50 :
+ 192:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_720P_to_PAL_param,VX8812_CCIR656_NUMBER) ;
+ 193:VS4210/VX8812.c **** 	break ;
+ 194:VS4210/VX8812.c **** 	
+ 195:VS4210/VX8812.c **** 	case _OSD_1920X1080P60 :
+ 196:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1080P60_to_PAL_param,VX8812_CCIR656_NUMBER) ; 
+ 197:VS4210/VX8812.c **** 	break ;
+ 198:VS4210/VX8812.c **** 
+ 199:VS4210/VX8812.c **** 	case _OSD_1920X1080P50 :
+ 200:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1080P50_to_PAL_param,VX8812_CCIR656_NUMBER) ; 
+ 201:VS4210/VX8812.c **** 	break ;
+ 202:VS4210/VX8812.c **** 
+ 203:VS4210/VX8812.c **** 	case _OSD_1920X1080P24 :
+ 204:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1080P24_to_PAL_param,VX8812_CCIR656_NUMBER) ; 
+ 205:VS4210/VX8812.c **** 	break ;
+ 206:VS4210/VX8812.c **** 
+ 207:VS4210/VX8812.c **** 	case _OSD_1920X1080P25 :
+ 208:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1080P25_to_PAL_param,VX8812_CCIR656_NUMBER) ; 
+ 209:VS4210/VX8812.c **** 	break ;
+ 210:VS4210/VX8812.c **** 
+ 211:VS4210/VX8812.c **** 	case _OSD_1920X1080P30 :
+ 212:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1080P30_to_PAL_param,VX8812_CCIR656_NUMBER) ; 
+ 213:VS4210/VX8812.c **** 	break ;
+ 214:VS4210/VX8812.c **** 
+ 215:VS4210/VX8812.c **** 	
+ 216:VS4210/VX8812.c **** 	case _OSD_1920X1080I50 :
+ 217:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1080i_to_PAL_param,VX8812_CCIR656_NUMBER) ; 
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 6
+
+
+ 218:VS4210/VX8812.c **** 	break ;
+ 219:VS4210/VX8812.c **** 
+ 220:VS4210/VX8812.c **** 	case _OSD_1920X1080I60 :
+ 221:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1080i_to_PAL_param,VX8812_CCIR656_NUMBER) ; 
+ 222:VS4210/VX8812.c **** 	break ;
+ 223:VS4210/VX8812.c **** 
+ 224:VS4210/VX8812.c **** 	
+ 225:VS4210/VX8812.c **** 	case _OSD_720X480I60 :
+ 226:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_480i60_to_PAL_param,VX8812_CCIR656_NUMBER) ; 					
+ 227:VS4210/VX8812.c **** 	break ;
+ 228:VS4210/VX8812.c **** 	
+ 229:VS4210/VX8812.c **** 	case _OSD_720X480P60 :
+ 230:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_480P60_to_PAL_param,VX8812_CCIR656_NUMBER) ; 							
+ 231:VS4210/VX8812.c **** 	break ;
+ 232:VS4210/VX8812.c **** 	
+ 233:VS4210/VX8812.c **** 	case _OSD_720X576I50 :
+ 234:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_576i50_to_PAL_param,VX8812_CCIR656_NUMBER) ; 							
+ 235:VS4210/VX8812.c **** 	break ;
+ 236:VS4210/VX8812.c **** 
+ 237:VS4210/VX8812.c **** 	case _OSD_720X576P50 :
+ 238:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_576P50_to_PAL_param,VX8812_CCIR656_NUMBER) ; 							
+ 239:VS4210/VX8812.c **** 	break ;
+ 240:VS4210/VX8812.c **** 	
+ 241:VS4210/VX8812.c **** 	case _OSD_VESA_800x600:
+ 242:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_800x600_to_PAL_param,VX8812_CCIR656_NUMBER) ;
+ 243:VS4210/VX8812.c **** 	break ;
+ 244:VS4210/VX8812.c **** 	case _OSD_VESA_1366x768:
+ 245:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1366x768_to_PAL_param,VX8812_CCIR656_NUMBER) ;
+ 246:VS4210/VX8812.c **** 	break ;
+ 247:VS4210/VX8812.c **** 	case _OSD_VESA_1024x768:
+ 248:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1024x768_to_PAL_param,VX8812_CCIR656_NUMBER) ;
+ 249:VS4210/VX8812.c **** 	break ;
+ 250:VS4210/VX8812.c **** 	case _OSD_VESA_1440x900:
+ 251:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1440x900_to_PAL_param,VX8812_CCIR656_NUMBER) ;
+ 252:VS4210/VX8812.c **** 	break ;
+ 253:VS4210/VX8812.c **** 	case _OSD_VESA_1280x960:
+ 254:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1280x960_to_PAL_param,VX8812_CCIR656_NUMBER) ;
+ 255:VS4210/VX8812.c **** 	break ;
+ 256:VS4210/VX8812.c **** 	case _OSD_VESA_1280x1024:
+ 257:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1280x1024_to_PAL_param,VX8812_CCIR656_NUMBER) ;
+ 258:VS4210/VX8812.c **** 	break ;
+ 259:VS4210/VX8812.c **** 	case _OSD_VESA_1680x1050:
+ 260:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1680x1050_to_PAL_param,VX8812_CCIR656_NUMBER) ;
+ 261:VS4210/VX8812.c **** 	break ;
+ 262:VS4210/VX8812.c **** 	case _OSD_VESA_1400x1050:
+ 263:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1400x1050_to_PAL_param,VX8812_CCIR656_NUMBER) ;
+ 264:VS4210/VX8812.c **** 	break ;
+ 265:VS4210/VX8812.c **** 	case _OSD_VESA_1920x1200:
+ 266:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1920x1200_to_PAL_param,VX8812_CCIR656_NUMBER) ;
+ 267:VS4210/VX8812.c **** 	break ;
+ 268:VS4210/VX8812.c **** 	case _OSD_VESA_1600x1200:
+ 269:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_1600x1200_to_PAL_param,VX8812_CCIR656_NUMBER) ;
+ 270:VS4210/VX8812.c **** 	break ;
+ 271:VS4210/VX8812.c **** 	case _OSD_VESA_640x480:
+ 272:VS4210/VX8812.c **** 		VX8812_init(VX8812_Addr_param, VX8812_ITU656_640x480_to_PAL_param,VX8812_CCIR656_NUMBER) ;
+ 273:VS4210/VX8812.c **** 	break ;
+ 274:VS4210/VX8812.c **** 	
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 7
+
+
+ 275:VS4210/VX8812.c **** 	case 100 :
+ 276:VS4210/VX8812.c **** 		VX8812_BlueScreen();
+ 277:VS4210/VX8812.c **** 	break ;
+ 278:VS4210/VX8812.c **** 	}
+ 279:VS4210/VX8812.c **** #endif
+ 280:VS4210/VX8812.c **** }
+  74              		.loc 1 280 1 view .LVU5
+  75 0000 7047     		bx	lr
+  76              		.cfi_endproc
+  77              	.LFE70:
+  79              		.section	.text.VXIS_fVX8812_Set_HDMI_in_SD_Video_Out,"ax",%progbits
+  80              		.align	1
+  81              		.global	VXIS_fVX8812_Set_HDMI_in_SD_Video_Out
+  82              		.syntax unified
+  83              		.thumb
+  84              		.thumb_func
+  85              		.fpu softvfp
+  87              	VXIS_fVX8812_Set_HDMI_in_SD_Video_Out:
+  88              	.LVL2:
+  89              	.LFB71:
+ 281:VS4210/VX8812.c **** 
+ 282:VS4210/VX8812.c **** void VXIS_fVX8812_Set_HDMI_in_SD_Video_Out(tByte tbMode)
+ 283:VS4210/VX8812.c **** {
+  90              		.loc 1 283 1 view -0
+  91              		.cfi_startproc
+  92              		@ args = 0, pretend = 0, frame = 0
+  93              		@ frame_needed = 0, uses_anonymous_args = 0
+  94              		@ link register save eliminated.
+ 284:VS4210/VX8812.c **** #if 0
+ 285:VS4210/VX8812.c **** 	if (gbVXIS_OuputModeflg == _NTSC_FORMAT  ) 
+ 286:VS4210/VX8812.c **** 	{
+ 287:VS4210/VX8812.c **** 		VXIS_fVX8812_Set_HDMI_in_OutCCIR656_NTSC( tbMode) ;
+ 288:VS4210/VX8812.c **** 	}
+ 289:VS4210/VX8812.c **** 	else if (gbVXIS_OuputModeflg == _PAL_FORMAT  ) 
+ 290:VS4210/VX8812.c **** 	{
+ 291:VS4210/VX8812.c **** 		VXIS_fVX8812_Set_HDMI_in_OutCCIR656_PAL( tbMode) ;
+ 292:VS4210/VX8812.c **** 	}
+ 293:VS4210/VX8812.c **** #endif
+ 294:VS4210/VX8812.c **** }
+  95              		.loc 1 294 1 view .LVU7
+  96 0000 7047     		bx	lr
+  97              		.cfi_endproc
+  98              	.LFE71:
+ 100              		.section	.rodata.SET_VX8812_SD_Video_Out.str1.4,"aMS",%progbits,1
+ 101              		.align	2
+ 102              	.LC0:
+ 103 0000 0D0A2853 		.ascii	"\015\012(SET_VX8812_NTSC_OUT)\015\012\000"
+ 103      45545F56 
+ 103      58383831 
+ 103      325F4E54 
+ 103      53435F4F 
+ 104 001a 0000     		.align	2
+ 105              	.LC1:
+ 106 001c 0D0A2853 		.ascii	"\015\012(SET_VX8812_PAL_OUT)\015\012\000"
+ 106      45545F56 
+ 106      58383831 
+ 106      325F5041 
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 8
+
+
+ 106      4C5F4F55 
+ 107              		.section	.text.SET_VX8812_SD_Video_Out,"ax",%progbits
+ 108              		.align	1
+ 109              		.global	SET_VX8812_SD_Video_Out
+ 110              		.syntax unified
+ 111              		.thumb
+ 112              		.thumb_func
+ 113              		.fpu softvfp
+ 115              	SET_VX8812_SD_Video_Out:
+ 116              	.LVL3:
+ 117              	.LFB72:
+ 295:VS4210/VX8812.c **** 
+ 296:VS4210/VX8812.c **** void SET_VX8812_SD_Video_Out(tByte tbMode)
+ 297:VS4210/VX8812.c **** {
+ 118              		.loc 1 297 1 view -0
+ 119              		.cfi_startproc
+ 120              		@ args = 0, pretend = 0, frame = 0
+ 121              		@ frame_needed = 0, uses_anonymous_args = 0
+ 122              		.loc 1 297 1 is_stmt 0 view .LVU9
+ 123 0000 10B5     		push	{r4, lr}
+ 124              	.LCFI0:
+ 125              		.cfi_def_cfa_offset 8
+ 126              		.cfi_offset 4, -8
+ 127              		.cfi_offset 14, -4
+ 128 0002 0446     		mov	r4, r0
+ 298:VS4210/VX8812.c **** 
+ 299:VS4210/VX8812.c **** #if (StartPowerBlackScreen == ON)
+ 300:VS4210/VX8812.c **** 	VS8812Write(0x32, 0x00);
+ 129              		.loc 1 300 2 is_stmt 1 view .LVU10
+ 130 0004 0021     		movs	r1, #0
+ 131 0006 3220     		movs	r0, #50
+ 132              	.LVL4:
+ 133              		.loc 1 300 2 is_stmt 0 view .LVU11
+ 134 0008 FFF7FEFF 		bl	VS8812Write
+ 135              	.LVL5:
+ 301:VS4210/VX8812.c **** #endif
+ 302:VS4210/VX8812.c **** 
+ 303:VS4210/VX8812.c **** 	switch (tbMode)
+ 136              		.loc 1 303 2 is_stmt 1 view .LVU12
+ 137 000c 012C     		cmp	r4, #1
+ 138 000e 03D0     		beq	.L6
+ 139 0010 022C     		cmp	r4, #2
+ 140 0012 00F07683 		beq	.L7
+ 141              	.L5:
+ 304:VS4210/VX8812.c **** 	{
+ 305:VS4210/VX8812.c **** 	case _NTSC:
+ 306:VS4210/VX8812.c **** #if (_DEBUG_MESSAGE_VX8812 == ON)
+ 307:VS4210/VX8812.c **** 		GraphicsPrint(MAGENTA, "\r\n(SET_VX8812_NTSC_OUT)\r\n");
+ 308:VS4210/VX8812.c **** #endif
+ 309:VS4210/VX8812.c **** #if (TH0701024600NYR50S1 == OFF)
+ 310:VS4210/VX8812.c **** 		VS8812Write(0x01, 0x00);
+ 311:VS4210/VX8812.c **** 		VS8812Write(0x02, 0x07);
+ 312:VS4210/VX8812.c **** 		VS8812Write(0x03, 0x1C);
+ 313:VS4210/VX8812.c **** 		VS8812Write(0x04, 0x01);
+ 314:VS4210/VX8812.c **** 		VS8812Write(0x05, 0x18);
+ 315:VS4210/VX8812.c **** 		VS8812Write(0x06, 0x00);
+ 316:VS4210/VX8812.c **** 		VS8812Write(0x07, 0x05);
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 9
+
+
+ 317:VS4210/VX8812.c **** 		VS8812Write(0x08, 0x00);
+ 318:VS4210/VX8812.c **** 		VS8812Write(0x09, 0x00);
+ 319:VS4210/VX8812.c **** 		VS8812Write(0x0B, 0x00);
+ 320:VS4210/VX8812.c **** 		VS8812Write(0x0C, 0x00);
+ 321:VS4210/VX8812.c **** 		VS8812Write(0x0D, 0x83);
+ 322:VS4210/VX8812.c **** 		VS8812Write(0x0E, 0x30);
+ 323:VS4210/VX8812.c **** 		VS8812Write(0x0F, 0x07);
+ 324:VS4210/VX8812.c **** 		VS8812Write(0x10, 0x80);
+ 325:VS4210/VX8812.c **** 		VS8812Write(0x11, 0x28);
+ 326:VS4210/VX8812.c **** 		VS8812Write(0x12, 0x52);
+ 327:VS4210/VX8812.c **** 		VS8812Write(0x13, 0x28);
+ 328:VS4210/VX8812.c **** 		VS8812Write(0x14, 0xDB);
+ 329:VS4210/VX8812.c **** 		VS8812Write(0x15, 0x88);
+ 330:VS4210/VX8812.c **** 		VS8812Write(0x16, 0x06);
+ 331:VS4210/VX8812.c **** 		VS8812Write(0x17, 0x08 + 7);
+ 332:VS4210/VX8812.c **** 		VS8812Write(0x18, 0x00);
+ 333:VS4210/VX8812.c **** 		VS8812Write(0x19, 0x00);
+ 334:VS4210/VX8812.c **** 		VS8812Write(0x1A, 0x20);
+ 335:VS4210/VX8812.c **** 		VS8812Write(0x1B, 0x32);
+ 336:VS4210/VX8812.c **** 		VS8812Write(0x1C, 0x00);
+ 337:VS4210/VX8812.c **** 		VS8812Write(0x1D, 0x00);
+ 338:VS4210/VX8812.c **** 		VS8812Write(0x1E, 0x00);
+ 339:VS4210/VX8812.c **** 		VS8812Write(0x1F, 0x00);
+ 340:VS4210/VX8812.c **** #if (TH0701024600NYR50S1 == OFF)
+ 341:VS4210/VX8812.c **** 		VS8812Write(0x20, 0x03);
+ 342:VS4210/VX8812.c **** #else
+ 343:VS4210/VX8812.c **** 		VS8812Write(0x20, 0x22);
+ 344:VS4210/VX8812.c **** #endif
+ 345:VS4210/VX8812.c **** 		VS8812Write(0x21, 0x00);
+ 346:VS4210/VX8812.c **** #if (TH0701024600NYR50S1 == OFF)
+ 347:VS4210/VX8812.c **** 		VS8812Write(0x22, 0x10);
+ 348:VS4210/VX8812.c **** #else
+ 349:VS4210/VX8812.c **** 		VS8812Write(0x22, 0x52);
+ 350:VS4210/VX8812.c **** #endif
+ 351:VS4210/VX8812.c **** 		VS8812Write(0x23, 0x80);
+ 352:VS4210/VX8812.c **** 		VS8812Write(0x24, 0x00);
+ 353:VS4210/VX8812.c **** 		VS8812Write(0x25, 0xA0);
+ 354:VS4210/VX8812.c **** 		VS8812Write(0x26, 0x03);
+ 355:VS4210/VX8812.c **** 		VS8812Write(0x27, 0x1C);
+ 356:VS4210/VX8812.c **** 		VS8812Write(0x28, 0x00);
+ 357:VS4210/VX8812.c **** 		VS8812Write(0x29, 0xFF);
+ 358:VS4210/VX8812.c **** 		VS8812Write(0x31, 0x80);
+ 359:VS4210/VX8812.c **** #if (StartPowerBlackScreen == OFF)
+ 360:VS4210/VX8812.c **** 		VS8812Write(0x32, 0x80);
+ 361:VS4210/VX8812.c **** #else
+ 362:VS4210/VX8812.c **** 		VS8812Write(0x32, 0x00);
+ 363:VS4210/VX8812.c **** #endif
+ 364:VS4210/VX8812.c **** 		VS8812Write(0x33, 0x80);
+ 365:VS4210/VX8812.c **** 		VS8812Write(0x34, 0xA0);
+ 366:VS4210/VX8812.c **** 		VS8812Write(0x35, 0x18);
+ 367:VS4210/VX8812.c **** 		VS8812Write(0x36, 0x46);
+ 368:VS4210/VX8812.c **** 		VS8812Write(0x37, 0x64);
+ 369:VS4210/VX8812.c **** 		VS8812Write(0x38, 0x00);
+ 370:VS4210/VX8812.c **** 		VS8812Write(0x39, 0xFF);
+ 371:VS4210/VX8812.c **** 		VS8812Write(0x3A, 0x00);
+ 372:VS4210/VX8812.c **** 		VS8812Write(0x3B, 0x80);
+ 373:VS4210/VX8812.c **** 		VS8812Write(0x3C, 0x80);
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 10
+
+
+ 374:VS4210/VX8812.c **** 		VS8812Write(0x3D, 0x80);
+ 375:VS4210/VX8812.c **** 		VS8812Write(0x3E, 0x80);
+ 376:VS4210/VX8812.c **** 		VS8812Write(0x3F, 0x80);
+ 377:VS4210/VX8812.c **** 		VS8812Write(0x40, 0x80);
+ 378:VS4210/VX8812.c **** 		VS8812Write(0x41, 0x60);
+ 379:VS4210/VX8812.c **** 		VS8812Write(0x42, 0x5F);
+ 380:VS4210/VX8812.c **** 		VS8812Write(0x43, 0x37);
+ 381:VS4210/VX8812.c **** 		VS8812Write(0x44, 0x14);
+ 382:VS4210/VX8812.c **** 		VS8812Write(0x45, 0x00);
+ 383:VS4210/VX8812.c **** 		VS8812Write(0x46, 0x00);
+ 384:VS4210/VX8812.c **** 		VS8812Write(0x47, 0x00);
+ 385:VS4210/VX8812.c **** 		VS8812Write(0x48, 0x00);
+ 386:VS4210/VX8812.c **** 		VS8812Write(0x49, 0x01);
+ 387:VS4210/VX8812.c **** 		VS8812Write(0x4A, 0x20);
+ 388:VS4210/VX8812.c **** 		VS8812Write(0x4B, 0x20);
+ 389:VS4210/VX8812.c **** 		VS8812Write(0x4C, 0x00);
+ 390:VS4210/VX8812.c **** 		VS8812Write(0x4D, 0x00);
+ 391:VS4210/VX8812.c **** 		VS8812Write(0x4E, 0x00);
+ 392:VS4210/VX8812.c **** 		VS8812Write(0x4F, 0x7F);
+ 393:VS4210/VX8812.c **** 		VS8812Write(0x50, 0x20);
+ 394:VS4210/VX8812.c **** 		VS8812Write(0x51, 0x20);
+ 395:VS4210/VX8812.c **** 		VS8812Write(0x52, 0x00);
+ 396:VS4210/VX8812.c **** 		VS8812Write(0x53, 0x0C);
+ 397:VS4210/VX8812.c **** 		VS8812Write(0x54, 0x00);
+ 398:VS4210/VX8812.c **** 		VS8812Write(0x55, 0xA0);
+ 399:VS4210/VX8812.c **** 		VS8812Write(0x56, 0x28);
+ 400:VS4210/VX8812.c **** 		VS8812Write(0x57, 0x04);
+ 401:VS4210/VX8812.c **** 		VS8812Write(0x58, 0x10);
+ 402:VS4210/VX8812.c **** 		VS8812Write(0x59, 0x08);
+ 403:VS4210/VX8812.c **** 		VS8812Write(0x5A, 0x10);
+ 404:VS4210/VX8812.c **** 		VS8812Write(0x5B, 0x00);
+ 405:VS4210/VX8812.c **** 		VS8812Write(0x5C, 0x68);
+ 406:VS4210/VX8812.c **** 		VS8812Write(0x5D, 0x25);
+ 407:VS4210/VX8812.c **** 		VS8812Write(0x5E, 0x04);
+ 408:VS4210/VX8812.c **** 		VS8812Write(0x5F, 0x00);
+ 409:VS4210/VX8812.c **** 		VS8812Write(0x60, 0xA0);
+ 410:VS4210/VX8812.c **** 		VS8812Write(0x61, 0x41);
+ 411:VS4210/VX8812.c **** 		VS8812Write(0x62, 0x33);
+ 412:VS4210/VX8812.c **** 		VS8812Write(0x63, 0x01);
+ 413:VS4210/VX8812.c **** 		VS8812Write(0x64, 0xFF);
+ 414:VS4210/VX8812.c **** 		VS8812Write(0x65, 0x01);
+ 415:VS4210/VX8812.c **** 		VS8812Write(0x66, 0xFF);
+ 416:VS4210/VX8812.c **** 		VS8812Write(0x67, 0x89);
+ 417:VS4210/VX8812.c **** 		VS8812Write(0x68, 0xAB);
+ 418:VS4210/VX8812.c **** 		VS8812Write(0x69, 0x28);
+ 419:VS4210/VX8812.c **** 		VS8812Write(0x6A, 0x6E);
+ 420:VS4210/VX8812.c **** 		VS8812Write(0x6B, 0x6E);
+ 421:VS4210/VX8812.c **** 		VS8812Write(0x6C, 0x6E);
+ 422:VS4210/VX8812.c **** 		VS8812Write(0x6D, 0x00);
+ 423:VS4210/VX8812.c **** 		VS8812Write(0x6E, 0x00);
+ 424:VS4210/VX8812.c **** 		VS8812Write(0x6F, 0x00);
+ 425:VS4210/VX8812.c **** 		VS8812Write(0x70, 0x00);
+ 426:VS4210/VX8812.c **** 		VS8812Write(0x71, 0x00);
+ 427:VS4210/VX8812.c **** 		VS8812Write(0x72, 0x00);
+ 428:VS4210/VX8812.c **** 		VS8812Write(0x73, 0x00);
+ 429:VS4210/VX8812.c **** 		VS8812Write(0x74, 0x10);
+ 430:VS4210/VX8812.c **** 		VS8812Write(0x75, 0xFF);
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 11
+
+
+ 431:VS4210/VX8812.c **** 		VS8812Write(0x76, 0xFF);
+ 432:VS4210/VX8812.c **** 		VS8812Write(0x77, 0xFF);
+ 433:VS4210/VX8812.c **** 		VS8812Write(0x78, 0xFF);
+ 434:VS4210/VX8812.c **** 		VS8812Write(0x79, 0xFF);
+ 435:VS4210/VX8812.c **** 		VS8812Write(0x7A, 0xFF);
+ 436:VS4210/VX8812.c **** 		VS8812Write(0x7B, 0xFF);
+ 437:VS4210/VX8812.c **** 		VS8812Write(0x7C, 0xFF);
+ 438:VS4210/VX8812.c **** 		VS8812Write(0x7D, 0xF0);
+ 439:VS4210/VX8812.c **** 		VS8812Write(0x7E, 0x70);
+ 440:VS4210/VX8812.c **** 		VS8812Write(0x7F, 0x00);
+ 441:VS4210/VX8812.c **** 		VS8812Write(0x80, 0x00);
+ 442:VS4210/VX8812.c **** 		VS8812Write(0x81, 0x00);
+ 443:VS4210/VX8812.c **** 		VS8812Write(0x82, 0x60);
+ 444:VS4210/VX8812.c **** 		VS8812Write(0x83, 0x0F);
+ 445:VS4210/VX8812.c **** #if (TH0701024600NYR50S1 == OFF)
+ 446:VS4210/VX8812.c **** 		VS8812Write(0x84, 0xFF);
+ 447:VS4210/VX8812.c **** 		VS8812Write(0x85, 0xFF);
+ 448:VS4210/VX8812.c **** #else
+ 449:VS4210/VX8812.c **** 		VS8812Write(0x84, 0xA7);
+ 450:VS4210/VX8812.c **** 		VS8812Write(0x85, 0xFE);
+ 451:VS4210/VX8812.c **** #endif
+ 452:VS4210/VX8812.c **** 		VS8812Write(0x86, 0x00);
+ 453:VS4210/VX8812.c **** 		VS8812Write(0x87, 0x00);
+ 454:VS4210/VX8812.c **** 		VS8812Write(0x88, 0x00);
+ 455:VS4210/VX8812.c **** 		VS8812Write(0x89, 0x00);
+ 456:VS4210/VX8812.c **** 		VS8812Write(0x8A, 0x00);
+ 457:VS4210/VX8812.c **** 		VS8812Write(0x8B, 0x7E);
+ 458:VS4210/VX8812.c **** 		VS8812Write(0x8C, 0x00);
+ 459:VS4210/VX8812.c **** 		VS8812Write(0x8D, 0x1F);
+ 460:VS4210/VX8812.c **** 		VS8812Write(0x8E, 0x6C);
+ 461:VS4210/VX8812.c **** 		VS8812Write(0x8F, 0x03);
+ 462:VS4210/VX8812.c **** 		VS8812Write(0x90, 0x08);
+ 463:VS4210/VX8812.c **** 		VS8812Write(0x91, 0x01);
+ 464:VS4210/VX8812.c **** 		VS8812Write(0x92, 0xC0);
+ 465:VS4210/VX8812.c **** 		VS8812Write(0x93, 0x32);
+ 466:VS4210/VX8812.c **** 		VS8812Write(0x94, 0x5A);
+ 467:VS4210/VX8812.c **** 		VS8812Write(0x95, 0xD0);
+ 468:VS4210/VX8812.c **** 		VS8812Write(0x96, 0x21);
+ 469:VS4210/VX8812.c **** 		VS8812Write(0x97, 0x0D);
+ 470:VS4210/VX8812.c **** 		VS8812Write(0x98, 0xE0);
+ 471:VS4210/VX8812.c **** 		VS8812Write(0x99, 0x02);
+ 472:VS4210/VX8812.c **** 		VS8812Write(0x9A, 0x00);
+ 473:VS4210/VX8812.c **** 		VS8812Write(0x9B, 0x90);
+ 474:VS4210/VX8812.c **** 		VS8812Write(0x9C, 0x22);
+ 475:VS4210/VX8812.c **** 		VS8812Write(0x9D, 0x00);
+ 476:VS4210/VX8812.c **** 		VS8812Write(0x9E, 0x00);
+ 477:VS4210/VX8812.c **** 		VS8812Write(0x9F, 0x00);
+ 478:VS4210/VX8812.c **** 		VS8812Write(0xA0, 0x80);
+ 479:VS4210/VX8812.c **** 		VS8812Write(0xA1, 0x00);
+ 480:VS4210/VX8812.c **** 		VS8812Write(0xA2, 0x7F);
+ 481:VS4210/VX8812.c **** 		VS8812Write(0xA3, 0x00);
+ 482:VS4210/VX8812.c **** 		VS8812Write(0xA4, 0x47);
+ 483:VS4210/VX8812.c **** 		VS8812Write(0xA5, 0x80);
+ 484:VS4210/VX8812.c **** 		VS8812Write(0xA6, 0x0C);
+ 485:VS4210/VX8812.c **** 		VS8812Write(0xA7, 0x02);
+ 486:VS4210/VX8812.c **** 		VS8812Write(0xA8, 0x20);
+ 487:VS4210/VX8812.c **** 		VS8812Write(0xA9, 0x10);
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 12
+
+
+ 488:VS4210/VX8812.c **** 		VS8812Write(0xAA, 0x10);
+ 489:VS4210/VX8812.c **** 		VS8812Write(0xAB, 0x00);
+ 490:VS4210/VX8812.c **** 		VS8812Write(0xAC, 0x42);
+ 491:VS4210/VX8812.c **** 		VS8812Write(0xAD, 0x02);
+ 492:VS4210/VX8812.c **** 		VS8812Write(0xAE, 0x06);
+ 493:VS4210/VX8812.c **** 		VS8812Write(0xAF, 0x04);
+ 494:VS4210/VX8812.c **** 		VS8812Write(0xB0, 0x00);
+ 495:VS4210/VX8812.c **** 		VS8812Write(0xB1, 0x00);
+ 496:VS4210/VX8812.c **** 		VS8812Write(0xB2, 0x00);
+ 497:VS4210/VX8812.c **** 		VS8812Write(0xB3, 0x00);
+ 498:VS4210/VX8812.c **** 		VS8812Write(0xB4, 0x00);
+ 499:VS4210/VX8812.c **** 		VS8812Write(0xB5, 0x00);
+ 500:VS4210/VX8812.c **** 		VS8812Write(0xB6, 0x00);
+ 501:VS4210/VX8812.c **** 		VS8812Write(0xC0, 0x88);
+ 502:VS4210/VX8812.c **** 		VS8812Write(0xC1, 0x7E);
+ 503:VS4210/VX8812.c **** 		VS8812Write(0xC2, 0xDC);
+ 504:VS4210/VX8812.c **** 		VS8812Write(0xC3, 0x20);
+ 505:VS4210/VX8812.c **** 		VS8812Write(0xC4, 0x20);
+ 506:VS4210/VX8812.c **** 		VS8812Write(0xC5, 0x34);
+ 507:VS4210/VX8812.c **** 		VS8812Write(0xC6, 0x18);
+ 508:VS4210/VX8812.c **** 		VS8812Write(0xC7, 0x04);
+ 509:VS4210/VX8812.c **** 		VS8812Write(0xC8, 0x02);
+ 510:VS4210/VX8812.c **** 		VS8812Write(0xD0, 0x02);
+ 511:VS4210/VX8812.c **** 		VS8812Write(0xD1, 0x40);
+ 512:VS4210/VX8812.c **** 		VS8812Write(0xD2, 0x40);
+ 513:VS4210/VX8812.c **** 		VS8812Write(0xD3, 0x40);
+ 514:VS4210/VX8812.c **** 		VS8812Write(0xD4, 0x00);
+ 515:VS4210/VX8812.c **** 		VS8812Write(0xD5, 0x00);
+ 516:VS4210/VX8812.c **** 		VS8812Write(0xD6, 0x00);
+ 517:VS4210/VX8812.c **** 		VS8812Write(0xD7, 0x00);
+ 518:VS4210/VX8812.c **** 		VS8812Write(0xD8, 0x00);
+ 519:VS4210/VX8812.c **** 		VS8812Write(0xD9, 0x00);
+ 520:VS4210/VX8812.c **** 		VS8812Write(0xE0, 0x33);
+ 521:VS4210/VX8812.c **** 		VS8812Write(0xE1, 0xA7);
+ 522:VS4210/VX8812.c **** 		VS8812Write(0xE2, 0x7F);
+ 523:VS4210/VX8812.c **** 		VS8812Write(0xE3, 0x22);
+ 524:VS4210/VX8812.c **** 		VS8812Write(0xE4, 0x0D);
+ 525:VS4210/VX8812.c **** 		VS8812Write(0xE5, 0x0A);
+ 526:VS4210/VX8812.c **** 		VS8812Write(0xE6, 0x00);
+ 527:VS4210/VX8812.c **** 		VS8812Write(0xE7, 0x99);
+ 528:VS4210/VX8812.c **** 		VS8812Write(0xE8, 0x67);
+ 529:VS4210/VX8812.c **** 		VS8812Write(0xE9, 0x02);
+ 530:VS4210/VX8812.c **** 		VS8812Write(0xF0, 0x00);
+ 531:VS4210/VX8812.c **** 		VS8812Write(0xF1, 0x43);
+ 532:VS4210/VX8812.c **** 		VS8812Write(0xF2, 0x1F);
+ 533:VS4210/VX8812.c **** 		VS8812Write(0xF3, 0x1F);
+ 534:VS4210/VX8812.c **** 		VS8812Write(0xF4, 0x22);
+ 535:VS4210/VX8812.c **** 		VS8812Write(0xF5, 0x73);
+ 536:VS4210/VX8812.c **** 		VS8812Write(0xF6, 0x53);
+ 537:VS4210/VX8812.c **** 		VS8812Write(0xF7, 0x80);
+ 538:VS4210/VX8812.c **** 		VS8812Write(0xF8, 0x01);
+ 539:VS4210/VX8812.c **** 		VS8812Write(0xF9, 0x01);
+ 540:VS4210/VX8812.c **** 		VS8812Write(0xFA, 0x00);
+ 541:VS4210/VX8812.c **** 		VS8812Write(0xFB, 0x00);
+ 542:VS4210/VX8812.c **** 		VS8812Write(0xFC, 0x00);
+ 543:VS4210/VX8812.c **** 		VS8812Write(0xFD, 0x70);
+ 544:VS4210/VX8812.c **** 		VS8812Write(0xFE, 0x25);
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 13
+
+
+ 545:VS4210/VX8812.c **** 		VS8812Write(0xFF, 0x17);
+ 546:VS4210/VX8812.c **** #else
+ 547:VS4210/VX8812.c **** 		VS8812Write(0x01, 0x00);
+ 548:VS4210/VX8812.c **** 		VS8812Write(0x02, 0x07);
+ 549:VS4210/VX8812.c **** 		VS8812Write(0x03, 0x1C);
+ 550:VS4210/VX8812.c **** 		VS8812Write(0x04, 0x01);
+ 551:VS4210/VX8812.c **** 		VS8812Write(0x05, 0x18);
+ 552:VS4210/VX8812.c **** 		VS8812Write(0x06, 0x00);
+ 553:VS4210/VX8812.c **** 		VS8812Write(0x07, 0x05);
+ 554:VS4210/VX8812.c **** 		VS8812Write(0x08, 0x00);
+ 555:VS4210/VX8812.c **** 		VS8812Write(0x09, 0x00);
+ 556:VS4210/VX8812.c **** 		VS8812Write(0x0B, 0x00);
+ 557:VS4210/VX8812.c **** 		VS8812Write(0x0C, 0x00);
+ 558:VS4210/VX8812.c **** 		VS8812Write(0x0D, 0x83);
+ 559:VS4210/VX8812.c **** 		VS8812Write(0x0E, 0x30);
+ 560:VS4210/VX8812.c **** 		VS8812Write(0x0F, 0x07);
+ 561:VS4210/VX8812.c **** 		VS8812Write(0x10, 0x80);
+ 562:VS4210/VX8812.c **** 		VS8812Write(0x11, 0x28);
+ 563:VS4210/VX8812.c **** 		VS8812Write(0x12, 0x52);
+ 564:VS4210/VX8812.c **** 		VS8812Write(0x13, 0x28);
+ 565:VS4210/VX8812.c **** 		VS8812Write(0x14, 0xDB);
+ 566:VS4210/VX8812.c **** 		VS8812Write(0x15, 0x88);
+ 567:VS4210/VX8812.c **** 		VS8812Write(0x16, 0x85);
+ 568:VS4210/VX8812.c **** 		VS8812Write(0x17, 0x09);
+ 569:VS4210/VX8812.c **** 		VS8812Write(0x18, 0x00);
+ 570:VS4210/VX8812.c **** 		VS8812Write(0x19, 0x00);
+ 571:VS4210/VX8812.c **** 		VS8812Write(0x1A, 0x20);
+ 572:VS4210/VX8812.c **** 		VS8812Write(0x1B, 0x32);
+ 573:VS4210/VX8812.c **** 		VS8812Write(0x1C, 0x00);
+ 574:VS4210/VX8812.c **** 		VS8812Write(0x1D, 0x00);
+ 575:VS4210/VX8812.c **** 		VS8812Write(0x1E, 0x00);
+ 576:VS4210/VX8812.c **** 		VS8812Write(0x1F, 0x00);
+ 577:VS4210/VX8812.c **** 		VS8812Write(0x20, 0x23 /*0x28*/);
+ 578:VS4210/VX8812.c **** 		VS8812Write(0x21, 0x00);
+ 579:VS4210/VX8812.c **** 		VS8812Write(0x22, 0x3E /*0x45*/);
+ 580:VS4210/VX8812.c **** 		VS8812Write(0x23, 0x80);
+ 581:VS4210/VX8812.c **** 		VS8812Write(0x24, 0x00);
+ 582:VS4210/VX8812.c **** 		VS8812Write(0x25, 0xA0);
+ 583:VS4210/VX8812.c **** 		VS8812Write(0x26, 0x03);
+ 584:VS4210/VX8812.c **** 		VS8812Write(0x27, 0x11);
+ 585:VS4210/VX8812.c **** 		VS8812Write(0x28, 0x00);
+ 586:VS4210/VX8812.c **** 		VS8812Write(0x29, 0xF5);
+ 587:VS4210/VX8812.c **** 		VS8812Write(0x31, 0x80);
+ 588:VS4210/VX8812.c **** 		VS8812Write(0x32, 0x80);
+ 589:VS4210/VX8812.c **** 		VS8812Write(0x33, 0x80);
+ 590:VS4210/VX8812.c **** 		VS8812Write(0x34, 0xA0);
+ 591:VS4210/VX8812.c **** 		VS8812Write(0x35, 0x18);
+ 592:VS4210/VX8812.c **** 		VS8812Write(0x36, 0x46);
+ 593:VS4210/VX8812.c **** 		VS8812Write(0x37, 0x64);
+ 594:VS4210/VX8812.c **** 		VS8812Write(0x38, 0x00);
+ 595:VS4210/VX8812.c **** 		VS8812Write(0x39, 0xFF);
+ 596:VS4210/VX8812.c **** 		VS8812Write(0x3A, 0x26);
+ 597:VS4210/VX8812.c **** 		VS8812Write(0x3B, 0x80);
+ 598:VS4210/VX8812.c **** 		VS8812Write(0x3C, 0x80);
+ 599:VS4210/VX8812.c **** 		VS8812Write(0x3D, 0x80);
+ 600:VS4210/VX8812.c **** 		VS8812Write(0x3E, 0x80);
+ 601:VS4210/VX8812.c **** 		VS8812Write(0x3F, 0x80);
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 14
+
+
+ 602:VS4210/VX8812.c **** 		VS8812Write(0x40, 0x80);
+ 603:VS4210/VX8812.c **** 		VS8812Write(0x41, 0x60);
+ 604:VS4210/VX8812.c **** 		VS8812Write(0x42, 0x5F);
+ 605:VS4210/VX8812.c **** 		VS8812Write(0x43, 0x37);
+ 606:VS4210/VX8812.c **** 		VS8812Write(0x44, 0x14);
+ 607:VS4210/VX8812.c **** 		VS8812Write(0x45, 0x00);
+ 608:VS4210/VX8812.c **** 		VS8812Write(0x46, 0x00);
+ 609:VS4210/VX8812.c **** 		VS8812Write(0x47, 0x00);
+ 610:VS4210/VX8812.c **** 		VS8812Write(0x48, 0x00);
+ 611:VS4210/VX8812.c **** 		VS8812Write(0x49, 0x01);
+ 612:VS4210/VX8812.c **** 		VS8812Write(0x4A, 0x20);
+ 613:VS4210/VX8812.c **** 		VS8812Write(0x4B, 0x20);
+ 614:VS4210/VX8812.c **** 		VS8812Write(0x4C, 0x00);
+ 615:VS4210/VX8812.c **** 		VS8812Write(0x4D, 0x00);
+ 616:VS4210/VX8812.c **** 		VS8812Write(0x4E, 0x00);
+ 617:VS4210/VX8812.c **** 		VS8812Write(0x4F, 0x7F);
+ 618:VS4210/VX8812.c **** 		VS8812Write(0x50, 0x20);
+ 619:VS4210/VX8812.c **** 		VS8812Write(0x51, 0x20);
+ 620:VS4210/VX8812.c **** 		VS8812Write(0x52, 0x00);
+ 621:VS4210/VX8812.c **** 		VS8812Write(0x53, 0x0C);
+ 622:VS4210/VX8812.c **** 		VS8812Write(0x54, 0x00);
+ 623:VS4210/VX8812.c **** 		VS8812Write(0x55, 0xA0);
+ 624:VS4210/VX8812.c **** 		VS8812Write(0x56, 0x28);
+ 625:VS4210/VX8812.c **** 		VS8812Write(0x57, 0x04);
+ 626:VS4210/VX8812.c **** 		VS8812Write(0x58, 0x10);
+ 627:VS4210/VX8812.c **** 		VS8812Write(0x59, 0x08);
+ 628:VS4210/VX8812.c **** 		VS8812Write(0x5A, 0x10);
+ 629:VS4210/VX8812.c **** 		VS8812Write(0x5B, 0x00);
+ 630:VS4210/VX8812.c **** 		VS8812Write(0x5C, 0x68);
+ 631:VS4210/VX8812.c **** 		VS8812Write(0x5D, 0x25);
+ 632:VS4210/VX8812.c **** 		VS8812Write(0x5E, 0x04);
+ 633:VS4210/VX8812.c **** 		VS8812Write(0x5F, 0x00);
+ 634:VS4210/VX8812.c **** 		VS8812Write(0x60, 0xA0);
+ 635:VS4210/VX8812.c **** 		VS8812Write(0x61, 0x41);
+ 636:VS4210/VX8812.c **** 		VS8812Write(0x62, 0x33);
+ 637:VS4210/VX8812.c **** 		VS8812Write(0x63, 0x01);
+ 638:VS4210/VX8812.c **** 		VS8812Write(0x64, 0xFF);
+ 639:VS4210/VX8812.c **** 		VS8812Write(0x65, 0x01);
+ 640:VS4210/VX8812.c **** 		VS8812Write(0x66, 0xFF);
+ 641:VS4210/VX8812.c **** 		VS8812Write(0x67, 0x89);
+ 642:VS4210/VX8812.c **** 		VS8812Write(0x68, 0xAB);
+ 643:VS4210/VX8812.c **** 		VS8812Write(0x69, 0x28);
+ 644:VS4210/VX8812.c **** 		VS8812Write(0x6A, 0x6E);
+ 645:VS4210/VX8812.c **** 		VS8812Write(0x6B, 0x6E);
+ 646:VS4210/VX8812.c **** 		VS8812Write(0x6C, 0x6E);
+ 647:VS4210/VX8812.c **** 		VS8812Write(0x6D, 0x00);
+ 648:VS4210/VX8812.c **** 		VS8812Write(0x6E, 0x00);
+ 649:VS4210/VX8812.c **** 		VS8812Write(0x6F, 0x00);
+ 650:VS4210/VX8812.c **** 		VS8812Write(0x70, 0x00);
+ 651:VS4210/VX8812.c **** 		VS8812Write(0x71, 0x00);
+ 652:VS4210/VX8812.c **** 		VS8812Write(0x72, 0x00);
+ 653:VS4210/VX8812.c **** 		VS8812Write(0x73, 0x00);
+ 654:VS4210/VX8812.c **** 		VS8812Write(0x74, 0x10);
+ 655:VS4210/VX8812.c **** 		VS8812Write(0x75, 0xFF);
+ 656:VS4210/VX8812.c **** 		VS8812Write(0x76, 0xFF);
+ 657:VS4210/VX8812.c **** 		VS8812Write(0x77, 0xFF);
+ 658:VS4210/VX8812.c **** 		VS8812Write(0x78, 0xFF);
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 15
+
+
+ 659:VS4210/VX8812.c **** 		VS8812Write(0x79, 0xFF);
+ 660:VS4210/VX8812.c **** 		VS8812Write(0x7A, 0xFF);
+ 661:VS4210/VX8812.c **** 		VS8812Write(0x7B, 0xFF);
+ 662:VS4210/VX8812.c **** 		VS8812Write(0x7C, 0xFF);
+ 663:VS4210/VX8812.c **** 		VS8812Write(0x7D, 0xF0);
+ 664:VS4210/VX8812.c **** 		VS8812Write(0x7E, 0x70);
+ 665:VS4210/VX8812.c **** 		VS8812Write(0x7F, 0x00);
+ 666:VS4210/VX8812.c **** 		VS8812Write(0x80, 0x00);
+ 667:VS4210/VX8812.c **** 		VS8812Write(0x81, 0x00);
+ 668:VS4210/VX8812.c **** 		VS8812Write(0x82, 0x60);
+ 669:VS4210/VX8812.c **** 		VS8812Write(0x83, 0x0F);
+ 670:VS4210/VX8812.c **** 		VS8812Write(0x84, 0xF3 /*0xFF*/);
+ 671:VS4210/VX8812.c **** 		VS8812Write(0x85, 0xFC /*0xFF*/);
+ 672:VS4210/VX8812.c **** 		VS8812Write(0x86, 0x00);
+ 673:VS4210/VX8812.c **** 		VS8812Write(0x87, 0x00);
+ 674:VS4210/VX8812.c **** 		VS8812Write(0x88, 0x00);
+ 675:VS4210/VX8812.c **** 		VS8812Write(0x89, 0x00);
+ 676:VS4210/VX8812.c **** 		VS8812Write(0x8A, 0x00);
+ 677:VS4210/VX8812.c **** 		VS8812Write(0x8B, 0x7E);
+ 678:VS4210/VX8812.c **** 		VS8812Write(0x8C, 0x00);
+ 679:VS4210/VX8812.c **** 		VS8812Write(0x8D, 0x1F);
+ 680:VS4210/VX8812.c **** 		VS8812Write(0x8E, 0x6C);
+ 681:VS4210/VX8812.c **** 		VS8812Write(0x8F, 0x03);
+ 682:VS4210/VX8812.c **** 		VS8812Write(0x90, 0x08);
+ 683:VS4210/VX8812.c **** 		VS8812Write(0x91, 0x01);
+ 684:VS4210/VX8812.c **** 		VS8812Write(0x92, 0xC0);
+ 685:VS4210/VX8812.c **** 		VS8812Write(0x93, 0x32);
+ 686:VS4210/VX8812.c **** 		VS8812Write(0x94, 0x5A);
+ 687:VS4210/VX8812.c **** 		VS8812Write(0x95, 0xD0);
+ 688:VS4210/VX8812.c **** 		VS8812Write(0x96, 0x21);
+ 689:VS4210/VX8812.c **** 		VS8812Write(0x97, 0x0D);
+ 690:VS4210/VX8812.c **** 		VS8812Write(0x98, 0xE0);
+ 691:VS4210/VX8812.c **** 		VS8812Write(0x99, 0x02);
+ 692:VS4210/VX8812.c **** 		VS8812Write(0x9A, 0x00);
+ 693:VS4210/VX8812.c **** 		VS8812Write(0x9B, 0x90);
+ 694:VS4210/VX8812.c **** 		VS8812Write(0x9C, 0x22);
+ 695:VS4210/VX8812.c **** 		VS8812Write(0x9D, 0x00);
+ 696:VS4210/VX8812.c **** 		VS8812Write(0x9E, 0x00);
+ 697:VS4210/VX8812.c **** 		VS8812Write(0x9F, 0x00);
+ 698:VS4210/VX8812.c **** 		VS8812Write(0xA0, 0x80);
+ 699:VS4210/VX8812.c **** 		VS8812Write(0xA1, 0x00);
+ 700:VS4210/VX8812.c **** 		VS8812Write(0xA2, 0x7F);
+ 701:VS4210/VX8812.c **** 		VS8812Write(0xA3, 0x00);
+ 702:VS4210/VX8812.c **** 		VS8812Write(0xA4, 0x47);
+ 703:VS4210/VX8812.c **** 		VS8812Write(0xA5, 0x80);
+ 704:VS4210/VX8812.c **** 		VS8812Write(0xA6, 0x0C);
+ 705:VS4210/VX8812.c **** 		VS8812Write(0xA7, 0x02);
+ 706:VS4210/VX8812.c **** 		VS8812Write(0xA8, 0x20);
+ 707:VS4210/VX8812.c **** 		VS8812Write(0xA9, 0x10);
+ 708:VS4210/VX8812.c **** 		VS8812Write(0xAA, 0x10);
+ 709:VS4210/VX8812.c **** 		VS8812Write(0xAB, 0x00);
+ 710:VS4210/VX8812.c **** 		VS8812Write(0xAC, 0x42);
+ 711:VS4210/VX8812.c **** 		VS8812Write(0xAD, 0x02);
+ 712:VS4210/VX8812.c **** 		VS8812Write(0xAE, 0x06);
+ 713:VS4210/VX8812.c **** 		VS8812Write(0xAF, 0x04);
+ 714:VS4210/VX8812.c **** 		VS8812Write(0xB0, 0x00);
+ 715:VS4210/VX8812.c **** 		VS8812Write(0xB1, 0x00);
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 16
+
+
+ 716:VS4210/VX8812.c **** 		VS8812Write(0xB2, 0x00);
+ 717:VS4210/VX8812.c **** 		VS8812Write(0xB3, 0x00);
+ 718:VS4210/VX8812.c **** 		VS8812Write(0xB4, 0x00);
+ 719:VS4210/VX8812.c **** 		VS8812Write(0xB5, 0x00);
+ 720:VS4210/VX8812.c **** 		VS8812Write(0xB6, 0x00);
+ 721:VS4210/VX8812.c **** 		VS8812Write(0xC0, 0x88);
+ 722:VS4210/VX8812.c **** 		VS8812Write(0xC1, 0x7E);
+ 723:VS4210/VX8812.c **** 		VS8812Write(0xC2, 0xDC);
+ 724:VS4210/VX8812.c **** 		VS8812Write(0xC3, 0x20);
+ 725:VS4210/VX8812.c **** 		VS8812Write(0xC4, 0x20);
+ 726:VS4210/VX8812.c **** 		VS8812Write(0xC5, 0x34);
+ 727:VS4210/VX8812.c **** 		VS8812Write(0xC6, 0x18);
+ 728:VS4210/VX8812.c **** 		VS8812Write(0xC7, 0x04);
+ 729:VS4210/VX8812.c **** 		VS8812Write(0xC8, 0x02);
+ 730:VS4210/VX8812.c **** 		VS8812Write(0xD0, 0x02);
+ 731:VS4210/VX8812.c **** 		VS8812Write(0xD1, 0x40);
+ 732:VS4210/VX8812.c **** 		VS8812Write(0xD2, 0x40);
+ 733:VS4210/VX8812.c **** 		VS8812Write(0xD3, 0x40);
+ 734:VS4210/VX8812.c **** 		VS8812Write(0xD4, 0x00);
+ 735:VS4210/VX8812.c **** 		VS8812Write(0xD5, 0x00);
+ 736:VS4210/VX8812.c **** 		VS8812Write(0xD6, 0x00);
+ 737:VS4210/VX8812.c **** 		VS8812Write(0xD7, 0x00);
+ 738:VS4210/VX8812.c **** 		VS8812Write(0xD8, 0x00);
+ 739:VS4210/VX8812.c **** 		VS8812Write(0xD9, 0x00);
+ 740:VS4210/VX8812.c **** 		VS8812Write(0xE0, 0x54);
+ 741:VS4210/VX8812.c **** 		VS8812Write(0xE1, 0x40);
+ 742:VS4210/VX8812.c **** 		VS8812Write(0xE2, 0xB8);
+ 743:VS4210/VX8812.c **** 		VS8812Write(0xE3, 0x22);
+ 744:VS4210/VX8812.c **** 		VS8812Write(0xE4, 0x8A);
+ 745:VS4210/VX8812.c **** 		VS8812Write(0xE5, 0x84);
+ 746:VS4210/VX8812.c **** 		VS8812Write(0xE6, 0x00);
+ 747:VS4210/VX8812.c **** 		VS8812Write(0xE7, 0x7C);
+ 748:VS4210/VX8812.c **** 		VS8812Write(0xE8, 0x17);
+ 749:VS4210/VX8812.c **** 		VS8812Write(0xE9, 0x03);
+ 750:VS4210/VX8812.c **** 		VS8812Write(0xF0, 0x00);
+ 751:VS4210/VX8812.c **** 		VS8812Write(0xF1, 0x43);
+ 752:VS4210/VX8812.c **** 		VS8812Write(0xF2, 0x1F);
+ 753:VS4210/VX8812.c **** 		VS8812Write(0xF3, 0x1F);
+ 754:VS4210/VX8812.c **** 		VS8812Write(0xF4, 0x22);
+ 755:VS4210/VX8812.c **** 		VS8812Write(0xF5, 0x73);
+ 756:VS4210/VX8812.c **** 		VS8812Write(0xF6, 0x53);
+ 757:VS4210/VX8812.c **** 		VS8812Write(0xF7, 0x80);
+ 758:VS4210/VX8812.c **** 		VS8812Write(0xF8, 0x01);
+ 759:VS4210/VX8812.c **** 		VS8812Write(0xF9, 0x01);
+ 760:VS4210/VX8812.c **** 		VS8812Write(0xFA, 0x00);
+ 761:VS4210/VX8812.c **** 		VS8812Write(0xFB, 0x00);
+ 762:VS4210/VX8812.c **** 		VS8812Write(0xFC, 0x00);
+ 763:VS4210/VX8812.c **** 		VS8812Write(0xFD, 0x70);
+ 764:VS4210/VX8812.c **** 		VS8812Write(0xFE, 0x25);
+ 765:VS4210/VX8812.c **** 		VS8812Write(0xFF, 0x17);
+ 766:VS4210/VX8812.c **** #endif
+ 767:VS4210/VX8812.c **** 		break;
+ 768:VS4210/VX8812.c **** 	case _PAL:
+ 769:VS4210/VX8812.c **** #if (_DEBUG_MESSAGE_VX8812 == ON)
+ 770:VS4210/VX8812.c **** 		GraphicsPrint(MAGENTA, "\r\n(SET_VX8812_PAL_OUT)\r\n");
+ 771:VS4210/VX8812.c **** #endif
+ 772:VS4210/VX8812.c **** 		VS8812Write(0x01, 0x00);
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 17
+
+
+ 773:VS4210/VX8812.c **** 		VS8812Write(0x02, 0x07);
+ 774:VS4210/VX8812.c **** 		VS8812Write(0x03, 0x1C);
+ 775:VS4210/VX8812.c **** 		VS8812Write(0x04, 0x01);
+ 776:VS4210/VX8812.c **** 		VS8812Write(0x05, 0x18);
+ 777:VS4210/VX8812.c **** 		VS8812Write(0x06, 0x00);
+ 778:VS4210/VX8812.c **** 		VS8812Write(0x07, 0x04);
+ 779:VS4210/VX8812.c **** 		VS8812Write(0x08, 0x00);
+ 780:VS4210/VX8812.c **** 		VS8812Write(0x09, 0x00);
+ 781:VS4210/VX8812.c **** 		VS8812Write(0x0B, 0x00);
+ 782:VS4210/VX8812.c **** 		VS8812Write(0x0C, 0x00);
+ 783:VS4210/VX8812.c **** 		VS8812Write(0x0D, 0x83);
+ 784:VS4210/VX8812.c **** 		VS8812Write(0x0E, 0x30);
+ 785:VS4210/VX8812.c **** 		VS8812Write(0x0F, 0x07);
+ 786:VS4210/VX8812.c **** 		VS8812Write(0x10, 0x80);
+ 787:VS4210/VX8812.c **** 		VS8812Write(0x11, 0x28);
+ 788:VS4210/VX8812.c **** 		VS8812Write(0x12, 0x00);
+ 789:VS4210/VX8812.c **** 		VS8812Write(0x13, 0x00);
+ 790:VS4210/VX8812.c **** 		VS8812Write(0x14, 0x00);
+ 791:VS4210/VX8812.c **** 		VS8812Write(0x15, 0x88);
+ 792:VS4210/VX8812.c **** 		VS8812Write(0x16, 0x04);
+ 793:VS4210/VX8812.c **** 		VS8812Write(0x17, 0x00);
+ 794:VS4210/VX8812.c **** 		VS8812Write(0x18, 0x00);
+ 795:VS4210/VX8812.c **** 		VS8812Write(0x19, 0x00);
+ 796:VS4210/VX8812.c **** 		VS8812Write(0x1A, 0x26);
+ 797:VS4210/VX8812.c **** 		VS8812Write(0x1B, 0x32);
+ 798:VS4210/VX8812.c **** 		VS8812Write(0x1C, 0x00);
+ 799:VS4210/VX8812.c **** 		VS8812Write(0x1D, 0x00);
+ 800:VS4210/VX8812.c **** 		VS8812Write(0x1E, 0x00);
+ 801:VS4210/VX8812.c **** 		VS8812Write(0x1F, 0x00);
+ 802:VS4210/VX8812.c **** 		VS8812Write(0x20, 0x04);
+ 803:VS4210/VX8812.c **** 		VS8812Write(0x21, 0x00);
+ 804:VS4210/VX8812.c **** 		VS8812Write(0x22, 0x10);
+ 805:VS4210/VX8812.c **** 		VS8812Write(0x23, 0x80);
+ 806:VS4210/VX8812.c **** 		VS8812Write(0x24, 0x00);
+ 807:VS4210/VX8812.c **** 		VS8812Write(0x25, 0x20);
+ 808:VS4210/VX8812.c **** 		VS8812Write(0x26, 0x03);
+ 809:VS4210/VX8812.c **** 		VS8812Write(0x27, 0x1C);
+ 810:VS4210/VX8812.c **** 		VS8812Write(0x28, 0x00);
+ 811:VS4210/VX8812.c **** 		VS8812Write(0x29, 0xFD);
+ 812:VS4210/VX8812.c **** 		VS8812Write(0x31, 0x80);
+ 813:VS4210/VX8812.c **** #if (StartPowerBlackScreen == OFF)
+ 814:VS4210/VX8812.c **** 		VS8812Write(0x32, 0x80);
+ 815:VS4210/VX8812.c **** #else
+ 816:VS4210/VX8812.c **** 		VS8812Write(0x32, 0x00);
+ 817:VS4210/VX8812.c **** #endif
+ 818:VS4210/VX8812.c **** 		VS8812Write(0x33, 0x80);
+ 819:VS4210/VX8812.c **** 		VS8812Write(0x34, 0xA0);
+ 820:VS4210/VX8812.c **** 		VS8812Write(0x35, 0x18);
+ 821:VS4210/VX8812.c **** 		VS8812Write(0x36, 0x46);
+ 822:VS4210/VX8812.c **** 		VS8812Write(0x37, 0x64);
+ 823:VS4210/VX8812.c **** 		VS8812Write(0x38, 0x00);
+ 824:VS4210/VX8812.c **** 		VS8812Write(0x39, 0xFF);
+ 825:VS4210/VX8812.c **** 		VS8812Write(0x3A, 0x00);
+ 826:VS4210/VX8812.c **** 		VS8812Write(0x3B, 0x80);
+ 827:VS4210/VX8812.c **** 		VS8812Write(0x3C, 0x80);
+ 828:VS4210/VX8812.c **** 		VS8812Write(0x3D, 0x80);
+ 829:VS4210/VX8812.c **** 		VS8812Write(0x3E, 0x80);
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 18
+
+
+ 830:VS4210/VX8812.c **** 		VS8812Write(0x3F, 0x80);
+ 831:VS4210/VX8812.c **** 		VS8812Write(0x40, 0x80);
+ 832:VS4210/VX8812.c **** 		VS8812Write(0x41, 0x60);
+ 833:VS4210/VX8812.c **** 		VS8812Write(0x42, 0x5F);
+ 834:VS4210/VX8812.c **** 		VS8812Write(0x43, 0x37);
+ 835:VS4210/VX8812.c **** 		VS8812Write(0x44, 0x14);
+ 836:VS4210/VX8812.c **** 		VS8812Write(0x45, 0x00);
+ 837:VS4210/VX8812.c **** 		VS8812Write(0x46, 0x00);
+ 838:VS4210/VX8812.c **** 		VS8812Write(0x47, 0x00);
+ 839:VS4210/VX8812.c **** 		VS8812Write(0x48, 0x00);
+ 840:VS4210/VX8812.c **** 		VS8812Write(0x49, 0x00);
+ 841:VS4210/VX8812.c **** 		VS8812Write(0x4A, 0x20);
+ 842:VS4210/VX8812.c **** 		VS8812Write(0x4B, 0x20);
+ 843:VS4210/VX8812.c **** 		VS8812Write(0x4C, 0x00);
+ 844:VS4210/VX8812.c **** 		VS8812Write(0x4D, 0x00);
+ 845:VS4210/VX8812.c **** 		VS8812Write(0x4E, 0x00);
+ 846:VS4210/VX8812.c **** 		VS8812Write(0x4F, 0x7F);
+ 847:VS4210/VX8812.c **** 		VS8812Write(0x50, 0x20);
+ 848:VS4210/VX8812.c **** 		VS8812Write(0x51, 0x20);
+ 849:VS4210/VX8812.c **** 		VS8812Write(0x52, 0x00);
+ 850:VS4210/VX8812.c **** 		VS8812Write(0x53, 0x0C);
+ 851:VS4210/VX8812.c **** 		VS8812Write(0x54, 0x00);
+ 852:VS4210/VX8812.c **** 		VS8812Write(0x55, 0xA0);
+ 853:VS4210/VX8812.c **** 		VS8812Write(0x56, 0x28);
+ 854:VS4210/VX8812.c **** 		VS8812Write(0x57, 0x04);
+ 855:VS4210/VX8812.c **** 		VS8812Write(0x58, 0x10);
+ 856:VS4210/VX8812.c **** 		VS8812Write(0x59, 0x08);
+ 857:VS4210/VX8812.c **** 		VS8812Write(0x5A, 0x10);
+ 858:VS4210/VX8812.c **** 		VS8812Write(0x5B, 0x00);
+ 859:VS4210/VX8812.c **** 		VS8812Write(0x5C, 0x68);
+ 860:VS4210/VX8812.c **** 		VS8812Write(0x5D, 0x25);
+ 861:VS4210/VX8812.c **** 		VS8812Write(0x5E, 0x04);
+ 862:VS4210/VX8812.c **** 		VS8812Write(0x5F, 0x00);
+ 863:VS4210/VX8812.c **** 		VS8812Write(0x60, 0xA0);
+ 864:VS4210/VX8812.c **** 		VS8812Write(0x61, 0x41);
+ 865:VS4210/VX8812.c **** 		VS8812Write(0x62, 0x33);
+ 866:VS4210/VX8812.c **** 		VS8812Write(0x63, 0x01);
+ 867:VS4210/VX8812.c **** 		VS8812Write(0x64, 0xFF);
+ 868:VS4210/VX8812.c **** 		VS8812Write(0x65, 0x01);
+ 869:VS4210/VX8812.c **** 		VS8812Write(0x66, 0xFF);
+ 870:VS4210/VX8812.c **** 		VS8812Write(0x67, 0x89);
+ 871:VS4210/VX8812.c **** 		VS8812Write(0x68, 0xAB);
+ 872:VS4210/VX8812.c **** 		VS8812Write(0x69, 0x28);
+ 873:VS4210/VX8812.c **** 		VS8812Write(0x6A, 0x6E);
+ 874:VS4210/VX8812.c **** 		VS8812Write(0x6B, 0x6E);
+ 875:VS4210/VX8812.c **** 		VS8812Write(0x6C, 0x6E);
+ 876:VS4210/VX8812.c **** 		VS8812Write(0x6D, 0x00);
+ 877:VS4210/VX8812.c **** 		VS8812Write(0x6E, 0x00);
+ 878:VS4210/VX8812.c **** 		VS8812Write(0x6F, 0x00);
+ 879:VS4210/VX8812.c **** 		VS8812Write(0x70, 0x00);
+ 880:VS4210/VX8812.c **** 		VS8812Write(0x71, 0x00);
+ 881:VS4210/VX8812.c **** 		VS8812Write(0x72, 0x00);
+ 882:VS4210/VX8812.c **** 		VS8812Write(0x73, 0x00);
+ 883:VS4210/VX8812.c **** 		VS8812Write(0x74, 0x50);
+ 884:VS4210/VX8812.c **** 		VS8812Write(0x75, 0xFF);
+ 885:VS4210/VX8812.c **** 		VS8812Write(0x76, 0xFF);
+ 886:VS4210/VX8812.c **** 		VS8812Write(0x77, 0xFF);
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 19
+
+
+ 887:VS4210/VX8812.c **** 		VS8812Write(0x78, 0xFF);
+ 888:VS4210/VX8812.c **** 		VS8812Write(0x79, 0xFF);
+ 889:VS4210/VX8812.c **** 		VS8812Write(0x7A, 0xFF);
+ 890:VS4210/VX8812.c **** 		VS8812Write(0x7B, 0xFF);
+ 891:VS4210/VX8812.c **** 		VS8812Write(0x7C, 0xFF);
+ 892:VS4210/VX8812.c **** 		VS8812Write(0x7D, 0xF0);
+ 893:VS4210/VX8812.c **** 		VS8812Write(0x7E, 0x70);
+ 894:VS4210/VX8812.c **** 		VS8812Write(0x7F, 0x00);
+ 895:VS4210/VX8812.c **** 		VS8812Write(0x80, 0x00);
+ 896:VS4210/VX8812.c **** 		VS8812Write(0x81, 0x00);
+ 897:VS4210/VX8812.c **** 		VS8812Write(0x82, 0x60);
+ 898:VS4210/VX8812.c **** 		VS8812Write(0x83, 0x06);
+ 899:VS4210/VX8812.c **** 		VS8812Write(0x84, 0x00);
+ 900:VS4210/VX8812.c **** 		VS8812Write(0x85, 0xFB);
+ 901:VS4210/VX8812.c **** 		VS8812Write(0x86, 0x00);
+ 902:VS4210/VX8812.c **** 		VS8812Write(0x87, 0x00);
+ 903:VS4210/VX8812.c **** 		VS8812Write(0x88, 0x00);
+ 904:VS4210/VX8812.c **** 		VS8812Write(0x89, 0x00);
+ 905:VS4210/VX8812.c **** 		VS8812Write(0x8A, 0x00);
+ 906:VS4210/VX8812.c **** 		VS8812Write(0x8B, 0x7E);
+ 907:VS4210/VX8812.c **** 		VS8812Write(0x8C, 0x00);
+ 908:VS4210/VX8812.c **** 		VS8812Write(0x8D, 0x0A);
+ 909:VS4210/VX8812.c **** 		VS8812Write(0x8E, 0x8C);
+ 910:VS4210/VX8812.c **** 		VS8812Write(0x8F, 0x00);
+ 911:VS4210/VX8812.c **** 		VS8812Write(0x90, 0x08);
+ 912:VS4210/VX8812.c **** 		VS8812Write(0x91, 0x01);
+ 913:VS4210/VX8812.c **** 		VS8812Write(0x92, 0xC6);
+ 914:VS4210/VX8812.c **** 		VS8812Write(0x93, 0x32);
+ 915:VS4210/VX8812.c **** 		VS8812Write(0x94, 0x60);
+ 916:VS4210/VX8812.c **** 		VS8812Write(0x95, 0xD0);
+ 917:VS4210/VX8812.c **** 		VS8812Write(0x96, 0x22);
+ 918:VS4210/VX8812.c **** 		VS8812Write(0x97, 0x71);
+ 919:VS4210/VX8812.c **** 		VS8812Write(0x98, 0x40);
+ 920:VS4210/VX8812.c **** 		VS8812Write(0x99, 0x02);
+ 921:VS4210/VX8812.c **** 		VS8812Write(0x9A, 0x00);
+ 922:VS4210/VX8812.c **** 		VS8812Write(0x9B, 0xA0);
+ 923:VS4210/VX8812.c **** 		VS8812Write(0x9C, 0x21);
+ 924:VS4210/VX8812.c **** 		VS8812Write(0x9D, 0x00);
+ 925:VS4210/VX8812.c **** 		VS8812Write(0x9E, 0x00);
+ 926:VS4210/VX8812.c **** 		VS8812Write(0x9F, 0x00);
+ 927:VS4210/VX8812.c **** 		VS8812Write(0xA0, 0x6B);
+ 928:VS4210/VX8812.c **** 		VS8812Write(0xA1, 0x00);
+ 929:VS4210/VX8812.c **** 		VS8812Write(0xA2, 0x80);
+ 930:VS4210/VX8812.c **** 		VS8812Write(0xA3, 0x80);
+ 931:VS4210/VX8812.c **** 		VS8812Write(0xA4, 0x47);
+ 932:VS4210/VX8812.c **** 		VS8812Write(0xA5, 0x80);
+ 933:VS4210/VX8812.c **** 		VS8812Write(0xA6, 0x0C);
+ 934:VS4210/VX8812.c **** 		VS8812Write(0xA7, 0x02);
+ 935:VS4210/VX8812.c **** 		VS8812Write(0xA8, 0x20);
+ 936:VS4210/VX8812.c **** 		VS8812Write(0xA9, 0x10);
+ 937:VS4210/VX8812.c **** 		VS8812Write(0xAA, 0x10);
+ 938:VS4210/VX8812.c **** 		VS8812Write(0xAB, 0x00);
+ 939:VS4210/VX8812.c **** 		VS8812Write(0xAC, 0x42);
+ 940:VS4210/VX8812.c **** 		VS8812Write(0xAD, 0x02);
+ 941:VS4210/VX8812.c **** 		VS8812Write(0xAE, 0x06);
+ 942:VS4210/VX8812.c **** 		VS8812Write(0xAF, 0x04);
+ 943:VS4210/VX8812.c **** 		VS8812Write(0xB0, 0x00);
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 20
+
+
+ 944:VS4210/VX8812.c **** 		VS8812Write(0xB1, 0x00);
+ 945:VS4210/VX8812.c **** 		VS8812Write(0xB2, 0x00);
+ 946:VS4210/VX8812.c **** 		VS8812Write(0xB3, 0x00);
+ 947:VS4210/VX8812.c **** 		VS8812Write(0xB4, 0x00);
+ 948:VS4210/VX8812.c **** 		VS8812Write(0xB5, 0x00);
+ 949:VS4210/VX8812.c **** 		VS8812Write(0xB6, 0x00);
+ 950:VS4210/VX8812.c **** 		VS8812Write(0xC0, 0x8C);
+ 951:VS4210/VX8812.c **** 		VS8812Write(0xC1, 0x7E);
+ 952:VS4210/VX8812.c **** 		VS8812Write(0xC2, 0xDC);
+ 953:VS4210/VX8812.c **** 		VS8812Write(0xC3, 0x20);
+ 954:VS4210/VX8812.c **** 		VS8812Write(0xC4, 0x20);
+ 955:VS4210/VX8812.c **** 		VS8812Write(0xC5, 0x34);
+ 956:VS4210/VX8812.c **** 		VS8812Write(0xC6, 0x18);
+ 957:VS4210/VX8812.c **** 		VS8812Write(0xC7, 0x84);
+ 958:VS4210/VX8812.c **** 		VS8812Write(0xC8, 0x02);
+ 959:VS4210/VX8812.c **** 		VS8812Write(0xD0, 0x02);
+ 960:VS4210/VX8812.c **** 		VS8812Write(0xD1, 0x40);
+ 961:VS4210/VX8812.c **** 		VS8812Write(0xD2, 0x40);
+ 962:VS4210/VX8812.c **** 		VS8812Write(0xD3, 0x40);
+ 963:VS4210/VX8812.c **** 		VS8812Write(0xD4, 0x00);
+ 964:VS4210/VX8812.c **** 		VS8812Write(0xD5, 0x00);
+ 965:VS4210/VX8812.c **** 		VS8812Write(0xD6, 0x00);
+ 966:VS4210/VX8812.c **** 		VS8812Write(0xD7, 0x00);
+ 967:VS4210/VX8812.c **** 		VS8812Write(0xD8, 0x00);
+ 968:VS4210/VX8812.c **** 		VS8812Write(0xD9, 0x00);
+ 969:VS4210/VX8812.c **** 		VS8812Write(0xE0, 0x33);
+ 970:VS4210/VX8812.c **** 		VS8812Write(0xE1, 0xA7);
+ 971:VS4210/VX8812.c **** 		VS8812Write(0xE2, 0x7F);
+ 972:VS4210/VX8812.c **** 		VS8812Write(0xE3, 0x22);
+ 973:VS4210/VX8812.c **** 		VS8812Write(0xE4, 0x0D);
+ 974:VS4210/VX8812.c **** 		VS8812Write(0xE5, 0x0A);
+ 975:VS4210/VX8812.c **** 		VS8812Write(0xE6, 0x00);
+ 976:VS4210/VX8812.c **** 		VS8812Write(0xE7, 0x99);
+ 977:VS4210/VX8812.c **** 		VS8812Write(0xE8, 0x67);
+ 978:VS4210/VX8812.c **** 		VS8812Write(0xE9, 0x02);
+ 979:VS4210/VX8812.c **** 		VS8812Write(0xF0, 0x00);
+ 980:VS4210/VX8812.c **** 		VS8812Write(0xF1, 0x43);
+ 981:VS4210/VX8812.c **** 		VS8812Write(0xF2, 0x1F);
+ 982:VS4210/VX8812.c **** 		VS8812Write(0xF3, 0x1F);
+ 983:VS4210/VX8812.c **** 		VS8812Write(0xF4, 0x22);
+ 984:VS4210/VX8812.c **** 		VS8812Write(0xF5, 0x73);
+ 985:VS4210/VX8812.c **** 		VS8812Write(0xF6, 0x53);
+ 986:VS4210/VX8812.c **** 		VS8812Write(0xF7, 0x80);
+ 987:VS4210/VX8812.c **** 		VS8812Write(0xF8, 0x01);
+ 988:VS4210/VX8812.c **** 		VS8812Write(0xF9, 0x01);
+ 989:VS4210/VX8812.c **** 		VS8812Write(0xFA, 0x00);
+ 990:VS4210/VX8812.c **** 		VS8812Write(0xFB, 0x00);
+ 991:VS4210/VX8812.c **** 		VS8812Write(0xFC, 0x00);
+ 992:VS4210/VX8812.c **** 		VS8812Write(0xFD, 0x70);
+ 993:VS4210/VX8812.c **** 		VS8812Write(0xFE, 0x25);
+ 994:VS4210/VX8812.c **** 		VS8812Write(0xFF, 0x17);
+ 995:VS4210/VX8812.c **** 		break;
+ 996:VS4210/VX8812.c **** 	}
+ 997:VS4210/VX8812.c **** }
+ 142              		.loc 1 997 1 is_stmt 0 view .LVU13
+ 143 0016 10BD     		pop	{r4, pc}
+ 144              	.L6:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 21
+
+
+ 307:VS4210/VX8812.c **** #endif
+ 145              		.loc 1 307 3 is_stmt 1 view .LVU14
+ 146 0018 FD49     		ldr	r1, .L10
+ 147 001a 0520     		movs	r0, #5
+ 148 001c FFF7FEFF 		bl	GraphicsPrint
+ 149              	.LVL6:
+ 310:VS4210/VX8812.c **** 		VS8812Write(0x02, 0x07);
+ 150              		.loc 1 310 3 view .LVU15
+ 151 0020 0021     		movs	r1, #0
+ 152 0022 0120     		movs	r0, #1
+ 153 0024 FFF7FEFF 		bl	VS8812Write
+ 154              	.LVL7:
+ 311:VS4210/VX8812.c **** 		VS8812Write(0x03, 0x1C);
+ 155              		.loc 1 311 3 view .LVU16
+ 156 0028 0721     		movs	r1, #7
+ 157 002a 0220     		movs	r0, #2
+ 158 002c FFF7FEFF 		bl	VS8812Write
+ 159              	.LVL8:
+ 312:VS4210/VX8812.c **** 		VS8812Write(0x04, 0x01);
+ 160              		.loc 1 312 3 view .LVU17
+ 161 0030 1C21     		movs	r1, #28
+ 162 0032 0320     		movs	r0, #3
+ 163 0034 FFF7FEFF 		bl	VS8812Write
+ 164              	.LVL9:
+ 313:VS4210/VX8812.c **** 		VS8812Write(0x05, 0x18);
+ 165              		.loc 1 313 3 view .LVU18
+ 166 0038 0121     		movs	r1, #1
+ 167 003a 0420     		movs	r0, #4
+ 168 003c FFF7FEFF 		bl	VS8812Write
+ 169              	.LVL10:
+ 314:VS4210/VX8812.c **** 		VS8812Write(0x06, 0x00);
+ 170              		.loc 1 314 3 view .LVU19
+ 171 0040 1821     		movs	r1, #24
+ 172 0042 0520     		movs	r0, #5
+ 173 0044 FFF7FEFF 		bl	VS8812Write
+ 174              	.LVL11:
+ 315:VS4210/VX8812.c **** 		VS8812Write(0x07, 0x05);
+ 175              		.loc 1 315 3 view .LVU20
+ 176 0048 0021     		movs	r1, #0
+ 177 004a 0620     		movs	r0, #6
+ 178 004c FFF7FEFF 		bl	VS8812Write
+ 179              	.LVL12:
+ 316:VS4210/VX8812.c **** 		VS8812Write(0x08, 0x00);
+ 180              		.loc 1 316 3 view .LVU21
+ 181 0050 0521     		movs	r1, #5
+ 182 0052 0720     		movs	r0, #7
+ 183 0054 FFF7FEFF 		bl	VS8812Write
+ 184              	.LVL13:
+ 317:VS4210/VX8812.c **** 		VS8812Write(0x09, 0x00);
+ 185              		.loc 1 317 3 view .LVU22
+ 186 0058 0021     		movs	r1, #0
+ 187 005a 0820     		movs	r0, #8
+ 188 005c FFF7FEFF 		bl	VS8812Write
+ 189              	.LVL14:
+ 318:VS4210/VX8812.c **** 		VS8812Write(0x0B, 0x00);
+ 190              		.loc 1 318 3 view .LVU23
+ 191 0060 0021     		movs	r1, #0
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 22
+
+
+ 192 0062 0920     		movs	r0, #9
+ 193 0064 FFF7FEFF 		bl	VS8812Write
+ 194              	.LVL15:
+ 319:VS4210/VX8812.c **** 		VS8812Write(0x0C, 0x00);
+ 195              		.loc 1 319 3 view .LVU24
+ 196 0068 0021     		movs	r1, #0
+ 197 006a 0B20     		movs	r0, #11
+ 198 006c FFF7FEFF 		bl	VS8812Write
+ 199              	.LVL16:
+ 320:VS4210/VX8812.c **** 		VS8812Write(0x0D, 0x83);
+ 200              		.loc 1 320 3 view .LVU25
+ 201 0070 0021     		movs	r1, #0
+ 202 0072 0C20     		movs	r0, #12
+ 203 0074 FFF7FEFF 		bl	VS8812Write
+ 204              	.LVL17:
+ 321:VS4210/VX8812.c **** 		VS8812Write(0x0E, 0x30);
+ 205              		.loc 1 321 3 view .LVU26
+ 206 0078 8321     		movs	r1, #131
+ 207 007a 0D20     		movs	r0, #13
+ 208 007c FFF7FEFF 		bl	VS8812Write
+ 209              	.LVL18:
+ 322:VS4210/VX8812.c **** 		VS8812Write(0x0F, 0x07);
+ 210              		.loc 1 322 3 view .LVU27
+ 211 0080 3021     		movs	r1, #48
+ 212 0082 0E20     		movs	r0, #14
+ 213 0084 FFF7FEFF 		bl	VS8812Write
+ 214              	.LVL19:
+ 323:VS4210/VX8812.c **** 		VS8812Write(0x10, 0x80);
+ 215              		.loc 1 323 3 view .LVU28
+ 216 0088 0721     		movs	r1, #7
+ 217 008a 0F20     		movs	r0, #15
+ 218 008c FFF7FEFF 		bl	VS8812Write
+ 219              	.LVL20:
+ 324:VS4210/VX8812.c **** 		VS8812Write(0x11, 0x28);
+ 220              		.loc 1 324 3 view .LVU29
+ 221 0090 8021     		movs	r1, #128
+ 222 0092 1020     		movs	r0, #16
+ 223 0094 FFF7FEFF 		bl	VS8812Write
+ 224              	.LVL21:
+ 325:VS4210/VX8812.c **** 		VS8812Write(0x12, 0x52);
+ 225              		.loc 1 325 3 view .LVU30
+ 226 0098 2821     		movs	r1, #40
+ 227 009a 1120     		movs	r0, #17
+ 228 009c FFF7FEFF 		bl	VS8812Write
+ 229              	.LVL22:
+ 326:VS4210/VX8812.c **** 		VS8812Write(0x13, 0x28);
+ 230              		.loc 1 326 3 view .LVU31
+ 231 00a0 5221     		movs	r1, #82
+ 232 00a2 1220     		movs	r0, #18
+ 233 00a4 FFF7FEFF 		bl	VS8812Write
+ 234              	.LVL23:
+ 327:VS4210/VX8812.c **** 		VS8812Write(0x14, 0xDB);
+ 235              		.loc 1 327 3 view .LVU32
+ 236 00a8 2821     		movs	r1, #40
+ 237 00aa 1320     		movs	r0, #19
+ 238 00ac FFF7FEFF 		bl	VS8812Write
+ 239              	.LVL24:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 23
+
+
+ 328:VS4210/VX8812.c **** 		VS8812Write(0x15, 0x88);
+ 240              		.loc 1 328 3 view .LVU33
+ 241 00b0 DB21     		movs	r1, #219
+ 242 00b2 1420     		movs	r0, #20
+ 243 00b4 FFF7FEFF 		bl	VS8812Write
+ 244              	.LVL25:
+ 329:VS4210/VX8812.c **** 		VS8812Write(0x16, 0x06);
+ 245              		.loc 1 329 3 view .LVU34
+ 246 00b8 8821     		movs	r1, #136
+ 247 00ba 1520     		movs	r0, #21
+ 248 00bc FFF7FEFF 		bl	VS8812Write
+ 249              	.LVL26:
+ 330:VS4210/VX8812.c **** 		VS8812Write(0x17, 0x08 + 7);
+ 250              		.loc 1 330 3 view .LVU35
+ 251 00c0 0621     		movs	r1, #6
+ 252 00c2 1620     		movs	r0, #22
+ 253 00c4 FFF7FEFF 		bl	VS8812Write
+ 254              	.LVL27:
+ 331:VS4210/VX8812.c **** 		VS8812Write(0x18, 0x00);
+ 255              		.loc 1 331 3 view .LVU36
+ 256 00c8 0F21     		movs	r1, #15
+ 257 00ca 1720     		movs	r0, #23
+ 258 00cc FFF7FEFF 		bl	VS8812Write
+ 259              	.LVL28:
+ 332:VS4210/VX8812.c **** 		VS8812Write(0x19, 0x00);
+ 260              		.loc 1 332 3 view .LVU37
+ 261 00d0 0021     		movs	r1, #0
+ 262 00d2 1820     		movs	r0, #24
+ 263 00d4 FFF7FEFF 		bl	VS8812Write
+ 264              	.LVL29:
+ 333:VS4210/VX8812.c **** 		VS8812Write(0x1A, 0x20);
+ 265              		.loc 1 333 3 view .LVU38
+ 266 00d8 0021     		movs	r1, #0
+ 267 00da 1920     		movs	r0, #25
+ 268 00dc FFF7FEFF 		bl	VS8812Write
+ 269              	.LVL30:
+ 334:VS4210/VX8812.c **** 		VS8812Write(0x1B, 0x32);
+ 270              		.loc 1 334 3 view .LVU39
+ 271 00e0 2021     		movs	r1, #32
+ 272 00e2 1A20     		movs	r0, #26
+ 273 00e4 FFF7FEFF 		bl	VS8812Write
+ 274              	.LVL31:
+ 335:VS4210/VX8812.c **** 		VS8812Write(0x1C, 0x00);
+ 275              		.loc 1 335 3 view .LVU40
+ 276 00e8 3221     		movs	r1, #50
+ 277 00ea 1B20     		movs	r0, #27
+ 278 00ec FFF7FEFF 		bl	VS8812Write
+ 279              	.LVL32:
+ 336:VS4210/VX8812.c **** 		VS8812Write(0x1D, 0x00);
+ 280              		.loc 1 336 3 view .LVU41
+ 281 00f0 0021     		movs	r1, #0
+ 282 00f2 1C20     		movs	r0, #28
+ 283 00f4 FFF7FEFF 		bl	VS8812Write
+ 284              	.LVL33:
+ 337:VS4210/VX8812.c **** 		VS8812Write(0x1E, 0x00);
+ 285              		.loc 1 337 3 view .LVU42
+ 286 00f8 0021     		movs	r1, #0
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 24
+
+
+ 287 00fa 1D20     		movs	r0, #29
+ 288 00fc FFF7FEFF 		bl	VS8812Write
+ 289              	.LVL34:
+ 338:VS4210/VX8812.c **** 		VS8812Write(0x1F, 0x00);
+ 290              		.loc 1 338 3 view .LVU43
+ 291 0100 0021     		movs	r1, #0
+ 292 0102 1E20     		movs	r0, #30
+ 293 0104 FFF7FEFF 		bl	VS8812Write
+ 294              	.LVL35:
+ 339:VS4210/VX8812.c **** #if (TH0701024600NYR50S1 == OFF)
+ 295              		.loc 1 339 3 view .LVU44
+ 296 0108 0021     		movs	r1, #0
+ 297 010a 1F20     		movs	r0, #31
+ 298 010c FFF7FEFF 		bl	VS8812Write
+ 299              	.LVL36:
+ 341:VS4210/VX8812.c **** #else
+ 300              		.loc 1 341 3 view .LVU45
+ 301 0110 0321     		movs	r1, #3
+ 302 0112 2020     		movs	r0, #32
+ 303 0114 FFF7FEFF 		bl	VS8812Write
+ 304              	.LVL37:
+ 345:VS4210/VX8812.c **** #if (TH0701024600NYR50S1 == OFF)
+ 305              		.loc 1 345 3 view .LVU46
+ 306 0118 0021     		movs	r1, #0
+ 307 011a 2120     		movs	r0, #33
+ 308 011c FFF7FEFF 		bl	VS8812Write
+ 309              	.LVL38:
+ 347:VS4210/VX8812.c **** #else
+ 310              		.loc 1 347 3 view .LVU47
+ 311 0120 1021     		movs	r1, #16
+ 312 0122 2220     		movs	r0, #34
+ 313 0124 FFF7FEFF 		bl	VS8812Write
+ 314              	.LVL39:
+ 351:VS4210/VX8812.c **** 		VS8812Write(0x24, 0x00);
+ 315              		.loc 1 351 3 view .LVU48
+ 316 0128 8021     		movs	r1, #128
+ 317 012a 2320     		movs	r0, #35
+ 318 012c FFF7FEFF 		bl	VS8812Write
+ 319              	.LVL40:
+ 352:VS4210/VX8812.c **** 		VS8812Write(0x25, 0xA0);
+ 320              		.loc 1 352 3 view .LVU49
+ 321 0130 0021     		movs	r1, #0
+ 322 0132 2420     		movs	r0, #36
+ 323 0134 FFF7FEFF 		bl	VS8812Write
+ 324              	.LVL41:
+ 353:VS4210/VX8812.c **** 		VS8812Write(0x26, 0x03);
+ 325              		.loc 1 353 3 view .LVU50
+ 326 0138 A021     		movs	r1, #160
+ 327 013a 2520     		movs	r0, #37
+ 328 013c FFF7FEFF 		bl	VS8812Write
+ 329              	.LVL42:
+ 354:VS4210/VX8812.c **** 		VS8812Write(0x27, 0x1C);
+ 330              		.loc 1 354 3 view .LVU51
+ 331 0140 0321     		movs	r1, #3
+ 332 0142 2620     		movs	r0, #38
+ 333 0144 FFF7FEFF 		bl	VS8812Write
+ 334              	.LVL43:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 25
+
+
+ 355:VS4210/VX8812.c **** 		VS8812Write(0x28, 0x00);
+ 335              		.loc 1 355 3 view .LVU52
+ 336 0148 1C21     		movs	r1, #28
+ 337 014a 2720     		movs	r0, #39
+ 338 014c FFF7FEFF 		bl	VS8812Write
+ 339              	.LVL44:
+ 356:VS4210/VX8812.c **** 		VS8812Write(0x29, 0xFF);
+ 340              		.loc 1 356 3 view .LVU53
+ 341 0150 0021     		movs	r1, #0
+ 342 0152 2820     		movs	r0, #40
+ 343 0154 FFF7FEFF 		bl	VS8812Write
+ 344              	.LVL45:
+ 357:VS4210/VX8812.c **** 		VS8812Write(0x31, 0x80);
+ 345              		.loc 1 357 3 view .LVU54
+ 346 0158 FF21     		movs	r1, #255
+ 347 015a 2920     		movs	r0, #41
+ 348 015c FFF7FEFF 		bl	VS8812Write
+ 349              	.LVL46:
+ 358:VS4210/VX8812.c **** #if (StartPowerBlackScreen == OFF)
+ 350              		.loc 1 358 3 view .LVU55
+ 351 0160 8021     		movs	r1, #128
+ 352 0162 3120     		movs	r0, #49
+ 353 0164 FFF7FEFF 		bl	VS8812Write
+ 354              	.LVL47:
+ 362:VS4210/VX8812.c **** #endif
+ 355              		.loc 1 362 3 view .LVU56
+ 356 0168 0021     		movs	r1, #0
+ 357 016a 3220     		movs	r0, #50
+ 358 016c FFF7FEFF 		bl	VS8812Write
+ 359              	.LVL48:
+ 364:VS4210/VX8812.c **** 		VS8812Write(0x34, 0xA0);
+ 360              		.loc 1 364 3 view .LVU57
+ 361 0170 8021     		movs	r1, #128
+ 362 0172 3320     		movs	r0, #51
+ 363 0174 FFF7FEFF 		bl	VS8812Write
+ 364              	.LVL49:
+ 365:VS4210/VX8812.c **** 		VS8812Write(0x35, 0x18);
+ 365              		.loc 1 365 3 view .LVU58
+ 366 0178 A021     		movs	r1, #160
+ 367 017a 3420     		movs	r0, #52
+ 368 017c FFF7FEFF 		bl	VS8812Write
+ 369              	.LVL50:
+ 366:VS4210/VX8812.c **** 		VS8812Write(0x36, 0x46);
+ 370              		.loc 1 366 3 view .LVU59
+ 371 0180 1821     		movs	r1, #24
+ 372 0182 3520     		movs	r0, #53
+ 373 0184 FFF7FEFF 		bl	VS8812Write
+ 374              	.LVL51:
+ 367:VS4210/VX8812.c **** 		VS8812Write(0x37, 0x64);
+ 375              		.loc 1 367 3 view .LVU60
+ 376 0188 4621     		movs	r1, #70
+ 377 018a 3620     		movs	r0, #54
+ 378 018c FFF7FEFF 		bl	VS8812Write
+ 379              	.LVL52:
+ 368:VS4210/VX8812.c **** 		VS8812Write(0x38, 0x00);
+ 380              		.loc 1 368 3 view .LVU61
+ 381 0190 6421     		movs	r1, #100
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 26
+
+
+ 382 0192 3720     		movs	r0, #55
+ 383 0194 FFF7FEFF 		bl	VS8812Write
+ 384              	.LVL53:
+ 369:VS4210/VX8812.c **** 		VS8812Write(0x39, 0xFF);
+ 385              		.loc 1 369 3 view .LVU62
+ 386 0198 0021     		movs	r1, #0
+ 387 019a 3820     		movs	r0, #56
+ 388 019c FFF7FEFF 		bl	VS8812Write
+ 389              	.LVL54:
+ 370:VS4210/VX8812.c **** 		VS8812Write(0x3A, 0x00);
+ 390              		.loc 1 370 3 view .LVU63
+ 391 01a0 FF21     		movs	r1, #255
+ 392 01a2 3920     		movs	r0, #57
+ 393 01a4 FFF7FEFF 		bl	VS8812Write
+ 394              	.LVL55:
+ 371:VS4210/VX8812.c **** 		VS8812Write(0x3B, 0x80);
+ 395              		.loc 1 371 3 view .LVU64
+ 396 01a8 0021     		movs	r1, #0
+ 397 01aa 3A20     		movs	r0, #58
+ 398 01ac FFF7FEFF 		bl	VS8812Write
+ 399              	.LVL56:
+ 372:VS4210/VX8812.c **** 		VS8812Write(0x3C, 0x80);
+ 400              		.loc 1 372 3 view .LVU65
+ 401 01b0 8021     		movs	r1, #128
+ 402 01b2 3B20     		movs	r0, #59
+ 403 01b4 FFF7FEFF 		bl	VS8812Write
+ 404              	.LVL57:
+ 373:VS4210/VX8812.c **** 		VS8812Write(0x3D, 0x80);
+ 405              		.loc 1 373 3 view .LVU66
+ 406 01b8 8021     		movs	r1, #128
+ 407 01ba 3C20     		movs	r0, #60
+ 408 01bc FFF7FEFF 		bl	VS8812Write
+ 409              	.LVL58:
+ 374:VS4210/VX8812.c **** 		VS8812Write(0x3E, 0x80);
+ 410              		.loc 1 374 3 view .LVU67
+ 411 01c0 8021     		movs	r1, #128
+ 412 01c2 3D20     		movs	r0, #61
+ 413 01c4 FFF7FEFF 		bl	VS8812Write
+ 414              	.LVL59:
+ 375:VS4210/VX8812.c **** 		VS8812Write(0x3F, 0x80);
+ 415              		.loc 1 375 3 view .LVU68
+ 416 01c8 8021     		movs	r1, #128
+ 417 01ca 3E20     		movs	r0, #62
+ 418 01cc FFF7FEFF 		bl	VS8812Write
+ 419              	.LVL60:
+ 376:VS4210/VX8812.c **** 		VS8812Write(0x40, 0x80);
+ 420              		.loc 1 376 3 view .LVU69
+ 421 01d0 8021     		movs	r1, #128
+ 422 01d2 3F20     		movs	r0, #63
+ 423 01d4 FFF7FEFF 		bl	VS8812Write
+ 424              	.LVL61:
+ 377:VS4210/VX8812.c **** 		VS8812Write(0x41, 0x60);
+ 425              		.loc 1 377 3 view .LVU70
+ 426 01d8 8021     		movs	r1, #128
+ 427 01da 4020     		movs	r0, #64
+ 428 01dc FFF7FEFF 		bl	VS8812Write
+ 429              	.LVL62:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 27
+
+
+ 378:VS4210/VX8812.c **** 		VS8812Write(0x42, 0x5F);
+ 430              		.loc 1 378 3 view .LVU71
+ 431 01e0 6021     		movs	r1, #96
+ 432 01e2 4120     		movs	r0, #65
+ 433 01e4 FFF7FEFF 		bl	VS8812Write
+ 434              	.LVL63:
+ 379:VS4210/VX8812.c **** 		VS8812Write(0x43, 0x37);
+ 435              		.loc 1 379 3 view .LVU72
+ 436 01e8 5F21     		movs	r1, #95
+ 437 01ea 4220     		movs	r0, #66
+ 438 01ec FFF7FEFF 		bl	VS8812Write
+ 439              	.LVL64:
+ 380:VS4210/VX8812.c **** 		VS8812Write(0x44, 0x14);
+ 440              		.loc 1 380 3 view .LVU73
+ 441 01f0 3721     		movs	r1, #55
+ 442 01f2 4320     		movs	r0, #67
+ 443 01f4 FFF7FEFF 		bl	VS8812Write
+ 444              	.LVL65:
+ 381:VS4210/VX8812.c **** 		VS8812Write(0x45, 0x00);
+ 445              		.loc 1 381 3 view .LVU74
+ 446 01f8 1421     		movs	r1, #20
+ 447 01fa 4420     		movs	r0, #68
+ 448 01fc FFF7FEFF 		bl	VS8812Write
+ 449              	.LVL66:
+ 382:VS4210/VX8812.c **** 		VS8812Write(0x46, 0x00);
+ 450              		.loc 1 382 3 view .LVU75
+ 451 0200 0021     		movs	r1, #0
+ 452 0202 4520     		movs	r0, #69
+ 453 0204 FFF7FEFF 		bl	VS8812Write
+ 454              	.LVL67:
+ 383:VS4210/VX8812.c **** 		VS8812Write(0x47, 0x00);
+ 455              		.loc 1 383 3 view .LVU76
+ 456 0208 0021     		movs	r1, #0
+ 457 020a 4620     		movs	r0, #70
+ 458 020c FFF7FEFF 		bl	VS8812Write
+ 459              	.LVL68:
+ 384:VS4210/VX8812.c **** 		VS8812Write(0x48, 0x00);
+ 460              		.loc 1 384 3 view .LVU77
+ 461 0210 0021     		movs	r1, #0
+ 462 0212 4720     		movs	r0, #71
+ 463 0214 FFF7FEFF 		bl	VS8812Write
+ 464              	.LVL69:
+ 385:VS4210/VX8812.c **** 		VS8812Write(0x49, 0x01);
+ 465              		.loc 1 385 3 view .LVU78
+ 466 0218 0021     		movs	r1, #0
+ 467 021a 4820     		movs	r0, #72
+ 468 021c FFF7FEFF 		bl	VS8812Write
+ 469              	.LVL70:
+ 386:VS4210/VX8812.c **** 		VS8812Write(0x4A, 0x20);
+ 470              		.loc 1 386 3 view .LVU79
+ 471 0220 0121     		movs	r1, #1
+ 472 0222 4920     		movs	r0, #73
+ 473 0224 FFF7FEFF 		bl	VS8812Write
+ 474              	.LVL71:
+ 387:VS4210/VX8812.c **** 		VS8812Write(0x4B, 0x20);
+ 475              		.loc 1 387 3 view .LVU80
+ 476 0228 2021     		movs	r1, #32
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 28
+
+
+ 477 022a 4A20     		movs	r0, #74
+ 478 022c FFF7FEFF 		bl	VS8812Write
+ 479              	.LVL72:
+ 388:VS4210/VX8812.c **** 		VS8812Write(0x4C, 0x00);
+ 480              		.loc 1 388 3 view .LVU81
+ 481 0230 2021     		movs	r1, #32
+ 482 0232 4B20     		movs	r0, #75
+ 483 0234 FFF7FEFF 		bl	VS8812Write
+ 484              	.LVL73:
+ 389:VS4210/VX8812.c **** 		VS8812Write(0x4D, 0x00);
+ 485              		.loc 1 389 3 view .LVU82
+ 486 0238 0021     		movs	r1, #0
+ 487 023a 4C20     		movs	r0, #76
+ 488 023c FFF7FEFF 		bl	VS8812Write
+ 489              	.LVL74:
+ 390:VS4210/VX8812.c **** 		VS8812Write(0x4E, 0x00);
+ 490              		.loc 1 390 3 view .LVU83
+ 491 0240 0021     		movs	r1, #0
+ 492 0242 4D20     		movs	r0, #77
+ 493 0244 FFF7FEFF 		bl	VS8812Write
+ 494              	.LVL75:
+ 391:VS4210/VX8812.c **** 		VS8812Write(0x4F, 0x7F);
+ 495              		.loc 1 391 3 view .LVU84
+ 496 0248 0021     		movs	r1, #0
+ 497 024a 4E20     		movs	r0, #78
+ 498 024c FFF7FEFF 		bl	VS8812Write
+ 499              	.LVL76:
+ 392:VS4210/VX8812.c **** 		VS8812Write(0x50, 0x20);
+ 500              		.loc 1 392 3 view .LVU85
+ 501 0250 7F21     		movs	r1, #127
+ 502 0252 4F20     		movs	r0, #79
+ 503 0254 FFF7FEFF 		bl	VS8812Write
+ 504              	.LVL77:
+ 393:VS4210/VX8812.c **** 		VS8812Write(0x51, 0x20);
+ 505              		.loc 1 393 3 view .LVU86
+ 506 0258 2021     		movs	r1, #32
+ 507 025a 5020     		movs	r0, #80
+ 508 025c FFF7FEFF 		bl	VS8812Write
+ 509              	.LVL78:
+ 394:VS4210/VX8812.c **** 		VS8812Write(0x52, 0x00);
+ 510              		.loc 1 394 3 view .LVU87
+ 511 0260 2021     		movs	r1, #32
+ 512 0262 5120     		movs	r0, #81
+ 513 0264 FFF7FEFF 		bl	VS8812Write
+ 514              	.LVL79:
+ 395:VS4210/VX8812.c **** 		VS8812Write(0x53, 0x0C);
+ 515              		.loc 1 395 3 view .LVU88
+ 516 0268 0021     		movs	r1, #0
+ 517 026a 5220     		movs	r0, #82
+ 518 026c FFF7FEFF 		bl	VS8812Write
+ 519              	.LVL80:
+ 396:VS4210/VX8812.c **** 		VS8812Write(0x54, 0x00);
+ 520              		.loc 1 396 3 view .LVU89
+ 521 0270 0C21     		movs	r1, #12
+ 522 0272 5320     		movs	r0, #83
+ 523 0274 FFF7FEFF 		bl	VS8812Write
+ 524              	.LVL81:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 29
+
+
+ 397:VS4210/VX8812.c **** 		VS8812Write(0x55, 0xA0);
+ 525              		.loc 1 397 3 view .LVU90
+ 526 0278 0021     		movs	r1, #0
+ 527 027a 5420     		movs	r0, #84
+ 528 027c FFF7FEFF 		bl	VS8812Write
+ 529              	.LVL82:
+ 398:VS4210/VX8812.c **** 		VS8812Write(0x56, 0x28);
+ 530              		.loc 1 398 3 view .LVU91
+ 531 0280 A021     		movs	r1, #160
+ 532 0282 5520     		movs	r0, #85
+ 533 0284 FFF7FEFF 		bl	VS8812Write
+ 534              	.LVL83:
+ 399:VS4210/VX8812.c **** 		VS8812Write(0x57, 0x04);
+ 535              		.loc 1 399 3 view .LVU92
+ 536 0288 2821     		movs	r1, #40
+ 537 028a 5620     		movs	r0, #86
+ 538 028c FFF7FEFF 		bl	VS8812Write
+ 539              	.LVL84:
+ 400:VS4210/VX8812.c **** 		VS8812Write(0x58, 0x10);
+ 540              		.loc 1 400 3 view .LVU93
+ 541 0290 0421     		movs	r1, #4
+ 542 0292 5720     		movs	r0, #87
+ 543 0294 FFF7FEFF 		bl	VS8812Write
+ 544              	.LVL85:
+ 401:VS4210/VX8812.c **** 		VS8812Write(0x59, 0x08);
+ 545              		.loc 1 401 3 view .LVU94
+ 546 0298 1021     		movs	r1, #16
+ 547 029a 5820     		movs	r0, #88
+ 548 029c FFF7FEFF 		bl	VS8812Write
+ 549              	.LVL86:
+ 402:VS4210/VX8812.c **** 		VS8812Write(0x5A, 0x10);
+ 550              		.loc 1 402 3 view .LVU95
+ 551 02a0 0821     		movs	r1, #8
+ 552 02a2 5920     		movs	r0, #89
+ 553 02a4 FFF7FEFF 		bl	VS8812Write
+ 554              	.LVL87:
+ 403:VS4210/VX8812.c **** 		VS8812Write(0x5B, 0x00);
+ 555              		.loc 1 403 3 view .LVU96
+ 556 02a8 1021     		movs	r1, #16
+ 557 02aa 5A20     		movs	r0, #90
+ 558 02ac FFF7FEFF 		bl	VS8812Write
+ 559              	.LVL88:
+ 404:VS4210/VX8812.c **** 		VS8812Write(0x5C, 0x68);
+ 560              		.loc 1 404 3 view .LVU97
+ 561 02b0 0021     		movs	r1, #0
+ 562 02b2 5B20     		movs	r0, #91
+ 563 02b4 FFF7FEFF 		bl	VS8812Write
+ 564              	.LVL89:
+ 405:VS4210/VX8812.c **** 		VS8812Write(0x5D, 0x25);
+ 565              		.loc 1 405 3 view .LVU98
+ 566 02b8 6821     		movs	r1, #104
+ 567 02ba 5C20     		movs	r0, #92
+ 568 02bc FFF7FEFF 		bl	VS8812Write
+ 569              	.LVL90:
+ 406:VS4210/VX8812.c **** 		VS8812Write(0x5E, 0x04);
+ 570              		.loc 1 406 3 view .LVU99
+ 571 02c0 2521     		movs	r1, #37
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 30
+
+
+ 572 02c2 5D20     		movs	r0, #93
+ 573 02c4 FFF7FEFF 		bl	VS8812Write
+ 574              	.LVL91:
+ 407:VS4210/VX8812.c **** 		VS8812Write(0x5F, 0x00);
+ 575              		.loc 1 407 3 view .LVU100
+ 576 02c8 0421     		movs	r1, #4
+ 577 02ca 5E20     		movs	r0, #94
+ 578 02cc FFF7FEFF 		bl	VS8812Write
+ 579              	.LVL92:
+ 408:VS4210/VX8812.c **** 		VS8812Write(0x60, 0xA0);
+ 580              		.loc 1 408 3 view .LVU101
+ 581 02d0 0021     		movs	r1, #0
+ 582 02d2 5F20     		movs	r0, #95
+ 583 02d4 FFF7FEFF 		bl	VS8812Write
+ 584              	.LVL93:
+ 409:VS4210/VX8812.c **** 		VS8812Write(0x61, 0x41);
+ 585              		.loc 1 409 3 view .LVU102
+ 586 02d8 A021     		movs	r1, #160
+ 587 02da 6020     		movs	r0, #96
+ 588 02dc FFF7FEFF 		bl	VS8812Write
+ 589              	.LVL94:
+ 410:VS4210/VX8812.c **** 		VS8812Write(0x62, 0x33);
+ 590              		.loc 1 410 3 view .LVU103
+ 591 02e0 4121     		movs	r1, #65
+ 592 02e2 6120     		movs	r0, #97
+ 593 02e4 FFF7FEFF 		bl	VS8812Write
+ 594              	.LVL95:
+ 411:VS4210/VX8812.c **** 		VS8812Write(0x63, 0x01);
+ 595              		.loc 1 411 3 view .LVU104
+ 596 02e8 3321     		movs	r1, #51
+ 597 02ea 6220     		movs	r0, #98
+ 598 02ec FFF7FEFF 		bl	VS8812Write
+ 599              	.LVL96:
+ 412:VS4210/VX8812.c **** 		VS8812Write(0x64, 0xFF);
+ 600              		.loc 1 412 3 view .LVU105
+ 601 02f0 0121     		movs	r1, #1
+ 602 02f2 6320     		movs	r0, #99
+ 603 02f4 FFF7FEFF 		bl	VS8812Write
+ 604              	.LVL97:
+ 413:VS4210/VX8812.c **** 		VS8812Write(0x65, 0x01);
+ 605              		.loc 1 413 3 view .LVU106
+ 606 02f8 FF21     		movs	r1, #255
+ 607 02fa 6420     		movs	r0, #100
+ 608 02fc FFF7FEFF 		bl	VS8812Write
+ 609              	.LVL98:
+ 414:VS4210/VX8812.c **** 		VS8812Write(0x66, 0xFF);
+ 610              		.loc 1 414 3 view .LVU107
+ 611 0300 0121     		movs	r1, #1
+ 612 0302 6520     		movs	r0, #101
+ 613 0304 FFF7FEFF 		bl	VS8812Write
+ 614              	.LVL99:
+ 415:VS4210/VX8812.c **** 		VS8812Write(0x67, 0x89);
+ 615              		.loc 1 415 3 view .LVU108
+ 616 0308 FF21     		movs	r1, #255
+ 617 030a 6620     		movs	r0, #102
+ 618 030c FFF7FEFF 		bl	VS8812Write
+ 619              	.LVL100:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 31
+
+
+ 416:VS4210/VX8812.c **** 		VS8812Write(0x68, 0xAB);
+ 620              		.loc 1 416 3 view .LVU109
+ 621 0310 8921     		movs	r1, #137
+ 622 0312 6720     		movs	r0, #103
+ 623 0314 FFF7FEFF 		bl	VS8812Write
+ 624              	.LVL101:
+ 417:VS4210/VX8812.c **** 		VS8812Write(0x69, 0x28);
+ 625              		.loc 1 417 3 view .LVU110
+ 626 0318 AB21     		movs	r1, #171
+ 627 031a 6820     		movs	r0, #104
+ 628 031c FFF7FEFF 		bl	VS8812Write
+ 629              	.LVL102:
+ 418:VS4210/VX8812.c **** 		VS8812Write(0x6A, 0x6E);
+ 630              		.loc 1 418 3 view .LVU111
+ 631 0320 2821     		movs	r1, #40
+ 632 0322 6920     		movs	r0, #105
+ 633 0324 FFF7FEFF 		bl	VS8812Write
+ 634              	.LVL103:
+ 419:VS4210/VX8812.c **** 		VS8812Write(0x6B, 0x6E);
+ 635              		.loc 1 419 3 view .LVU112
+ 636 0328 6E21     		movs	r1, #110
+ 637 032a 6A20     		movs	r0, #106
+ 638 032c FFF7FEFF 		bl	VS8812Write
+ 639              	.LVL104:
+ 420:VS4210/VX8812.c **** 		VS8812Write(0x6C, 0x6E);
+ 640              		.loc 1 420 3 view .LVU113
+ 641 0330 6E21     		movs	r1, #110
+ 642 0332 6B20     		movs	r0, #107
+ 643 0334 FFF7FEFF 		bl	VS8812Write
+ 644              	.LVL105:
+ 421:VS4210/VX8812.c **** 		VS8812Write(0x6D, 0x00);
+ 645              		.loc 1 421 3 view .LVU114
+ 646 0338 6E21     		movs	r1, #110
+ 647 033a 6C20     		movs	r0, #108
+ 648 033c FFF7FEFF 		bl	VS8812Write
+ 649              	.LVL106:
+ 422:VS4210/VX8812.c **** 		VS8812Write(0x6E, 0x00);
+ 650              		.loc 1 422 3 view .LVU115
+ 651 0340 0021     		movs	r1, #0
+ 652 0342 6D20     		movs	r0, #109
+ 653 0344 FFF7FEFF 		bl	VS8812Write
+ 654              	.LVL107:
+ 423:VS4210/VX8812.c **** 		VS8812Write(0x6F, 0x00);
+ 655              		.loc 1 423 3 view .LVU116
+ 656 0348 0021     		movs	r1, #0
+ 657 034a 6E20     		movs	r0, #110
+ 658 034c FFF7FEFF 		bl	VS8812Write
+ 659              	.LVL108:
+ 424:VS4210/VX8812.c **** 		VS8812Write(0x70, 0x00);
+ 660              		.loc 1 424 3 view .LVU117
+ 661 0350 0021     		movs	r1, #0
+ 662 0352 6F20     		movs	r0, #111
+ 663 0354 FFF7FEFF 		bl	VS8812Write
+ 664              	.LVL109:
+ 425:VS4210/VX8812.c **** 		VS8812Write(0x71, 0x00);
+ 665              		.loc 1 425 3 view .LVU118
+ 666 0358 0021     		movs	r1, #0
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 32
+
+
+ 667 035a 7020     		movs	r0, #112
+ 668 035c FFF7FEFF 		bl	VS8812Write
+ 669              	.LVL110:
+ 426:VS4210/VX8812.c **** 		VS8812Write(0x72, 0x00);
+ 670              		.loc 1 426 3 view .LVU119
+ 671 0360 0021     		movs	r1, #0
+ 672 0362 7120     		movs	r0, #113
+ 673 0364 FFF7FEFF 		bl	VS8812Write
+ 674              	.LVL111:
+ 427:VS4210/VX8812.c **** 		VS8812Write(0x73, 0x00);
+ 675              		.loc 1 427 3 view .LVU120
+ 676 0368 0021     		movs	r1, #0
+ 677 036a 7220     		movs	r0, #114
+ 678 036c FFF7FEFF 		bl	VS8812Write
+ 679              	.LVL112:
+ 428:VS4210/VX8812.c **** 		VS8812Write(0x74, 0x10);
+ 680              		.loc 1 428 3 view .LVU121
+ 681 0370 0021     		movs	r1, #0
+ 682 0372 7320     		movs	r0, #115
+ 683 0374 FFF7FEFF 		bl	VS8812Write
+ 684              	.LVL113:
+ 429:VS4210/VX8812.c **** 		VS8812Write(0x75, 0xFF);
+ 685              		.loc 1 429 3 view .LVU122
+ 686 0378 1021     		movs	r1, #16
+ 687 037a 7420     		movs	r0, #116
+ 688 037c FFF7FEFF 		bl	VS8812Write
+ 689              	.LVL114:
+ 430:VS4210/VX8812.c **** 		VS8812Write(0x76, 0xFF);
+ 690              		.loc 1 430 3 view .LVU123
+ 691 0380 FF21     		movs	r1, #255
+ 692 0382 7520     		movs	r0, #117
+ 693 0384 FFF7FEFF 		bl	VS8812Write
+ 694              	.LVL115:
+ 431:VS4210/VX8812.c **** 		VS8812Write(0x77, 0xFF);
+ 695              		.loc 1 431 3 view .LVU124
+ 696 0388 FF21     		movs	r1, #255
+ 697 038a 7620     		movs	r0, #118
+ 698 038c FFF7FEFF 		bl	VS8812Write
+ 699              	.LVL116:
+ 432:VS4210/VX8812.c **** 		VS8812Write(0x78, 0xFF);
+ 700              		.loc 1 432 3 view .LVU125
+ 701 0390 FF21     		movs	r1, #255
+ 702 0392 7720     		movs	r0, #119
+ 703 0394 FFF7FEFF 		bl	VS8812Write
+ 704              	.LVL117:
+ 433:VS4210/VX8812.c **** 		VS8812Write(0x79, 0xFF);
+ 705              		.loc 1 433 3 view .LVU126
+ 706 0398 FF21     		movs	r1, #255
+ 707 039a 7820     		movs	r0, #120
+ 708 039c FFF7FEFF 		bl	VS8812Write
+ 709              	.LVL118:
+ 434:VS4210/VX8812.c **** 		VS8812Write(0x7A, 0xFF);
+ 710              		.loc 1 434 3 view .LVU127
+ 711 03a0 FF21     		movs	r1, #255
+ 712 03a2 7920     		movs	r0, #121
+ 713 03a4 FFF7FEFF 		bl	VS8812Write
+ 714              	.LVL119:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 33
+
+
+ 435:VS4210/VX8812.c **** 		VS8812Write(0x7B, 0xFF);
+ 715              		.loc 1 435 3 view .LVU128
+ 716 03a8 FF21     		movs	r1, #255
+ 717 03aa 7A20     		movs	r0, #122
+ 718 03ac FFF7FEFF 		bl	VS8812Write
+ 719              	.LVL120:
+ 436:VS4210/VX8812.c **** 		VS8812Write(0x7C, 0xFF);
+ 720              		.loc 1 436 3 view .LVU129
+ 721 03b0 FF21     		movs	r1, #255
+ 722 03b2 7B20     		movs	r0, #123
+ 723 03b4 FFF7FEFF 		bl	VS8812Write
+ 724              	.LVL121:
+ 437:VS4210/VX8812.c **** 		VS8812Write(0x7D, 0xF0);
+ 725              		.loc 1 437 3 view .LVU130
+ 726 03b8 FF21     		movs	r1, #255
+ 727 03ba 7C20     		movs	r0, #124
+ 728 03bc FFF7FEFF 		bl	VS8812Write
+ 729              	.LVL122:
+ 438:VS4210/VX8812.c **** 		VS8812Write(0x7E, 0x70);
+ 730              		.loc 1 438 3 view .LVU131
+ 731 03c0 F021     		movs	r1, #240
+ 732 03c2 7D20     		movs	r0, #125
+ 733 03c4 FFF7FEFF 		bl	VS8812Write
+ 734              	.LVL123:
+ 439:VS4210/VX8812.c **** 		VS8812Write(0x7F, 0x00);
+ 735              		.loc 1 439 3 view .LVU132
+ 736 03c8 7021     		movs	r1, #112
+ 737 03ca 7E20     		movs	r0, #126
+ 738 03cc FFF7FEFF 		bl	VS8812Write
+ 739              	.LVL124:
+ 440:VS4210/VX8812.c **** 		VS8812Write(0x80, 0x00);
+ 740              		.loc 1 440 3 view .LVU133
+ 741 03d0 0021     		movs	r1, #0
+ 742 03d2 7F20     		movs	r0, #127
+ 743 03d4 FFF7FEFF 		bl	VS8812Write
+ 744              	.LVL125:
+ 441:VS4210/VX8812.c **** 		VS8812Write(0x81, 0x00);
+ 745              		.loc 1 441 3 view .LVU134
+ 746 03d8 0021     		movs	r1, #0
+ 747 03da 8020     		movs	r0, #128
+ 748 03dc FFF7FEFF 		bl	VS8812Write
+ 749              	.LVL126:
+ 442:VS4210/VX8812.c **** 		VS8812Write(0x82, 0x60);
+ 750              		.loc 1 442 3 view .LVU135
+ 751 03e0 0021     		movs	r1, #0
+ 752 03e2 8120     		movs	r0, #129
+ 753 03e4 FFF7FEFF 		bl	VS8812Write
+ 754              	.LVL127:
+ 443:VS4210/VX8812.c **** 		VS8812Write(0x83, 0x0F);
+ 755              		.loc 1 443 3 view .LVU136
+ 756 03e8 6021     		movs	r1, #96
+ 757 03ea 8220     		movs	r0, #130
+ 758 03ec FFF7FEFF 		bl	VS8812Write
+ 759              	.LVL128:
+ 444:VS4210/VX8812.c **** #if (TH0701024600NYR50S1 == OFF)
+ 760              		.loc 1 444 3 view .LVU137
+ 761 03f0 0F21     		movs	r1, #15
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 34
+
+
+ 762 03f2 8320     		movs	r0, #131
+ 763 03f4 FFF7FEFF 		bl	VS8812Write
+ 764              	.LVL129:
+ 446:VS4210/VX8812.c **** 		VS8812Write(0x85, 0xFF);
+ 765              		.loc 1 446 3 view .LVU138
+ 766 03f8 FF21     		movs	r1, #255
+ 767 03fa 8420     		movs	r0, #132
+ 768 03fc FFF7FEFF 		bl	VS8812Write
+ 769              	.LVL130:
+ 447:VS4210/VX8812.c **** #else
+ 770              		.loc 1 447 3 view .LVU139
+ 771 0400 FF21     		movs	r1, #255
+ 772 0402 8520     		movs	r0, #133
+ 773 0404 FFF7FEFF 		bl	VS8812Write
+ 774              	.LVL131:
+ 452:VS4210/VX8812.c **** 		VS8812Write(0x87, 0x00);
+ 775              		.loc 1 452 3 view .LVU140
+ 776 0408 0021     		movs	r1, #0
+ 777 040a 8620     		movs	r0, #134
+ 778 040c 02E0     		b	.L11
+ 779              	.L12:
+ 780 040e 00BF     		.align	2
+ 781              	.L10:
+ 782 0410 00000000 		.word	.LC0
+ 783              	.L11:
+ 784 0414 FFF7FEFF 		bl	VS8812Write
+ 785              	.LVL132:
+ 453:VS4210/VX8812.c **** 		VS8812Write(0x88, 0x00);
+ 786              		.loc 1 453 3 view .LVU141
+ 787 0418 0021     		movs	r1, #0
+ 788 041a 8720     		movs	r0, #135
+ 789 041c FFF7FEFF 		bl	VS8812Write
+ 790              	.LVL133:
+ 454:VS4210/VX8812.c **** 		VS8812Write(0x89, 0x00);
+ 791              		.loc 1 454 3 view .LVU142
+ 792 0420 0021     		movs	r1, #0
+ 793 0422 8820     		movs	r0, #136
+ 794 0424 FFF7FEFF 		bl	VS8812Write
+ 795              	.LVL134:
+ 455:VS4210/VX8812.c **** 		VS8812Write(0x8A, 0x00);
+ 796              		.loc 1 455 3 view .LVU143
+ 797 0428 0021     		movs	r1, #0
+ 798 042a 8920     		movs	r0, #137
+ 799 042c FFF7FEFF 		bl	VS8812Write
+ 800              	.LVL135:
+ 456:VS4210/VX8812.c **** 		VS8812Write(0x8B, 0x7E);
+ 801              		.loc 1 456 3 view .LVU144
+ 802 0430 0021     		movs	r1, #0
+ 803 0432 8A20     		movs	r0, #138
+ 804 0434 FFF7FEFF 		bl	VS8812Write
+ 805              	.LVL136:
+ 457:VS4210/VX8812.c **** 		VS8812Write(0x8C, 0x00);
+ 806              		.loc 1 457 3 view .LVU145
+ 807 0438 7E21     		movs	r1, #126
+ 808 043a 8B20     		movs	r0, #139
+ 809 043c FFF7FEFF 		bl	VS8812Write
+ 810              	.LVL137:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 35
+
+
+ 458:VS4210/VX8812.c **** 		VS8812Write(0x8D, 0x1F);
+ 811              		.loc 1 458 3 view .LVU146
+ 812 0440 0021     		movs	r1, #0
+ 813 0442 8C20     		movs	r0, #140
+ 814 0444 FFF7FEFF 		bl	VS8812Write
+ 815              	.LVL138:
+ 459:VS4210/VX8812.c **** 		VS8812Write(0x8E, 0x6C);
+ 816              		.loc 1 459 3 view .LVU147
+ 817 0448 1F21     		movs	r1, #31
+ 818 044a 8D20     		movs	r0, #141
+ 819 044c FFF7FEFF 		bl	VS8812Write
+ 820              	.LVL139:
+ 460:VS4210/VX8812.c **** 		VS8812Write(0x8F, 0x03);
+ 821              		.loc 1 460 3 view .LVU148
+ 822 0450 6C21     		movs	r1, #108
+ 823 0452 8E20     		movs	r0, #142
+ 824 0454 FFF7FEFF 		bl	VS8812Write
+ 825              	.LVL140:
+ 461:VS4210/VX8812.c **** 		VS8812Write(0x90, 0x08);
+ 826              		.loc 1 461 3 view .LVU149
+ 827 0458 0321     		movs	r1, #3
+ 828 045a 8F20     		movs	r0, #143
+ 829 045c FFF7FEFF 		bl	VS8812Write
+ 830              	.LVL141:
+ 462:VS4210/VX8812.c **** 		VS8812Write(0x91, 0x01);
+ 831              		.loc 1 462 3 view .LVU150
+ 832 0460 0821     		movs	r1, #8
+ 833 0462 9020     		movs	r0, #144
+ 834 0464 FFF7FEFF 		bl	VS8812Write
+ 835              	.LVL142:
+ 463:VS4210/VX8812.c **** 		VS8812Write(0x92, 0xC0);
+ 836              		.loc 1 463 3 view .LVU151
+ 837 0468 0121     		movs	r1, #1
+ 838 046a 9120     		movs	r0, #145
+ 839 046c FFF7FEFF 		bl	VS8812Write
+ 840              	.LVL143:
+ 464:VS4210/VX8812.c **** 		VS8812Write(0x93, 0x32);
+ 841              		.loc 1 464 3 view .LVU152
+ 842 0470 C021     		movs	r1, #192
+ 843 0472 9220     		movs	r0, #146
+ 844 0474 FFF7FEFF 		bl	VS8812Write
+ 845              	.LVL144:
+ 465:VS4210/VX8812.c **** 		VS8812Write(0x94, 0x5A);
+ 846              		.loc 1 465 3 view .LVU153
+ 847 0478 3221     		movs	r1, #50
+ 848 047a 9320     		movs	r0, #147
+ 849 047c FFF7FEFF 		bl	VS8812Write
+ 850              	.LVL145:
+ 466:VS4210/VX8812.c **** 		VS8812Write(0x95, 0xD0);
+ 851              		.loc 1 466 3 view .LVU154
+ 852 0480 5A21     		movs	r1, #90
+ 853 0482 9420     		movs	r0, #148
+ 854 0484 FFF7FEFF 		bl	VS8812Write
+ 855              	.LVL146:
+ 467:VS4210/VX8812.c **** 		VS8812Write(0x96, 0x21);
+ 856              		.loc 1 467 3 view .LVU155
+ 857 0488 D021     		movs	r1, #208
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 36
+
+
+ 858 048a 9520     		movs	r0, #149
+ 859 048c FFF7FEFF 		bl	VS8812Write
+ 860              	.LVL147:
+ 468:VS4210/VX8812.c **** 		VS8812Write(0x97, 0x0D);
+ 861              		.loc 1 468 3 view .LVU156
+ 862 0490 2121     		movs	r1, #33
+ 863 0492 9620     		movs	r0, #150
+ 864 0494 FFF7FEFF 		bl	VS8812Write
+ 865              	.LVL148:
+ 469:VS4210/VX8812.c **** 		VS8812Write(0x98, 0xE0);
+ 866              		.loc 1 469 3 view .LVU157
+ 867 0498 0D21     		movs	r1, #13
+ 868 049a 9720     		movs	r0, #151
+ 869 049c FFF7FEFF 		bl	VS8812Write
+ 870              	.LVL149:
+ 470:VS4210/VX8812.c **** 		VS8812Write(0x99, 0x02);
+ 871              		.loc 1 470 3 view .LVU158
+ 872 04a0 E021     		movs	r1, #224
+ 873 04a2 9820     		movs	r0, #152
+ 874 04a4 FFF7FEFF 		bl	VS8812Write
+ 875              	.LVL150:
+ 471:VS4210/VX8812.c **** 		VS8812Write(0x9A, 0x00);
+ 876              		.loc 1 471 3 view .LVU159
+ 877 04a8 0221     		movs	r1, #2
+ 878 04aa 9920     		movs	r0, #153
+ 879 04ac FFF7FEFF 		bl	VS8812Write
+ 880              	.LVL151:
+ 472:VS4210/VX8812.c **** 		VS8812Write(0x9B, 0x90);
+ 881              		.loc 1 472 3 view .LVU160
+ 882 04b0 0021     		movs	r1, #0
+ 883 04b2 9A20     		movs	r0, #154
+ 884 04b4 FFF7FEFF 		bl	VS8812Write
+ 885              	.LVL152:
+ 473:VS4210/VX8812.c **** 		VS8812Write(0x9C, 0x22);
+ 886              		.loc 1 473 3 view .LVU161
+ 887 04b8 9021     		movs	r1, #144
+ 888 04ba 9B20     		movs	r0, #155
+ 889 04bc FFF7FEFF 		bl	VS8812Write
+ 890              	.LVL153:
+ 474:VS4210/VX8812.c **** 		VS8812Write(0x9D, 0x00);
+ 891              		.loc 1 474 3 view .LVU162
+ 892 04c0 2221     		movs	r1, #34
+ 893 04c2 9C20     		movs	r0, #156
+ 894 04c4 FFF7FEFF 		bl	VS8812Write
+ 895              	.LVL154:
+ 475:VS4210/VX8812.c **** 		VS8812Write(0x9E, 0x00);
+ 896              		.loc 1 475 3 view .LVU163
+ 897 04c8 0021     		movs	r1, #0
+ 898 04ca 9D20     		movs	r0, #157
+ 899 04cc FFF7FEFF 		bl	VS8812Write
+ 900              	.LVL155:
+ 476:VS4210/VX8812.c **** 		VS8812Write(0x9F, 0x00);
+ 901              		.loc 1 476 3 view .LVU164
+ 902 04d0 0021     		movs	r1, #0
+ 903 04d2 9E20     		movs	r0, #158
+ 904 04d4 FFF7FEFF 		bl	VS8812Write
+ 905              	.LVL156:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 37
+
+
+ 477:VS4210/VX8812.c **** 		VS8812Write(0xA0, 0x80);
+ 906              		.loc 1 477 3 view .LVU165
+ 907 04d8 0021     		movs	r1, #0
+ 908 04da 9F20     		movs	r0, #159
+ 909 04dc FFF7FEFF 		bl	VS8812Write
+ 910              	.LVL157:
+ 478:VS4210/VX8812.c **** 		VS8812Write(0xA1, 0x00);
+ 911              		.loc 1 478 3 view .LVU166
+ 912 04e0 8021     		movs	r1, #128
+ 913 04e2 A020     		movs	r0, #160
+ 914 04e4 FFF7FEFF 		bl	VS8812Write
+ 915              	.LVL158:
+ 479:VS4210/VX8812.c **** 		VS8812Write(0xA2, 0x7F);
+ 916              		.loc 1 479 3 view .LVU167
+ 917 04e8 0021     		movs	r1, #0
+ 918 04ea A120     		movs	r0, #161
+ 919 04ec FFF7FEFF 		bl	VS8812Write
+ 920              	.LVL159:
+ 480:VS4210/VX8812.c **** 		VS8812Write(0xA3, 0x00);
+ 921              		.loc 1 480 3 view .LVU168
+ 922 04f0 7F21     		movs	r1, #127
+ 923 04f2 A220     		movs	r0, #162
+ 924 04f4 FFF7FEFF 		bl	VS8812Write
+ 925              	.LVL160:
+ 481:VS4210/VX8812.c **** 		VS8812Write(0xA4, 0x47);
+ 926              		.loc 1 481 3 view .LVU169
+ 927 04f8 0021     		movs	r1, #0
+ 928 04fa A320     		movs	r0, #163
+ 929 04fc FFF7FEFF 		bl	VS8812Write
+ 930              	.LVL161:
+ 482:VS4210/VX8812.c **** 		VS8812Write(0xA5, 0x80);
+ 931              		.loc 1 482 3 view .LVU170
+ 932 0500 4721     		movs	r1, #71
+ 933 0502 A420     		movs	r0, #164
+ 934 0504 FFF7FEFF 		bl	VS8812Write
+ 935              	.LVL162:
+ 483:VS4210/VX8812.c **** 		VS8812Write(0xA6, 0x0C);
+ 936              		.loc 1 483 3 view .LVU171
+ 937 0508 8021     		movs	r1, #128
+ 938 050a A520     		movs	r0, #165
+ 939 050c FFF7FEFF 		bl	VS8812Write
+ 940              	.LVL163:
+ 484:VS4210/VX8812.c **** 		VS8812Write(0xA7, 0x02);
+ 941              		.loc 1 484 3 view .LVU172
+ 942 0510 0C21     		movs	r1, #12
+ 943 0512 A620     		movs	r0, #166
+ 944 0514 FFF7FEFF 		bl	VS8812Write
+ 945              	.LVL164:
+ 485:VS4210/VX8812.c **** 		VS8812Write(0xA8, 0x20);
+ 946              		.loc 1 485 3 view .LVU173
+ 947 0518 0221     		movs	r1, #2
+ 948 051a A720     		movs	r0, #167
+ 949 051c FFF7FEFF 		bl	VS8812Write
+ 950              	.LVL165:
+ 486:VS4210/VX8812.c **** 		VS8812Write(0xA9, 0x10);
+ 951              		.loc 1 486 3 view .LVU174
+ 952 0520 2021     		movs	r1, #32
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 38
+
+
+ 953 0522 A820     		movs	r0, #168
+ 954 0524 FFF7FEFF 		bl	VS8812Write
+ 955              	.LVL166:
+ 487:VS4210/VX8812.c **** 		VS8812Write(0xAA, 0x10);
+ 956              		.loc 1 487 3 view .LVU175
+ 957 0528 1021     		movs	r1, #16
+ 958 052a A920     		movs	r0, #169
+ 959 052c FFF7FEFF 		bl	VS8812Write
+ 960              	.LVL167:
+ 488:VS4210/VX8812.c **** 		VS8812Write(0xAB, 0x00);
+ 961              		.loc 1 488 3 view .LVU176
+ 962 0530 1021     		movs	r1, #16
+ 963 0532 AA20     		movs	r0, #170
+ 964 0534 FFF7FEFF 		bl	VS8812Write
+ 965              	.LVL168:
+ 489:VS4210/VX8812.c **** 		VS8812Write(0xAC, 0x42);
+ 966              		.loc 1 489 3 view .LVU177
+ 967 0538 0021     		movs	r1, #0
+ 968 053a AB20     		movs	r0, #171
+ 969 053c FFF7FEFF 		bl	VS8812Write
+ 970              	.LVL169:
+ 490:VS4210/VX8812.c **** 		VS8812Write(0xAD, 0x02);
+ 971              		.loc 1 490 3 view .LVU178
+ 972 0540 4221     		movs	r1, #66
+ 973 0542 AC20     		movs	r0, #172
+ 974 0544 FFF7FEFF 		bl	VS8812Write
+ 975              	.LVL170:
+ 491:VS4210/VX8812.c **** 		VS8812Write(0xAE, 0x06);
+ 976              		.loc 1 491 3 view .LVU179
+ 977 0548 0221     		movs	r1, #2
+ 978 054a AD20     		movs	r0, #173
+ 979 054c FFF7FEFF 		bl	VS8812Write
+ 980              	.LVL171:
+ 492:VS4210/VX8812.c **** 		VS8812Write(0xAF, 0x04);
+ 981              		.loc 1 492 3 view .LVU180
+ 982 0550 0621     		movs	r1, #6
+ 983 0552 AE20     		movs	r0, #174
+ 984 0554 FFF7FEFF 		bl	VS8812Write
+ 985              	.LVL172:
+ 493:VS4210/VX8812.c **** 		VS8812Write(0xB0, 0x00);
+ 986              		.loc 1 493 3 view .LVU181
+ 987 0558 0421     		movs	r1, #4
+ 988 055a AF20     		movs	r0, #175
+ 989 055c FFF7FEFF 		bl	VS8812Write
+ 990              	.LVL173:
+ 494:VS4210/VX8812.c **** 		VS8812Write(0xB1, 0x00);
+ 991              		.loc 1 494 3 view .LVU182
+ 992 0560 0021     		movs	r1, #0
+ 993 0562 B020     		movs	r0, #176
+ 994 0564 FFF7FEFF 		bl	VS8812Write
+ 995              	.LVL174:
+ 495:VS4210/VX8812.c **** 		VS8812Write(0xB2, 0x00);
+ 996              		.loc 1 495 3 view .LVU183
+ 997 0568 0021     		movs	r1, #0
+ 998 056a B120     		movs	r0, #177
+ 999 056c FFF7FEFF 		bl	VS8812Write
+ 1000              	.LVL175:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 39
+
+
+ 496:VS4210/VX8812.c **** 		VS8812Write(0xB3, 0x00);
+ 1001              		.loc 1 496 3 view .LVU184
+ 1002 0570 0021     		movs	r1, #0
+ 1003 0572 B220     		movs	r0, #178
+ 1004 0574 FFF7FEFF 		bl	VS8812Write
+ 1005              	.LVL176:
+ 497:VS4210/VX8812.c **** 		VS8812Write(0xB4, 0x00);
+ 1006              		.loc 1 497 3 view .LVU185
+ 1007 0578 0021     		movs	r1, #0
+ 1008 057a B320     		movs	r0, #179
+ 1009 057c FFF7FEFF 		bl	VS8812Write
+ 1010              	.LVL177:
+ 498:VS4210/VX8812.c **** 		VS8812Write(0xB5, 0x00);
+ 1011              		.loc 1 498 3 view .LVU186
+ 1012 0580 0021     		movs	r1, #0
+ 1013 0582 B420     		movs	r0, #180
+ 1014 0584 FFF7FEFF 		bl	VS8812Write
+ 1015              	.LVL178:
+ 499:VS4210/VX8812.c **** 		VS8812Write(0xB6, 0x00);
+ 1016              		.loc 1 499 3 view .LVU187
+ 1017 0588 0021     		movs	r1, #0
+ 1018 058a B520     		movs	r0, #181
+ 1019 058c FFF7FEFF 		bl	VS8812Write
+ 1020              	.LVL179:
+ 500:VS4210/VX8812.c **** 		VS8812Write(0xC0, 0x88);
+ 1021              		.loc 1 500 3 view .LVU188
+ 1022 0590 0021     		movs	r1, #0
+ 1023 0592 B620     		movs	r0, #182
+ 1024 0594 FFF7FEFF 		bl	VS8812Write
+ 1025              	.LVL180:
+ 501:VS4210/VX8812.c **** 		VS8812Write(0xC1, 0x7E);
+ 1026              		.loc 1 501 3 view .LVU189
+ 1027 0598 8821     		movs	r1, #136
+ 1028 059a C020     		movs	r0, #192
+ 1029 059c FFF7FEFF 		bl	VS8812Write
+ 1030              	.LVL181:
+ 502:VS4210/VX8812.c **** 		VS8812Write(0xC2, 0xDC);
+ 1031              		.loc 1 502 3 view .LVU190
+ 1032 05a0 7E21     		movs	r1, #126
+ 1033 05a2 C120     		movs	r0, #193
+ 1034 05a4 FFF7FEFF 		bl	VS8812Write
+ 1035              	.LVL182:
+ 503:VS4210/VX8812.c **** 		VS8812Write(0xC3, 0x20);
+ 1036              		.loc 1 503 3 view .LVU191
+ 1037 05a8 DC21     		movs	r1, #220
+ 1038 05aa C220     		movs	r0, #194
+ 1039 05ac FFF7FEFF 		bl	VS8812Write
+ 1040              	.LVL183:
+ 504:VS4210/VX8812.c **** 		VS8812Write(0xC4, 0x20);
+ 1041              		.loc 1 504 3 view .LVU192
+ 1042 05b0 2021     		movs	r1, #32
+ 1043 05b2 C320     		movs	r0, #195
+ 1044 05b4 FFF7FEFF 		bl	VS8812Write
+ 1045              	.LVL184:
+ 505:VS4210/VX8812.c **** 		VS8812Write(0xC5, 0x34);
+ 1046              		.loc 1 505 3 view .LVU193
+ 1047 05b8 2021     		movs	r1, #32
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 40
+
+
+ 1048 05ba C420     		movs	r0, #196
+ 1049 05bc FFF7FEFF 		bl	VS8812Write
+ 1050              	.LVL185:
+ 506:VS4210/VX8812.c **** 		VS8812Write(0xC6, 0x18);
+ 1051              		.loc 1 506 3 view .LVU194
+ 1052 05c0 3421     		movs	r1, #52
+ 1053 05c2 C520     		movs	r0, #197
+ 1054 05c4 FFF7FEFF 		bl	VS8812Write
+ 1055              	.LVL186:
+ 507:VS4210/VX8812.c **** 		VS8812Write(0xC7, 0x04);
+ 1056              		.loc 1 507 3 view .LVU195
+ 1057 05c8 1821     		movs	r1, #24
+ 1058 05ca C620     		movs	r0, #198
+ 1059 05cc FFF7FEFF 		bl	VS8812Write
+ 1060              	.LVL187:
+ 508:VS4210/VX8812.c **** 		VS8812Write(0xC8, 0x02);
+ 1061              		.loc 1 508 3 view .LVU196
+ 1062 05d0 0421     		movs	r1, #4
+ 1063 05d2 C720     		movs	r0, #199
+ 1064 05d4 FFF7FEFF 		bl	VS8812Write
+ 1065              	.LVL188:
+ 509:VS4210/VX8812.c **** 		VS8812Write(0xD0, 0x02);
+ 1066              		.loc 1 509 3 view .LVU197
+ 1067 05d8 0221     		movs	r1, #2
+ 1068 05da C820     		movs	r0, #200
+ 1069 05dc FFF7FEFF 		bl	VS8812Write
+ 1070              	.LVL189:
+ 510:VS4210/VX8812.c **** 		VS8812Write(0xD1, 0x40);
+ 1071              		.loc 1 510 3 view .LVU198
+ 1072 05e0 0221     		movs	r1, #2
+ 1073 05e2 D020     		movs	r0, #208
+ 1074 05e4 FFF7FEFF 		bl	VS8812Write
+ 1075              	.LVL190:
+ 511:VS4210/VX8812.c **** 		VS8812Write(0xD2, 0x40);
+ 1076              		.loc 1 511 3 view .LVU199
+ 1077 05e8 4021     		movs	r1, #64
+ 1078 05ea D120     		movs	r0, #209
+ 1079 05ec FFF7FEFF 		bl	VS8812Write
+ 1080              	.LVL191:
+ 512:VS4210/VX8812.c **** 		VS8812Write(0xD3, 0x40);
+ 1081              		.loc 1 512 3 view .LVU200
+ 1082 05f0 4021     		movs	r1, #64
+ 1083 05f2 D220     		movs	r0, #210
+ 1084 05f4 FFF7FEFF 		bl	VS8812Write
+ 1085              	.LVL192:
+ 513:VS4210/VX8812.c **** 		VS8812Write(0xD4, 0x00);
+ 1086              		.loc 1 513 3 view .LVU201
+ 1087 05f8 4021     		movs	r1, #64
+ 1088 05fa D320     		movs	r0, #211
+ 1089 05fc FFF7FEFF 		bl	VS8812Write
+ 1090              	.LVL193:
+ 514:VS4210/VX8812.c **** 		VS8812Write(0xD5, 0x00);
+ 1091              		.loc 1 514 3 view .LVU202
+ 1092 0600 0021     		movs	r1, #0
+ 1093 0602 D420     		movs	r0, #212
+ 1094 0604 FFF7FEFF 		bl	VS8812Write
+ 1095              	.LVL194:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 41
+
+
+ 515:VS4210/VX8812.c **** 		VS8812Write(0xD6, 0x00);
+ 1096              		.loc 1 515 3 view .LVU203
+ 1097 0608 0021     		movs	r1, #0
+ 1098 060a D520     		movs	r0, #213
+ 1099 060c FFF7FEFF 		bl	VS8812Write
+ 1100              	.LVL195:
+ 516:VS4210/VX8812.c **** 		VS8812Write(0xD7, 0x00);
+ 1101              		.loc 1 516 3 view .LVU204
+ 1102 0610 0021     		movs	r1, #0
+ 1103 0612 D620     		movs	r0, #214
+ 1104 0614 FFF7FEFF 		bl	VS8812Write
+ 1105              	.LVL196:
+ 517:VS4210/VX8812.c **** 		VS8812Write(0xD8, 0x00);
+ 1106              		.loc 1 517 3 view .LVU205
+ 1107 0618 0021     		movs	r1, #0
+ 1108 061a D720     		movs	r0, #215
+ 1109 061c FFF7FEFF 		bl	VS8812Write
+ 1110              	.LVL197:
+ 518:VS4210/VX8812.c **** 		VS8812Write(0xD9, 0x00);
+ 1111              		.loc 1 518 3 view .LVU206
+ 1112 0620 0021     		movs	r1, #0
+ 1113 0622 D820     		movs	r0, #216
+ 1114 0624 FFF7FEFF 		bl	VS8812Write
+ 1115              	.LVL198:
+ 519:VS4210/VX8812.c **** 		VS8812Write(0xE0, 0x33);
+ 1116              		.loc 1 519 3 view .LVU207
+ 1117 0628 0021     		movs	r1, #0
+ 1118 062a D920     		movs	r0, #217
+ 1119 062c FFF7FEFF 		bl	VS8812Write
+ 1120              	.LVL199:
+ 520:VS4210/VX8812.c **** 		VS8812Write(0xE1, 0xA7);
+ 1121              		.loc 1 520 3 view .LVU208
+ 1122 0630 3321     		movs	r1, #51
+ 1123 0632 E020     		movs	r0, #224
+ 1124 0634 FFF7FEFF 		bl	VS8812Write
+ 1125              	.LVL200:
+ 521:VS4210/VX8812.c **** 		VS8812Write(0xE2, 0x7F);
+ 1126              		.loc 1 521 3 view .LVU209
+ 1127 0638 A721     		movs	r1, #167
+ 1128 063a E120     		movs	r0, #225
+ 1129 063c FFF7FEFF 		bl	VS8812Write
+ 1130              	.LVL201:
+ 522:VS4210/VX8812.c **** 		VS8812Write(0xE3, 0x22);
+ 1131              		.loc 1 522 3 view .LVU210
+ 1132 0640 7F21     		movs	r1, #127
+ 1133 0642 E220     		movs	r0, #226
+ 1134 0644 FFF7FEFF 		bl	VS8812Write
+ 1135              	.LVL202:
+ 523:VS4210/VX8812.c **** 		VS8812Write(0xE4, 0x0D);
+ 1136              		.loc 1 523 3 view .LVU211
+ 1137 0648 2221     		movs	r1, #34
+ 1138 064a E320     		movs	r0, #227
+ 1139 064c FFF7FEFF 		bl	VS8812Write
+ 1140              	.LVL203:
+ 524:VS4210/VX8812.c **** 		VS8812Write(0xE5, 0x0A);
+ 1141              		.loc 1 524 3 view .LVU212
+ 1142 0650 0D21     		movs	r1, #13
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 42
+
+
+ 1143 0652 E420     		movs	r0, #228
+ 1144 0654 FFF7FEFF 		bl	VS8812Write
+ 1145              	.LVL204:
+ 525:VS4210/VX8812.c **** 		VS8812Write(0xE6, 0x00);
+ 1146              		.loc 1 525 3 view .LVU213
+ 1147 0658 0A21     		movs	r1, #10
+ 1148 065a E520     		movs	r0, #229
+ 1149 065c FFF7FEFF 		bl	VS8812Write
+ 1150              	.LVL205:
+ 526:VS4210/VX8812.c **** 		VS8812Write(0xE7, 0x99);
+ 1151              		.loc 1 526 3 view .LVU214
+ 1152 0660 0021     		movs	r1, #0
+ 1153 0662 E620     		movs	r0, #230
+ 1154 0664 FFF7FEFF 		bl	VS8812Write
+ 1155              	.LVL206:
+ 527:VS4210/VX8812.c **** 		VS8812Write(0xE8, 0x67);
+ 1156              		.loc 1 527 3 view .LVU215
+ 1157 0668 9921     		movs	r1, #153
+ 1158 066a E720     		movs	r0, #231
+ 1159 066c FFF7FEFF 		bl	VS8812Write
+ 1160              	.LVL207:
+ 528:VS4210/VX8812.c **** 		VS8812Write(0xE9, 0x02);
+ 1161              		.loc 1 528 3 view .LVU216
+ 1162 0670 6721     		movs	r1, #103
+ 1163 0672 E820     		movs	r0, #232
+ 1164 0674 FFF7FEFF 		bl	VS8812Write
+ 1165              	.LVL208:
+ 529:VS4210/VX8812.c **** 		VS8812Write(0xF0, 0x00);
+ 1166              		.loc 1 529 3 view .LVU217
+ 1167 0678 0221     		movs	r1, #2
+ 1168 067a E920     		movs	r0, #233
+ 1169 067c FFF7FEFF 		bl	VS8812Write
+ 1170              	.LVL209:
+ 530:VS4210/VX8812.c **** 		VS8812Write(0xF1, 0x43);
+ 1171              		.loc 1 530 3 view .LVU218
+ 1172 0680 0021     		movs	r1, #0
+ 1173 0682 F020     		movs	r0, #240
+ 1174 0684 FFF7FEFF 		bl	VS8812Write
+ 1175              	.LVL210:
+ 531:VS4210/VX8812.c **** 		VS8812Write(0xF2, 0x1F);
+ 1176              		.loc 1 531 3 view .LVU219
+ 1177 0688 4321     		movs	r1, #67
+ 1178 068a F120     		movs	r0, #241
+ 1179 068c FFF7FEFF 		bl	VS8812Write
+ 1180              	.LVL211:
+ 532:VS4210/VX8812.c **** 		VS8812Write(0xF3, 0x1F);
+ 1181              		.loc 1 532 3 view .LVU220
+ 1182 0690 1F21     		movs	r1, #31
+ 1183 0692 F220     		movs	r0, #242
+ 1184 0694 FFF7FEFF 		bl	VS8812Write
+ 1185              	.LVL212:
+ 533:VS4210/VX8812.c **** 		VS8812Write(0xF4, 0x22);
+ 1186              		.loc 1 533 3 view .LVU221
+ 1187 0698 1F21     		movs	r1, #31
+ 1188 069a F320     		movs	r0, #243
+ 1189 069c FFF7FEFF 		bl	VS8812Write
+ 1190              	.LVL213:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 43
+
+
+ 534:VS4210/VX8812.c **** 		VS8812Write(0xF5, 0x73);
+ 1191              		.loc 1 534 3 view .LVU222
+ 1192 06a0 2221     		movs	r1, #34
+ 1193 06a2 F420     		movs	r0, #244
+ 1194 06a4 FFF7FEFF 		bl	VS8812Write
+ 1195              	.LVL214:
+ 535:VS4210/VX8812.c **** 		VS8812Write(0xF6, 0x53);
+ 1196              		.loc 1 535 3 view .LVU223
+ 1197 06a8 7321     		movs	r1, #115
+ 1198 06aa F520     		movs	r0, #245
+ 1199 06ac FFF7FEFF 		bl	VS8812Write
+ 1200              	.LVL215:
+ 536:VS4210/VX8812.c **** 		VS8812Write(0xF7, 0x80);
+ 1201              		.loc 1 536 3 view .LVU224
+ 1202 06b0 5321     		movs	r1, #83
+ 1203 06b2 F620     		movs	r0, #246
+ 1204 06b4 FFF7FEFF 		bl	VS8812Write
+ 1205              	.LVL216:
+ 537:VS4210/VX8812.c **** 		VS8812Write(0xF8, 0x01);
+ 1206              		.loc 1 537 3 view .LVU225
+ 1207 06b8 8021     		movs	r1, #128
+ 1208 06ba F720     		movs	r0, #247
+ 1209 06bc FFF7FEFF 		bl	VS8812Write
+ 1210              	.LVL217:
+ 538:VS4210/VX8812.c **** 		VS8812Write(0xF9, 0x01);
+ 1211              		.loc 1 538 3 view .LVU226
+ 1212 06c0 0121     		movs	r1, #1
+ 1213 06c2 F820     		movs	r0, #248
+ 1214 06c4 FFF7FEFF 		bl	VS8812Write
+ 1215              	.LVL218:
+ 539:VS4210/VX8812.c **** 		VS8812Write(0xFA, 0x00);
+ 1216              		.loc 1 539 3 view .LVU227
+ 1217 06c8 0121     		movs	r1, #1
+ 1218 06ca F920     		movs	r0, #249
+ 1219 06cc FFF7FEFF 		bl	VS8812Write
+ 1220              	.LVL219:
+ 540:VS4210/VX8812.c **** 		VS8812Write(0xFB, 0x00);
+ 1221              		.loc 1 540 3 view .LVU228
+ 1222 06d0 0021     		movs	r1, #0
+ 1223 06d2 FA20     		movs	r0, #250
+ 1224 06d4 FFF7FEFF 		bl	VS8812Write
+ 1225              	.LVL220:
+ 541:VS4210/VX8812.c **** 		VS8812Write(0xFC, 0x00);
+ 1226              		.loc 1 541 3 view .LVU229
+ 1227 06d8 0021     		movs	r1, #0
+ 1228 06da FB20     		movs	r0, #251
+ 1229 06dc FFF7FEFF 		bl	VS8812Write
+ 1230              	.LVL221:
+ 542:VS4210/VX8812.c **** 		VS8812Write(0xFD, 0x70);
+ 1231              		.loc 1 542 3 view .LVU230
+ 1232 06e0 0021     		movs	r1, #0
+ 1233 06e2 FC20     		movs	r0, #252
+ 1234 06e4 FFF7FEFF 		bl	VS8812Write
+ 1235              	.LVL222:
+ 543:VS4210/VX8812.c **** 		VS8812Write(0xFE, 0x25);
+ 1236              		.loc 1 543 3 view .LVU231
+ 1237 06e8 7021     		movs	r1, #112
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 44
+
+
+ 1238 06ea FD20     		movs	r0, #253
+ 1239 06ec FFF7FEFF 		bl	VS8812Write
+ 1240              	.LVL223:
+ 544:VS4210/VX8812.c **** 		VS8812Write(0xFF, 0x17);
+ 1241              		.loc 1 544 3 view .LVU232
+ 1242 06f0 2521     		movs	r1, #37
+ 1243 06f2 FE20     		movs	r0, #254
+ 1244 06f4 FFF7FEFF 		bl	VS8812Write
+ 1245              	.LVL224:
+ 545:VS4210/VX8812.c **** #else
+ 1246              		.loc 1 545 3 view .LVU233
+ 1247 06f8 1721     		movs	r1, #23
+ 1248 06fa FF20     		movs	r0, #255
+ 1249 06fc FFF7FEFF 		bl	VS8812Write
+ 1250              	.LVL225:
+ 767:VS4210/VX8812.c **** 	case _PAL:
+ 1251              		.loc 1 767 3 view .LVU234
+ 1252 0700 89E4     		b	.L5
+ 1253              	.L7:
+ 770:VS4210/VX8812.c **** #endif
+ 1254              		.loc 1 770 3 view .LVU235
+ 1255 0702 FD49     		ldr	r1, .L13
+ 1256 0704 0520     		movs	r0, #5
+ 1257 0706 FFF7FEFF 		bl	GraphicsPrint
+ 1258              	.LVL226:
+ 772:VS4210/VX8812.c **** 		VS8812Write(0x02, 0x07);
+ 1259              		.loc 1 772 3 view .LVU236
+ 1260 070a 0021     		movs	r1, #0
+ 1261 070c 0120     		movs	r0, #1
+ 1262 070e FFF7FEFF 		bl	VS8812Write
+ 1263              	.LVL227:
+ 773:VS4210/VX8812.c **** 		VS8812Write(0x03, 0x1C);
+ 1264              		.loc 1 773 3 view .LVU237
+ 1265 0712 0721     		movs	r1, #7
+ 1266 0714 0220     		movs	r0, #2
+ 1267 0716 FFF7FEFF 		bl	VS8812Write
+ 1268              	.LVL228:
+ 774:VS4210/VX8812.c **** 		VS8812Write(0x04, 0x01);
+ 1269              		.loc 1 774 3 view .LVU238
+ 1270 071a 1C21     		movs	r1, #28
+ 1271 071c 0320     		movs	r0, #3
+ 1272 071e FFF7FEFF 		bl	VS8812Write
+ 1273              	.LVL229:
+ 775:VS4210/VX8812.c **** 		VS8812Write(0x05, 0x18);
+ 1274              		.loc 1 775 3 view .LVU239
+ 1275 0722 0121     		movs	r1, #1
+ 1276 0724 0420     		movs	r0, #4
+ 1277 0726 FFF7FEFF 		bl	VS8812Write
+ 1278              	.LVL230:
+ 776:VS4210/VX8812.c **** 		VS8812Write(0x06, 0x00);
+ 1279              		.loc 1 776 3 view .LVU240
+ 1280 072a 1821     		movs	r1, #24
+ 1281 072c 0520     		movs	r0, #5
+ 1282 072e FFF7FEFF 		bl	VS8812Write
+ 1283              	.LVL231:
+ 777:VS4210/VX8812.c **** 		VS8812Write(0x07, 0x04);
+ 1284              		.loc 1 777 3 view .LVU241
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 45
+
+
+ 1285 0732 0021     		movs	r1, #0
+ 1286 0734 0620     		movs	r0, #6
+ 1287 0736 FFF7FEFF 		bl	VS8812Write
+ 1288              	.LVL232:
+ 778:VS4210/VX8812.c **** 		VS8812Write(0x08, 0x00);
+ 1289              		.loc 1 778 3 view .LVU242
+ 1290 073a 0421     		movs	r1, #4
+ 1291 073c 0720     		movs	r0, #7
+ 1292 073e FFF7FEFF 		bl	VS8812Write
+ 1293              	.LVL233:
+ 779:VS4210/VX8812.c **** 		VS8812Write(0x09, 0x00);
+ 1294              		.loc 1 779 3 view .LVU243
+ 1295 0742 0021     		movs	r1, #0
+ 1296 0744 0820     		movs	r0, #8
+ 1297 0746 FFF7FEFF 		bl	VS8812Write
+ 1298              	.LVL234:
+ 780:VS4210/VX8812.c **** 		VS8812Write(0x0B, 0x00);
+ 1299              		.loc 1 780 3 view .LVU244
+ 1300 074a 0021     		movs	r1, #0
+ 1301 074c 0920     		movs	r0, #9
+ 1302 074e FFF7FEFF 		bl	VS8812Write
+ 1303              	.LVL235:
+ 781:VS4210/VX8812.c **** 		VS8812Write(0x0C, 0x00);
+ 1304              		.loc 1 781 3 view .LVU245
+ 1305 0752 0021     		movs	r1, #0
+ 1306 0754 0B20     		movs	r0, #11
+ 1307 0756 FFF7FEFF 		bl	VS8812Write
+ 1308              	.LVL236:
+ 782:VS4210/VX8812.c **** 		VS8812Write(0x0D, 0x83);
+ 1309              		.loc 1 782 3 view .LVU246
+ 1310 075a 0021     		movs	r1, #0
+ 1311 075c 0C20     		movs	r0, #12
+ 1312 075e FFF7FEFF 		bl	VS8812Write
+ 1313              	.LVL237:
+ 783:VS4210/VX8812.c **** 		VS8812Write(0x0E, 0x30);
+ 1314              		.loc 1 783 3 view .LVU247
+ 1315 0762 8321     		movs	r1, #131
+ 1316 0764 0D20     		movs	r0, #13
+ 1317 0766 FFF7FEFF 		bl	VS8812Write
+ 1318              	.LVL238:
+ 784:VS4210/VX8812.c **** 		VS8812Write(0x0F, 0x07);
+ 1319              		.loc 1 784 3 view .LVU248
+ 1320 076a 3021     		movs	r1, #48
+ 1321 076c 0E20     		movs	r0, #14
+ 1322 076e FFF7FEFF 		bl	VS8812Write
+ 1323              	.LVL239:
+ 785:VS4210/VX8812.c **** 		VS8812Write(0x10, 0x80);
+ 1324              		.loc 1 785 3 view .LVU249
+ 1325 0772 0721     		movs	r1, #7
+ 1326 0774 0F20     		movs	r0, #15
+ 1327 0776 FFF7FEFF 		bl	VS8812Write
+ 1328              	.LVL240:
+ 786:VS4210/VX8812.c **** 		VS8812Write(0x11, 0x28);
+ 1329              		.loc 1 786 3 view .LVU250
+ 1330 077a 8021     		movs	r1, #128
+ 1331 077c 1020     		movs	r0, #16
+ 1332 077e FFF7FEFF 		bl	VS8812Write
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 46
+
+
+ 1333              	.LVL241:
+ 787:VS4210/VX8812.c **** 		VS8812Write(0x12, 0x00);
+ 1334              		.loc 1 787 3 view .LVU251
+ 1335 0782 2821     		movs	r1, #40
+ 1336 0784 1120     		movs	r0, #17
+ 1337 0786 FFF7FEFF 		bl	VS8812Write
+ 1338              	.LVL242:
+ 788:VS4210/VX8812.c **** 		VS8812Write(0x13, 0x00);
+ 1339              		.loc 1 788 3 view .LVU252
+ 1340 078a 0021     		movs	r1, #0
+ 1341 078c 1220     		movs	r0, #18
+ 1342 078e FFF7FEFF 		bl	VS8812Write
+ 1343              	.LVL243:
+ 789:VS4210/VX8812.c **** 		VS8812Write(0x14, 0x00);
+ 1344              		.loc 1 789 3 view .LVU253
+ 1345 0792 0021     		movs	r1, #0
+ 1346 0794 1320     		movs	r0, #19
+ 1347 0796 FFF7FEFF 		bl	VS8812Write
+ 1348              	.LVL244:
+ 790:VS4210/VX8812.c **** 		VS8812Write(0x15, 0x88);
+ 1349              		.loc 1 790 3 view .LVU254
+ 1350 079a 0021     		movs	r1, #0
+ 1351 079c 1420     		movs	r0, #20
+ 1352 079e FFF7FEFF 		bl	VS8812Write
+ 1353              	.LVL245:
+ 791:VS4210/VX8812.c **** 		VS8812Write(0x16, 0x04);
+ 1354              		.loc 1 791 3 view .LVU255
+ 1355 07a2 8821     		movs	r1, #136
+ 1356 07a4 1520     		movs	r0, #21
+ 1357 07a6 FFF7FEFF 		bl	VS8812Write
+ 1358              	.LVL246:
+ 792:VS4210/VX8812.c **** 		VS8812Write(0x17, 0x00);
+ 1359              		.loc 1 792 3 view .LVU256
+ 1360 07aa 0421     		movs	r1, #4
+ 1361 07ac 1620     		movs	r0, #22
+ 1362 07ae FFF7FEFF 		bl	VS8812Write
+ 1363              	.LVL247:
+ 793:VS4210/VX8812.c **** 		VS8812Write(0x18, 0x00);
+ 1364              		.loc 1 793 3 view .LVU257
+ 1365 07b2 0021     		movs	r1, #0
+ 1366 07b4 1720     		movs	r0, #23
+ 1367 07b6 FFF7FEFF 		bl	VS8812Write
+ 1368              	.LVL248:
+ 794:VS4210/VX8812.c **** 		VS8812Write(0x19, 0x00);
+ 1369              		.loc 1 794 3 view .LVU258
+ 1370 07ba 0021     		movs	r1, #0
+ 1371 07bc 1820     		movs	r0, #24
+ 1372 07be FFF7FEFF 		bl	VS8812Write
+ 1373              	.LVL249:
+ 795:VS4210/VX8812.c **** 		VS8812Write(0x1A, 0x26);
+ 1374              		.loc 1 795 3 view .LVU259
+ 1375 07c2 0021     		movs	r1, #0
+ 1376 07c4 1920     		movs	r0, #25
+ 1377 07c6 FFF7FEFF 		bl	VS8812Write
+ 1378              	.LVL250:
+ 796:VS4210/VX8812.c **** 		VS8812Write(0x1B, 0x32);
+ 1379              		.loc 1 796 3 view .LVU260
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 47
+
+
+ 1380 07ca 2621     		movs	r1, #38
+ 1381 07cc 1A20     		movs	r0, #26
+ 1382 07ce FFF7FEFF 		bl	VS8812Write
+ 1383              	.LVL251:
+ 797:VS4210/VX8812.c **** 		VS8812Write(0x1C, 0x00);
+ 1384              		.loc 1 797 3 view .LVU261
+ 1385 07d2 3221     		movs	r1, #50
+ 1386 07d4 1B20     		movs	r0, #27
+ 1387 07d6 FFF7FEFF 		bl	VS8812Write
+ 1388              	.LVL252:
+ 798:VS4210/VX8812.c **** 		VS8812Write(0x1D, 0x00);
+ 1389              		.loc 1 798 3 view .LVU262
+ 1390 07da 0021     		movs	r1, #0
+ 1391 07dc 1C20     		movs	r0, #28
+ 1392 07de FFF7FEFF 		bl	VS8812Write
+ 1393              	.LVL253:
+ 799:VS4210/VX8812.c **** 		VS8812Write(0x1E, 0x00);
+ 1394              		.loc 1 799 3 view .LVU263
+ 1395 07e2 0021     		movs	r1, #0
+ 1396 07e4 1D20     		movs	r0, #29
+ 1397 07e6 FFF7FEFF 		bl	VS8812Write
+ 1398              	.LVL254:
+ 800:VS4210/VX8812.c **** 		VS8812Write(0x1F, 0x00);
+ 1399              		.loc 1 800 3 view .LVU264
+ 1400 07ea 0021     		movs	r1, #0
+ 1401 07ec 1E20     		movs	r0, #30
+ 1402 07ee FFF7FEFF 		bl	VS8812Write
+ 1403              	.LVL255:
+ 801:VS4210/VX8812.c **** 		VS8812Write(0x20, 0x04);
+ 1404              		.loc 1 801 3 view .LVU265
+ 1405 07f2 0021     		movs	r1, #0
+ 1406 07f4 1F20     		movs	r0, #31
+ 1407 07f6 FFF7FEFF 		bl	VS8812Write
+ 1408              	.LVL256:
+ 802:VS4210/VX8812.c **** 		VS8812Write(0x21, 0x00);
+ 1409              		.loc 1 802 3 view .LVU266
+ 1410 07fa 0421     		movs	r1, #4
+ 1411 07fc 2020     		movs	r0, #32
+ 1412 07fe FFF7FEFF 		bl	VS8812Write
+ 1413              	.LVL257:
+ 803:VS4210/VX8812.c **** 		VS8812Write(0x22, 0x10);
+ 1414              		.loc 1 803 3 view .LVU267
+ 1415 0802 0021     		movs	r1, #0
+ 1416 0804 2120     		movs	r0, #33
+ 1417 0806 FFF7FEFF 		bl	VS8812Write
+ 1418              	.LVL258:
+ 804:VS4210/VX8812.c **** 		VS8812Write(0x23, 0x80);
+ 1419              		.loc 1 804 3 view .LVU268
+ 1420 080a 1021     		movs	r1, #16
+ 1421 080c 2220     		movs	r0, #34
+ 1422 080e FFF7FEFF 		bl	VS8812Write
+ 1423              	.LVL259:
+ 805:VS4210/VX8812.c **** 		VS8812Write(0x24, 0x00);
+ 1424              		.loc 1 805 3 view .LVU269
+ 1425 0812 8021     		movs	r1, #128
+ 1426 0814 2320     		movs	r0, #35
+ 1427 0816 FFF7FEFF 		bl	VS8812Write
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 48
+
+
+ 1428              	.LVL260:
+ 806:VS4210/VX8812.c **** 		VS8812Write(0x25, 0x20);
+ 1429              		.loc 1 806 3 view .LVU270
+ 1430 081a 0021     		movs	r1, #0
+ 1431 081c 2420     		movs	r0, #36
+ 1432 081e FFF7FEFF 		bl	VS8812Write
+ 1433              	.LVL261:
+ 807:VS4210/VX8812.c **** 		VS8812Write(0x26, 0x03);
+ 1434              		.loc 1 807 3 view .LVU271
+ 1435 0822 2021     		movs	r1, #32
+ 1436 0824 2520     		movs	r0, #37
+ 1437 0826 FFF7FEFF 		bl	VS8812Write
+ 1438              	.LVL262:
+ 808:VS4210/VX8812.c **** 		VS8812Write(0x27, 0x1C);
+ 1439              		.loc 1 808 3 view .LVU272
+ 1440 082a 0321     		movs	r1, #3
+ 1441 082c 2620     		movs	r0, #38
+ 1442 082e FFF7FEFF 		bl	VS8812Write
+ 1443              	.LVL263:
+ 809:VS4210/VX8812.c **** 		VS8812Write(0x28, 0x00);
+ 1444              		.loc 1 809 3 view .LVU273
+ 1445 0832 1C21     		movs	r1, #28
+ 1446 0834 2720     		movs	r0, #39
+ 1447 0836 FFF7FEFF 		bl	VS8812Write
+ 1448              	.LVL264:
+ 810:VS4210/VX8812.c **** 		VS8812Write(0x29, 0xFD);
+ 1449              		.loc 1 810 3 view .LVU274
+ 1450 083a 0021     		movs	r1, #0
+ 1451 083c 2820     		movs	r0, #40
+ 1452 083e FFF7FEFF 		bl	VS8812Write
+ 1453              	.LVL265:
+ 811:VS4210/VX8812.c **** 		VS8812Write(0x31, 0x80);
+ 1454              		.loc 1 811 3 view .LVU275
+ 1455 0842 FD21     		movs	r1, #253
+ 1456 0844 2920     		movs	r0, #41
+ 1457 0846 FFF7FEFF 		bl	VS8812Write
+ 1458              	.LVL266:
+ 812:VS4210/VX8812.c **** #if (StartPowerBlackScreen == OFF)
+ 1459              		.loc 1 812 3 view .LVU276
+ 1460 084a 8021     		movs	r1, #128
+ 1461 084c 3120     		movs	r0, #49
+ 1462 084e FFF7FEFF 		bl	VS8812Write
+ 1463              	.LVL267:
+ 816:VS4210/VX8812.c **** #endif
+ 1464              		.loc 1 816 3 view .LVU277
+ 1465 0852 0021     		movs	r1, #0
+ 1466 0854 3220     		movs	r0, #50
+ 1467 0856 FFF7FEFF 		bl	VS8812Write
+ 1468              	.LVL268:
+ 818:VS4210/VX8812.c **** 		VS8812Write(0x34, 0xA0);
+ 1469              		.loc 1 818 3 view .LVU278
+ 1470 085a 8021     		movs	r1, #128
+ 1471 085c 3320     		movs	r0, #51
+ 1472 085e FFF7FEFF 		bl	VS8812Write
+ 1473              	.LVL269:
+ 819:VS4210/VX8812.c **** 		VS8812Write(0x35, 0x18);
+ 1474              		.loc 1 819 3 view .LVU279
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 49
+
+
+ 1475 0862 A021     		movs	r1, #160
+ 1476 0864 3420     		movs	r0, #52
+ 1477 0866 FFF7FEFF 		bl	VS8812Write
+ 1478              	.LVL270:
+ 820:VS4210/VX8812.c **** 		VS8812Write(0x36, 0x46);
+ 1479              		.loc 1 820 3 view .LVU280
+ 1480 086a 1821     		movs	r1, #24
+ 1481 086c 3520     		movs	r0, #53
+ 1482 086e FFF7FEFF 		bl	VS8812Write
+ 1483              	.LVL271:
+ 821:VS4210/VX8812.c **** 		VS8812Write(0x37, 0x64);
+ 1484              		.loc 1 821 3 view .LVU281
+ 1485 0872 4621     		movs	r1, #70
+ 1486 0874 3620     		movs	r0, #54
+ 1487 0876 FFF7FEFF 		bl	VS8812Write
+ 1488              	.LVL272:
+ 822:VS4210/VX8812.c **** 		VS8812Write(0x38, 0x00);
+ 1489              		.loc 1 822 3 view .LVU282
+ 1490 087a 6421     		movs	r1, #100
+ 1491 087c 3720     		movs	r0, #55
+ 1492 087e FFF7FEFF 		bl	VS8812Write
+ 1493              	.LVL273:
+ 823:VS4210/VX8812.c **** 		VS8812Write(0x39, 0xFF);
+ 1494              		.loc 1 823 3 view .LVU283
+ 1495 0882 0021     		movs	r1, #0
+ 1496 0884 3820     		movs	r0, #56
+ 1497 0886 FFF7FEFF 		bl	VS8812Write
+ 1498              	.LVL274:
+ 824:VS4210/VX8812.c **** 		VS8812Write(0x3A, 0x00);
+ 1499              		.loc 1 824 3 view .LVU284
+ 1500 088a FF21     		movs	r1, #255
+ 1501 088c 3920     		movs	r0, #57
+ 1502 088e FFF7FEFF 		bl	VS8812Write
+ 1503              	.LVL275:
+ 825:VS4210/VX8812.c **** 		VS8812Write(0x3B, 0x80);
+ 1504              		.loc 1 825 3 view .LVU285
+ 1505 0892 0021     		movs	r1, #0
+ 1506 0894 3A20     		movs	r0, #58
+ 1507 0896 FFF7FEFF 		bl	VS8812Write
+ 1508              	.LVL276:
+ 826:VS4210/VX8812.c **** 		VS8812Write(0x3C, 0x80);
+ 1509              		.loc 1 826 3 view .LVU286
+ 1510 089a 8021     		movs	r1, #128
+ 1511 089c 3B20     		movs	r0, #59
+ 1512 089e FFF7FEFF 		bl	VS8812Write
+ 1513              	.LVL277:
+ 827:VS4210/VX8812.c **** 		VS8812Write(0x3D, 0x80);
+ 1514              		.loc 1 827 3 view .LVU287
+ 1515 08a2 8021     		movs	r1, #128
+ 1516 08a4 3C20     		movs	r0, #60
+ 1517 08a6 FFF7FEFF 		bl	VS8812Write
+ 1518              	.LVL278:
+ 828:VS4210/VX8812.c **** 		VS8812Write(0x3E, 0x80);
+ 1519              		.loc 1 828 3 view .LVU288
+ 1520 08aa 8021     		movs	r1, #128
+ 1521 08ac 3D20     		movs	r0, #61
+ 1522 08ae FFF7FEFF 		bl	VS8812Write
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 50
+
+
+ 1523              	.LVL279:
+ 829:VS4210/VX8812.c **** 		VS8812Write(0x3F, 0x80);
+ 1524              		.loc 1 829 3 view .LVU289
+ 1525 08b2 8021     		movs	r1, #128
+ 1526 08b4 3E20     		movs	r0, #62
+ 1527 08b6 FFF7FEFF 		bl	VS8812Write
+ 1528              	.LVL280:
+ 830:VS4210/VX8812.c **** 		VS8812Write(0x40, 0x80);
+ 1529              		.loc 1 830 3 view .LVU290
+ 1530 08ba 8021     		movs	r1, #128
+ 1531 08bc 3F20     		movs	r0, #63
+ 1532 08be FFF7FEFF 		bl	VS8812Write
+ 1533              	.LVL281:
+ 831:VS4210/VX8812.c **** 		VS8812Write(0x41, 0x60);
+ 1534              		.loc 1 831 3 view .LVU291
+ 1535 08c2 8021     		movs	r1, #128
+ 1536 08c4 4020     		movs	r0, #64
+ 1537 08c6 FFF7FEFF 		bl	VS8812Write
+ 1538              	.LVL282:
+ 832:VS4210/VX8812.c **** 		VS8812Write(0x42, 0x5F);
+ 1539              		.loc 1 832 3 view .LVU292
+ 1540 08ca 6021     		movs	r1, #96
+ 1541 08cc 4120     		movs	r0, #65
+ 1542 08ce FFF7FEFF 		bl	VS8812Write
+ 1543              	.LVL283:
+ 833:VS4210/VX8812.c **** 		VS8812Write(0x43, 0x37);
+ 1544              		.loc 1 833 3 view .LVU293
+ 1545 08d2 5F21     		movs	r1, #95
+ 1546 08d4 4220     		movs	r0, #66
+ 1547 08d6 FFF7FEFF 		bl	VS8812Write
+ 1548              	.LVL284:
+ 834:VS4210/VX8812.c **** 		VS8812Write(0x44, 0x14);
+ 1549              		.loc 1 834 3 view .LVU294
+ 1550 08da 3721     		movs	r1, #55
+ 1551 08dc 4320     		movs	r0, #67
+ 1552 08de FFF7FEFF 		bl	VS8812Write
+ 1553              	.LVL285:
+ 835:VS4210/VX8812.c **** 		VS8812Write(0x45, 0x00);
+ 1554              		.loc 1 835 3 view .LVU295
+ 1555 08e2 1421     		movs	r1, #20
+ 1556 08e4 4420     		movs	r0, #68
+ 1557 08e6 FFF7FEFF 		bl	VS8812Write
+ 1558              	.LVL286:
+ 836:VS4210/VX8812.c **** 		VS8812Write(0x46, 0x00);
+ 1559              		.loc 1 836 3 view .LVU296
+ 1560 08ea 0021     		movs	r1, #0
+ 1561 08ec 4520     		movs	r0, #69
+ 1562 08ee FFF7FEFF 		bl	VS8812Write
+ 1563              	.LVL287:
+ 837:VS4210/VX8812.c **** 		VS8812Write(0x47, 0x00);
+ 1564              		.loc 1 837 3 view .LVU297
+ 1565 08f2 0021     		movs	r1, #0
+ 1566 08f4 4620     		movs	r0, #70
+ 1567 08f6 FFF7FEFF 		bl	VS8812Write
+ 1568              	.LVL288:
+ 838:VS4210/VX8812.c **** 		VS8812Write(0x48, 0x00);
+ 1569              		.loc 1 838 3 view .LVU298
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 51
+
+
+ 1570 08fa 0021     		movs	r1, #0
+ 1571 08fc 4720     		movs	r0, #71
+ 1572 08fe FFF7FEFF 		bl	VS8812Write
+ 1573              	.LVL289:
+ 839:VS4210/VX8812.c **** 		VS8812Write(0x49, 0x00);
+ 1574              		.loc 1 839 3 view .LVU299
+ 1575 0902 0021     		movs	r1, #0
+ 1576 0904 4820     		movs	r0, #72
+ 1577 0906 FFF7FEFF 		bl	VS8812Write
+ 1578              	.LVL290:
+ 840:VS4210/VX8812.c **** 		VS8812Write(0x4A, 0x20);
+ 1579              		.loc 1 840 3 view .LVU300
+ 1580 090a 0021     		movs	r1, #0
+ 1581 090c 4920     		movs	r0, #73
+ 1582 090e FFF7FEFF 		bl	VS8812Write
+ 1583              	.LVL291:
+ 841:VS4210/VX8812.c **** 		VS8812Write(0x4B, 0x20);
+ 1584              		.loc 1 841 3 view .LVU301
+ 1585 0912 2021     		movs	r1, #32
+ 1586 0914 4A20     		movs	r0, #74
+ 1587 0916 FFF7FEFF 		bl	VS8812Write
+ 1588              	.LVL292:
+ 842:VS4210/VX8812.c **** 		VS8812Write(0x4C, 0x00);
+ 1589              		.loc 1 842 3 view .LVU302
+ 1590 091a 2021     		movs	r1, #32
+ 1591 091c 4B20     		movs	r0, #75
+ 1592 091e FFF7FEFF 		bl	VS8812Write
+ 1593              	.LVL293:
+ 843:VS4210/VX8812.c **** 		VS8812Write(0x4D, 0x00);
+ 1594              		.loc 1 843 3 view .LVU303
+ 1595 0922 0021     		movs	r1, #0
+ 1596 0924 4C20     		movs	r0, #76
+ 1597 0926 FFF7FEFF 		bl	VS8812Write
+ 1598              	.LVL294:
+ 844:VS4210/VX8812.c **** 		VS8812Write(0x4E, 0x00);
+ 1599              		.loc 1 844 3 view .LVU304
+ 1600 092a 0021     		movs	r1, #0
+ 1601 092c 4D20     		movs	r0, #77
+ 1602 092e FFF7FEFF 		bl	VS8812Write
+ 1603              	.LVL295:
+ 845:VS4210/VX8812.c **** 		VS8812Write(0x4F, 0x7F);
+ 1604              		.loc 1 845 3 view .LVU305
+ 1605 0932 0021     		movs	r1, #0
+ 1606 0934 4E20     		movs	r0, #78
+ 1607 0936 FFF7FEFF 		bl	VS8812Write
+ 1608              	.LVL296:
+ 846:VS4210/VX8812.c **** 		VS8812Write(0x50, 0x20);
+ 1609              		.loc 1 846 3 view .LVU306
+ 1610 093a 7F21     		movs	r1, #127
+ 1611 093c 4F20     		movs	r0, #79
+ 1612 093e FFF7FEFF 		bl	VS8812Write
+ 1613              	.LVL297:
+ 847:VS4210/VX8812.c **** 		VS8812Write(0x51, 0x20);
+ 1614              		.loc 1 847 3 view .LVU307
+ 1615 0942 2021     		movs	r1, #32
+ 1616 0944 5020     		movs	r0, #80
+ 1617 0946 FFF7FEFF 		bl	VS8812Write
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 52
+
+
+ 1618              	.LVL298:
+ 848:VS4210/VX8812.c **** 		VS8812Write(0x52, 0x00);
+ 1619              		.loc 1 848 3 view .LVU308
+ 1620 094a 2021     		movs	r1, #32
+ 1621 094c 5120     		movs	r0, #81
+ 1622 094e FFF7FEFF 		bl	VS8812Write
+ 1623              	.LVL299:
+ 849:VS4210/VX8812.c **** 		VS8812Write(0x53, 0x0C);
+ 1624              		.loc 1 849 3 view .LVU309
+ 1625 0952 0021     		movs	r1, #0
+ 1626 0954 5220     		movs	r0, #82
+ 1627 0956 FFF7FEFF 		bl	VS8812Write
+ 1628              	.LVL300:
+ 850:VS4210/VX8812.c **** 		VS8812Write(0x54, 0x00);
+ 1629              		.loc 1 850 3 view .LVU310
+ 1630 095a 0C21     		movs	r1, #12
+ 1631 095c 5320     		movs	r0, #83
+ 1632 095e FFF7FEFF 		bl	VS8812Write
+ 1633              	.LVL301:
+ 851:VS4210/VX8812.c **** 		VS8812Write(0x55, 0xA0);
+ 1634              		.loc 1 851 3 view .LVU311
+ 1635 0962 0021     		movs	r1, #0
+ 1636 0964 5420     		movs	r0, #84
+ 1637 0966 FFF7FEFF 		bl	VS8812Write
+ 1638              	.LVL302:
+ 852:VS4210/VX8812.c **** 		VS8812Write(0x56, 0x28);
+ 1639              		.loc 1 852 3 view .LVU312
+ 1640 096a A021     		movs	r1, #160
+ 1641 096c 5520     		movs	r0, #85
+ 1642 096e FFF7FEFF 		bl	VS8812Write
+ 1643              	.LVL303:
+ 853:VS4210/VX8812.c **** 		VS8812Write(0x57, 0x04);
+ 1644              		.loc 1 853 3 view .LVU313
+ 1645 0972 2821     		movs	r1, #40
+ 1646 0974 5620     		movs	r0, #86
+ 1647 0976 FFF7FEFF 		bl	VS8812Write
+ 1648              	.LVL304:
+ 854:VS4210/VX8812.c **** 		VS8812Write(0x58, 0x10);
+ 1649              		.loc 1 854 3 view .LVU314
+ 1650 097a 0421     		movs	r1, #4
+ 1651 097c 5720     		movs	r0, #87
+ 1652 097e FFF7FEFF 		bl	VS8812Write
+ 1653              	.LVL305:
+ 855:VS4210/VX8812.c **** 		VS8812Write(0x59, 0x08);
+ 1654              		.loc 1 855 3 view .LVU315
+ 1655 0982 1021     		movs	r1, #16
+ 1656 0984 5820     		movs	r0, #88
+ 1657 0986 FFF7FEFF 		bl	VS8812Write
+ 1658              	.LVL306:
+ 856:VS4210/VX8812.c **** 		VS8812Write(0x5A, 0x10);
+ 1659              		.loc 1 856 3 view .LVU316
+ 1660 098a 0821     		movs	r1, #8
+ 1661 098c 5920     		movs	r0, #89
+ 1662 098e FFF7FEFF 		bl	VS8812Write
+ 1663              	.LVL307:
+ 857:VS4210/VX8812.c **** 		VS8812Write(0x5B, 0x00);
+ 1664              		.loc 1 857 3 view .LVU317
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 53
+
+
+ 1665 0992 1021     		movs	r1, #16
+ 1666 0994 5A20     		movs	r0, #90
+ 1667 0996 FFF7FEFF 		bl	VS8812Write
+ 1668              	.LVL308:
+ 858:VS4210/VX8812.c **** 		VS8812Write(0x5C, 0x68);
+ 1669              		.loc 1 858 3 view .LVU318
+ 1670 099a 0021     		movs	r1, #0
+ 1671 099c 5B20     		movs	r0, #91
+ 1672 099e FFF7FEFF 		bl	VS8812Write
+ 1673              	.LVL309:
+ 859:VS4210/VX8812.c **** 		VS8812Write(0x5D, 0x25);
+ 1674              		.loc 1 859 3 view .LVU319
+ 1675 09a2 6821     		movs	r1, #104
+ 1676 09a4 5C20     		movs	r0, #92
+ 1677 09a6 FFF7FEFF 		bl	VS8812Write
+ 1678              	.LVL310:
+ 860:VS4210/VX8812.c **** 		VS8812Write(0x5E, 0x04);
+ 1679              		.loc 1 860 3 view .LVU320
+ 1680 09aa 2521     		movs	r1, #37
+ 1681 09ac 5D20     		movs	r0, #93
+ 1682 09ae FFF7FEFF 		bl	VS8812Write
+ 1683              	.LVL311:
+ 861:VS4210/VX8812.c **** 		VS8812Write(0x5F, 0x00);
+ 1684              		.loc 1 861 3 view .LVU321
+ 1685 09b2 0421     		movs	r1, #4
+ 1686 09b4 5E20     		movs	r0, #94
+ 1687 09b6 FFF7FEFF 		bl	VS8812Write
+ 1688              	.LVL312:
+ 862:VS4210/VX8812.c **** 		VS8812Write(0x60, 0xA0);
+ 1689              		.loc 1 862 3 view .LVU322
+ 1690 09ba 0021     		movs	r1, #0
+ 1691 09bc 5F20     		movs	r0, #95
+ 1692 09be FFF7FEFF 		bl	VS8812Write
+ 1693              	.LVL313:
+ 863:VS4210/VX8812.c **** 		VS8812Write(0x61, 0x41);
+ 1694              		.loc 1 863 3 view .LVU323
+ 1695 09c2 A021     		movs	r1, #160
+ 1696 09c4 6020     		movs	r0, #96
+ 1697 09c6 FFF7FEFF 		bl	VS8812Write
+ 1698              	.LVL314:
+ 864:VS4210/VX8812.c **** 		VS8812Write(0x62, 0x33);
+ 1699              		.loc 1 864 3 view .LVU324
+ 1700 09ca 4121     		movs	r1, #65
+ 1701 09cc 6120     		movs	r0, #97
+ 1702 09ce FFF7FEFF 		bl	VS8812Write
+ 1703              	.LVL315:
+ 865:VS4210/VX8812.c **** 		VS8812Write(0x63, 0x01);
+ 1704              		.loc 1 865 3 view .LVU325
+ 1705 09d2 3321     		movs	r1, #51
+ 1706 09d4 6220     		movs	r0, #98
+ 1707 09d6 FFF7FEFF 		bl	VS8812Write
+ 1708              	.LVL316:
+ 866:VS4210/VX8812.c **** 		VS8812Write(0x64, 0xFF);
+ 1709              		.loc 1 866 3 view .LVU326
+ 1710 09da 0121     		movs	r1, #1
+ 1711 09dc 6320     		movs	r0, #99
+ 1712 09de FFF7FEFF 		bl	VS8812Write
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 54
+
+
+ 1713              	.LVL317:
+ 867:VS4210/VX8812.c **** 		VS8812Write(0x65, 0x01);
+ 1714              		.loc 1 867 3 view .LVU327
+ 1715 09e2 FF21     		movs	r1, #255
+ 1716 09e4 6420     		movs	r0, #100
+ 1717 09e6 FFF7FEFF 		bl	VS8812Write
+ 1718              	.LVL318:
+ 868:VS4210/VX8812.c **** 		VS8812Write(0x66, 0xFF);
+ 1719              		.loc 1 868 3 view .LVU328
+ 1720 09ea 0121     		movs	r1, #1
+ 1721 09ec 6520     		movs	r0, #101
+ 1722 09ee FFF7FEFF 		bl	VS8812Write
+ 1723              	.LVL319:
+ 869:VS4210/VX8812.c **** 		VS8812Write(0x67, 0x89);
+ 1724              		.loc 1 869 3 view .LVU329
+ 1725 09f2 FF21     		movs	r1, #255
+ 1726 09f4 6620     		movs	r0, #102
+ 1727 09f6 FFF7FEFF 		bl	VS8812Write
+ 1728              	.LVL320:
+ 870:VS4210/VX8812.c **** 		VS8812Write(0x68, 0xAB);
+ 1729              		.loc 1 870 3 view .LVU330
+ 1730 09fa 8921     		movs	r1, #137
+ 1731 09fc 6720     		movs	r0, #103
+ 1732 09fe FFF7FEFF 		bl	VS8812Write
+ 1733              	.LVL321:
+ 871:VS4210/VX8812.c **** 		VS8812Write(0x69, 0x28);
+ 1734              		.loc 1 871 3 view .LVU331
+ 1735 0a02 AB21     		movs	r1, #171
+ 1736 0a04 6820     		movs	r0, #104
+ 1737 0a06 FFF7FEFF 		bl	VS8812Write
+ 1738              	.LVL322:
+ 872:VS4210/VX8812.c **** 		VS8812Write(0x6A, 0x6E);
+ 1739              		.loc 1 872 3 view .LVU332
+ 1740 0a0a 2821     		movs	r1, #40
+ 1741 0a0c 6920     		movs	r0, #105
+ 1742 0a0e FFF7FEFF 		bl	VS8812Write
+ 1743              	.LVL323:
+ 873:VS4210/VX8812.c **** 		VS8812Write(0x6B, 0x6E);
+ 1744              		.loc 1 873 3 view .LVU333
+ 1745 0a12 6E21     		movs	r1, #110
+ 1746 0a14 6A20     		movs	r0, #106
+ 1747 0a16 FFF7FEFF 		bl	VS8812Write
+ 1748              	.LVL324:
+ 874:VS4210/VX8812.c **** 		VS8812Write(0x6C, 0x6E);
+ 1749              		.loc 1 874 3 view .LVU334
+ 1750 0a1a 6E21     		movs	r1, #110
+ 1751 0a1c 6B20     		movs	r0, #107
+ 1752 0a1e FFF7FEFF 		bl	VS8812Write
+ 1753              	.LVL325:
+ 875:VS4210/VX8812.c **** 		VS8812Write(0x6D, 0x00);
+ 1754              		.loc 1 875 3 view .LVU335
+ 1755 0a22 6E21     		movs	r1, #110
+ 1756 0a24 6C20     		movs	r0, #108
+ 1757 0a26 FFF7FEFF 		bl	VS8812Write
+ 1758              	.LVL326:
+ 876:VS4210/VX8812.c **** 		VS8812Write(0x6E, 0x00);
+ 1759              		.loc 1 876 3 view .LVU336
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 55
+
+
+ 1760 0a2a 0021     		movs	r1, #0
+ 1761 0a2c 6D20     		movs	r0, #109
+ 1762 0a2e FFF7FEFF 		bl	VS8812Write
+ 1763              	.LVL327:
+ 877:VS4210/VX8812.c **** 		VS8812Write(0x6F, 0x00);
+ 1764              		.loc 1 877 3 view .LVU337
+ 1765 0a32 0021     		movs	r1, #0
+ 1766 0a34 6E20     		movs	r0, #110
+ 1767 0a36 FFF7FEFF 		bl	VS8812Write
+ 1768              	.LVL328:
+ 878:VS4210/VX8812.c **** 		VS8812Write(0x70, 0x00);
+ 1769              		.loc 1 878 3 view .LVU338
+ 1770 0a3a 0021     		movs	r1, #0
+ 1771 0a3c 6F20     		movs	r0, #111
+ 1772 0a3e FFF7FEFF 		bl	VS8812Write
+ 1773              	.LVL329:
+ 879:VS4210/VX8812.c **** 		VS8812Write(0x71, 0x00);
+ 1774              		.loc 1 879 3 view .LVU339
+ 1775 0a42 0021     		movs	r1, #0
+ 1776 0a44 7020     		movs	r0, #112
+ 1777 0a46 FFF7FEFF 		bl	VS8812Write
+ 1778              	.LVL330:
+ 880:VS4210/VX8812.c **** 		VS8812Write(0x72, 0x00);
+ 1779              		.loc 1 880 3 view .LVU340
+ 1780 0a4a 0021     		movs	r1, #0
+ 1781 0a4c 7120     		movs	r0, #113
+ 1782 0a4e FFF7FEFF 		bl	VS8812Write
+ 1783              	.LVL331:
+ 881:VS4210/VX8812.c **** 		VS8812Write(0x73, 0x00);
+ 1784              		.loc 1 881 3 view .LVU341
+ 1785 0a52 0021     		movs	r1, #0
+ 1786 0a54 7220     		movs	r0, #114
+ 1787 0a56 FFF7FEFF 		bl	VS8812Write
+ 1788              	.LVL332:
+ 882:VS4210/VX8812.c **** 		VS8812Write(0x74, 0x50);
+ 1789              		.loc 1 882 3 view .LVU342
+ 1790 0a5a 0021     		movs	r1, #0
+ 1791 0a5c 7320     		movs	r0, #115
+ 1792 0a5e FFF7FEFF 		bl	VS8812Write
+ 1793              	.LVL333:
+ 883:VS4210/VX8812.c **** 		VS8812Write(0x75, 0xFF);
+ 1794              		.loc 1 883 3 view .LVU343
+ 1795 0a62 5021     		movs	r1, #80
+ 1796 0a64 7420     		movs	r0, #116
+ 1797 0a66 FFF7FEFF 		bl	VS8812Write
+ 1798              	.LVL334:
+ 884:VS4210/VX8812.c **** 		VS8812Write(0x76, 0xFF);
+ 1799              		.loc 1 884 3 view .LVU344
+ 1800 0a6a FF21     		movs	r1, #255
+ 1801 0a6c 7520     		movs	r0, #117
+ 1802 0a6e FFF7FEFF 		bl	VS8812Write
+ 1803              	.LVL335:
+ 885:VS4210/VX8812.c **** 		VS8812Write(0x77, 0xFF);
+ 1804              		.loc 1 885 3 view .LVU345
+ 1805 0a72 FF21     		movs	r1, #255
+ 1806 0a74 7620     		movs	r0, #118
+ 1807 0a76 FFF7FEFF 		bl	VS8812Write
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 56
+
+
+ 1808              	.LVL336:
+ 886:VS4210/VX8812.c **** 		VS8812Write(0x78, 0xFF);
+ 1809              		.loc 1 886 3 view .LVU346
+ 1810 0a7a FF21     		movs	r1, #255
+ 1811 0a7c 7720     		movs	r0, #119
+ 1812 0a7e FFF7FEFF 		bl	VS8812Write
+ 1813              	.LVL337:
+ 887:VS4210/VX8812.c **** 		VS8812Write(0x79, 0xFF);
+ 1814              		.loc 1 887 3 view .LVU347
+ 1815 0a82 FF21     		movs	r1, #255
+ 1816 0a84 7820     		movs	r0, #120
+ 1817 0a86 FFF7FEFF 		bl	VS8812Write
+ 1818              	.LVL338:
+ 888:VS4210/VX8812.c **** 		VS8812Write(0x7A, 0xFF);
+ 1819              		.loc 1 888 3 view .LVU348
+ 1820 0a8a FF21     		movs	r1, #255
+ 1821 0a8c 7920     		movs	r0, #121
+ 1822 0a8e FFF7FEFF 		bl	VS8812Write
+ 1823              	.LVL339:
+ 889:VS4210/VX8812.c **** 		VS8812Write(0x7B, 0xFF);
+ 1824              		.loc 1 889 3 view .LVU349
+ 1825 0a92 FF21     		movs	r1, #255
+ 1826 0a94 7A20     		movs	r0, #122
+ 1827 0a96 FFF7FEFF 		bl	VS8812Write
+ 1828              	.LVL340:
+ 890:VS4210/VX8812.c **** 		VS8812Write(0x7C, 0xFF);
+ 1829              		.loc 1 890 3 view .LVU350
+ 1830 0a9a FF21     		movs	r1, #255
+ 1831 0a9c 7B20     		movs	r0, #123
+ 1832 0a9e FFF7FEFF 		bl	VS8812Write
+ 1833              	.LVL341:
+ 891:VS4210/VX8812.c **** 		VS8812Write(0x7D, 0xF0);
+ 1834              		.loc 1 891 3 view .LVU351
+ 1835 0aa2 FF21     		movs	r1, #255
+ 1836 0aa4 7C20     		movs	r0, #124
+ 1837 0aa6 FFF7FEFF 		bl	VS8812Write
+ 1838              	.LVL342:
+ 892:VS4210/VX8812.c **** 		VS8812Write(0x7E, 0x70);
+ 1839              		.loc 1 892 3 view .LVU352
+ 1840 0aaa F021     		movs	r1, #240
+ 1841 0aac 7D20     		movs	r0, #125
+ 1842 0aae FFF7FEFF 		bl	VS8812Write
+ 1843              	.LVL343:
+ 893:VS4210/VX8812.c **** 		VS8812Write(0x7F, 0x00);
+ 1844              		.loc 1 893 3 view .LVU353
+ 1845 0ab2 7021     		movs	r1, #112
+ 1846 0ab4 7E20     		movs	r0, #126
+ 1847 0ab6 FFF7FEFF 		bl	VS8812Write
+ 1848              	.LVL344:
+ 894:VS4210/VX8812.c **** 		VS8812Write(0x80, 0x00);
+ 1849              		.loc 1 894 3 view .LVU354
+ 1850 0aba 0021     		movs	r1, #0
+ 1851 0abc 7F20     		movs	r0, #127
+ 1852 0abe FFF7FEFF 		bl	VS8812Write
+ 1853              	.LVL345:
+ 895:VS4210/VX8812.c **** 		VS8812Write(0x81, 0x00);
+ 1854              		.loc 1 895 3 view .LVU355
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 57
+
+
+ 1855 0ac2 0021     		movs	r1, #0
+ 1856 0ac4 8020     		movs	r0, #128
+ 1857 0ac6 FFF7FEFF 		bl	VS8812Write
+ 1858              	.LVL346:
+ 896:VS4210/VX8812.c **** 		VS8812Write(0x82, 0x60);
+ 1859              		.loc 1 896 3 view .LVU356
+ 1860 0aca 0021     		movs	r1, #0
+ 1861 0acc 8120     		movs	r0, #129
+ 1862 0ace FFF7FEFF 		bl	VS8812Write
+ 1863              	.LVL347:
+ 897:VS4210/VX8812.c **** 		VS8812Write(0x83, 0x06);
+ 1864              		.loc 1 897 3 view .LVU357
+ 1865 0ad2 6021     		movs	r1, #96
+ 1866 0ad4 8220     		movs	r0, #130
+ 1867 0ad6 FFF7FEFF 		bl	VS8812Write
+ 1868              	.LVL348:
+ 898:VS4210/VX8812.c **** 		VS8812Write(0x84, 0x00);
+ 1869              		.loc 1 898 3 view .LVU358
+ 1870 0ada 0621     		movs	r1, #6
+ 1871 0adc 8320     		movs	r0, #131
+ 1872 0ade FFF7FEFF 		bl	VS8812Write
+ 1873              	.LVL349:
+ 899:VS4210/VX8812.c **** 		VS8812Write(0x85, 0xFB);
+ 1874              		.loc 1 899 3 view .LVU359
+ 1875 0ae2 0021     		movs	r1, #0
+ 1876 0ae4 8420     		movs	r0, #132
+ 1877 0ae6 FFF7FEFF 		bl	VS8812Write
+ 1878              	.LVL350:
+ 900:VS4210/VX8812.c **** 		VS8812Write(0x86, 0x00);
+ 1879              		.loc 1 900 3 view .LVU360
+ 1880 0aea FB21     		movs	r1, #251
+ 1881 0aec 8520     		movs	r0, #133
+ 1882 0aee FFF7FEFF 		bl	VS8812Write
+ 1883              	.LVL351:
+ 901:VS4210/VX8812.c **** 		VS8812Write(0x87, 0x00);
+ 1884              		.loc 1 901 3 view .LVU361
+ 1885 0af2 0021     		movs	r1, #0
+ 1886 0af4 8620     		movs	r0, #134
+ 1887 0af6 01E0     		b	.L14
+ 1888              	.L15:
+ 1889              		.align	2
+ 1890              	.L13:
+ 1891 0af8 1C000000 		.word	.LC1
+ 1892              	.L14:
+ 1893 0afc FFF7FEFF 		bl	VS8812Write
+ 1894              	.LVL352:
+ 902:VS4210/VX8812.c **** 		VS8812Write(0x88, 0x00);
+ 1895              		.loc 1 902 3 view .LVU362
+ 1896 0b00 0021     		movs	r1, #0
+ 1897 0b02 8720     		movs	r0, #135
+ 1898 0b04 FFF7FEFF 		bl	VS8812Write
+ 1899              	.LVL353:
+ 903:VS4210/VX8812.c **** 		VS8812Write(0x89, 0x00);
+ 1900              		.loc 1 903 3 view .LVU363
+ 1901 0b08 0021     		movs	r1, #0
+ 1902 0b0a 8820     		movs	r0, #136
+ 1903 0b0c FFF7FEFF 		bl	VS8812Write
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 58
+
+
+ 1904              	.LVL354:
+ 904:VS4210/VX8812.c **** 		VS8812Write(0x8A, 0x00);
+ 1905              		.loc 1 904 3 view .LVU364
+ 1906 0b10 0021     		movs	r1, #0
+ 1907 0b12 8920     		movs	r0, #137
+ 1908 0b14 FFF7FEFF 		bl	VS8812Write
+ 1909              	.LVL355:
+ 905:VS4210/VX8812.c **** 		VS8812Write(0x8B, 0x7E);
+ 1910              		.loc 1 905 3 view .LVU365
+ 1911 0b18 0021     		movs	r1, #0
+ 1912 0b1a 8A20     		movs	r0, #138
+ 1913 0b1c FFF7FEFF 		bl	VS8812Write
+ 1914              	.LVL356:
+ 906:VS4210/VX8812.c **** 		VS8812Write(0x8C, 0x00);
+ 1915              		.loc 1 906 3 view .LVU366
+ 1916 0b20 7E21     		movs	r1, #126
+ 1917 0b22 8B20     		movs	r0, #139
+ 1918 0b24 FFF7FEFF 		bl	VS8812Write
+ 1919              	.LVL357:
+ 907:VS4210/VX8812.c **** 		VS8812Write(0x8D, 0x0A);
+ 1920              		.loc 1 907 3 view .LVU367
+ 1921 0b28 0021     		movs	r1, #0
+ 1922 0b2a 8C20     		movs	r0, #140
+ 1923 0b2c FFF7FEFF 		bl	VS8812Write
+ 1924              	.LVL358:
+ 908:VS4210/VX8812.c **** 		VS8812Write(0x8E, 0x8C);
+ 1925              		.loc 1 908 3 view .LVU368
+ 1926 0b30 0A21     		movs	r1, #10
+ 1927 0b32 8D20     		movs	r0, #141
+ 1928 0b34 FFF7FEFF 		bl	VS8812Write
+ 1929              	.LVL359:
+ 909:VS4210/VX8812.c **** 		VS8812Write(0x8F, 0x00);
+ 1930              		.loc 1 909 3 view .LVU369
+ 1931 0b38 8C21     		movs	r1, #140
+ 1932 0b3a 8E20     		movs	r0, #142
+ 1933 0b3c FFF7FEFF 		bl	VS8812Write
+ 1934              	.LVL360:
+ 910:VS4210/VX8812.c **** 		VS8812Write(0x90, 0x08);
+ 1935              		.loc 1 910 3 view .LVU370
+ 1936 0b40 0021     		movs	r1, #0
+ 1937 0b42 8F20     		movs	r0, #143
+ 1938 0b44 FFF7FEFF 		bl	VS8812Write
+ 1939              	.LVL361:
+ 911:VS4210/VX8812.c **** 		VS8812Write(0x91, 0x01);
+ 1940              		.loc 1 911 3 view .LVU371
+ 1941 0b48 0821     		movs	r1, #8
+ 1942 0b4a 9020     		movs	r0, #144
+ 1943 0b4c FFF7FEFF 		bl	VS8812Write
+ 1944              	.LVL362:
+ 912:VS4210/VX8812.c **** 		VS8812Write(0x92, 0xC6);
+ 1945              		.loc 1 912 3 view .LVU372
+ 1946 0b50 0121     		movs	r1, #1
+ 1947 0b52 9120     		movs	r0, #145
+ 1948 0b54 FFF7FEFF 		bl	VS8812Write
+ 1949              	.LVL363:
+ 913:VS4210/VX8812.c **** 		VS8812Write(0x93, 0x32);
+ 1950              		.loc 1 913 3 view .LVU373
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 59
+
+
+ 1951 0b58 C621     		movs	r1, #198
+ 1952 0b5a 9220     		movs	r0, #146
+ 1953 0b5c FFF7FEFF 		bl	VS8812Write
+ 1954              	.LVL364:
+ 914:VS4210/VX8812.c **** 		VS8812Write(0x94, 0x60);
+ 1955              		.loc 1 914 3 view .LVU374
+ 1956 0b60 3221     		movs	r1, #50
+ 1957 0b62 9320     		movs	r0, #147
+ 1958 0b64 FFF7FEFF 		bl	VS8812Write
+ 1959              	.LVL365:
+ 915:VS4210/VX8812.c **** 		VS8812Write(0x95, 0xD0);
+ 1960              		.loc 1 915 3 view .LVU375
+ 1961 0b68 6021     		movs	r1, #96
+ 1962 0b6a 9420     		movs	r0, #148
+ 1963 0b6c FFF7FEFF 		bl	VS8812Write
+ 1964              	.LVL366:
+ 916:VS4210/VX8812.c **** 		VS8812Write(0x96, 0x22);
+ 1965              		.loc 1 916 3 view .LVU376
+ 1966 0b70 D021     		movs	r1, #208
+ 1967 0b72 9520     		movs	r0, #149
+ 1968 0b74 FFF7FEFF 		bl	VS8812Write
+ 1969              	.LVL367:
+ 917:VS4210/VX8812.c **** 		VS8812Write(0x97, 0x71);
+ 1970              		.loc 1 917 3 view .LVU377
+ 1971 0b78 2221     		movs	r1, #34
+ 1972 0b7a 9620     		movs	r0, #150
+ 1973 0b7c FFF7FEFF 		bl	VS8812Write
+ 1974              	.LVL368:
+ 918:VS4210/VX8812.c **** 		VS8812Write(0x98, 0x40);
+ 1975              		.loc 1 918 3 view .LVU378
+ 1976 0b80 7121     		movs	r1, #113
+ 1977 0b82 9720     		movs	r0, #151
+ 1978 0b84 FFF7FEFF 		bl	VS8812Write
+ 1979              	.LVL369:
+ 919:VS4210/VX8812.c **** 		VS8812Write(0x99, 0x02);
+ 1980              		.loc 1 919 3 view .LVU379
+ 1981 0b88 4021     		movs	r1, #64
+ 1982 0b8a 9820     		movs	r0, #152
+ 1983 0b8c FFF7FEFF 		bl	VS8812Write
+ 1984              	.LVL370:
+ 920:VS4210/VX8812.c **** 		VS8812Write(0x9A, 0x00);
+ 1985              		.loc 1 920 3 view .LVU380
+ 1986 0b90 0221     		movs	r1, #2
+ 1987 0b92 9920     		movs	r0, #153
+ 1988 0b94 FFF7FEFF 		bl	VS8812Write
+ 1989              	.LVL371:
+ 921:VS4210/VX8812.c **** 		VS8812Write(0x9B, 0xA0);
+ 1990              		.loc 1 921 3 view .LVU381
+ 1991 0b98 0021     		movs	r1, #0
+ 1992 0b9a 9A20     		movs	r0, #154
+ 1993 0b9c FFF7FEFF 		bl	VS8812Write
+ 1994              	.LVL372:
+ 922:VS4210/VX8812.c **** 		VS8812Write(0x9C, 0x21);
+ 1995              		.loc 1 922 3 view .LVU382
+ 1996 0ba0 A021     		movs	r1, #160
+ 1997 0ba2 9B20     		movs	r0, #155
+ 1998 0ba4 FFF7FEFF 		bl	VS8812Write
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 60
+
+
+ 1999              	.LVL373:
+ 923:VS4210/VX8812.c **** 		VS8812Write(0x9D, 0x00);
+ 2000              		.loc 1 923 3 view .LVU383
+ 2001 0ba8 2121     		movs	r1, #33
+ 2002 0baa 9C20     		movs	r0, #156
+ 2003 0bac FFF7FEFF 		bl	VS8812Write
+ 2004              	.LVL374:
+ 924:VS4210/VX8812.c **** 		VS8812Write(0x9E, 0x00);
+ 2005              		.loc 1 924 3 view .LVU384
+ 2006 0bb0 0021     		movs	r1, #0
+ 2007 0bb2 9D20     		movs	r0, #157
+ 2008 0bb4 FFF7FEFF 		bl	VS8812Write
+ 2009              	.LVL375:
+ 925:VS4210/VX8812.c **** 		VS8812Write(0x9F, 0x00);
+ 2010              		.loc 1 925 3 view .LVU385
+ 2011 0bb8 0021     		movs	r1, #0
+ 2012 0bba 9E20     		movs	r0, #158
+ 2013 0bbc FFF7FEFF 		bl	VS8812Write
+ 2014              	.LVL376:
+ 926:VS4210/VX8812.c **** 		VS8812Write(0xA0, 0x6B);
+ 2015              		.loc 1 926 3 view .LVU386
+ 2016 0bc0 0021     		movs	r1, #0
+ 2017 0bc2 9F20     		movs	r0, #159
+ 2018 0bc4 FFF7FEFF 		bl	VS8812Write
+ 2019              	.LVL377:
+ 927:VS4210/VX8812.c **** 		VS8812Write(0xA1, 0x00);
+ 2020              		.loc 1 927 3 view .LVU387
+ 2021 0bc8 6B21     		movs	r1, #107
+ 2022 0bca A020     		movs	r0, #160
+ 2023 0bcc FFF7FEFF 		bl	VS8812Write
+ 2024              	.LVL378:
+ 928:VS4210/VX8812.c **** 		VS8812Write(0xA2, 0x80);
+ 2025              		.loc 1 928 3 view .LVU388
+ 2026 0bd0 0021     		movs	r1, #0
+ 2027 0bd2 A120     		movs	r0, #161
+ 2028 0bd4 FFF7FEFF 		bl	VS8812Write
+ 2029              	.LVL379:
+ 929:VS4210/VX8812.c **** 		VS8812Write(0xA3, 0x80);
+ 2030              		.loc 1 929 3 view .LVU389
+ 2031 0bd8 8021     		movs	r1, #128
+ 2032 0bda A220     		movs	r0, #162
+ 2033 0bdc FFF7FEFF 		bl	VS8812Write
+ 2034              	.LVL380:
+ 930:VS4210/VX8812.c **** 		VS8812Write(0xA4, 0x47);
+ 2035              		.loc 1 930 3 view .LVU390
+ 2036 0be0 8021     		movs	r1, #128
+ 2037 0be2 A320     		movs	r0, #163
+ 2038 0be4 FFF7FEFF 		bl	VS8812Write
+ 2039              	.LVL381:
+ 931:VS4210/VX8812.c **** 		VS8812Write(0xA5, 0x80);
+ 2040              		.loc 1 931 3 view .LVU391
+ 2041 0be8 4721     		movs	r1, #71
+ 2042 0bea A420     		movs	r0, #164
+ 2043 0bec FFF7FEFF 		bl	VS8812Write
+ 2044              	.LVL382:
+ 932:VS4210/VX8812.c **** 		VS8812Write(0xA6, 0x0C);
+ 2045              		.loc 1 932 3 view .LVU392
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 61
+
+
+ 2046 0bf0 8021     		movs	r1, #128
+ 2047 0bf2 A520     		movs	r0, #165
+ 2048 0bf4 FFF7FEFF 		bl	VS8812Write
+ 2049              	.LVL383:
+ 933:VS4210/VX8812.c **** 		VS8812Write(0xA7, 0x02);
+ 2050              		.loc 1 933 3 view .LVU393
+ 2051 0bf8 0C21     		movs	r1, #12
+ 2052 0bfa A620     		movs	r0, #166
+ 2053 0bfc FFF7FEFF 		bl	VS8812Write
+ 2054              	.LVL384:
+ 934:VS4210/VX8812.c **** 		VS8812Write(0xA8, 0x20);
+ 2055              		.loc 1 934 3 view .LVU394
+ 2056 0c00 0221     		movs	r1, #2
+ 2057 0c02 A720     		movs	r0, #167
+ 2058 0c04 FFF7FEFF 		bl	VS8812Write
+ 2059              	.LVL385:
+ 935:VS4210/VX8812.c **** 		VS8812Write(0xA9, 0x10);
+ 2060              		.loc 1 935 3 view .LVU395
+ 2061 0c08 2021     		movs	r1, #32
+ 2062 0c0a A820     		movs	r0, #168
+ 2063 0c0c FFF7FEFF 		bl	VS8812Write
+ 2064              	.LVL386:
+ 936:VS4210/VX8812.c **** 		VS8812Write(0xAA, 0x10);
+ 2065              		.loc 1 936 3 view .LVU396
+ 2066 0c10 1021     		movs	r1, #16
+ 2067 0c12 A920     		movs	r0, #169
+ 2068 0c14 FFF7FEFF 		bl	VS8812Write
+ 2069              	.LVL387:
+ 937:VS4210/VX8812.c **** 		VS8812Write(0xAB, 0x00);
+ 2070              		.loc 1 937 3 view .LVU397
+ 2071 0c18 1021     		movs	r1, #16
+ 2072 0c1a AA20     		movs	r0, #170
+ 2073 0c1c FFF7FEFF 		bl	VS8812Write
+ 2074              	.LVL388:
+ 938:VS4210/VX8812.c **** 		VS8812Write(0xAC, 0x42);
+ 2075              		.loc 1 938 3 view .LVU398
+ 2076 0c20 0021     		movs	r1, #0
+ 2077 0c22 AB20     		movs	r0, #171
+ 2078 0c24 FFF7FEFF 		bl	VS8812Write
+ 2079              	.LVL389:
+ 939:VS4210/VX8812.c **** 		VS8812Write(0xAD, 0x02);
+ 2080              		.loc 1 939 3 view .LVU399
+ 2081 0c28 4221     		movs	r1, #66
+ 2082 0c2a AC20     		movs	r0, #172
+ 2083 0c2c FFF7FEFF 		bl	VS8812Write
+ 2084              	.LVL390:
+ 940:VS4210/VX8812.c **** 		VS8812Write(0xAE, 0x06);
+ 2085              		.loc 1 940 3 view .LVU400
+ 2086 0c30 0221     		movs	r1, #2
+ 2087 0c32 AD20     		movs	r0, #173
+ 2088 0c34 FFF7FEFF 		bl	VS8812Write
+ 2089              	.LVL391:
+ 941:VS4210/VX8812.c **** 		VS8812Write(0xAF, 0x04);
+ 2090              		.loc 1 941 3 view .LVU401
+ 2091 0c38 0621     		movs	r1, #6
+ 2092 0c3a AE20     		movs	r0, #174
+ 2093 0c3c FFF7FEFF 		bl	VS8812Write
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 62
+
+
+ 2094              	.LVL392:
+ 942:VS4210/VX8812.c **** 		VS8812Write(0xB0, 0x00);
+ 2095              		.loc 1 942 3 view .LVU402
+ 2096 0c40 0421     		movs	r1, #4
+ 2097 0c42 AF20     		movs	r0, #175
+ 2098 0c44 FFF7FEFF 		bl	VS8812Write
+ 2099              	.LVL393:
+ 943:VS4210/VX8812.c **** 		VS8812Write(0xB1, 0x00);
+ 2100              		.loc 1 943 3 view .LVU403
+ 2101 0c48 0021     		movs	r1, #0
+ 2102 0c4a B020     		movs	r0, #176
+ 2103 0c4c FFF7FEFF 		bl	VS8812Write
+ 2104              	.LVL394:
+ 944:VS4210/VX8812.c **** 		VS8812Write(0xB2, 0x00);
+ 2105              		.loc 1 944 3 view .LVU404
+ 2106 0c50 0021     		movs	r1, #0
+ 2107 0c52 B120     		movs	r0, #177
+ 2108 0c54 FFF7FEFF 		bl	VS8812Write
+ 2109              	.LVL395:
+ 945:VS4210/VX8812.c **** 		VS8812Write(0xB3, 0x00);
+ 2110              		.loc 1 945 3 view .LVU405
+ 2111 0c58 0021     		movs	r1, #0
+ 2112 0c5a B220     		movs	r0, #178
+ 2113 0c5c FFF7FEFF 		bl	VS8812Write
+ 2114              	.LVL396:
+ 946:VS4210/VX8812.c **** 		VS8812Write(0xB4, 0x00);
+ 2115              		.loc 1 946 3 view .LVU406
+ 2116 0c60 0021     		movs	r1, #0
+ 2117 0c62 B320     		movs	r0, #179
+ 2118 0c64 FFF7FEFF 		bl	VS8812Write
+ 2119              	.LVL397:
+ 947:VS4210/VX8812.c **** 		VS8812Write(0xB5, 0x00);
+ 2120              		.loc 1 947 3 view .LVU407
+ 2121 0c68 0021     		movs	r1, #0
+ 2122 0c6a B420     		movs	r0, #180
+ 2123 0c6c FFF7FEFF 		bl	VS8812Write
+ 2124              	.LVL398:
+ 948:VS4210/VX8812.c **** 		VS8812Write(0xB6, 0x00);
+ 2125              		.loc 1 948 3 view .LVU408
+ 2126 0c70 0021     		movs	r1, #0
+ 2127 0c72 B520     		movs	r0, #181
+ 2128 0c74 FFF7FEFF 		bl	VS8812Write
+ 2129              	.LVL399:
+ 949:VS4210/VX8812.c **** 		VS8812Write(0xC0, 0x8C);
+ 2130              		.loc 1 949 3 view .LVU409
+ 2131 0c78 0021     		movs	r1, #0
+ 2132 0c7a B620     		movs	r0, #182
+ 2133 0c7c FFF7FEFF 		bl	VS8812Write
+ 2134              	.LVL400:
+ 950:VS4210/VX8812.c **** 		VS8812Write(0xC1, 0x7E);
+ 2135              		.loc 1 950 3 view .LVU410
+ 2136 0c80 8C21     		movs	r1, #140
+ 2137 0c82 C020     		movs	r0, #192
+ 2138 0c84 FFF7FEFF 		bl	VS8812Write
+ 2139              	.LVL401:
+ 951:VS4210/VX8812.c **** 		VS8812Write(0xC2, 0xDC);
+ 2140              		.loc 1 951 3 view .LVU411
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 63
+
+
+ 2141 0c88 7E21     		movs	r1, #126
+ 2142 0c8a C120     		movs	r0, #193
+ 2143 0c8c FFF7FEFF 		bl	VS8812Write
+ 2144              	.LVL402:
+ 952:VS4210/VX8812.c **** 		VS8812Write(0xC3, 0x20);
+ 2145              		.loc 1 952 3 view .LVU412
+ 2146 0c90 DC21     		movs	r1, #220
+ 2147 0c92 C220     		movs	r0, #194
+ 2148 0c94 FFF7FEFF 		bl	VS8812Write
+ 2149              	.LVL403:
+ 953:VS4210/VX8812.c **** 		VS8812Write(0xC4, 0x20);
+ 2150              		.loc 1 953 3 view .LVU413
+ 2151 0c98 2021     		movs	r1, #32
+ 2152 0c9a C320     		movs	r0, #195
+ 2153 0c9c FFF7FEFF 		bl	VS8812Write
+ 2154              	.LVL404:
+ 954:VS4210/VX8812.c **** 		VS8812Write(0xC5, 0x34);
+ 2155              		.loc 1 954 3 view .LVU414
+ 2156 0ca0 2021     		movs	r1, #32
+ 2157 0ca2 C420     		movs	r0, #196
+ 2158 0ca4 FFF7FEFF 		bl	VS8812Write
+ 2159              	.LVL405:
+ 955:VS4210/VX8812.c **** 		VS8812Write(0xC6, 0x18);
+ 2160              		.loc 1 955 3 view .LVU415
+ 2161 0ca8 3421     		movs	r1, #52
+ 2162 0caa C520     		movs	r0, #197
+ 2163 0cac FFF7FEFF 		bl	VS8812Write
+ 2164              	.LVL406:
+ 956:VS4210/VX8812.c **** 		VS8812Write(0xC7, 0x84);
+ 2165              		.loc 1 956 3 view .LVU416
+ 2166 0cb0 1821     		movs	r1, #24
+ 2167 0cb2 C620     		movs	r0, #198
+ 2168 0cb4 FFF7FEFF 		bl	VS8812Write
+ 2169              	.LVL407:
+ 957:VS4210/VX8812.c **** 		VS8812Write(0xC8, 0x02);
+ 2170              		.loc 1 957 3 view .LVU417
+ 2171 0cb8 8421     		movs	r1, #132
+ 2172 0cba C720     		movs	r0, #199
+ 2173 0cbc FFF7FEFF 		bl	VS8812Write
+ 2174              	.LVL408:
+ 958:VS4210/VX8812.c **** 		VS8812Write(0xD0, 0x02);
+ 2175              		.loc 1 958 3 view .LVU418
+ 2176 0cc0 0221     		movs	r1, #2
+ 2177 0cc2 C820     		movs	r0, #200
+ 2178 0cc4 FFF7FEFF 		bl	VS8812Write
+ 2179              	.LVL409:
+ 959:VS4210/VX8812.c **** 		VS8812Write(0xD1, 0x40);
+ 2180              		.loc 1 959 3 view .LVU419
+ 2181 0cc8 0221     		movs	r1, #2
+ 2182 0cca D020     		movs	r0, #208
+ 2183 0ccc FFF7FEFF 		bl	VS8812Write
+ 2184              	.LVL410:
+ 960:VS4210/VX8812.c **** 		VS8812Write(0xD2, 0x40);
+ 2185              		.loc 1 960 3 view .LVU420
+ 2186 0cd0 4021     		movs	r1, #64
+ 2187 0cd2 D120     		movs	r0, #209
+ 2188 0cd4 FFF7FEFF 		bl	VS8812Write
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 64
+
+
+ 2189              	.LVL411:
+ 961:VS4210/VX8812.c **** 		VS8812Write(0xD3, 0x40);
+ 2190              		.loc 1 961 3 view .LVU421
+ 2191 0cd8 4021     		movs	r1, #64
+ 2192 0cda D220     		movs	r0, #210
+ 2193 0cdc FFF7FEFF 		bl	VS8812Write
+ 2194              	.LVL412:
+ 962:VS4210/VX8812.c **** 		VS8812Write(0xD4, 0x00);
+ 2195              		.loc 1 962 3 view .LVU422
+ 2196 0ce0 4021     		movs	r1, #64
+ 2197 0ce2 D320     		movs	r0, #211
+ 2198 0ce4 FFF7FEFF 		bl	VS8812Write
+ 2199              	.LVL413:
+ 963:VS4210/VX8812.c **** 		VS8812Write(0xD5, 0x00);
+ 2200              		.loc 1 963 3 view .LVU423
+ 2201 0ce8 0021     		movs	r1, #0
+ 2202 0cea D420     		movs	r0, #212
+ 2203 0cec FFF7FEFF 		bl	VS8812Write
+ 2204              	.LVL414:
+ 964:VS4210/VX8812.c **** 		VS8812Write(0xD6, 0x00);
+ 2205              		.loc 1 964 3 view .LVU424
+ 2206 0cf0 0021     		movs	r1, #0
+ 2207 0cf2 D520     		movs	r0, #213
+ 2208 0cf4 FFF7FEFF 		bl	VS8812Write
+ 2209              	.LVL415:
+ 965:VS4210/VX8812.c **** 		VS8812Write(0xD7, 0x00);
+ 2210              		.loc 1 965 3 view .LVU425
+ 2211 0cf8 0021     		movs	r1, #0
+ 2212 0cfa D620     		movs	r0, #214
+ 2213 0cfc FFF7FEFF 		bl	VS8812Write
+ 2214              	.LVL416:
+ 966:VS4210/VX8812.c **** 		VS8812Write(0xD8, 0x00);
+ 2215              		.loc 1 966 3 view .LVU426
+ 2216 0d00 0021     		movs	r1, #0
+ 2217 0d02 D720     		movs	r0, #215
+ 2218 0d04 FFF7FEFF 		bl	VS8812Write
+ 2219              	.LVL417:
+ 967:VS4210/VX8812.c **** 		VS8812Write(0xD9, 0x00);
+ 2220              		.loc 1 967 3 view .LVU427
+ 2221 0d08 0021     		movs	r1, #0
+ 2222 0d0a D820     		movs	r0, #216
+ 2223 0d0c FFF7FEFF 		bl	VS8812Write
+ 2224              	.LVL418:
+ 968:VS4210/VX8812.c **** 		VS8812Write(0xE0, 0x33);
+ 2225              		.loc 1 968 3 view .LVU428
+ 2226 0d10 0021     		movs	r1, #0
+ 2227 0d12 D920     		movs	r0, #217
+ 2228 0d14 FFF7FEFF 		bl	VS8812Write
+ 2229              	.LVL419:
+ 969:VS4210/VX8812.c **** 		VS8812Write(0xE1, 0xA7);
+ 2230              		.loc 1 969 3 view .LVU429
+ 2231 0d18 3321     		movs	r1, #51
+ 2232 0d1a E020     		movs	r0, #224
+ 2233 0d1c FFF7FEFF 		bl	VS8812Write
+ 2234              	.LVL420:
+ 970:VS4210/VX8812.c **** 		VS8812Write(0xE2, 0x7F);
+ 2235              		.loc 1 970 3 view .LVU430
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 65
+
+
+ 2236 0d20 A721     		movs	r1, #167
+ 2237 0d22 E120     		movs	r0, #225
+ 2238 0d24 FFF7FEFF 		bl	VS8812Write
+ 2239              	.LVL421:
+ 971:VS4210/VX8812.c **** 		VS8812Write(0xE3, 0x22);
+ 2240              		.loc 1 971 3 view .LVU431
+ 2241 0d28 7F21     		movs	r1, #127
+ 2242 0d2a E220     		movs	r0, #226
+ 2243 0d2c FFF7FEFF 		bl	VS8812Write
+ 2244              	.LVL422:
+ 972:VS4210/VX8812.c **** 		VS8812Write(0xE4, 0x0D);
+ 2245              		.loc 1 972 3 view .LVU432
+ 2246 0d30 2221     		movs	r1, #34
+ 2247 0d32 E320     		movs	r0, #227
+ 2248 0d34 FFF7FEFF 		bl	VS8812Write
+ 2249              	.LVL423:
+ 973:VS4210/VX8812.c **** 		VS8812Write(0xE5, 0x0A);
+ 2250              		.loc 1 973 3 view .LVU433
+ 2251 0d38 0D21     		movs	r1, #13
+ 2252 0d3a E420     		movs	r0, #228
+ 2253 0d3c FFF7FEFF 		bl	VS8812Write
+ 2254              	.LVL424:
+ 974:VS4210/VX8812.c **** 		VS8812Write(0xE6, 0x00);
+ 2255              		.loc 1 974 3 view .LVU434
+ 2256 0d40 0A21     		movs	r1, #10
+ 2257 0d42 E520     		movs	r0, #229
+ 2258 0d44 FFF7FEFF 		bl	VS8812Write
+ 2259              	.LVL425:
+ 975:VS4210/VX8812.c **** 		VS8812Write(0xE7, 0x99);
+ 2260              		.loc 1 975 3 view .LVU435
+ 2261 0d48 0021     		movs	r1, #0
+ 2262 0d4a E620     		movs	r0, #230
+ 2263 0d4c FFF7FEFF 		bl	VS8812Write
+ 2264              	.LVL426:
+ 976:VS4210/VX8812.c **** 		VS8812Write(0xE8, 0x67);
+ 2265              		.loc 1 976 3 view .LVU436
+ 2266 0d50 9921     		movs	r1, #153
+ 2267 0d52 E720     		movs	r0, #231
+ 2268 0d54 FFF7FEFF 		bl	VS8812Write
+ 2269              	.LVL427:
+ 977:VS4210/VX8812.c **** 		VS8812Write(0xE9, 0x02);
+ 2270              		.loc 1 977 3 view .LVU437
+ 2271 0d58 6721     		movs	r1, #103
+ 2272 0d5a E820     		movs	r0, #232
+ 2273 0d5c FFF7FEFF 		bl	VS8812Write
+ 2274              	.LVL428:
+ 978:VS4210/VX8812.c **** 		VS8812Write(0xF0, 0x00);
+ 2275              		.loc 1 978 3 view .LVU438
+ 2276 0d60 0221     		movs	r1, #2
+ 2277 0d62 E920     		movs	r0, #233
+ 2278 0d64 FFF7FEFF 		bl	VS8812Write
+ 2279              	.LVL429:
+ 979:VS4210/VX8812.c **** 		VS8812Write(0xF1, 0x43);
+ 2280              		.loc 1 979 3 view .LVU439
+ 2281 0d68 0021     		movs	r1, #0
+ 2282 0d6a F020     		movs	r0, #240
+ 2283 0d6c FFF7FEFF 		bl	VS8812Write
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 66
+
+
+ 2284              	.LVL430:
+ 980:VS4210/VX8812.c **** 		VS8812Write(0xF2, 0x1F);
+ 2285              		.loc 1 980 3 view .LVU440
+ 2286 0d70 4321     		movs	r1, #67
+ 2287 0d72 F120     		movs	r0, #241
+ 2288 0d74 FFF7FEFF 		bl	VS8812Write
+ 2289              	.LVL431:
+ 981:VS4210/VX8812.c **** 		VS8812Write(0xF3, 0x1F);
+ 2290              		.loc 1 981 3 view .LVU441
+ 2291 0d78 1F21     		movs	r1, #31
+ 2292 0d7a F220     		movs	r0, #242
+ 2293 0d7c FFF7FEFF 		bl	VS8812Write
+ 2294              	.LVL432:
+ 982:VS4210/VX8812.c **** 		VS8812Write(0xF4, 0x22);
+ 2295              		.loc 1 982 3 view .LVU442
+ 2296 0d80 1F21     		movs	r1, #31
+ 2297 0d82 F320     		movs	r0, #243
+ 2298 0d84 FFF7FEFF 		bl	VS8812Write
+ 2299              	.LVL433:
+ 983:VS4210/VX8812.c **** 		VS8812Write(0xF5, 0x73);
+ 2300              		.loc 1 983 3 view .LVU443
+ 2301 0d88 2221     		movs	r1, #34
+ 2302 0d8a F420     		movs	r0, #244
+ 2303 0d8c FFF7FEFF 		bl	VS8812Write
+ 2304              	.LVL434:
+ 984:VS4210/VX8812.c **** 		VS8812Write(0xF6, 0x53);
+ 2305              		.loc 1 984 3 view .LVU444
+ 2306 0d90 7321     		movs	r1, #115
+ 2307 0d92 F520     		movs	r0, #245
+ 2308 0d94 FFF7FEFF 		bl	VS8812Write
+ 2309              	.LVL435:
+ 985:VS4210/VX8812.c **** 		VS8812Write(0xF7, 0x80);
+ 2310              		.loc 1 985 3 view .LVU445
+ 2311 0d98 5321     		movs	r1, #83
+ 2312 0d9a F620     		movs	r0, #246
+ 2313 0d9c FFF7FEFF 		bl	VS8812Write
+ 2314              	.LVL436:
+ 986:VS4210/VX8812.c **** 		VS8812Write(0xF8, 0x01);
+ 2315              		.loc 1 986 3 view .LVU446
+ 2316 0da0 8021     		movs	r1, #128
+ 2317 0da2 F720     		movs	r0, #247
+ 2318 0da4 FFF7FEFF 		bl	VS8812Write
+ 2319              	.LVL437:
+ 987:VS4210/VX8812.c **** 		VS8812Write(0xF9, 0x01);
+ 2320              		.loc 1 987 3 view .LVU447
+ 2321 0da8 0121     		movs	r1, #1
+ 2322 0daa F820     		movs	r0, #248
+ 2323 0dac FFF7FEFF 		bl	VS8812Write
+ 2324              	.LVL438:
+ 988:VS4210/VX8812.c **** 		VS8812Write(0xFA, 0x00);
+ 2325              		.loc 1 988 3 view .LVU448
+ 2326 0db0 0121     		movs	r1, #1
+ 2327 0db2 F920     		movs	r0, #249
+ 2328 0db4 FFF7FEFF 		bl	VS8812Write
+ 2329              	.LVL439:
+ 989:VS4210/VX8812.c **** 		VS8812Write(0xFB, 0x00);
+ 2330              		.loc 1 989 3 view .LVU449
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 67
+
+
+ 2331 0db8 0021     		movs	r1, #0
+ 2332 0dba FA20     		movs	r0, #250
+ 2333 0dbc FFF7FEFF 		bl	VS8812Write
+ 2334              	.LVL440:
+ 990:VS4210/VX8812.c **** 		VS8812Write(0xFC, 0x00);
+ 2335              		.loc 1 990 3 view .LVU450
+ 2336 0dc0 0021     		movs	r1, #0
+ 2337 0dc2 FB20     		movs	r0, #251
+ 2338 0dc4 FFF7FEFF 		bl	VS8812Write
+ 2339              	.LVL441:
+ 991:VS4210/VX8812.c **** 		VS8812Write(0xFD, 0x70);
+ 2340              		.loc 1 991 3 view .LVU451
+ 2341 0dc8 0021     		movs	r1, #0
+ 2342 0dca FC20     		movs	r0, #252
+ 2343 0dcc FFF7FEFF 		bl	VS8812Write
+ 2344              	.LVL442:
+ 992:VS4210/VX8812.c **** 		VS8812Write(0xFE, 0x25);
+ 2345              		.loc 1 992 3 view .LVU452
+ 2346 0dd0 7021     		movs	r1, #112
+ 2347 0dd2 FD20     		movs	r0, #253
+ 2348 0dd4 FFF7FEFF 		bl	VS8812Write
+ 2349              	.LVL443:
+ 993:VS4210/VX8812.c **** 		VS8812Write(0xFF, 0x17);
+ 2350              		.loc 1 993 3 view .LVU453
+ 2351 0dd8 2521     		movs	r1, #37
+ 2352 0dda FE20     		movs	r0, #254
+ 2353 0ddc FFF7FEFF 		bl	VS8812Write
+ 2354              	.LVL444:
+ 994:VS4210/VX8812.c **** 		break;
+ 2355              		.loc 1 994 3 view .LVU454
+ 2356 0de0 1721     		movs	r1, #23
+ 2357 0de2 FF20     		movs	r0, #255
+ 2358 0de4 FFF7FEFF 		bl	VS8812Write
+ 2359              	.LVL445:
+ 995:VS4210/VX8812.c **** 	}
+ 2360              		.loc 1 995 3 view .LVU455
+ 2361              		.loc 1 997 1 is_stmt 0 view .LVU456
+ 2362 0de8 FFF715B9 		b	.L5
+ 2363              		.cfi_endproc
+ 2364              	.LFE72:
+ 2366              		.text
+ 2367              	.Letext0:
+ 2368              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 2369              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 2370              		.file 4 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 2371              		.file 5 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\lib\\gcc\\arm-none-eabi
+ 2372              		.file 6 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 2373              		.file 7 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 2374              		.file 8 "VS4210/VXIS_Extern_Define.h"
+ 2375              		.file 9 "VS4210/VS4210.h"
+ 2376              		.file 10 "Drivers/CMSIS/Include/core_cm3.h"
+ 2377              		.file 11 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h"
+ 2378              		.file 12 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ 2379              		.file 13 "VS4210/VX_OSD_Simple.h"
+ 2380              		.file 14 "sw_i2c/VX_swi2c.h"
+ 2381              		.file 15 "VS4210/VS4210_param_Mode88.h"
+ 2382              		.file 16 "VS4210/VS4210_param_Modex26.h"
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 68
+
+
+ 2383              		.file 17 "VS4210/Printf.h"
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s 			page 69
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 VX8812.c
+C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s:16     .text.VX8812_BlueScreen:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s:24     .text.VX8812_BlueScreen:00000000 VX8812_BlueScreen
+C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s:38     .text.VXIS_fVX8812_Set_HDMI_in_OutCCIR656_NTSC:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s:45     .text.VXIS_fVX8812_Set_HDMI_in_OutCCIR656_NTSC:00000000 VXIS_fVX8812_Set_HDMI_in_OutCCIR656_NTSC
+C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s:59     .text.VXIS_fVX8812_Set_HDMI_in_OutCCIR656_PAL:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s:66     .text.VXIS_fVX8812_Set_HDMI_in_OutCCIR656_PAL:00000000 VXIS_fVX8812_Set_HDMI_in_OutCCIR656_PAL
+C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s:80     .text.VXIS_fVX8812_Set_HDMI_in_SD_Video_Out:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s:87     .text.VXIS_fVX8812_Set_HDMI_in_SD_Video_Out:00000000 VXIS_fVX8812_Set_HDMI_in_SD_Video_Out
+C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s:101    .rodata.SET_VX8812_SD_Video_Out.str1.4:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s:108    .text.SET_VX8812_SD_Video_Out:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s:115    .text.SET_VX8812_SD_Video_Out:00000000 SET_VX8812_SD_Video_Out
+C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s:782    .text.SET_VX8812_SD_Video_Out:00000410 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s:784    .text.SET_VX8812_SD_Video_Out:00000414 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s:1891   .text.SET_VX8812_SD_Video_Out:00000af8 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc8Fvbtd.s:1893   .text.SET_VX8812_SD_Video_Out:00000afc $t
+
+UNDEFINED SYMBOLS
+VS8812Write
+GraphicsPrint

@@ -1,0 +1,102 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    // "configurations": [
+        
+    //     {
+    //         "name": "Cortex Debug",
+    //         "cwd": "${workspaceRoot}",
+    //         "executable": "D:\\share\\ML076Q_git\\build\\TP2824stm32.elf",
+    //         "request": "launch",
+    //         "type": "cortex-debug",
+            
+    //         "device":"stm32f103xb",        //使用J-link GDB Server时必须；其他GBD Server时可选（有可能帮助自动选择SVD文件）。支持的设备见 https://www.segger.com/downloads/supported-devices.php
+    //         "svdFile": "./STM32F103xx.svd",  //svd文件，有这个文件才能查看寄存器的值，每个单片机都不同。可以在以下地址找到 https://github.com/posborne/cmsis-svd
+    //         "servertype": "openocd",       //使用的GDB Server
+    //         "configFiles": [                  
+    //             "${workspaceRoot}/openocd.cfg"
+    //         ],
+    //         "preLaunchTask": "build",
+    //         "armToolchainPath": "C:\\Program Files (x86)\\GNU Tools Arm Embedded\\9 2019-q4-major\\bin"
+    //     }
+    // ]
+
+    // "configurations": [
+    //     {
+    //         "name": "Debug (OpenOCD)",
+    //         "type": "cortex-debug",
+    //         "request": "launch",
+    //         "servertype": "openocd",
+    //         "cwd": "${workspaceRoot}",
+    //         "executable": "${workspaceRoot}/build/TP2824stm32.elf",
+    //         "device": "stm32f103xb",
+    //         "svdFile": "STM32F103xx.svd",
+    //          "configFiles": [
+    //              "stm32f7discovery.cfg"
+    //          ]
+    //     }
+    // ]
+
+    "configurations": [       
+        {
+            // "cwd": "${workspaceFolder}",
+            "name": "Cortex Debug",
+            "cwd": "${workspaceRoot}",
+            // "executable": "D:\\share\\ML076Q_git_test\\build\\TP2824stm32.elf",
+            "executable": "${workspaceRoot}/build/TP2824stm32.elf",
+            "request": "launch",
+           // "request": "launch",
+            "type": "cortex-debug",
+             "servertype": "openocd",
+            //"servertype": "stlink",
+           "device": "STM32F103RC",
+            "armToolchainPath": "${env:ARMGCC_DIR}",            
+            "interface": "swd",
+            //"svdFile": "STM32F103xx.svd",
+           // "svdFile": "${workspaceRoot}/STM32F103xx.svd",
+          //  "runToMain": true,
+            "configFiles": [
+                "interface/stlink-v2.cfg",
+                "target/stm32f1x.cfg"
+                // "D:\\share\\openocd-0.10.0\\scripts\\target\\stm32f1x_stlink.cfg"
+            ],
+            // "gdbpath": "D:/share/openocd-0.10.0",
+            // "debuggerArgs": [
+            //     "-d",
+            //     "${workspaceRoot}"
+            //   ],
+            // "preRestartCommands": [
+            //     "load",
+            //     "enable breakpoint",
+            //     "monitor reset",
+            //     {
+            //         "text": "target remote localhost:3333",
+            //     },
+                
+            // ],
+            //"showDevDebugOutput": true,
+             "preLaunchTask": "make",
+       }
+    ]
+  
+// { "terminal.integrated.rendererType": "dom",
+//     "cortex-debug.openocdPath": "/home/democles/opt/gnu-mcu-eclipse/openocd/0.10.0-10-20181020-0522/bin/openocd", 
+//     "cortex-debug.enableTelemetry": false,
+//      "cortex-debug.stutilPath": "/home/democles/.platformio/packages/tool-stlink/bin/st-util",
+//       "cortex-debug.armToolchainPath": "/home/democles/opt/gnu-mcu-eclipse/arm-none-eabi-gcc/8.2.1-1.1-20190102-1122/bin",
+//        "workbench.iconTheme": "vscode-icons", "workbench.colorTheme": "Solarized Dark",
+//         }     
+//   // my launch.json file looks like:
+//    { "cwd": "${workspaceRoot}", "executable": "${workspaceRoot}/.pioenvs/genericSTM32F103C8/firmware.elf", 
+//    "name": "Debug Microcontroller",
+//     "request": "launch", 
+//     "type": "cortex-debug",
+//      "servertype": "openocd",
+//       "device": "STM32F103C8",
+//        "configFiles": ["/home/democles/opt/gnu-mcu-eclipse/openocd/0.10.0-10-20181020-0522/scripts/interface/stlink-v2.cfg",
+//        "/home/democles/opt/gnu-mcu-eclipse/openocd/0.10.0-10-20181020-0522/scripts/target/stm32f1x.cfg"] 
+//        }   
+    
+}

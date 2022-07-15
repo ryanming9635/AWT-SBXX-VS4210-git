@@ -1,0 +1,2525 @@
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"TD5300.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.TPMS_redraw,"ax",%progbits
+  16              		.align	1
+  17              		.global	TPMS_redraw
+  18              		.arch armv7-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	TPMS_redraw:
+  25              	.LVL0:
+  26              	.LFB68:
+  27              		.file 1 "VS4210/TD5300.c"
+   1:VS4210/TD5300.c **** /*
+   2:VS4210/TD5300.c **** //#include <stdio.h>
+   3:VS4210/TD5300.c **** //#include "82Gxx.h"
+   4:VS4210/TD5300.c **** #include "Config.h"
+   5:VS4210/TD5300.c **** #include "reg.h"
+   6:VS4210/TD5300.c **** #include "typedefs.h"
+   7:VS4210/TD5300.c **** #include "main.h"
+   8:VS4210/TD5300.c **** //#include "menu.h"
+   9:VS4210/TD5300.c **** #include "tw88.h"    
+  10:VS4210/TD5300.c **** #include "i2c.h"
+  11:VS4210/TD5300.c **** #include "adc.h"
+  12:VS4210/TD5300.c **** #include "osdbasic.h"
+  13:VS4210/TD5300.c **** #include "dispinfo.h"
+  14:VS4210/TD5300.c **** #include "debug.h"
+  15:VS4210/TD5300.c **** #include "etc_eep.h"
+  16:VS4210/TD5300.c **** #include "measure.h"
+  17:VS4210/TD5300.c **** #include "Printf.h"
+  18:VS4210/TD5300.c **** #include "audio.h"
+  19:VS4210/TD5300.c **** #include "osdmenu.h"
+  20:VS4210/TD5300.c **** #include "pc_eep.h"
+  21:VS4210/TD5300.c **** #include "KeyRemo.h"
+  22:VS4210/TD5300.c **** #include "Monitor.h"
+  23:VS4210/TD5300.c **** #include "CPU.h"
+  24:VS4210/TD5300.c **** #include "HS_keyremo.h"
+  25:VS4210/TD5300.c **** #include "HS_DisplayOSD.h"
+  26:VS4210/TD5300.c **** #include "rgbmix.h"			
+  27:VS4210/TD5300.c **** #include "panel.h"
+  28:VS4210/TD5300.c **** #include "HS_IOdef.h"
+  29:VS4210/TD5300.c **** #include "HS_DVRProtocol.h"
+  30:VS4210/TD5300.c **** #include "TD5300.h"
+  31:VS4210/TD5300.c **** #include "panel.h"
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 2
+
+
+  32:VS4210/TD5300.c **** */
+  33:VS4210/TD5300.c **** //#define BYTE unsigned char
+  34:VS4210/TD5300.c **** //#include "main.h"
+  35:VS4210/TD5300.c **** //#define BYTE char
+  36:VS4210/TD5300.c **** //#define WORD unsigned int
+  37:VS4210/TD5300.c **** 
+  38:VS4210/TD5300.c **** #include "VXIS_Extern_Define.h"
+  39:VS4210/TD5300.c **** #include "TD5300.h"
+  40:VS4210/TD5300.c **** #include "main.h"
+  41:VS4210/TD5300.c **** #include "VX_OSD_Simple.h"
+  42:VS4210/TD5300.c **** #include "VX_swi2c.h"
+  43:VS4210/TD5300.c **** 
+  44:VS4210/TD5300.c **** #include "VS4210_param_Mode88.h"
+  45:VS4210/TD5300.c **** #include "VS4210_param_Modex26.h"
+  46:VS4210/TD5300.c **** 
+  47:VS4210/TD5300.c **** #include "keyremo.h"
+  48:VS4210/TD5300.c **** #include "tpinc/TP2802.h"
+  49:VS4210/TD5300.c **** #include "Printf.h"
+  50:VS4210/TD5300.c **** #include <stdlib.h>
+  51:VS4210/TD5300.c **** 
+  52:VS4210/TD5300.c **** //////////////////////////////////
+  53:VS4210/TD5300.c **** 
+  54:VS4210/TD5300.c **** #if (TPMSOSD==ON)
+  55:VS4210/TD5300.c **** BYTE TP_HIGH_PSI[6]={0};
+  56:VS4210/TD5300.c **** BYTE TP_LOW_PSI[6]={0};
+  57:VS4210/TD5300.c **** BYTE TP_HIGH_TEMP[6]={0};
+  58:VS4210/TD5300.c **** #endif
+  59:VS4210/TD5300.c **** 
+  60:VS4210/TD5300.c **** #if 1
+  61:VS4210/TD5300.c **** extern CODE BYTE Hex[16];
+  62:VS4210/TD5300.c **** extern DATA BYTE Key;
+  63:VS4210/TD5300.c **** extern bit KeyReady,RepeatKey;
+  64:VS4210/TD5300.c **** extern bit RS2_Xbusy;
+  65:VS4210/TD5300.c **** 
+  66:VS4210/TD5300.c **** CODE BYTE Ascii[16]={'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+  67:VS4210/TD5300.c **** CODE BYTE Device_Mask[]={0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80};
+  68:VS4210/TD5300.c **** 
+  69:VS4210/TD5300.c **** 
+  70:VS4210/TD5300.c **** BYTE  cursor_p=0,change_keyon=0;
+  71:VS4210/TD5300.c **** #if 0
+  72:VS4210/TD5300.c **** BYTE *empty=" ";
+  73:VS4210/TD5300.c **** BYTE *TPMS="TPMS information";
+  74:VS4210/TD5300.c **** BYTE *Hex_p="112233445566";
+  75:VS4210/TD5300.c ****  #endif
+  76:VS4210/TD5300.c **** //BYTE SR_Temp[3]={'1','2','3'};
+  77:VS4210/TD5300.c **** //BYTE SR_Press[3]={'4','5','6'};
+  78:VS4210/TD5300.c **** BYTE sb_data[3]={0,0,0};
+  79:VS4210/TD5300.c **** BYTE sb_tp_data[12]={60,30,60,30,60,30,60,30,60,30,60,30};
+  80:VS4210/TD5300.c **** BYTE sb_p_data_max[6]={45,45,45,45,45,45};
+  81:VS4210/TD5300.c **** 
+  82:VS4210/TD5300.c **** BYTE buf_tpms[99];
+  83:VS4210/TD5300.c **** 
+  84:VS4210/TD5300.c **** BYTE TPMS_P=0;
+  85:VS4210/TD5300.c **** BYTE  TPMS_Ready=0;
+  86:VS4210/TD5300.c **** BYTE  TPMS_Start=0;
+  87:VS4210/TD5300.c **** BYTE  TPMS_Count=0;
+  88:VS4210/TD5300.c **** BYTE  TPMS_val=0;
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 3
+
+
+  89:VS4210/TD5300.c **** BYTE  TPMS_Relay_Battery=0;
+  90:VS4210/TD5300.c **** 
+  91:VS4210/TD5300.c ****     
+  92:VS4210/TD5300.c **** BYTE TPMS_Flag=0;
+  93:VS4210/TD5300.c **** BYTE TPMS_Pop_Flag=0;
+  94:VS4210/TD5300.c **** //BYTE TPMS_Mune_Pop_Flag=0;
+  95:VS4210/TD5300.c **** 
+  96:VS4210/TD5300.c **** BYTE TPMS_Cursor=0;
+  97:VS4210/TD5300.c **** BYTE TPMS_Setting_Mode=0;
+  98:VS4210/TD5300.c ****    
+  99:VS4210/TD5300.c **** BYTE loop_flag=0;
+ 100:VS4210/TD5300.c **** BYTE TPMS_OSD=0;
+ 101:VS4210/TD5300.c **** BYTE SB_Temper_Error_Flag=0x00;
+ 102:VS4210/TD5300.c **** BYTE SB_Press_Error_Flag=0x00;
+ 103:VS4210/TD5300.c **** BYTE SB_Work_Error_Flag=0x00;
+ 104:VS4210/TD5300.c **** BYTE SB_Work_Flag=0x00;
+ 105:VS4210/TD5300.c **** BYTE SB_Work_Flag_F=0x00;
+ 106:VS4210/TD5300.c **** BYTE TPMS_LED=0;
+ 107:VS4210/TD5300.c **** BYTE TPMS_Reset_Flag=0;
+ 108:VS4210/TD5300.c **** 
+ 109:VS4210/TD5300.c **** extern BYTE PowerFlag;
+ 110:VS4210/TD5300.c **** 
+ 111:VS4210/TD5300.c **** #endif
+ 112:VS4210/TD5300.c **** ///////////////////////////////// add by ryan 20140812.
+ 113:VS4210/TD5300.c **** #define FORNT_LEFT_TEMPTURE 72
+ 114:VS4210/TD5300.c **** #define FORNT_LEFT_PRESSURE 82
+ 115:VS4210/TD5300.c **** #define REAR_LEFT_TEMPTURE 112
+ 116:VS4210/TD5300.c **** #define REAR_LEFT_PRESSURE 122
+ 117:VS4210/TD5300.c **** #define REAR2_LEFT_TEMPTURE 117
+ 118:VS4210/TD5300.c **** #define REAR2_LEFT_PRESSURE 127
+ 119:VS4210/TD5300.c **** #define FORNT_RIGHT_TEMPTURE 177
+ 120:VS4210/TD5300.c **** #define FORNT_RIGHT_PRESSURE 187
+ 121:VS4210/TD5300.c **** #define REAR_RIGHT_TEMPTURE 212
+ 122:VS4210/TD5300.c **** #define REAR_RIGHT_PRESSURE 222
+ 123:VS4210/TD5300.c **** #define REAR2_RIGHT_TEMPTURE 217
+ 124:VS4210/TD5300.c **** #define REAR2_RIGHT_PRESSURE 227
+ 125:VS4210/TD5300.c **** 
+ 126:VS4210/TD5300.c **** #define FORNT_LEFT_TIRE 22
+ 127:VS4210/TD5300.c **** #define FORNT_RIGHT_TIRE 27
+ 128:VS4210/TD5300.c **** #define REAR_LEFT_TIRE 40
+ 129:VS4210/TD5300.c **** #define REAR_RIGHT_TIRE 45
+ 130:VS4210/TD5300.c **** #define REAR_LEFT2_TIRE 41
+ 131:VS4210/TD5300.c **** #define REAR_RIGHT2_TIRE 44
+ 132:VS4210/TD5300.c **** 
+ 133:VS4210/TD5300.c **** /////////////////////////////////
+ 134:VS4210/TD5300.c **** /*
+ 135:VS4210/TD5300.c **** BYTE Sensor0[15];
+ 136:VS4210/TD5300.c **** BYTE Sensor1[15];
+ 137:VS4210/TD5300.c **** BYTE Sensor2[15];
+ 138:VS4210/TD5300.c **** BYTE Sensor3[15];
+ 139:VS4210/TD5300.c **** BYTE Sensor4[15];
+ 140:VS4210/TD5300.c **** BYTE Sensor5[15];
+ 141:VS4210/TD5300.c **** 
+ 142:VS4210/TD5300.c **** BYTE Sensor_state[15];
+ 143:VS4210/TD5300.c **** */
+ 144:VS4210/TD5300.c **** #if 0
+ 145:VS4210/TD5300.c ****         ////////////////////////add by ryan 20140805_start.
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 4
+
+
+ 146:VS4210/TD5300.c ****         //////////////////////////////////////----- Title Window
+ 147:VS4210/TD5300.c **** CODE BYTE Init_Osd[] = {
+ 148:VS4210/TD5300.c **** 	17,
+ 149:VS4210/TD5300.c **** 	OSD_Win_Num			( BACK_COLOR|OSDMENU_TOPWIN ),	// 2 bytes
+ 150:VS4210/TD5300.c **** 	OSD_Win_Attr			( WIN_BG_COLOR_EX0 | BACK_COLOR | WIN_3D_TYPE0 | WIN_3D_EN0 | WIN_EN0 ),
+ 151:VS4210/TD5300.c **** 	OSD_Win_Start			( (OSDHSTART_MAX/2-85-65+80), ((OSDVSTART_MAX/2)-84) ), // 3 bytes
+ 152:VS4210/TD5300.c **** 	OSD_Win_Width			(16 ),
+ 153:VS4210/TD5300.c **** 	OSD_Win_Height			( 1),
+ 154:VS4210/TD5300.c **** 	OSD_Win_Border			( WIN_BD_EN | OSDMENU_OUTLINE_COLOR | WIN_BD_WIDTH(0) ),
+ 155:VS4210/TD5300.c **** 	OSD_Win_HBorder			( WIN_BD_COLOR_EX | WIN_H_BD_W(0x00) ),
+ 156:VS4210/TD5300.c **** 	OSD_Win_VBorder			( WIN_V_BD_W(0x00) ),
+ 157:VS4210/TD5300.c **** 	OSD_Win_CH_Space		( WIN_CH_HSPACE(0) | WIN_CH_VSPACE(0x00) ),
+ 158:VS4210/TD5300.c **** 	OSD_Win_ZM_SAddr		( WIN_VZOOM(WINZOOMx3), WIN_HZOOM(WINZOOMx3), WIN_SADDR(OSDMENU_MAINADDR) ),
+ 159:VS4210/TD5300.c ****       OSD_Win_Shadow			( WIN_SHADOW_EN | BG_COLOR_BLACK | WIN_SHADOW_W(0) ),
+ 160:VS4210/TD5300.c **** 	OSD_Win_Blending		( 0x0f ),
+ 161:VS4210/TD5300.c **** //	OSD_Win_Blending		( 0x0f ),
+ 162:VS4210/TD5300.c **** 	OSD_Win_CH_BorderShadow	( WIN_SHADOW_COLOR_EX0 | WIN_MULTI_EN | WIN_V_EXT_EN0 
+ 163:VS4210/TD5300.c **** 	                        | WIN_CH_BDSH_SEL(SEL_BORDER) 
+ 164:VS4210/TD5300.c **** 	                        | WIN_CH_BDSH_COLOR_EX0 | CH_COLOR_BLACK ),
+ 165:VS4210/TD5300.c **** 
+ 166:VS4210/TD5300.c **** 
+ 167:VS4210/TD5300.c **** //#if HS_NEWOSDMENU_2
+ 168:VS4210/TD5300.c **** //#ifdef HS_NEWOSDMENU
+ 169:VS4210/TD5300.c **** 	/////////////////////////////////////----- Car Window
+ 170:VS4210/TD5300.c **** 	17,                           
+ 171:VS4210/TD5300.c **** 	//OSD_Win_Num					( BACK_COLOR|OSDMENU_TITLEWIN ),	// 2 bytes
+ 172:VS4210/TD5300.c **** 	OSD_Win_Num					( BACK_COLOR|OSDCURSORWINDOW ),	// 2 bytes
+ 173:VS4210/TD5300.c **** 
+ 174:VS4210/TD5300.c **** //#if 1	
+ 175:VS4210/TD5300.c **** 	OSD_Win_Attr				( WIN_BG_COLOR_EX0 | TITLE_BACK_COLOR | WIN_3D_TYPE0 | WIN_3D_EN0 | WIN_EN0 ),
+ 176:VS4210/TD5300.c **** //#else	
+ 177:VS4210/TD5300.c **** //	OSD_Win_Attr				( WIN_BG_COLOR_EX0 | DEFAULT_COLOR | WIN_3D_TYPE0 | WIN_3D_EN0 | WIN_EN0 ),
+ 178:VS4210/TD5300.c **** //#endif	
+ 179:VS4210/TD5300.c **** 	 OSD_Win_Start			( ((OSDHSTART_MAX/2-85-65+3+120+120+15+10)), (OSDVSTART_MAX/2-20-60+60+30) ), // 
+ 180:VS4210/TD5300.c **** 	//OSD_Win_Start				( ((OSDHSTART_MAX/2)+66+14+2), ((OSDVSTART_MAX/2)-60) ), // 3 bytes
+ 181:VS4210/TD5300.c **** 	OSD_Win_Width				( 6 ), 
+ 182:VS4210/TD5300.c **** 	OSD_Win_Height				( 6 ), 
+ 183:VS4210/TD5300.c **** 	OSD_Win_Border				( WIN_BD_EN0 | OSDMENU_OUTLINE_COLOR | WIN_BD_WIDTH(0) ),
+ 184:VS4210/TD5300.c **** 	OSD_Win_HBorder				( WIN_BD_COLOR_EX | WIN_H_BD_W(0) ),
+ 185:VS4210/TD5300.c **** 	OSD_Win_VBorder				( WIN_V_BD_W(0) ),
+ 186:VS4210/TD5300.c **** 	OSD_Win_CH_Space			( WIN_CH_HSPACE(0) | WIN_CH_VSPACE(0) ),
+ 187:VS4210/TD5300.c **** 	
+ 188:VS4210/TD5300.c **** //#ifdef TW8816
+ 189:VS4210/TD5300.c **** 	//OSD_Win_ZM_SAddr			( WIN_VZOOM(WINZOOMx1), WIN_HZOOM(WINZOOMx1), WIN_SADDR(OSDMENU_SUBADDR) ),	/
+ 190:VS4210/TD5300.c **** 	OSD_Win_ZM_SAddr			( WIN_VZOOM(WINZOOMx3), WIN_HZOOM(WINZOOMx3), WIN_SADDR(OSDMENU_SUBADDR+2) ),	/
+ 191:VS4210/TD5300.c **** //#else
+ 192:VS4210/TD5300.c **** 	//OSD_Win_ZM_SAddr			( WIN_VZOOM(WINZOOMx1), WIN_HZOOM(WINZOOMx2), WIN_SADDR(OSDMENU_SUBADDR) ),	/
+ 193:VS4210/TD5300.c **** //    OSD_Win_ZM_SAddr			( WIN_VZOOM(WINZOOMx3), WIN_HZOOM(WINZOOMx3), WIN_SADDR(OSDMENU_SUBADDR+3)
+ 194:VS4210/TD5300.c **** 
+ 195:VS4210/TD5300.c **** //#endif
+ 196:VS4210/TD5300.c **** 
+ 197:VS4210/TD5300.c **** 	OSD_Win_Shadow				( WIN_SHADOW_EN0 | BG_COLOR_BLACK | WIN_SHADOW_W(0) ),
+ 198:VS4210/TD5300.c **** 	OSD_Win_Blending				( 0x0f ),
+ 199:VS4210/TD5300.c **** 	//OSD_Win_Blending			( 0x05 ),
+ 200:VS4210/TD5300.c **** 	OSD_Win_CH_BorderShadow		( WIN_SHADOW_COLOR_EX0 | WIN_MULTI_EN | WIN_V_EXT_EN0 | WIN_CH_BDSH_SEL(S
+ 201:VS4210/TD5300.c **** 									WIN_CH_BDSH_COLOR_EX0 | CH_COLOR_BLACK ),
+ 202:VS4210/TD5300.c **** 
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 5
+
+
+ 203:VS4210/TD5300.c **** 	////////////////////////////////////----- Left_Numbers Window 
+ 204:VS4210/TD5300.c **** 	17,
+ 205:VS4210/TD5300.c **** 	OSD_Win_Num				( BACK_COLOR|OSDMENUWINDOW ),	// 2 bytes
+ 206:VS4210/TD5300.c **** 	OSD_Win_Attr			( WIN_BG_COLOR_EX0 | BACK_COLOR | WIN_3D_TYPE0 | WIN_3D_EN0 | WIN_EN0 ),
+ 207:VS4210/TD5300.c **** //#ifdef E_Wintek
+ 208:VS4210/TD5300.c **** //	OSD_Win_Start			( ((OSDHSTART_MAX/2-145)), (OSDVSTART_MAX/2-60) ), // 3 bytes
+ 209:VS4210/TD5300.c **** //#else
+ 210:VS4210/TD5300.c **** 	OSD_Win_Start			( ((OSDHSTART_MAX/2-85-65+3+10)), (OSDVSTART_MAX/2-20+7) ), // 3 bytes
+ 211:VS4210/TD5300.c **** 	//OSD_Win_Start			( ((OSDHSTART_MAX/2-85)), (OSDVSTART_MAX/2-10) ), // 3 bytes
+ 212:VS4210/TD5300.c **** 	//OSD_Win_Start			( ((OSDHSTART_MAX/2)+66+14+2), (OSDVSTART_MAX/2+28) ), // 3 bytes
+ 213:VS4210/TD5300.c **** //#endif
+ 214:VS4210/TD5300.c **** 	//OSD_Win_Width			( MENU_WIDTH+8 ), //MENU_WIDTH
+ 215:VS4210/TD5300.c **** 	//OSD_Win_Height			( MENU_HEIGHT-1),	// MENU_HEIGHT
+ 216:VS4210/TD5300.c **** 	OSD_Win_Width			(10 ), //MENU_WIDTH
+ 217:VS4210/TD5300.c **** 	OSD_Win_Height			( 10),	// MENU_HEIGHT
+ 218:VS4210/TD5300.c **** 
+ 219:VS4210/TD5300.c **** 
+ 220:VS4210/TD5300.c ****      // OSD_Win_Border			( WIN_BD_EN | OSDMENU_OUTLINE_COLOR | WIN_BD_WIDTH(1) ),
+ 221:VS4210/TD5300.c ****     //OSD_Win_HBorder			( WIN_BD_COLOR_EX | WIN_H_BD_W(0x0c+8) ),
+ 222:VS4210/TD5300.c ****     //OSD_Win_VBorder			( WIN_V_BD_W(0x16+1) ),
+ 223:VS4210/TD5300.c ****       OSD_Win_Border			( WIN_BD_EN | OSDMENU_OUTLINE_COLOR | WIN_BD_WIDTH(0) ),
+ 224:VS4210/TD5300.c **** 	OSD_Win_HBorder			( WIN_BD_COLOR_EX | WIN_H_BD_W(0) ),
+ 225:VS4210/TD5300.c **** 	OSD_Win_VBorder			( WIN_V_BD_W(0) ),
+ 226:VS4210/TD5300.c **** 
+ 227:VS4210/TD5300.c **** 
+ 228:VS4210/TD5300.c **** OSD_Win_CH_Space		( WIN_CH_HSPACE(0) | WIN_CH_VSPACE(0x00) ),
+ 229:VS4210/TD5300.c **** 
+ 230:VS4210/TD5300.c **** //#ifdef E_Wintek	
+ 231:VS4210/TD5300.c **** //	OSD_Win_ZM_SAddr		( WIN_VZOOM(WINZOOMx3), WIN_HZOOM(WINZOOMx2), WIN_SADDR(OSDMENU_SUBADDR+MENU_W
+ 232:VS4210/TD5300.c **** //#else
+ 233:VS4210/TD5300.c **** 	//OSD_Win_ZM_SAddr		( WIN_VZOOM(WINZOOMx2), WIN_HZOOM(WINZOOMx2), WIN_SADDR(OSDMENU_SUBADDR+MENU_W
+ 234:VS4210/TD5300.c **** 	OSD_Win_ZM_SAddr		( WIN_VZOOM(WINZOOMx2), WIN_HZOOM(WINZOOMx2), WIN_SADDR(52) ),	//25=MENU_WIDTH//
+ 235:VS4210/TD5300.c **** //#endif
+ 236:VS4210/TD5300.c **** 	//OSD_Win_Shadow			( WIN_SHADOW_EN0 | BG_COLOR_BLACK | WIN_SHADOW_W(8) ),
+ 237:VS4210/TD5300.c **** 	OSD_Win_Shadow			( WIN_SHADOW_EN0 | BG_COLOR_BLACK | WIN_SHADOW_W(0) ),
+ 238:VS4210/TD5300.c **** 
+ 239:VS4210/TD5300.c **** 	OSD_Win_Blending	( 0x0f ),
+ 240:VS4210/TD5300.c **** 	//	OSD_Win_Blending	( 0x0f ),
+ 241:VS4210/TD5300.c **** 
+ 242:VS4210/TD5300.c **** 	OSD_Win_CH_BorderShadow	( WIN_SHADOW_COLOR_EX0 | WIN_MULTI_EN | WIN_V_EXT_EN0 
+ 243:VS4210/TD5300.c **** 	                        | WIN_CH_BDSH_SEL(SEL_BORDER) 
+ 244:VS4210/TD5300.c **** 	                        | WIN_CH_BDSH_COLOR_EX0 | CH_COLOR_BLACK ),
+ 245:VS4210/TD5300.c **** 
+ 246:VS4210/TD5300.c **** 
+ 247:VS4210/TD5300.c **** 
+ 248:VS4210/TD5300.c **** 	/////////////////////////////////////----- Right_Numbers Window.
+ 249:VS4210/TD5300.c **** 	17,
+ 250:VS4210/TD5300.c **** 	OSD_Win_Num				( BACK_COLOR|OSDMENU_TITLEWIN ),	// 2 bytes
+ 251:VS4210/TD5300.c **** 	OSD_Win_Attr			( WIN_BG_COLOR_EX | BACK_COLOR | WIN_3D_TYPE0 | WIN_3D_EN | WIN_EN0 ),
+ 252:VS4210/TD5300.c **** //#ifdef E_Wintek
+ 253:VS4210/TD5300.c **** //	OSD_Win_Start			( ((OSDHSTART_MAX/2)-145+8), ((OSDVSTART_MAX/2)-80)+10 ), // 3 bytes
+ 254:VS4210/TD5300.c **** //#else
+ 255:VS4210/TD5300.c **** //#ifdef HS_NEWOSDMENU
+ 256:VS4210/TD5300.c ****         OSD_Win_Start			( ((OSDHSTART_MAX/2-85-65+3+485+10)), (OSDVSTART_MAX/2-20+7) ), // 3 bytes
+ 257:VS4210/TD5300.c **** 	//OSD_Win_Start			( (OSDHSTART_MAX/2-85), ((OSDVSTART_MAX/2)-84) ), // 3 bytes
+ 258:VS4210/TD5300.c **** //#else	
+ 259:VS4210/TD5300.c **** //	OSD_Win_Start			( ((OSDHSTART_MAX/2)+7+14+1), ((OSDVSTART_MAX/2)+4+28+2) ), // 3 bytes
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 6
+
+
+ 260:VS4210/TD5300.c **** //#endif	
+ 261:VS4210/TD5300.c **** //#endif
+ 262:VS4210/TD5300.c **** 	OSD_Win_Width			( 10 ),
+ 263:VS4210/TD5300.c **** 	OSD_Win_Height			( 10),
+ 264:VS4210/TD5300.c **** 	OSD_Win_Border			( WIN_BD_EN | BG_COLOR_WHITE | WIN_BD_WIDTH(0) ),
+ 265:VS4210/TD5300.c **** 	OSD_Win_HBorder			( WIN_BD_COLOR_EX0 | WIN_H_BD_W(0) ),
+ 266:VS4210/TD5300.c **** 	OSD_Win_VBorder			( WIN_V_BD_W(0) ),
+ 267:VS4210/TD5300.c **** 	OSD_Win_CH_Space		( WIN_CH_HSPACE(0) | WIN_CH_VSPACE(0) ),
+ 268:VS4210/TD5300.c **** //#ifdef E_Wintek
+ 269:VS4210/TD5300.c **** //	OSD_Win_ZM_SAddr		( WIN_VZOOM(WINZOOMx4), WIN_HZOOM(WINZOOMx4), WIN_SADDR(OSDMENU_MAINADDR) ),	/
+ 270:VS4210/TD5300.c **** //#else
+ 271:VS4210/TD5300.c **** 	OSD_Win_ZM_SAddr		( WIN_VZOOM(WINZOOMx2), WIN_HZOOM(WINZOOMx2), WIN_SADDR(152) ),	// 2 bytes
+ 272:VS4210/TD5300.c **** //#endif
+ 273:VS4210/TD5300.c **** 	OSD_Win_Shadow			( WIN_SHADOW_EN0 | BG_COLOR_BLACK | WIN_SHADOW_W(0) ),
+ 274:VS4210/TD5300.c **** 	//OSD_Win_Blending		( 3 ),
+ 275:VS4210/TD5300.c **** 		OSD_Win_Blending		(0x0f ),
+ 276:VS4210/TD5300.c **** 	OSD_Win_CH_BorderShadow	( WIN_SHADOW_COLOR_EX | WIN_MULTI_EN | WIN_V_EXT_EN0 
+ 277:VS4210/TD5300.c **** 	                        | WIN_CH_BDSH_SEL(SEL_SHADOW) 
+ 278:VS4210/TD5300.c **** 	                        | WIN_CH_BDSH_COLOR_EX0 | CH_COLOR_BLACK ),
+ 279:VS4210/TD5300.c **** 
+ 280:VS4210/TD5300.c **** 	0 // End of Data
+ 281:VS4210/TD5300.c **** 	
+ 282:VS4210/TD5300.c **** ///////////////////////////add by ryan 20140805_End.
+ 283:VS4210/TD5300.c ****  
+ 284:VS4210/TD5300.c **** };
+ 285:VS4210/TD5300.c **** #endif
+ 286:VS4210/TD5300.c **** 
+ 287:VS4210/TD5300.c **** 
+ 288:VS4210/TD5300.c **** void TPMS_redraw(BYTE tp)
+ 289:VS4210/TD5300.c **** {
+  28              		.loc 1 289 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+ 290:VS4210/TD5300.c **** #if 0
+ 291:VS4210/TD5300.c **** BYTE tire_p[13]={22,22,27,27,40,40,41,41,44,44,45,45,252};
+ 292:VS4210/TD5300.c **** BYTE cursor[13]={72,82,177,187,112,122,117,127,212,222,217,227,250};
+ 293:VS4210/TD5300.c **** 
+ 294:VS4210/TD5300.c **** BYTE *OK="OK";
+ 295:VS4210/TD5300.c **** //BYTE *set="Setting mode:   ";
+ 296:VS4210/TD5300.c **** BYTE *t_set="Temperature Set:";
+ 297:VS4210/TD5300.c **** BYTE *p_set="Pressure Set:   ";
+ 298:VS4210/TD5300.c **** BYTE x=0;
+ 299:VS4210/TD5300.c **** 
+ 300:VS4210/TD5300.c **** ClearDataCnt(52, 247);
+ 301:VS4210/TD5300.c **** DrawAttrCnt(52,(CH_COLOR_WHITE|BG_COLOR_CYAN), 247);
+ 302:VS4210/TD5300.c ****    
+ 303:VS4210/TD5300.c **** if(tp==0)
+ 304:VS4210/TD5300.c **** {
+ 305:VS4210/TD5300.c ****             for(x=0 ;x<=5;x++)
+ 306:VS4210/TD5300.c ****             {
+ 307:VS4210/TD5300.c ****              WriteStringToAddr(cursor[x+(x*1)], DataToAscii(sb_tp_data[x+(x*1)]), 3);  //temp
+ 308:VS4210/TD5300.c ****               WriteStringToAddr(cursor[x+(x*1)]+3,Temp,2);   //unit   
+ 309:VS4210/TD5300.c ****            
+ 310:VS4210/TD5300.c ****               
+ 311:VS4210/TD5300.c ****             }
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 7
+
+
+ 312:VS4210/TD5300.c ****              WriteStringToAddr(0, t_set,16); //title string..
+ 313:VS4210/TD5300.c **** 
+ 314:VS4210/TD5300.c ****              //WriteStringToAddr(52,L_arrow,2);  
+ 315:VS4210/TD5300.c **** }
+ 316:VS4210/TD5300.c **** else
+ 317:VS4210/TD5300.c **** {
+ 318:VS4210/TD5300.c ****        for(x=0 ;x<=5;x++)
+ 319:VS4210/TD5300.c ****             {
+ 320:VS4210/TD5300.c ****              WriteStringToAddr(cursor[x+(x*1)], DataToAscii(sb_p_data_max[x]), 3);  //temp
+ 321:VS4210/TD5300.c ****              WriteStringToAddr(cursor[x+(x*1)]+3,PSI,4);   //unit        
+ 322:VS4210/TD5300.c ****            
+ 323:VS4210/TD5300.c ****              WriteStringToAddr(cursor[(x+1)+(x*1)], DataToAscii(sb_tp_data[(x+1)+(x*1)]),3);  //tem
+ 324:VS4210/TD5300.c ****              WriteStringToAddr(cursor[(x+1)+(x*1)]+3,PSI,4);   //unit        
+ 325:VS4210/TD5300.c ****             }
+ 326:VS4210/TD5300.c ****        
+ 327:VS4210/TD5300.c ****              WriteStringToAddr(0, p_set,16); //title string..
+ 328:VS4210/TD5300.c **** 
+ 329:VS4210/TD5300.c ****              //WriteStringToAddr(161,R_arrow,2);  
+ 330:VS4210/TD5300.c **** }
+ 331:VS4210/TD5300.c ****        
+ 332:VS4210/TD5300.c ****   WriteStringToAddr(cursor[12], OK, 2);   //press  
+ 333:VS4210/TD5300.c ****    //WriteStringToAddr(0, set,16); //title string..
+ 334:VS4210/TD5300.c ****                     
+ 335:VS4210/TD5300.c **** WriteStringToAddr(22,&Hex[1],1);
+ 336:VS4210/TD5300.c **** WriteStringToAddr(27,&Hex[2],1);
+ 337:VS4210/TD5300.c **** WriteStringToAddr(40,&Hex[3],1);
+ 338:VS4210/TD5300.c **** WriteStringToAddr(41,&Hex[4],1);
+ 339:VS4210/TD5300.c **** WriteStringToAddr(44,&Hex[5],1);
+ 340:VS4210/TD5300.c **** WriteStringToAddr(45,&Hex[6],1);   
+ 341:VS4210/TD5300.c **** 
+ 342:VS4210/TD5300.c ****  #endif
+ 343:VS4210/TD5300.c **** 
+ 344:VS4210/TD5300.c **** }
+  33              		.loc 1 344 1 view .LVU1
+  34 0000 7047     		bx	lr
+  35              		.cfi_endproc
+  36              	.LFE68:
+  38              		.section	.text.TPMS_Keyin_Mode,"ax",%progbits
+  39              		.align	1
+  40              		.global	TPMS_Keyin_Mode
+  41              		.syntax unified
+  42              		.thumb
+  43              		.thumb_func
+  44              		.fpu softvfp
+  46              	TPMS_Keyin_Mode:
+  47              	.LVL1:
+  48              	.LFB69:
+ 345:VS4210/TD5300.c **** 
+ 346:VS4210/TD5300.c **** 
+ 347:VS4210/TD5300.c **** 
+ 348:VS4210/TD5300.c **** 
+ 349:VS4210/TD5300.c **** BYTE TPMS_Keyin_Mode(BYTE val)
+ 350:VS4210/TD5300.c **** {
+  49              		.loc 1 350 1 view -0
+  50              		.cfi_startproc
+  51              		@ args = 0, pretend = 0, frame = 0
+  52              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 8
+
+
+  53              		@ link register save eliminated.
+ 351:VS4210/TD5300.c **** #if 0
+ 352:VS4210/TD5300.c **** BYTE tire_p[13]={22,22,27,27,40,40,41,41,44,44,45,45,252};
+ 353:VS4210/TD5300.c **** BYTE cursor[13]={72,82,177,187,112,122,117,127,212,222,217,227,250};
+ 354:VS4210/TD5300.c **** 
+ 355:VS4210/TD5300.c **** //BYTE tire_p[13]={ 22,22,27,27,40,40,41,41,44,44,45,45,252};
+ 356:VS4210/TD5300.c **** //BYTE cursor[13]={72,82,177,187,112,122,117,127,212,222,217,227,249};
+ 357:VS4210/TD5300.c **** //BYTE  cursor_p=0;
+ 358:VS4210/TD5300.c **** //BYTE Action=1,x,y,z,ikey;
+ 359:VS4210/TD5300.c **** //BYTE *empty=" ";
+ 360:VS4210/TD5300.c **** //BYTE *TPMS="TPMS information";
+ 361:VS4210/TD5300.c **** //BYTE *Hex_p="112233445566";
+ 362:VS4210/TD5300.c **** //BYTE *pairing="$C010#";
+ 363:VS4210/TD5300.c **** //BYTE *end="$C02#";
+ 364:VS4210/TD5300.c **** 
+ 365:VS4210/TD5300.c **** BYTE x;
+ 366:VS4210/TD5300.c **** 
+ 367:VS4210/TD5300.c **** 
+ 368:VS4210/TD5300.c **** if(TPMS_Setting_Mode==0)
+ 369:VS4210/TD5300.c **** {
+ 370:VS4210/TD5300.c **** 
+ 371:VS4210/TD5300.c **** TPMS_redraw(0); //temperature page.
+ 372:VS4210/TD5300.c **** DrawAttrCnt(cursor[0],(CH_COLOR_WHITE|BG_COLOR_MAGENTA),5);
+ 373:VS4210/TD5300.c **** DrawAttrCnt(tire_p[0],(CH_COLOR_WHITE|BG_COLOR_MAGENTA),1);
+ 374:VS4210/TD5300.c **** cursor_p=0;
+ 375:VS4210/TD5300.c **** TPMS_Setting_Mode=1;
+ 376:VS4210/TD5300.c **** }
+ 377:VS4210/TD5300.c **** //else if(change_keyon==1)
+ 378:VS4210/TD5300.c **** //{
+ 379:VS4210/TD5300.c **** 
+ 380:VS4210/TD5300.c ****  // TPMS_Change_Mode(val);
+ 381:VS4210/TD5300.c ****  // return 0;
+ 382:VS4210/TD5300.c **** //}
+ 383:VS4210/TD5300.c **** //WriteStringToAddr(tire_p[0],Tire_Yellow,2);
+ 384:VS4210/TD5300.c ****  //while(Action==1)
+ 385:VS4210/TD5300.c ****  //{   		
+ 386:VS4210/TD5300.c ****   // switch (GetKey(1)) 
+ 387:VS4210/TD5300.c ****     DrawAttrCnt(cursor[cursor_p],(CH_COLOR_WHITE|BG_COLOR_CYAN), 5);
+ 388:VS4210/TD5300.c ****     DrawAttrCnt(tire_p[cursor_p],(CH_COLOR_WHITE|BG_COLOR_CYAN), 1);
+ 389:VS4210/TD5300.c **** 
+ 390:VS4210/TD5300.c ****                      switch (val) 
+ 391:VS4210/TD5300.c ****                     {
+ 392:VS4210/TD5300.c ****           
+ 393:VS4210/TD5300.c **** 			//case MENUKEY: 
+ 394:VS4210/TD5300.c ****                    case 2:
+ 395:VS4210/TD5300.c ****                                         //Printf("\r\nMENU key pressed");                          
+ 396:VS4210/TD5300.c ****                                                                             
+ 397:VS4210/TD5300.c **** 						if(cursor_p==12) 
+ 398:VS4210/TD5300.c **** 						    {
+ 399:VS4210/TD5300.c ****                                           DrawAttrCnt(cursor[cursor_p],(CH_COLOR_WHITE|BG_COLOR_CYA
+ 400:VS4210/TD5300.c **** 						    for(x=0;x<=199;x++)  WriteStringToAddr(52+x, empty, 1);   //press  
+ 401:VS4210/TD5300.c ****                                             //Action=0;
+ 402:VS4210/TD5300.c ****                                             TPMS_Setting_Mode=0;
+ 403:VS4210/TD5300.c ****                                             WriteStringToAddr(22,Tire_None,2);
+ 404:VS4210/TD5300.c ****                                             WriteStringToAddr(27,Tire_None,2);
+ 405:VS4210/TD5300.c ****                                             WriteStringToAddr(40,Tire_None,2);
+ 406:VS4210/TD5300.c ****                                             WriteStringToAddr(41,Tire_None,2);
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 9
+
+
+ 407:VS4210/TD5300.c ****                                             WriteStringToAddr(44,Tire_None,2);
+ 408:VS4210/TD5300.c ****                                             WriteStringToAddr(45,Tire_None,2);
+ 409:VS4210/TD5300.c ****                        
+ 410:VS4210/TD5300.c ****                                             WriteStringToAddr(0, TPMS,16); //title string..
+ 411:VS4210/TD5300.c ****                                            // TPMS_OSD_OFF();
+ 412:VS4210/TD5300.c ****                                            TPMS_Write_eeprom();
+ 413:VS4210/TD5300.c **** 						    }
+ 414:VS4210/TD5300.c ****                                          
+ 415:VS4210/TD5300.c ****                         
+ 416:VS4210/TD5300.c ****                                          break;
+ 417:VS4210/TD5300.c **** 			//case UPKEY:	  
+ 418:VS4210/TD5300.c **** 			case 1:	  
+ 419:VS4210/TD5300.c ****                                            WriteStringToAddr(tire_p[cursor_p],(Hex_p+cursor_p),1);
+ 420:VS4210/TD5300.c ****                                            DrawAttrCnt(cursor[cursor_p],(CH_COLOR_WHITE|BG_COLOR_CY
+ 421:VS4210/TD5300.c ****                                            DrawAttrCnt(tire_p[cursor_p],(CH_COLOR_WHITE|BG_COLOR_CY
+ 422:VS4210/TD5300.c ****                                          if(cursor_p==12)
+ 423:VS4210/TD5300.c ****                                             cursor_p=0;
+ 424:VS4210/TD5300.c ****                                          else if(TPMS_Setting_Mode==1)
+ 425:VS4210/TD5300.c ****                                             cursor_p+=2;
+ 426:VS4210/TD5300.c ****                                          else                                            
+ 427:VS4210/TD5300.c ****                                             cursor_p++;    
+ 428:VS4210/TD5300.c ****                                          DrawAttrCnt(cursor[cursor_p],(CH_COLOR_WHITE|BG_COLOR_MAGE
+ 429:VS4210/TD5300.c ****                                           DrawAttrCnt(tire_p[cursor_p],(CH_COLOR_WHITE|BG_COLOR_MAG
+ 430:VS4210/TD5300.c ****                                         //WriteStringToAddr(tire_p[cursor_p],Tire_Yellow,2);
+ 431:VS4210/TD5300.c ****                                         //Printf("\r\nUP key pressed");  
+ 432:VS4210/TD5300.c ****                                           break;
+ 433:VS4210/TD5300.c **** 			//case DOWNKEY:
+ 434:VS4210/TD5300.c **** 			case 0:
+ 435:VS4210/TD5300.c ****                                        WriteStringToAddr(tire_p[cursor_p],(Hex_p+cursor_p),1);
+ 436:VS4210/TD5300.c ****                                        DrawAttrCnt(cursor[cursor_p],(CH_COLOR_WHITE|BG_COLOR_CYAN),
+ 437:VS4210/TD5300.c ****                                        DrawAttrCnt(tire_p[cursor_p],(CH_COLOR_WHITE|BG_COLOR_CYAN),
+ 438:VS4210/TD5300.c ****                                          if(cursor_p==0)
+ 439:VS4210/TD5300.c ****                                           cursor_p=12;
+ 440:VS4210/TD5300.c ****                                          else if(TPMS_Setting_Mode==1)                             
+ 441:VS4210/TD5300.c ****                                            cursor_p-=2;
+ 442:VS4210/TD5300.c ****                                          else
+ 443:VS4210/TD5300.c ****                                            cursor_p--;                                             
+ 444:VS4210/TD5300.c ****                                         DrawAttrCnt(cursor[cursor_p],(CH_COLOR_WHITE|BG_COLOR_MAGEN
+ 445:VS4210/TD5300.c ****                                        DrawAttrCnt(tire_p[cursor_p],(CH_COLOR_WHITE|BG_COLOR_MAGENT
+ 446:VS4210/TD5300.c ****                                          //WriteStringToAddr(tire_p[cursor_p],Tire_Yellow,2);
+ 447:VS4210/TD5300.c ****                                          //Printf("\r\nUP key pressed"); 
+ 448:VS4210/TD5300.c ****                                          break;
+ 449:VS4210/TD5300.c ****                     //Pressure page.
+ 450:VS4210/TD5300.c ****                      case 3:
+ 451:VS4210/TD5300.c ****                                         TPMS_redraw(1); 
+ 452:VS4210/TD5300.c ****                                         DrawAttrCnt(cursor[0],(CH_COLOR_WHITE|BG_COLOR_MAGENTA),5);
+ 453:VS4210/TD5300.c ****                                         DrawAttrCnt(tire_p[0],(CH_COLOR_WHITE|BG_COLOR_MAGENTA),1);
+ 454:VS4210/TD5300.c ****                                         cursor_p=0;
+ 455:VS4210/TD5300.c ****                                        TPMS_Setting_Mode=2;                                       
+ 456:VS4210/TD5300.c ****                                         break;
+ 457:VS4210/TD5300.c ****                      //Temperature page.
+ 458:VS4210/TD5300.c ****                      case 4:
+ 459:VS4210/TD5300.c ****                                         TPMS_redraw(0); 
+ 460:VS4210/TD5300.c ****                                         DrawAttrCnt(cursor[0],(CH_COLOR_WHITE|BG_COLOR_MAGENTA),5);
+ 461:VS4210/TD5300.c ****                                         DrawAttrCnt(tire_p[0],(CH_COLOR_WHITE|BG_COLOR_MAGENTA),1);
+ 462:VS4210/TD5300.c ****                                         cursor_p=0;
+ 463:VS4210/TD5300.c ****                                        TPMS_Setting_Mode=1;                                       
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 10
+
+
+ 464:VS4210/TD5300.c ****                                         break;
+ 465:VS4210/TD5300.c **** 
+ 466:VS4210/TD5300.c **** 
+ 467:VS4210/TD5300.c **** 		    }   
+ 468:VS4210/TD5300.c **** #endif
+ 469:VS4210/TD5300.c ****   //  }
+ 470:VS4210/TD5300.c ****   
+ 471:VS4210/TD5300.c **** /*
+ 472:VS4210/TD5300.c **** WriteStringToAddr(22,Tire_None,2);
+ 473:VS4210/TD5300.c **** WriteStringToAddr(27,Tire_None,2);
+ 474:VS4210/TD5300.c **** WriteStringToAddr(40,Tire_None,2);
+ 475:VS4210/TD5300.c **** WriteStringToAddr(41,Tire_None,2);
+ 476:VS4210/TD5300.c **** WriteStringToAddr(44,Tire_None,2);
+ 477:VS4210/TD5300.c **** WriteStringToAddr(45,Tire_None,2);
+ 478:VS4210/TD5300.c **** TPMS_Setting_Mode=0;
+ 479:VS4210/TD5300.c **** WriteStringToAddr(0, TPMS,16); //title string..
+ 480:VS4210/TD5300.c **** */
+ 481:VS4210/TD5300.c **** 		return 0;   
+  54              		.loc 1 481 3 view .LVU3
+ 482:VS4210/TD5300.c **** }
+  55              		.loc 1 482 1 is_stmt 0 view .LVU4
+  56 0000 0020     		movs	r0, #0
+  57              	.LVL2:
+  58              		.loc 1 482 1 view .LVU5
+  59 0002 7047     		bx	lr
+  60              		.cfi_endproc
+  61              	.LFE69:
+  63              		.section	.text.TPMS_Change_Mode,"ax",%progbits
+  64              		.align	1
+  65              		.global	TPMS_Change_Mode
+  66              		.syntax unified
+  67              		.thumb
+  68              		.thumb_func
+  69              		.fpu softvfp
+  71              	TPMS_Change_Mode:
+  72              	.LVL3:
+  73              	.LFB70:
+ 483:VS4210/TD5300.c **** 
+ 484:VS4210/TD5300.c **** void TPMS_Change_Mode(BYTE val)
+ 485:VS4210/TD5300.c **** {
+  74              		.loc 1 485 1 is_stmt 1 view -0
+  75              		.cfi_startproc
+  76              		@ args = 0, pretend = 0, frame = 0
+  77              		@ frame_needed = 0, uses_anonymous_args = 0
+  78              		@ link register save eliminated.
+ 486:VS4210/TD5300.c **** #if 0
+ 487:VS4210/TD5300.c **** BYTE tire_p[13]={22,22,27,27,40,40,41,41,44,44,45,45,252};
+ 488:VS4210/TD5300.c **** BYTE cursor[13]={72,82,177,187,112,122,117,127,212,222,217,227,250};
+ 489:VS4210/TD5300.c **** BYTE val_temp=0;
+ 490:VS4210/TD5300.c **** //BYTE  cursor[13]={72,82,177,187,112,122,117,127,212,222,217,227,248};
+ 491:VS4210/TD5300.c **** //BYTE tire_p[13]={ 22,22,27,27,40,40,41,41,44,44,45,45,252};
+ 492:VS4210/TD5300.c **** if(change_keyon==0)
+ 493:VS4210/TD5300.c ****  {
+ 494:VS4210/TD5300.c ****   change_keyon=1;
+ 495:VS4210/TD5300.c ****   DrawAttrCnt(cursor[cursor_p],(CH_COLOR_GREEN|BG_COLOR_CYAN), 5);
+ 496:VS4210/TD5300.c **** 
+ 497:VS4210/TD5300.c **** if((TPMS_Setting_Mode==2)&&(cursor_p==0||cursor_p==2||cursor_p==4||cursor_p==6||cursor_p==8||cursor
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 11
+
+
+ 498:VS4210/TD5300.c **** {
+ 499:VS4210/TD5300.c ****         TPMS_val=sb_p_data_max[(cursor_p/2)];
+ 500:VS4210/TD5300.c ****         WriteStringToAddr(cursor[cursor_p], DataToAscii(TPMS_val), 3);  
+ 501:VS4210/TD5300.c **** }
+ 502:VS4210/TD5300.c **** else
+ 503:VS4210/TD5300.c ****   {
+ 504:VS4210/TD5300.c ****         TPMS_val=sb_tp_data[cursor_p];
+ 505:VS4210/TD5300.c ****      WriteStringToAddr(cursor[cursor_p], DataToAscii(TPMS_val), 3); 
+ 506:VS4210/TD5300.c ****     }
+ 507:VS4210/TD5300.c ****  }
+ 508:VS4210/TD5300.c **** 
+ 509:VS4210/TD5300.c ****        //while(change_keyon)
+ 510:VS4210/TD5300.c ****         //{
+ 511:VS4210/TD5300.c ****          
+ 512:VS4210/TD5300.c ****           //switch (GetKey(1)) 
+ 513:VS4210/TD5300.c ****          switch (val) 
+ 514:VS4210/TD5300.c ****                  {
+ 515:VS4210/TD5300.c ****                   // case UPKEY:   
+ 516:VS4210/TD5300.c ****                       case 1:        
+ 517:VS4210/TD5300.c **** 
+ 518:VS4210/TD5300.c ****                                         if(TPMS_val==180)
+ 519:VS4210/TD5300.c ****                                            TPMS_val=1;  
+ 520:VS4210/TD5300.c ****                                         else
+ 521:VS4210/TD5300.c ****                                           TPMS_val++;
+ 522:VS4210/TD5300.c ****                                        
+ 523:VS4210/TD5300.c ****                             WriteStringToAddr(cursor[cursor_p], DataToAscii(TPMS_val), 3); 
+ 524:VS4210/TD5300.c ****                                         break;
+ 525:VS4210/TD5300.c ****                    //case DOWNKEY:                                         
+ 526:VS4210/TD5300.c ****                    case 0:                                         
+ 527:VS4210/TD5300.c ****                                         if(TPMS_val==0)
+ 528:VS4210/TD5300.c ****                                            TPMS_val=180;             
+ 529:VS4210/TD5300.c ****                                          else
+ 530:VS4210/TD5300.c ****                                             TPMS_val--;
+ 531:VS4210/TD5300.c ****                                          
+ 532:VS4210/TD5300.c ****                             WriteStringToAddr(cursor[cursor_p], DataToAscii(TPMS_val), 3); 
+ 533:VS4210/TD5300.c ****     
+ 534:VS4210/TD5300.c ****                                         break;
+ 535:VS4210/TD5300.c ****                     
+ 536:VS4210/TD5300.c **** 			case 2:                                    
+ 537:VS4210/TD5300.c ****                           DrawAttrCnt(cursor[cursor_p],(CH_COLOR_WHITE|BG_COLOR_MAGENTA), 5);
+ 538:VS4210/TD5300.c ****                         change_keyon=0;
+ 539:VS4210/TD5300.c ****                                break;
+ 540:VS4210/TD5300.c **** 		        }
+ 541:VS4210/TD5300.c ****     //}
+ 542:VS4210/TD5300.c **** if((TPMS_Setting_Mode==2)&&(cursor_p==0||cursor_p==2||cursor_p==4||cursor_p==6||cursor_p==8||cursor
+ 543:VS4210/TD5300.c ****         sb_p_data_max[(cursor_p/2)]=TPMS_val;
+ 544:VS4210/TD5300.c **** else
+ 545:VS4210/TD5300.c ****         sb_tp_data[cursor_p]=TPMS_val;
+ 546:VS4210/TD5300.c ****            
+ 547:VS4210/TD5300.c ****     #endif   
+ 548:VS4210/TD5300.c **** }    
+  79              		.loc 1 548 1 view .LVU7
+  80 0000 7047     		bx	lr
+  81              		.cfi_endproc
+  82              	.LFE70:
+  84              		.section	.text.TPMS_Read_eeprom,"ax",%progbits
+  85              		.align	1
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 12
+
+
+  86              		.global	TPMS_Read_eeprom
+  87              		.syntax unified
+  88              		.thumb
+  89              		.thumb_func
+  90              		.fpu softvfp
+  92              	TPMS_Read_eeprom:
+  93              	.LFB71:
+ 549:VS4210/TD5300.c **** 
+ 550:VS4210/TD5300.c **** 
+ 551:VS4210/TD5300.c **** 
+ 552:VS4210/TD5300.c **** 
+ 553:VS4210/TD5300.c **** 
+ 554:VS4210/TD5300.c **** void TPMS_Read_eeprom(void)
+ 555:VS4210/TD5300.c **** {
+  94              		.loc 1 555 1 view -0
+  95              		.cfi_startproc
+  96              		@ args = 0, pretend = 0, frame = 0
+  97              		@ frame_needed = 0, uses_anonymous_args = 0
+  98 0000 10B5     		push	{r4, lr}
+  99              	.LCFI0:
+ 100              		.cfi_def_cfa_offset 8
+ 101              		.cfi_offset 4, -8
+ 102              		.cfi_offset 14, -4
+ 556:VS4210/TD5300.c **** 
+ 557:VS4210/TD5300.c ****    WORD x=0;
+ 103              		.loc 1 557 4 view .LVU9
+ 104              	.LVL4:
+ 558:VS4210/TD5300.c ****     for(x=0;x<=11;x++)    sb_tp_data[x]=ReadEEP(EEP_SB_data_offset+x);
+ 105              		.loc 1 558 5 view .LVU10
+ 106              		.loc 1 558 10 is_stmt 0 view .LVU11
+ 107 0002 0024     		movs	r4, #0
+ 108              	.LVL5:
+ 109              	.L5:
+ 110              		.loc 1 558 13 is_stmt 1 discriminator 1 view .LVU12
+ 111              		.loc 1 558 5 is_stmt 0 discriminator 1 view .LVU13
+ 112 0004 0B2C     		cmp	r4, #11
+ 113 0006 07D8     		bhi	.L8
+ 114              		.loc 1 558 27 is_stmt 1 discriminator 3 view .LVU14
+ 115              		.loc 1 558 41 is_stmt 0 discriminator 3 view .LVU15
+ 116 0008 04F1DC00 		add	r0, r4, #220
+ 117 000c FFF7FEFF 		bl	ReadEEP
+ 118              	.LVL6:
+ 119              		.loc 1 558 40 discriminator 3 view .LVU16
+ 120 0010 024B     		ldr	r3, .L9
+ 121 0012 1855     		strb	r0, [r3, r4]
+ 122              		.loc 1 558 19 is_stmt 1 discriminator 3 view .LVU17
+ 123              		.loc 1 558 20 is_stmt 0 discriminator 3 view .LVU18
+ 124 0014 0134     		adds	r4, r4, #1
+ 125              	.LVL7:
+ 126              		.loc 1 558 20 discriminator 3 view .LVU19
+ 127 0016 F5E7     		b	.L5
+ 128              	.L8:
+ 559:VS4210/TD5300.c **** 
+ 560:VS4210/TD5300.c **** }
+ 129              		.loc 1 560 1 view .LVU20
+ 130 0018 10BD     		pop	{r4, pc}
+ 131              	.LVL8:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 13
+
+
+ 132              	.L10:
+ 133              		.loc 1 560 1 view .LVU21
+ 134 001a 00BF     		.align	2
+ 135              	.L9:
+ 136 001c 00000000 		.word	.LANCHOR0
+ 137              		.cfi_endproc
+ 138              	.LFE71:
+ 140              		.section	.text.TPMS_Write_eeprom,"ax",%progbits
+ 141              		.align	1
+ 142              		.global	TPMS_Write_eeprom
+ 143              		.syntax unified
+ 144              		.thumb
+ 145              		.thumb_func
+ 146              		.fpu softvfp
+ 148              	TPMS_Write_eeprom:
+ 149              	.LFB72:
+ 561:VS4210/TD5300.c **** 
+ 562:VS4210/TD5300.c **** void TPMS_Write_eeprom(void)
+ 563:VS4210/TD5300.c **** {
+ 150              		.loc 1 563 1 is_stmt 1 view -0
+ 151              		.cfi_startproc
+ 152              		@ args = 0, pretend = 0, frame = 0
+ 153              		@ frame_needed = 0, uses_anonymous_args = 0
+ 154 0000 10B5     		push	{r4, lr}
+ 155              	.LCFI1:
+ 156              		.cfi_def_cfa_offset 8
+ 157              		.cfi_offset 4, -8
+ 158              		.cfi_offset 14, -4
+ 564:VS4210/TD5300.c **** 
+ 565:VS4210/TD5300.c ****     WORD x=0;
+ 159              		.loc 1 565 5 view .LVU23
+ 160              	.LVL9:
+ 566:VS4210/TD5300.c ****     for(x=0;x<=11;x++)    WriteEEP(EEP_SB_data_offset+x,sb_tp_data[x]);
+ 161              		.loc 1 566 5 view .LVU24
+ 162              		.loc 1 566 10 is_stmt 0 view .LVU25
+ 163 0002 0024     		movs	r4, #0
+ 164              	.LVL10:
+ 165              	.L12:
+ 166              		.loc 1 566 13 is_stmt 1 discriminator 1 view .LVU26
+ 167              		.loc 1 566 5 is_stmt 0 discriminator 1 view .LVU27
+ 168 0004 0B2C     		cmp	r4, #11
+ 169 0006 07D8     		bhi	.L17
+ 170              		.loc 1 566 27 is_stmt 1 discriminator 3 view .LVU28
+ 171 0008 094B     		ldr	r3, .L19
+ 172 000a 195D     		ldrb	r1, [r3, r4]	@ zero_extendqisi2
+ 173 000c 04F1DC00 		add	r0, r4, #220
+ 174 0010 FFF7FEFF 		bl	WriteEEP
+ 175              	.LVL11:
+ 176              		.loc 1 566 19 discriminator 3 view .LVU29
+ 177              		.loc 1 566 20 is_stmt 0 discriminator 3 view .LVU30
+ 178 0014 0134     		adds	r4, r4, #1
+ 179              	.LVL12:
+ 180              		.loc 1 566 20 discriminator 3 view .LVU31
+ 181 0016 F5E7     		b	.L12
+ 182              	.L17:
+ 567:VS4210/TD5300.c ****   for(x=0;x<=5;x++)    WriteEEP(EEP_SB_data_offset+x+12,sb_p_data_max[x]);
+ 183              		.loc 1 567 8 view .LVU32
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 14
+
+
+ 184 0018 0024     		movs	r4, #0
+ 185              	.LVL13:
+ 186              	.L14:
+ 187              		.loc 1 567 11 is_stmt 1 discriminator 1 view .LVU33
+ 188              		.loc 1 567 3 is_stmt 0 discriminator 1 view .LVU34
+ 189 001a 052C     		cmp	r4, #5
+ 190 001c 07D8     		bhi	.L18
+ 191              		.loc 1 567 24 is_stmt 1 discriminator 3 view .LVU35
+ 192 001e 054B     		ldr	r3, .L19+4
+ 193 0020 195D     		ldrb	r1, [r3, r4]	@ zero_extendqisi2
+ 194 0022 04F1E800 		add	r0, r4, #232
+ 195 0026 FFF7FEFF 		bl	WriteEEP
+ 196              	.LVL14:
+ 197              		.loc 1 567 16 discriminator 3 view .LVU36
+ 198              		.loc 1 567 17 is_stmt 0 discriminator 3 view .LVU37
+ 199 002a 0134     		adds	r4, r4, #1
+ 200              	.LVL15:
+ 201              		.loc 1 567 17 discriminator 3 view .LVU38
+ 202 002c F5E7     		b	.L14
+ 203              	.L18:
+ 568:VS4210/TD5300.c **** 
+ 569:VS4210/TD5300.c **** }
+ 204              		.loc 1 569 1 view .LVU39
+ 205 002e 10BD     		pop	{r4, pc}
+ 206              	.LVL16:
+ 207              	.L20:
+ 208              		.loc 1 569 1 view .LVU40
+ 209              		.align	2
+ 210              	.L19:
+ 211 0030 00000000 		.word	.LANCHOR0
+ 212 0034 00000000 		.word	.LANCHOR1
+ 213              		.cfi_endproc
+ 214              	.LFE72:
+ 216              		.section	.text.TPMS_Default_Setting,"ax",%progbits
+ 217              		.align	1
+ 218              		.global	TPMS_Default_Setting
+ 219              		.syntax unified
+ 220              		.thumb
+ 221              		.thumb_func
+ 222              		.fpu softvfp
+ 224              	TPMS_Default_Setting:
+ 225              	.LFB73:
+ 570:VS4210/TD5300.c **** 
+ 571:VS4210/TD5300.c **** void TPMS_Default_Setting(void)
+ 572:VS4210/TD5300.c **** {
+ 226              		.loc 1 572 1 is_stmt 1 view -0
+ 227              		.cfi_startproc
+ 228              		@ args = 0, pretend = 0, frame = 0
+ 229              		@ frame_needed = 0, uses_anonymous_args = 0
+ 230 0000 10B5     		push	{r4, lr}
+ 231              	.LCFI2:
+ 232              		.cfi_def_cfa_offset 8
+ 233              		.cfi_offset 4, -8
+ 234              		.cfi_offset 14, -4
+ 573:VS4210/TD5300.c **** 
+ 574:VS4210/TD5300.c ****    WORD x=0;
+ 235              		.loc 1 574 4 view .LVU42
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 15
+
+
+ 236              	.LVL17:
+ 575:VS4210/TD5300.c ****     for(x=0;x<=11;x+=2)
+ 237              		.loc 1 575 5 view .LVU43
+ 238              		.loc 1 575 10 is_stmt 0 view .LVU44
+ 239 0002 0023     		movs	r3, #0
+ 240              	.LVL18:
+ 241              	.L22:
+ 242              		.loc 1 575 13 is_stmt 1 discriminator 1 view .LVU45
+ 243              		.loc 1 575 5 is_stmt 0 discriminator 1 view .LVU46
+ 244 0004 0B2B     		cmp	r3, #11
+ 245 0006 07D8     		bhi	.L31
+ 576:VS4210/TD5300.c ****         {
+ 577:VS4210/TD5300.c ****             sb_tp_data[x]=60;
+ 246              		.loc 1 577 13 is_stmt 1 discriminator 3 view .LVU47
+ 247              		.loc 1 577 26 is_stmt 0 discriminator 3 view .LVU48
+ 248 0008 134A     		ldr	r2, .L35
+ 249 000a 3C21     		movs	r1, #60
+ 250 000c D154     		strb	r1, [r2, r3]
+ 578:VS4210/TD5300.c ****             sb_tp_data[x+1]=30;
+ 251              		.loc 1 578 13 is_stmt 1 discriminator 3 view .LVU49
+ 252              		.loc 1 578 25 is_stmt 0 discriminator 3 view .LVU50
+ 253 000e 591C     		adds	r1, r3, #1
+ 254              		.loc 1 578 28 discriminator 3 view .LVU51
+ 255 0010 1E20     		movs	r0, #30
+ 256 0012 5054     		strb	r0, [r2, r1]
+ 575:VS4210/TD5300.c ****     for(x=0;x<=11;x+=2)
+ 257              		.loc 1 575 19 is_stmt 1 discriminator 3 view .LVU52
+ 575:VS4210/TD5300.c ****     for(x=0;x<=11;x+=2)
+ 258              		.loc 1 575 20 is_stmt 0 discriminator 3 view .LVU53
+ 259 0014 0233     		adds	r3, r3, #2
+ 260              	.LVL19:
+ 575:VS4210/TD5300.c ****     for(x=0;x<=11;x+=2)
+ 261              		.loc 1 575 20 discriminator 3 view .LVU54
+ 262 0016 F5E7     		b	.L22
+ 263              	.L31:
+ 579:VS4210/TD5300.c ****             //sb_p_data_max[x]=45;
+ 580:VS4210/TD5300.c ****         }
+ 581:VS4210/TD5300.c **** 
+ 582:VS4210/TD5300.c ****   for(x=0;x<=5;x++)    sb_p_data_max[x]=45;
+ 264              		.loc 1 582 8 view .LVU55
+ 265 0018 0023     		movs	r3, #0
+ 266              	.LVL20:
+ 267              	.L24:
+ 268              		.loc 1 582 11 is_stmt 1 discriminator 1 view .LVU56
+ 269              		.loc 1 582 3 is_stmt 0 discriminator 1 view .LVU57
+ 270 001a 052B     		cmp	r3, #5
+ 271 001c 04D8     		bhi	.L32
+ 272              		.loc 1 582 24 is_stmt 1 discriminator 3 view .LVU58
+ 273              		.loc 1 582 40 is_stmt 0 discriminator 3 view .LVU59
+ 274 001e 0F4A     		ldr	r2, .L35+4
+ 275 0020 2D21     		movs	r1, #45
+ 276 0022 D154     		strb	r1, [r2, r3]
+ 277              		.loc 1 582 16 is_stmt 1 discriminator 3 view .LVU60
+ 278              		.loc 1 582 17 is_stmt 0 discriminator 3 view .LVU61
+ 279 0024 0133     		adds	r3, r3, #1
+ 280              	.LVL21:
+ 281              		.loc 1 582 17 discriminator 3 view .LVU62
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 16
+
+
+ 282 0026 F8E7     		b	.L24
+ 283              	.L32:
+ 583:VS4210/TD5300.c **** 
+ 584:VS4210/TD5300.c ****   for(x=0;x<=11;x++)    WriteEEP(EEP_SB_data_offset+x,sb_tp_data[x]);
+ 284              		.loc 1 584 8 view .LVU63
+ 285 0028 0024     		movs	r4, #0
+ 286              	.LVL22:
+ 287              	.L26:
+ 288              		.loc 1 584 11 is_stmt 1 discriminator 1 view .LVU64
+ 289              		.loc 1 584 3 is_stmt 0 discriminator 1 view .LVU65
+ 290 002a 0B2C     		cmp	r4, #11
+ 291 002c 07D8     		bhi	.L33
+ 292              		.loc 1 584 25 is_stmt 1 discriminator 3 view .LVU66
+ 293 002e 0A4B     		ldr	r3, .L35
+ 294 0030 195D     		ldrb	r1, [r3, r4]	@ zero_extendqisi2
+ 295 0032 04F1DC00 		add	r0, r4, #220
+ 296 0036 FFF7FEFF 		bl	WriteEEP
+ 297              	.LVL23:
+ 298              		.loc 1 584 17 discriminator 3 view .LVU67
+ 299              		.loc 1 584 18 is_stmt 0 discriminator 3 view .LVU68
+ 300 003a 0134     		adds	r4, r4, #1
+ 301              	.LVL24:
+ 302              		.loc 1 584 18 discriminator 3 view .LVU69
+ 303 003c F5E7     		b	.L26
+ 304              	.L33:
+ 585:VS4210/TD5300.c ****   for(x=0;x<=5;x++)    WriteEEP(EEP_SB_data_offset+x+12,sb_p_data_max[x]);
+ 305              		.loc 1 585 8 view .LVU70
+ 306 003e 0024     		movs	r4, #0
+ 307              	.LVL25:
+ 308              	.L28:
+ 309              		.loc 1 585 11 is_stmt 1 discriminator 1 view .LVU71
+ 310              		.loc 1 585 3 is_stmt 0 discriminator 1 view .LVU72
+ 311 0040 052C     		cmp	r4, #5
+ 312 0042 07D8     		bhi	.L34
+ 313              		.loc 1 585 24 is_stmt 1 discriminator 3 view .LVU73
+ 314 0044 054B     		ldr	r3, .L35+4
+ 315 0046 195D     		ldrb	r1, [r3, r4]	@ zero_extendqisi2
+ 316 0048 04F1E800 		add	r0, r4, #232
+ 317 004c FFF7FEFF 		bl	WriteEEP
+ 318              	.LVL26:
+ 319              		.loc 1 585 16 discriminator 3 view .LVU74
+ 320              		.loc 1 585 17 is_stmt 0 discriminator 3 view .LVU75
+ 321 0050 0134     		adds	r4, r4, #1
+ 322              	.LVL27:
+ 323              		.loc 1 585 17 discriminator 3 view .LVU76
+ 324 0052 F5E7     		b	.L28
+ 325              	.L34:
+ 586:VS4210/TD5300.c **** 
+ 587:VS4210/TD5300.c **** }
+ 326              		.loc 1 587 1 view .LVU77
+ 327 0054 10BD     		pop	{r4, pc}
+ 328              	.LVL28:
+ 329              	.L36:
+ 330              		.loc 1 587 1 view .LVU78
+ 331 0056 00BF     		.align	2
+ 332              	.L35:
+ 333 0058 00000000 		.word	.LANCHOR0
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 17
+
+
+ 334 005c 00000000 		.word	.LANCHOR1
+ 335              		.cfi_endproc
+ 336              	.LFE73:
+ 338              		.section	.text.Init_TPMS_OSD,"ax",%progbits
+ 339              		.align	1
+ 340              		.global	Init_TPMS_OSD
+ 341              		.syntax unified
+ 342              		.thumb
+ 343              		.thumb_func
+ 344              		.fpu softvfp
+ 346              	Init_TPMS_OSD:
+ 347              	.LFB74:
+ 588:VS4210/TD5300.c ****     
+ 589:VS4210/TD5300.c **** void Init_TPMS_OSD(void)          //add by ryan chen 20140728 
+ 590:VS4210/TD5300.c **** {
+ 348              		.loc 1 590 1 is_stmt 1 view -0
+ 349              		.cfi_startproc
+ 350              		@ args = 0, pretend = 0, frame = 0
+ 351              		@ frame_needed = 0, uses_anonymous_args = 0
+ 352              		@ link register save eliminated.
+ 591:VS4210/TD5300.c **** #if 0
+ 592:VS4210/TD5300.c ****   BYTE i=0;
+ 593:VS4210/TD5300.c ****   
+ 594:VS4210/TD5300.c **** if(TPMS_OSD==1) return;
+ 595:VS4210/TD5300.c **** 
+ 596:VS4210/TD5300.c ****   ShowTPMSOSD();
+ 597:VS4210/TD5300.c **** 
+ 598:VS4210/TD5300.c **** //  InitOSDWindow(Init_Osd);  // Define Window Top(4), Sub(3), Bar(2), Cursor(1) 
+ 599:VS4210/TD5300.c **** //  ClearDataCnt(OSDMENU_MAINADDR, 255);	// Clear the counter of OSD RAM Data from addr with space(
+ 600:VS4210/TD5300.c **** //  DrawAttrCnt(0,(CH_COLOR_WHITE|BG_COLOR_CYAN), 252);   
+ 601:VS4210/TD5300.c **** //  Draw_CAR(); 
+ 602:VS4210/TD5300.c ****   
+ 603:VS4210/TD5300.c ****    TPMS_OSD=1;
+ 604:VS4210/TD5300.c ****  #endif
+ 605:VS4210/TD5300.c **** }
+ 353              		.loc 1 605 1 view .LVU80
+ 354 0000 7047     		bx	lr
+ 355              		.cfi_endproc
+ 356              	.LFE74:
+ 358              		.section	.text.Display_TPMS_info,"ax",%progbits
+ 359              		.align	1
+ 360              		.global	Display_TPMS_info
+ 361              		.syntax unified
+ 362              		.thumb
+ 363              		.thumb_func
+ 364              		.fpu softvfp
+ 366              	Display_TPMS_info:
+ 367              	.LVL29:
+ 368              	.LFB75:
+ 606:VS4210/TD5300.c **** 
+ 607:VS4210/TD5300.c **** 
+ 608:VS4210/TD5300.c **** 
+ 609:VS4210/TD5300.c **** void Display_TPMS_info(BYTE Vchar)
+ 610:VS4210/TD5300.c **** {
+ 369              		.loc 1 610 1 view -0
+ 370              		.cfi_startproc
+ 371              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 18
+
+
+ 372              		@ frame_needed = 0, uses_anonymous_args = 0
+ 373              		@ link register save eliminated.
+ 611:VS4210/TD5300.c **** #if 0
+ 612:VS4210/TD5300.c **** BYTE x,y,z;
+ 613:VS4210/TD5300.c **** BYTE *module="TPMS was failure";
+ 614:VS4210/TD5300.c **** //Init_TPMS_OSD();
+ 615:VS4210/TD5300.c **** //ShowOSDWindowAll(1);
+ 616:VS4210/TD5300.c **** //SetDisplayedOSD( MENU);
+ 617:VS4210/TD5300.c **** //Check_tire_sensors();
+ 618:VS4210/TD5300.c **** 
+ 619:VS4210/TD5300.c **** /*
+ 620:VS4210/TD5300.c **** if((Get_Relay_Data('6',1))==0&&(TPMS_Ready==0))   //check relay board...
+ 621:VS4210/TD5300.c **** {
+ 622:VS4210/TD5300.c **** DrawAttrCnt(0,(CH_COLOR_RED|BG_COLOR_CYAN), 16); 
+ 623:VS4210/TD5300.c **** WriteStringToAddr(0, module, 16);
+ 624:VS4210/TD5300.c ****     
+ 625:VS4210/TD5300.c **** ShowOSDWindowAll(1);
+ 626:VS4210/TD5300.c **** WaitEndofDisplayArea();
+ 627:VS4210/TD5300.c **** ShowOSDWindow_TW88(3,TRUE);  
+ 628:VS4210/TD5300.c **** //TPMS_OSD=1;
+ 629:VS4210/TD5300.c **** TPMS_Reset_Flag=1;
+ 630:VS4210/TD5300.c **** }
+ 631:VS4210/TD5300.c **** else
+ 632:VS4210/TD5300.c **** {
+ 633:VS4210/TD5300.c **** */
+ 634:VS4210/TD5300.c **** 
+ 635:VS4210/TD5300.c **** //GetTireDatawhole(5,Vchar);
+ 636:VS4210/TD5300.c **** 
+ 637:VS4210/TD5300.c **** //ShowOSDWindowAll(Vchar);
+ 638:VS4210/TD5300.c **** //WaitEndofDisplayArea();
+ 639:VS4210/TD5300.c **** //ShowOSDWindow_TW88(1,Vchar);                                        
+ 640:VS4210/TD5300.c **** //ShowOSDWindow_TW88(2,Vchar);                                        
+ 641:VS4210/TD5300.c **** //ShowOSDWindow_TW88(3,Vchar);                                        
+ 642:VS4210/TD5300.c **** //ShowOSDWindow_TW88(4,Vchar); 
+ 643:VS4210/TD5300.c **** //}
+ 644:VS4210/TD5300.c **** //   WriteDecoder(MISC3, ReadDecoder(MISC3)&0xfd);   //black screen..  //add by ryan
+ 645:VS4210/TD5300.c **** //else
+ 646:VS4210/TD5300.c **** //{
+ 647:VS4210/TD5300.c **** //DrawAttrCnt(0,(CH_COLOR_RED|BG_COLOR_CYAN), 16); 
+ 648:VS4210/TD5300.c **** //WriteStringToAddr(0, module, 16);
+ 649:VS4210/TD5300.c **** //ShowOSDWindowAll(1);
+ 650:VS4210/TD5300.c **** //WaitEndofDisplayArea();
+ 651:VS4210/TD5300.c **** //ShowOSDWindow_TW88(3,TRUE);  
+ 652:VS4210/TD5300.c **** //TPMS_OSD=0;
+ 653:VS4210/TD5300.c **** //}
+ 654:VS4210/TD5300.c **** 
+ 655:VS4210/TD5300.c **** /*
+ 656:VS4210/TD5300.c ****             if((TPMS_Ready==1)&&Vchar)
+ 657:VS4210/TD5300.c ****             {
+ 658:VS4210/TD5300.c ****                   Get_Tire_Data(5,0,FORNT_LEFT_TEMPTURE,FORNT_LEFT_PRESSURE,Vchar);
+ 659:VS4210/TD5300.c ****                   
+ 660:VS4210/TD5300.c ****                   Get_Tire_Data(5,1,FORNT_RIGHT_TEMPTURE,FORNT_RIGHT_PRESSURE,Vchar);
+ 661:VS4210/TD5300.c **** 
+ 662:VS4210/TD5300.c ****                   Get_Tire_Data(5,2,REAR_LEFT_TEMPTURE,REAR_LEFT_PRESSURE,Vchar);
+ 663:VS4210/TD5300.c **** 
+ 664:VS4210/TD5300.c ****                   Get_Tire_Data(5,3,REAR2_RIGHT_TEMPTURE,REAR2_RIGHT_PRESSURE,Vchar);
+ 665:VS4210/TD5300.c ****                   
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 19
+
+
+ 666:VS4210/TD5300.c ****                   TPMS_Ready=0;
+ 667:VS4210/TD5300.c ****             }
+ 668:VS4210/TD5300.c ****  */   
+ 669:VS4210/TD5300.c **** //if(Vchar)
+ 670:VS4210/TD5300.c **** //{
+ 671:VS4210/TD5300.c **** //}  
+ 672:VS4210/TD5300.c **** //TPMS_OSD=1;
+ 673:VS4210/TD5300.c **** #endif
+ 674:VS4210/TD5300.c **** }
+ 374              		.loc 1 674 1 view .LVU82
+ 375 0000 7047     		bx	lr
+ 376              		.cfi_endproc
+ 377              	.LFE75:
+ 379              		.section	.text.Draw_CAR,"ax",%progbits
+ 380              		.align	1
+ 381              		.global	Draw_CAR
+ 382              		.syntax unified
+ 383              		.thumb
+ 384              		.thumb_func
+ 385              		.fpu softvfp
+ 387              	Draw_CAR:
+ 388              	.LFB76:
+ 675:VS4210/TD5300.c **** 
+ 676:VS4210/TD5300.c **** void Draw_CAR(void)
+ 677:VS4210/TD5300.c **** {
+ 389              		.loc 1 677 1 view -0
+ 390              		.cfi_startproc
+ 391              		@ args = 0, pretend = 0, frame = 0
+ 392              		@ frame_needed = 0, uses_anonymous_args = 0
+ 393              		@ link register save eliminated.
+ 678:VS4210/TD5300.c **** #if 0
+ 679:VS4210/TD5300.c ****     BYTE i=0,T[]={"TPMS information"},addr=17;
+ 680:VS4210/TD5300.c ****     
+ 681:VS4210/TD5300.c **** //PCT test
+ 682:VS4210/TD5300.c **** 
+ 683:VS4210/TD5300.c **** DrawAttrCnt(0,(CH_COLOR_WHITE|BG_COLOR_CYAN), 20);
+ 684:VS4210/TD5300.c **** WriteStringToAddr(0,&T[0],16);
+ 685:VS4210/TD5300.c **** 
+ 686:VS4210/TD5300.c **** 
+ 687:VS4210/TD5300.c **** WriteStringToAddr(16,Cube0,2);
+ 688:VS4210/TD5300.c **** WriteStringToAddr(21,Cube2,2);
+ 689:VS4210/TD5300.c **** 
+ 690:VS4210/TD5300.c **** WriteStringToAddr(17,Cube8,2);
+ 691:VS4210/TD5300.c **** WriteStringToAddr(18,Cube1,2);
+ 692:VS4210/TD5300.c **** WriteStringToAddr(19,Cube1,2);
+ 693:VS4210/TD5300.c **** WriteStringToAddr(20,Cube8,2);
+ 694:VS4210/TD5300.c **** 
+ 695:VS4210/TD5300.c **** 
+ 696:VS4210/TD5300.c **** WriteStringToAddr(28,Cube6,2);
+ 697:VS4210/TD5300.c **** WriteStringToAddr(34,Cube6,2);
+ 698:VS4210/TD5300.c **** //WriteStringToAddr(23,Cube6,2);
+ 699:VS4210/TD5300.c **** //WriteStringToAddr(41,Cube6,2);
+ 700:VS4210/TD5300.c **** 
+ 701:VS4210/TD5300.c **** 
+ 702:VS4210/TD5300.c **** WriteStringToAddr(33,Cube7,2);
+ 703:VS4210/TD5300.c **** WriteStringToAddr(39,Cube7,2);
+ 704:VS4210/TD5300.c **** //WriteStringToAddr(26,Cube7,2);
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 20
+
+
+ 705:VS4210/TD5300.c **** //WriteStringToAddr(44,Cube7,2);
+ 706:VS4210/TD5300.c **** 
+ 707:VS4210/TD5300.c **** 
+ 708:VS4210/TD5300.c **** WriteStringToAddr(46,Cube5,2);
+ 709:VS4210/TD5300.c **** WriteStringToAddr(51,Cube3,2);
+ 710:VS4210/TD5300.c **** 
+ 711:VS4210/TD5300.c **** 
+ 712:VS4210/TD5300.c **** WriteStringToAddr(47,Cube4,2);
+ 713:VS4210/TD5300.c **** WriteStringToAddr(48,Cube4,2);
+ 714:VS4210/TD5300.c **** WriteStringToAddr(49,Cube4,2);
+ 715:VS4210/TD5300.c **** WriteStringToAddr(50,Cube4,2);
+ 716:VS4210/TD5300.c **** 
+ 717:VS4210/TD5300.c **** 
+ 718:VS4210/TD5300.c **** WriteStringToAddr(22,Tire_None,2);
+ 719:VS4210/TD5300.c **** WriteStringToAddr(27,Tire_None,2);
+ 720:VS4210/TD5300.c **** WriteStringToAddr(40,Tire_None,2);
+ 721:VS4210/TD5300.c **** WriteStringToAddr(41,Tire_None,2);
+ 722:VS4210/TD5300.c **** WriteStringToAddr(44,Tire_None,2);
+ 723:VS4210/TD5300.c **** WriteStringToAddr(45,Tire_None,2);
+ 724:VS4210/TD5300.c **** #endif
+ 725:VS4210/TD5300.c **** 
+ 726:VS4210/TD5300.c **** /*
+ 727:VS4210/TD5300.c **** WriteStringToAddr(22,&Hex[1],1);
+ 728:VS4210/TD5300.c **** WriteStringToAddr(27,&Hex[2],1);
+ 729:VS4210/TD5300.c **** WriteStringToAddr(40,&Hex[3],1);
+ 730:VS4210/TD5300.c **** WriteStringToAddr(41,&Hex[4],1);
+ 731:VS4210/TD5300.c **** WriteStringToAddr(44,&Hex[5],1);
+ 732:VS4210/TD5300.c **** WriteStringToAddr(45,&Hex[6],1);
+ 733:VS4210/TD5300.c **** */
+ 734:VS4210/TD5300.c **** 
+ 735:VS4210/TD5300.c ****                                              
+ 736:VS4210/TD5300.c **** //WriteStringToAddr(41,Tire_None,2);
+ 737:VS4210/TD5300.c **** //WriteStringToAddr(44,Tire_None,2);
+ 738:VS4210/TD5300.c **** 
+ 739:VS4210/TD5300.c **** }
+ 394              		.loc 1 739 1 view .LVU84
+ 395 0000 7047     		bx	lr
+ 396              		.cfi_endproc
+ 397              	.LFE76:
+ 399              		.section	.text.putch,"ax",%progbits
+ 400              		.align	1
+ 401              		.global	putch
+ 402              		.syntax unified
+ 403              		.thumb
+ 404              		.thumb_func
+ 405              		.fpu softvfp
+ 407              	putch:
+ 408              	.LVL30:
+ 409              	.LFB78:
+ 740:VS4210/TD5300.c ****           
+ 741:VS4210/TD5300.c **** 
+ 742:VS4210/TD5300.c **** BYTE Read_RX(void)
+ 743:VS4210/TD5300.c **** {
+ 744:VS4210/TD5300.c **** 
+ 745:VS4210/TD5300.c **** 	BYTE x,y,z;
+ 746:VS4210/TD5300.c **** 
+ 747:VS4210/TD5300.c **** 			//CREN=1;
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 21
+
+
+ 748:VS4210/TD5300.c **** 	x=1;
+ 749:VS4210/TD5300.c ****    
+ 750:VS4210/TD5300.c **** 	while(x==1)
+ 751:VS4210/TD5300.c **** 	{		
+ 752:VS4210/TD5300.c **** 			y=Input(2);
+ 753:VS4210/TD5300.c **** 		
+ 754:VS4210/TD5300.c **** 			if(y=='#')
+ 755:VS4210/TD5300.c **** 			{
+ 756:VS4210/TD5300.c **** 					//relay0		
+ 757:VS4210/TD5300.c **** 					for(z=0;z<=14;z++)
+ 758:VS4210/TD5300.c **** 					{	
+ 759:VS4210/TD5300.c **** 						y=Input(2);
+ 760:VS4210/TD5300.c **** 						buf_tpms[z]=y;
+ 761:VS4210/TD5300.c **** 						if(buf_tpms[z]=='#') z=14;
+ 762:VS4210/TD5300.c **** 					}
+ 763:VS4210/TD5300.c **** 			//CREN=0;
+ 764:VS4210/TD5300.c **** 			//RCIF=0;
+ 765:VS4210/TD5300.c **** 			x=0;
+ 766:VS4210/TD5300.c **** 			}
+ 767:VS4210/TD5300.c **** 	}
+ 768:VS4210/TD5300.c **** 
+ 769:VS4210/TD5300.c **** 		//CREN=0;
+ 770:VS4210/TD5300.c **** 		//RCIF=0;
+ 771:VS4210/TD5300.c **** 		
+ 772:VS4210/TD5300.c **** 	return 1;
+ 773:VS4210/TD5300.c **** }
+ 774:VS4210/TD5300.c **** 
+ 775:VS4210/TD5300.c **** void putch(BYTE num) 
+ 776:VS4210/TD5300.c **** {
+ 410              		.loc 1 776 1 view -0
+ 411              		.cfi_startproc
+ 412              		@ args = 0, pretend = 0, frame = 0
+ 413              		@ frame_needed = 0, uses_anonymous_args = 0
+ 414              		@ link register save eliminated.
+ 777:VS4210/TD5300.c **** //TXEN=1;	
+ 778:VS4210/TD5300.c **** /* output one byte */
+ 779:VS4210/TD5300.c **** //	while(!TXIF)	/* set when register is empty */
+ 780:VS4210/TD5300.c **** //		continue;
+ 781:VS4210/TD5300.c **** //	TXREG = (byte);
+ 782:VS4210/TD5300.c **** }
+ 415              		.loc 1 782 1 view .LVU86
+ 416 0000 7047     		bx	lr
+ 417              		.cfi_endproc
+ 418              	.LFE78:
+ 420              		.section	.text.getch,"ax",%progbits
+ 421              		.align	1
+ 422              		.global	getch
+ 423              		.syntax unified
+ 424              		.thumb
+ 425              		.thumb_func
+ 426              		.fpu softvfp
+ 428              	getch:
+ 429              	.LFB79:
+ 783:VS4210/TD5300.c **** 
+ 784:VS4210/TD5300.c **** BYTE getch(void)
+ 785:VS4210/TD5300.c **** {
+ 430              		.loc 1 785 1 view -0
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 22
+
+
+ 431              		.cfi_startproc
+ 432              		@ args = 0, pretend = 0, frame = 0
+ 433              		@ frame_needed = 0, uses_anonymous_args = 0
+ 434              		@ link register save eliminated.
+ 786:VS4210/TD5300.c **** 		/* retrieve one byte */
+ 787:VS4210/TD5300.c **** 	//	while(!RCIF)	/* set when register is not empty */
+ 788:VS4210/TD5300.c **** 	//		continue;
+ 789:VS4210/TD5300.c ****       //			RCIF=0;
+ 790:VS4210/TD5300.c ****      //			return RCREG;
+ 791:VS4210/TD5300.c **** return 1;	
+ 435              		.loc 1 791 1 view .LVU88
+ 792:VS4210/TD5300.c **** }
+ 436              		.loc 1 792 1 is_stmt 0 view .LVU89
+ 437 0000 0120     		movs	r0, #1
+ 438 0002 7047     		bx	lr
+ 439              		.cfi_endproc
+ 440              	.LFE79:
+ 442              		.section	.text.getche,"ax",%progbits
+ 443              		.align	1
+ 444              		.global	getche
+ 445              		.syntax unified
+ 446              		.thumb
+ 447              		.thumb_func
+ 448              		.fpu softvfp
+ 450              	getche:
+ 451              	.LFB80:
+ 793:VS4210/TD5300.c **** 
+ 794:VS4210/TD5300.c **** BYTE getche(void)
+ 795:VS4210/TD5300.c **** {
+ 452              		.loc 1 795 1 is_stmt 1 view -0
+ 453              		.cfi_startproc
+ 454              		@ args = 0, pretend = 0, frame = 0
+ 455              		@ frame_needed = 0, uses_anonymous_args = 0
+ 456              		@ link register save eliminated.
+ 796:VS4210/TD5300.c **** 					
+ 797:VS4210/TD5300.c **** 				//BYTE c;
+ 798:VS4210/TD5300.c **** 				//putch(c = getch());
+ 799:VS4210/TD5300.c **** 				//return c;
+ 800:VS4210/TD5300.c **** 		return 1;			
+ 457              		.loc 1 800 3 view .LVU91
+ 801:VS4210/TD5300.c **** }
+ 458              		.loc 1 801 1 is_stmt 0 view .LVU92
+ 459 0000 0120     		movs	r0, #1
+ 460 0002 7047     		bx	lr
+ 461              		.cfi_endproc
+ 462              	.LFE80:
+ 464              		.section	.text.GetData,"ax",%progbits
+ 465              		.align	1
+ 466              		.global	GetData
+ 467              		.syntax unified
+ 468              		.thumb
+ 469              		.thumb_func
+ 470              		.fpu softvfp
+ 472              	GetData:
+ 473              	.LVL31:
+ 474              	.LFB81:
+ 802:VS4210/TD5300.c **** 
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 23
+
+
+ 803:VS4210/TD5300.c **** 
+ 804:VS4210/TD5300.c **** BYTE GetData(BYTE *addr)
+ 805:VS4210/TD5300.c **** {
+ 475              		.loc 1 805 1 is_stmt 1 view -0
+ 476              		.cfi_startproc
+ 477              		@ args = 0, pretend = 0, frame = 0
+ 478              		@ frame_needed = 0, uses_anonymous_args = 0
+ 479              		@ link register save eliminated.
+ 806:VS4210/TD5300.c **** //   		BYTE x;
+ 807:VS4210/TD5300.c **** 
+ 808:VS4210/TD5300.c **** //	for(x=0;x<=14;x++)
+ 809:VS4210/TD5300.c ****   //    {
+ 810:VS4210/TD5300.c **** 	//*addr=buf[x];
+ 811:VS4210/TD5300.c **** 	//if(buf[x]=='#') x=14;
+ 812:VS4210/TD5300.c **** 	//addr++;
+ 813:VS4210/TD5300.c ****       //}
+ 814:VS4210/TD5300.c ****  
+ 815:VS4210/TD5300.c **** return 1;
+ 480              		.loc 1 815 1 view .LVU94
+ 816:VS4210/TD5300.c **** }
+ 481              		.loc 1 816 1 is_stmt 0 view .LVU95
+ 482 0000 0120     		movs	r0, #1
+ 483              	.LVL32:
+ 484              		.loc 1 816 1 view .LVU96
+ 485 0002 7047     		bx	lr
+ 486              		.cfi_endproc
+ 487              	.LFE81:
+ 489              		.section	.text.AsciiToData,"ax",%progbits
+ 490              		.align	1
+ 491              		.global	AsciiToData
+ 492              		.syntax unified
+ 493              		.thumb
+ 494              		.thumb_func
+ 495              		.fpu softvfp
+ 497              	AsciiToData:
+ 498              	.LVL33:
+ 499              	.LFB82:
+ 817:VS4210/TD5300.c **** 
+ 818:VS4210/TD5300.c **** BYTE AsciiToData(BYTE num)
+ 819:VS4210/TD5300.c **** {
+ 500              		.loc 1 819 1 is_stmt 1 view -0
+ 501              		.cfi_startproc
+ 502              		@ args = 0, pretend = 0, frame = 0
+ 503              		@ frame_needed = 0, uses_anonymous_args = 0
+ 504              		@ link register save eliminated.
+ 820:VS4210/TD5300.c **** 
+ 821:VS4210/TD5300.c ****  BYTE y;
+ 505              		.loc 1 821 2 view .LVU98
+ 822:VS4210/TD5300.c **** 
+ 823:VS4210/TD5300.c **** 	
+ 824:VS4210/TD5300.c **** 	for(y=0;y<=15;y++)
+ 506              		.loc 1 824 2 view .LVU99
+ 507              		.loc 1 824 7 is_stmt 0 view .LVU100
+ 508 0000 0023     		movs	r3, #0
+ 509              	.LVL34:
+ 510              	.L45:
+ 511              		.loc 1 824 10 is_stmt 1 discriminator 1 view .LVU101
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 24
+
+
+ 512              		.loc 1 824 2 is_stmt 0 discriminator 1 view .LVU102
+ 513 0002 0F2B     		cmp	r3, #15
+ 514 0004 06D8     		bhi	.L49
+ 825:VS4210/TD5300.c **** 	{
+ 826:VS4210/TD5300.c **** 				if(num==Hex[y]) 
+ 515              		.loc 1 826 5 is_stmt 1 view .LVU103
+ 516              		.loc 1 826 16 is_stmt 0 view .LVU104
+ 517 0006 054A     		ldr	r2, .L50
+ 518 0008 D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
+ 519              		.loc 1 826 7 view .LVU105
+ 520 000a 8242     		cmp	r2, r0
+ 521 000c 03D0     		beq	.L48
+ 824:VS4210/TD5300.c **** 	{
+ 522              		.loc 1 824 16 is_stmt 1 discriminator 2 view .LVU106
+ 824:VS4210/TD5300.c **** 	{
+ 523              		.loc 1 824 17 is_stmt 0 discriminator 2 view .LVU107
+ 524 000e 0133     		adds	r3, r3, #1
+ 525              	.LVL35:
+ 824:VS4210/TD5300.c **** 	{
+ 526              		.loc 1 824 17 discriminator 2 view .LVU108
+ 527 0010 DBB2     		uxtb	r3, r3
+ 528              	.LVL36:
+ 824:VS4210/TD5300.c **** 	{
+ 529              		.loc 1 824 17 discriminator 2 view .LVU109
+ 530 0012 F6E7     		b	.L45
+ 531              	.L49:
+ 824:VS4210/TD5300.c **** 	{
+ 532              		.loc 1 824 17 discriminator 2 view .LVU110
+ 533 0014 7047     		bx	lr
+ 534              	.L48:
+ 827:VS4210/TD5300.c **** 				{
+ 828:VS4210/TD5300.c **** 					//num=y;
+ 829:VS4210/TD5300.c **** 					return y;
+ 535              		.loc 1 829 13 view .LVU111
+ 536 0016 1846     		mov	r0, r3
+ 537              	.LVL37:
+ 830:VS4210/TD5300.c **** 				}
+ 831:VS4210/TD5300.c **** 	}	
+ 832:VS4210/TD5300.c **** 
+ 833:VS4210/TD5300.c **** return num;
+ 834:VS4210/TD5300.c **** }
+ 538              		.loc 1 834 1 view .LVU112
+ 539 0018 7047     		bx	lr
+ 540              	.L51:
+ 541 001a 00BF     		.align	2
+ 542              	.L50:
+ 543 001c 00000000 		.word	Hex
+ 544              		.cfi_endproc
+ 545              	.LFE82:
+ 547              		.section	.text.DataToAscii,"ax",%progbits
+ 548              		.align	1
+ 549              		.global	DataToAscii
+ 550              		.syntax unified
+ 551              		.thumb
+ 552              		.thumb_func
+ 553              		.fpu softvfp
+ 555              	DataToAscii:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 25
+
+
+ 556              	.LVL38:
+ 557              	.LFB83:
+ 835:VS4210/TD5300.c **** 
+ 836:VS4210/TD5300.c **** BYTE* DataToAscii(BYTE val)
+ 837:VS4210/TD5300.c **** {
+ 558              		.loc 1 837 1 is_stmt 1 view -0
+ 559              		.cfi_startproc
+ 560              		@ args = 0, pretend = 0, frame = 0
+ 561              		@ frame_needed = 0, uses_anonymous_args = 0
+ 562              		@ link register save eliminated.
+ 838:VS4210/TD5300.c **** #if 0
+ 839:VS4210/TD5300.c ****  BYTE x,num[3];
+ 840:VS4210/TD5300.c ****  
+ 841:VS4210/TD5300.c ****                                        if(val>=200)
+ 842:VS4210/TD5300.c ****                                             {       val-=200;
+ 843:VS4210/TD5300.c ****                                                     num[0]='2';   
+ 844:VS4210/TD5300.c ****                                                      num[1]=Ascii[ (val/10)];   
+ 845:VS4210/TD5300.c ****                                                      num[2]=Ascii[(val%10)];
+ 846:VS4210/TD5300.c ****                                             }
+ 847:VS4210/TD5300.c ****                                             else if((val>=100)) 
+ 848:VS4210/TD5300.c ****                                                 {   
+ 849:VS4210/TD5300.c ****                                                     val-=100;
+ 850:VS4210/TD5300.c ****                                                     num[0]='1';
+ 851:VS4210/TD5300.c ****                                                      num[1]=Ascii[ (val/10)];   
+ 852:VS4210/TD5300.c ****                                                      num[2]=Ascii[(val%10)];
+ 853:VS4210/TD5300.c **** 
+ 854:VS4210/TD5300.c ****                                                     
+ 855:VS4210/TD5300.c ****                                                  }
+ 856:VS4210/TD5300.c ****                                                    else 
+ 857:VS4210/TD5300.c ****                                                     {
+ 858:VS4210/TD5300.c ****                                                         num[0]=' ';
+ 859:VS4210/TD5300.c **** 
+ 860:VS4210/TD5300.c ****                                                                   if(val<=9)
+ 861:VS4210/TD5300.c ****                                                                   num[1]=' '; 
+ 862:VS4210/TD5300.c ****                                                                   else
+ 863:VS4210/TD5300.c ****                                                                   num[1]=Ascii[ (val/10)];    
+ 864:VS4210/TD5300.c ****                                                                   num[2]=Ascii[(val%10)];
+ 865:VS4210/TD5300.c ****                                                     }
+ 866:VS4210/TD5300.c ****                                        
+ 867:VS4210/TD5300.c ****                                          
+ 868:VS4210/TD5300.c **** 						     
+ 869:VS4210/TD5300.c ****                                             
+ 870:VS4210/TD5300.c ****                                              
+ 871:VS4210/TD5300.c **** 						   
+ 872:VS4210/TD5300.c **** return num;
+ 873:VS4210/TD5300.c **** #endif
+ 874:VS4210/TD5300.c **** return 0;
+ 563              		.loc 1 874 1 view .LVU114
+ 875:VS4210/TD5300.c **** }
+ 564              		.loc 1 875 1 is_stmt 0 view .LVU115
+ 565 0000 0020     		movs	r0, #0
+ 566              	.LVL39:
+ 567              		.loc 1 875 1 view .LVU116
+ 568 0002 7047     		bx	lr
+ 569              		.cfi_endproc
+ 570              	.LFE83:
+ 572              		.section	.text.Check_Tire_Data,"ax",%progbits
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 26
+
+
+ 573              		.align	1
+ 574              		.global	Check_Tire_Data
+ 575              		.syntax unified
+ 576              		.thumb
+ 577              		.thumb_func
+ 578              		.fpu softvfp
+ 580              	Check_Tire_Data:
+ 581              	.LVL40:
+ 582              	.LFB84:
+ 876:VS4210/TD5300.c **** 
+ 877:VS4210/TD5300.c **** BYTE Check_Tire_Data(BYTE *addr ,BYTE SB_num)
+ 878:VS4210/TD5300.c **** {
+ 583              		.loc 1 878 1 is_stmt 1 view -0
+ 584              		.cfi_startproc
+ 585              		@ args = 0, pretend = 0, frame = 0
+ 586              		@ frame_needed = 0, uses_anonymous_args = 0
+ 587              		@ link register save eliminated.
+ 879:VS4210/TD5300.c **** #if 0
+ 880:VS4210/TD5300.c **** //SB_Work_Error_Flag=0x00;
+ 881:VS4210/TD5300.c **** SB_Temper_Error_Flag=0x00;
+ 882:VS4210/TD5300.c **** SB_Press_Error_Flag=0x00;
+ 883:VS4210/TD5300.c **** if((SB_Work_Flag&SB_num)==0) return 0;
+ 884:VS4210/TD5300.c **** 	
+ 885:VS4210/TD5300.c **** if((*addr>SB_Temperature_High)) SB_Temper_Error_Flag|=SB_num;
+ 886:VS4210/TD5300.c **** addr++;
+ 887:VS4210/TD5300.c **** //if(((buf[2])>SB_Pressure_High)||((buf[2])<SB_Pressure_Low)) SB_Work_Error_Flag|=SB_num;
+ 888:VS4210/TD5300.c **** 	if(((*addr)>SB_Pressure_High)||((*addr)<SB_Pressure_Low)) SB_Work_Error_Flag|=SB_num;
+ 889:VS4210/TD5300.c **** 
+ 890:VS4210/TD5300.c **** return (SB_Work_Error_Flag);
+ 891:VS4210/TD5300.c **** #endif
+ 892:VS4210/TD5300.c **** 
+ 893:VS4210/TD5300.c **** return 0;
+ 588              		.loc 1 893 1 view .LVU118
+ 894:VS4210/TD5300.c **** }
+ 589              		.loc 1 894 1 is_stmt 0 view .LVU119
+ 590 0000 0020     		movs	r0, #0
+ 591              	.LVL41:
+ 592              		.loc 1 894 1 view .LVU120
+ 593 0002 7047     		bx	lr
+ 594              		.cfi_endproc
+ 595              	.LFE84:
+ 597              		.section	.text.Check_Data,"ax",%progbits
+ 598              		.align	1
+ 599              		.global	Check_Data
+ 600              		.syntax unified
+ 601              		.thumb
+ 602              		.thumb_func
+ 603              		.fpu softvfp
+ 605              	Check_Data:
+ 606              	.LVL42:
+ 607              	.LFB85:
+ 895:VS4210/TD5300.c **** 
+ 896:VS4210/TD5300.c **** void Check_Data(BYTE num,BYTE *addr, BYTE VChar)
+ 897:VS4210/TD5300.c **** {
+ 608              		.loc 1 897 1 is_stmt 1 view -0
+ 609              		.cfi_startproc
+ 610              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 27
+
+
+ 611              		@ frame_needed = 0, uses_anonymous_args = 0
+ 612              		@ link register save eliminated.
+ 898:VS4210/TD5300.c **** 
+ 899:VS4210/TD5300.c **** #if 0
+ 900:VS4210/TD5300.c **** BYTE tire_p[6]={ 22,27,40,41,44,45};
+ 901:VS4210/TD5300.c **** BYTE *Empty="  ";
+ 902:VS4210/TD5300.c **** BYTE  loop_error=0,tp,pp_max,pp_min,pp,ppp_max,tp_limit,pp_limit,ppp_max_limit;
+ 903:VS4210/TD5300.c **** //check sensor info.
+ 904:VS4210/TD5300.c **** tp=(sb_tp_data[num+(num*1)]);    //degree C..
+ 905:VS4210/TD5300.c **** pp=(sb_tp_data[(num+(num*1)+1)]/10);
+ 906:VS4210/TD5300.c **** 
+ 907:VS4210/TD5300.c **** //pp_max=sb_tp_data[(num+(num*1)+1)]+(pp*2);
+ 908:VS4210/TD5300.c **** //pp_min=sb_tp_data[(num+(num*1)+1)]-(pp*2);
+ 909:VS4210/TD5300.c **** //ppp_max=sb_p_data_max[num];
+ 910:VS4210/TD5300.c **** 
+ 911:VS4210/TD5300.c **** pp_max=sb_tp_data[(num+(num*1)+1)];
+ 912:VS4210/TD5300.c **** pp_min=sb_tp_data[(num+(num*1)+1)];
+ 913:VS4210/TD5300.c **** ppp_max=sb_p_data_max[num];
+ 914:VS4210/TD5300.c **** 
+ 915:VS4210/TD5300.c **** 
+ 916:VS4210/TD5300.c **** tp_limit=(sb_tp_data[num+(num*1)])-((sb_tp_data[num+(num*1)])/10);  //10% alarm
+ 917:VS4210/TD5300.c **** pp_limit=sb_tp_data[(num+(num*1)+1)]-(pp);                                           //10% alarm
+ 918:VS4210/TD5300.c **** ppp_max_limit=sb_p_data_max[num]-(sb_p_data_max[num]/10);               //10% alarm
+ 919:VS4210/TD5300.c **** 
+ 920:VS4210/TD5300.c **** 
+ 921:VS4210/TD5300.c **** 
+ 922:VS4210/TD5300.c **** if(((*addr<tp)&&(*(addr+1)>pp_min))&&(*(addr+1))<ppp_max)
+ 923:VS4210/TD5300.c **** 		{
+ 924:VS4210/TD5300.c ****               if(SB_Work_Error_Flag&Device_Mask[num]) SB_Work_Error_Flag&=(~Device_Mask[num]);     
+ 925:VS4210/TD5300.c ****               SB_Work_Flag|=Device_Mask[num];                     
+ 926:VS4210/TD5300.c ****               addr++;
+ 927:VS4210/TD5300.c ****               addr++;
+ 928:VS4210/TD5300.c ****               
+ 929:VS4210/TD5300.c ****              if(VChar)
+ 930:VS4210/TD5300.c ****                 {
+ 931:VS4210/TD5300.c ****                     if((*addr)&0x02)
+ 932:VS4210/TD5300.c ****                     ;//WriteStringToAddr(tire_p[num],Low_Battery,2);                               
+ 933:VS4210/TD5300.c ****                     else
+ 934:VS4210/TD5300.c ****                      ;//WriteStringToAddr(tire_p[num],Tire_Green,2);                               
+ 935:VS4210/TD5300.c **** 			
+ 936:VS4210/TD5300.c ****                 }
+ 937:VS4210/TD5300.c ****              
+ 938:VS4210/TD5300.c ****               if(SB_Work_Error_Flag==0&&PowerFlag)  ;//PowerLED(ON);
+ 939:VS4210/TD5300.c **** 
+ 940:VS4210/TD5300.c ****                } 
+ 941:VS4210/TD5300.c ****    else if((SB_Work_Flag&Device_Mask[num])==(Device_Mask[num]))
+ 942:VS4210/TD5300.c ****              {
+ 943:VS4210/TD5300.c ****                            
+ 944:VS4210/TD5300.c ****               SB_Work_Error_Flag|=Device_Mask[num];
+ 945:VS4210/TD5300.c ****         
+ 946:VS4210/TD5300.c ****             
+ 947:VS4210/TD5300.c ****               
+ 948:VS4210/TD5300.c ****               if(VChar){
+ 949:VS4210/TD5300.c ****                          
+ 950:VS4210/TD5300.c ****               //              WriteStringToAddr(tire_p[num],Tire_Yellow,2);  
+ 951:VS4210/TD5300.c ****                             }
+ 952:VS4210/TD5300.c **** 
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 28
+
+
+ 953:VS4210/TD5300.c ****              /*
+ 954:VS4210/TD5300.c ****                 if(PowerFlag)
+ 955:VS4210/TD5300.c ****                 {
+ 956:VS4210/TD5300.c ****            
+ 957:VS4210/TD5300.c ****                     PowerLED(OFF);
+ 958:VS4210/TD5300.c ****                       if(VChar) WriteStringToAddr(tire_p[num],Empty,1);
+ 959:VS4210/TD5300.c ****                     Wait_ms(100);
+ 960:VS4210/TD5300.c ****                      P4=P4|0x01;		//GREEN_LED = 1;		// ON GREEN
+ 961:VS4210/TD5300.c **** 		        P4=P4|0x02;		//RED_LED = 1;		// OFF RED	  
+ 962:VS4210/TD5300.c **** 		       if(VChar)   WriteStringToAddr(tire_p[num],Tire_Red,2);
+ 963:VS4210/TD5300.c **** 
+ 964:VS4210/TD5300.c ****                    Wait_ms(100);
+ 965:VS4210/TD5300.c ****                  }
+ 966:VS4210/TD5300.c ****                 */
+ 967:VS4210/TD5300.c ****              }
+ 968:VS4210/TD5300.c **** 
+ 969:VS4210/TD5300.c ****             #endif
+ 970:VS4210/TD5300.c **** 
+ 971:VS4210/TD5300.c **** }
+ 613              		.loc 1 971 1 view .LVU122
+ 614 0000 7047     		bx	lr
+ 615              		.cfi_endproc
+ 616              	.LFE85:
+ 618              		.section	.text.GetTireDatawhole,"ax",%progbits
+ 619              		.align	1
+ 620              		.global	GetTireDatawhole
+ 621              		.syntax unified
+ 622              		.thumb
+ 623              		.thumb_func
+ 624              		.fpu softvfp
+ 626              	GetTireDatawhole:
+ 627              	.LVL43:
+ 628              	.LFB86:
+ 972:VS4210/TD5300.c **** BYTE GetTireDatawhole(BYTE ins,BYTE VChar)
+ 973:VS4210/TD5300.c **** {
+ 629              		.loc 1 973 1 view -0
+ 630              		.cfi_startproc
+ 631              		@ args = 0, pretend = 0, frame = 0
+ 632              		@ frame_needed = 0, uses_anonymous_args = 0
+ 633              		@ link register save eliminated.
+ 974:VS4210/TD5300.c **** #if 0
+ 975:VS4210/TD5300.c **** BYTE tire_p[6]={ 22,27,40,41,44,45};
+ 976:VS4210/TD5300.c **** BYTE tire_tp[6]={72,177,112,117,212,217};
+ 977:VS4210/TD5300.c **** BYTE tire_pp[6]={82,187,122,127,222,227};
+ 978:VS4210/TD5300.c **** BYTE x,y;
+ 979:VS4210/TD5300.c **** BYTE *Empty="  ";
+ 980:VS4210/TD5300.c **** BYTE Error,Work;
+ 981:VS4210/TD5300.c **** BYTE *Relay="Relay battery L ";
+ 982:VS4210/TD5300.c ****     
+ 983:VS4210/TD5300.c **** //Get_Tire_Data(5,0,FORNT_LEFT_TEMPTURE,FORNT_LEFT_PRESSURE,VChar);
+ 984:VS4210/TD5300.c **** 
+ 985:VS4210/TD5300.c **** //if(TPMS_Ready==1)
+ 986:VS4210/TD5300.c **** //{
+ 987:VS4210/TD5300.c **** 
+ 988:VS4210/TD5300.c ****     for( x=0; x<=(SB_MAX-1);x++)   Get_Tire_Data(ins,x,tire_tp[x],tire_pp[x],VChar);  
+ 989:VS4210/TD5300.c ****          for(x=0;x<=98;x++) buf_tpms[x]=0x00;  //clear buffer data..
+ 990:VS4210/TD5300.c ****              TPMS_Ready=0;
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 29
+
+
+ 991:VS4210/TD5300.c **** 
+ 992:VS4210/TD5300.c **** 
+ 993:VS4210/TD5300.c ****         if(TPMS_Relay_Battery)
+ 994:VS4210/TD5300.c ****         {
+ 995:VS4210/TD5300.c ****   //      DrawAttrCnt(0,(CH_COLOR_WHITE|BG_COLOR_RED), 16);
+ 996:VS4210/TD5300.c ****      //   WriteStringToAddr(0,Relay,16);       
+ 997:VS4210/TD5300.c ****         }
+ 998:VS4210/TD5300.c ****                     
+ 999:VS4210/TD5300.c **** 
+1000:VS4210/TD5300.c ****                 
+1001:VS4210/TD5300.c ****                 if(SB_Work_Error_Flag>=1)
+1002:VS4210/TD5300.c ****                 {
+1003:VS4210/TD5300.c ****                     Error=SB_Work_Error_Flag;
+1004:VS4210/TD5300.c ****                     Work=SB_Work_Flag;
+1005:VS4210/TD5300.c ****                     
+1006:VS4210/TD5300.c ****                      for( x=0; x<=(SB_MAX-1);x++)  
+1007:VS4210/TD5300.c ****                         {
+1008:VS4210/TD5300.c ****                              
+1009:VS4210/TD5300.c ****                 //            if(VChar&&(Error&Work&1)) WriteStringToAddr(tire_p[x],Empty,1);
+1010:VS4210/TD5300.c ****                             Error>>=1;
+1011:VS4210/TD5300.c ****   	  			Work>>=1;
+1012:VS4210/TD5300.c ****                         }
+1013:VS4210/TD5300.c **** 
+1014:VS4210/TD5300.c ****                         
+1015:VS4210/TD5300.c ****                //     PowerLED(OFF);                                
+1016:VS4210/TD5300.c ****                     Wait_ms(100);
+1017:VS4210/TD5300.c ****                     Error=SB_Work_Error_Flag;
+1018:VS4210/TD5300.c ****                    Work=SB_Work_Flag;
+1019:VS4210/TD5300.c **** 
+1020:VS4210/TD5300.c ****                      for( x=0; x<=(SB_MAX-1);x++)  
+1021:VS4210/TD5300.c ****                         {
+1022:VS4210/TD5300.c ****                              
+1023:VS4210/TD5300.c ****                //             if(VChar&&(Error&Work&1)) WriteStringToAddr(tire_p[x],Tire_Yellow,2);
+1024:VS4210/TD5300.c ****                             Error>>=1;
+1025:VS4210/TD5300.c ****                             Work>>=1;
+1026:VS4210/TD5300.c ****                         }
+1027:VS4210/TD5300.c **** 
+1028:VS4210/TD5300.c ****                     
+1029:VS4210/TD5300.c ****       //               P4=P4|0x01;		//GREEN_LED = 1;		// ON GREEN
+1030:VS4210/TD5300.c **** //		        P4=P4|0x02;		//RED_LED = 1;		// OFF RED	  
+1031:VS4210/TD5300.c **** 		       //if(VChar)   WriteStringToAddr(tire_p[num],Tire_Red,2);
+1032:VS4210/TD5300.c **** 
+1033:VS4210/TD5300.c ****                    Wait_ms(100);
+1034:VS4210/TD5300.c ****                 
+1035:VS4210/TD5300.c ****                 }
+1036:VS4210/TD5300.c **** 
+1037:VS4210/TD5300.c ****     
+1038:VS4210/TD5300.c ****   return 1;
+1039:VS4210/TD5300.c **** //}
+1040:VS4210/TD5300.c **** #endif
+1041:VS4210/TD5300.c **** return 0 ;
+ 634              		.loc 1 1041 1 view .LVU124
+1042:VS4210/TD5300.c **** }
+ 635              		.loc 1 1042 1 is_stmt 0 view .LVU125
+ 636 0000 0020     		movs	r0, #0
+ 637              	.LVL44:
+ 638              		.loc 1 1042 1 view .LVU126
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 30
+
+
+ 639 0002 7047     		bx	lr
+ 640              		.cfi_endproc
+ 641              	.LFE86:
+ 643              		.section	.text.Get_Tire_Data,"ax",%progbits
+ 644              		.align	1
+ 645              		.global	Get_Tire_Data
+ 646              		.syntax unified
+ 647              		.thumb
+ 648              		.thumb_func
+ 649              		.fpu softvfp
+ 651              	Get_Tire_Data:
+ 652              	.LVL45:
+ 653              	.LFB87:
+1043:VS4210/TD5300.c **** 
+1044:VS4210/TD5300.c **** 
+1045:VS4210/TD5300.c **** BYTE Get_Tire_Data(BYTE  ins,BYTE num,BYTE  Temp_p,BYTE Press ,BYTE VChar)
+1046:VS4210/TD5300.c **** {
+ 654              		.loc 1 1046 1 is_stmt 1 view -0
+ 655              		.cfi_startproc
+ 656              		@ args = 4, pretend = 0, frame = 0
+ 657              		@ frame_needed = 0, uses_anonymous_args = 0
+ 658              		@ link register save eliminated.
+1047:VS4210/TD5300.c **** #if 0
+1048:VS4210/TD5300.c **** BYTE TPMS_end=1,x,y,z,TPMS_offset=0,tp,pp_min,pp_max,val[3]={0,0,0},pp,ppp_max;
+1049:VS4210/TD5300.c **** BYTE tp_limit,pp_limit,ppp_max_limit;
+1050:VS4210/TD5300.c **** 
+1051:VS4210/TD5300.c **** tp=(sb_tp_data[num+(num*1)]); 
+1052:VS4210/TD5300.c **** pp=(sb_tp_data[(num+(num*1)+1)]/10);
+1053:VS4210/TD5300.c ****     
+1054:VS4210/TD5300.c **** //pp_max=sb_tp_data[(num+(num*1)+1)]+(pp*2);
+1055:VS4210/TD5300.c **** //pp_min=sb_tp_data[(num+(num*1)+1)]-(pp*2);  //20% alarm
+1056:VS4210/TD5300.c **** 
+1057:VS4210/TD5300.c **** pp_max=sb_tp_data[(num+(num*1)+1)];
+1058:VS4210/TD5300.c **** pp_min=sb_tp_data[(num+(num*1)+1)];  //20% alarm
+1059:VS4210/TD5300.c **** 
+1060:VS4210/TD5300.c **** ppp_max=sb_p_data_max[num];
+1061:VS4210/TD5300.c **** 
+1062:VS4210/TD5300.c **** tp_limit=(sb_tp_data[num+(num*1)])-((sb_tp_data[num+(num*1)])/10);  //10% alarm
+1063:VS4210/TD5300.c **** pp_limit=sb_tp_data[(num+(num*1)+1)]+(pp);                                           //10% alarm
+1064:VS4210/TD5300.c **** ppp_max_limit=sb_p_data_max[num]-(sb_p_data_max[num]/10);               //10% alarm
+1065:VS4210/TD5300.c **** 
+1066:VS4210/TD5300.c ****             while(TPMS_offset<=98)
+1067:VS4210/TD5300.c ****             {
+1068:VS4210/TD5300.c **** 
+1069:VS4210/TD5300.c ****                   if(buf_tpms[TPMS_offset]=='$')
+1070:VS4210/TD5300.c ****                     {
+1071:VS4210/TD5300.c ****                                 if((buf_tpms[TPMS_offset+3]==Hex[ins])&&(buf_tpms[TPMS_offset+5]==H
+1072:VS4210/TD5300.c ****                                 {
+1073:VS4210/TD5300.c ****                                                                                                    
+1074:VS4210/TD5300.c ****                                        //check sum.
+1075:VS4210/TD5300.c ****                                         z=0;
+1076:VS4210/TD5300.c ****                                          for(x=0;x<=10;x++)
+1077:VS4210/TD5300.c ****                                          {
+1078:VS4210/TD5300.c ****                                           //y=(buf_tpms[TPMS_offset+1+x]);
+1079:VS4210/TD5300.c ****                                           z+=(buf_tpms[TPMS_offset+1+x]);
+1080:VS4210/TD5300.c ****                                          }
+1081:VS4210/TD5300.c ****                                         y=AsciiToData(buf_tpms[TPMS_offset+12])<<4;
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 31
+
+
+1082:VS4210/TD5300.c ****                                         y|=AsciiToData(buf_tpms[TPMS_offset+13]);
+1083:VS4210/TD5300.c ****                                         if(z!=y) return 0;                                     
+1084:VS4210/TD5300.c ****                                         
+1085:VS4210/TD5300.c ****                                 
+1086:VS4210/TD5300.c ****                                        //bettery status.
+1087:VS4210/TD5300.c ****                                         sb_data[2]=(AsciiToData(buf_tpms[TPMS_offset+6]))<<4;
+1088:VS4210/TD5300.c ****                                         sb_data[2]|=(AsciiToData(buf_tpms[TPMS_offset+7]));
+1089:VS4210/TD5300.c **** 
+1090:VS4210/TD5300.c ****                                         //sb_data[2]=0x02;//for test...    
+1091:VS4210/TD5300.c ****                                            
+1092:VS4210/TD5300.c ****                                        //temperature.
+1093:VS4210/TD5300.c ****                                        val[2]=(AsciiToData(buf_tpms[TPMS_offset+8]))<<4;
+1094:VS4210/TD5300.c ****                                        val[2]|=AsciiToData(buf_tpms[TPMS_offset+9]);               
+1095:VS4210/TD5300.c **** 
+1096:VS4210/TD5300.c ****                                        val[2]-=40;
+1097:VS4210/TD5300.c ****                                                 
+1098:VS4210/TD5300.c ****                          if((val[2]>=tp)&&(SB_Work_Flag&Device_Mask[num])&&VChar) 
+1099:VS4210/TD5300.c ****                      ;//        DrawAttrCnt(Temp_p,(CH_COLOR_WHITE|BG_COLOR_RED), 4);
+1100:VS4210/TD5300.c ****                                 else if((val[2]>=tp_limit)&&VChar)
+1101:VS4210/TD5300.c ****                                  ;//   DrawAttrCnt(Temp_p,(CH_COLOR_YELLOW|BG_COLOR_CYAN), 4);
+1102:VS4210/TD5300.c ****                                  else if(VChar)
+1103:VS4210/TD5300.c ****                                   ;//   DrawAttrCnt(Temp_p,(CH_COLOR_GREEN|BG_COLOR_CYAN), 4);
+1104:VS4210/TD5300.c **** 
+1105:VS4210/TD5300.c ****                                           
+1106:VS4210/TD5300.c ****                                             sb_data[0]=val[2];
+1107:VS4210/TD5300.c ****                                                   
+1108:VS4210/TD5300.c ****                                            if(val[2]>=200)
+1109:VS4210/TD5300.c ****                                             {       val[2]-=200;
+1110:VS4210/TD5300.c ****                                                     val[0]='2';   
+1111:VS4210/TD5300.c ****                                             }
+1112:VS4210/TD5300.c ****                                             else if((val[2]>=100)) 
+1113:VS4210/TD5300.c ****                                                 {   
+1114:VS4210/TD5300.c ****                                                     val[2]-=100;
+1115:VS4210/TD5300.c ****                                                     val[0]='1';
+1116:VS4210/TD5300.c ****                                                  }
+1117:VS4210/TD5300.c ****                                                      else  val[0]=' ';
+1118:VS4210/TD5300.c **** 
+1119:VS4210/TD5300.c ****                                              if((val[0]=' ')&&(val[2]==0))
+1120:VS4210/TD5300.c ****                                            val[1]=' '; 
+1121:VS4210/TD5300.c ****                                             else
+1122:VS4210/TD5300.c ****                                              val[1]=Ascii[ (val[2]/10)];                           
+1123:VS4210/TD5300.c ****                                                val[2]=Ascii[(val[2]%10)];
+1124:VS4210/TD5300.c ****                                    
+1125:VS4210/TD5300.c **** 
+1126:VS4210/TD5300.c **** 
+1127:VS4210/TD5300.c **** 
+1128:VS4210/TD5300.c ****       if((SB_Work_Flag&Device_Mask[num])&&VChar) 
+1129:VS4210/TD5300.c ****         {
+1130:VS4210/TD5300.c ****       ;//  WriteStringToAddr(Temp_p,val,3);         
+1131:VS4210/TD5300.c ****       ;//  WriteStringToAddr(Temp_p+3,Temp,2);     
+1132:VS4210/TD5300.c ****         }                           
+1133:VS4210/TD5300.c ****       
+1134:VS4210/TD5300.c ****                                          //Pressure
+1135:VS4210/TD5300.c ****                                         val[2]=(AsciiToData(buf_tpms[TPMS_offset+10]))<<4;
+1136:VS4210/TD5300.c ****                                         //val[2]<<=4;
+1137:VS4210/TD5300.c ****                                         val[2]|=AsciiToData(buf_tpms[TPMS_offset+11]);
+1138:VS4210/TD5300.c **** 
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 32
+
+
+1139:VS4210/TD5300.c ****                                         if(val[2] >=5)   //check sensor board   
+1140:VS4210/TD5300.c ****                                         SB_Work_Flag|=Device_Mask[num];
+1141:VS4210/TD5300.c ****    
+1142:VS4210/TD5300.c ****  //if(((val[2]>=pp_max)||(val[2]<=pp_min))&&(SB_Work_Flag&Device_Mask[num])&&VChar) 
+1143:VS4210/TD5300.c **** if((val[2]<=pp_min||(val[2]>=ppp_max))&&(SB_Work_Flag&Device_Mask[num])&&VChar) 
+1144:VS4210/TD5300.c **** ;//  DrawAttrCnt(Press,(CH_COLOR_WHITE|BG_COLOR_RED), 5);
+1145:VS4210/TD5300.c **** else if((val[2]>=ppp_max_limit)||(val[2]<=pp_limit)&&VChar)
+1146:VS4210/TD5300.c **** {
+1147:VS4210/TD5300.c ****  ;//  DrawAttrCnt(Press,(CH_COLOR_YELLOW|BG_COLOR_CYAN), 5);
+1148:VS4210/TD5300.c **** }
+1149:VS4210/TD5300.c ****                                           else if(VChar)
+1150:VS4210/TD5300.c ****                                           ;//   DrawAttrCnt(Press,(CH_COLOR_GREEN|BG_COLOR_CYAN), 5
+1151:VS4210/TD5300.c **** 
+1152:VS4210/TD5300.c ****                                          sb_data[1]=val[2];
+1153:VS4210/TD5300.c **** 
+1154:VS4210/TD5300.c ****                                            if(val[2]>=200)
+1155:VS4210/TD5300.c ****                                             {       val[2]-=200;
+1156:VS4210/TD5300.c ****                                                     val[0]='2';   
+1157:VS4210/TD5300.c ****                                             }
+1158:VS4210/TD5300.c ****                                             else if((val[2]>=100)) 
+1159:VS4210/TD5300.c ****                                                 {   
+1160:VS4210/TD5300.c ****                                                     val[2]-=100;
+1161:VS4210/TD5300.c ****                                                     val[0]='1';
+1162:VS4210/TD5300.c ****                                                  }
+1163:VS4210/TD5300.c ****                                                      else  val[0]=' ';
+1164:VS4210/TD5300.c ****                                                      
+1165:VS4210/TD5300.c ****                                          if((val[0]=' ')&&(val[2]==0))
+1166:VS4210/TD5300.c ****                                            val[1]=' '; 
+1167:VS4210/TD5300.c ****                                             else
+1168:VS4210/TD5300.c ****                                              val[1]=Ascii[ (val[2]/10)];                           
+1169:VS4210/TD5300.c ****                                                val[2]=Ascii[(val[2]%10)];
+1170:VS4210/TD5300.c ****      
+1171:VS4210/TD5300.c ****                                                                
+1172:VS4210/TD5300.c ****      if(SB_Work_Flag&Device_Mask[num]&&VChar)  
+1173:VS4210/TD5300.c ****         {
+1174:VS4210/TD5300.c ****    ;//     WriteStringToAddr(Press,val,3);  
+1175:VS4210/TD5300.c ****   ;//         WriteStringToAddr(Press+3,PSI,4);
+1176:VS4210/TD5300.c ****         }
+1177:VS4210/TD5300.c **** 
+1178:VS4210/TD5300.c ****                                         Check_Data(num,sb_data, VChar);  //check sensor of data.
+1179:VS4210/TD5300.c ****                                                 
+1180:VS4210/TD5300.c ****                                        TPMS_end=0;      
+1181:VS4210/TD5300.c ****                                       
+1182:VS4210/TD5300.c ****                                 }      
+1183:VS4210/TD5300.c **** 
+1184:VS4210/TD5300.c ****                     }
+1185:VS4210/TD5300.c ****                     TPMS_offset++;                     
+1186:VS4210/TD5300.c ****             }
+1187:VS4210/TD5300.c **** #endif
+1188:VS4210/TD5300.c **** return 0;
+ 659              		.loc 1 1188 1 view .LVU128
+1189:VS4210/TD5300.c **** 
+1190:VS4210/TD5300.c **** }
+ 660              		.loc 1 1190 1 is_stmt 0 view .LVU129
+ 661 0000 0020     		movs	r0, #0
+ 662              	.LVL46:
+ 663              		.loc 1 1190 1 view .LVU130
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 33
+
+
+ 664 0002 7047     		bx	lr
+ 665              		.cfi_endproc
+ 666              	.LFE87:
+ 668              		.section	.text.Get_Relay_Data,"ax",%progbits
+ 669              		.align	1
+ 670              		.global	Get_Relay_Data
+ 671              		.syntax unified
+ 672              		.thumb
+ 673              		.thumb_func
+ 674              		.fpu softvfp
+ 676              	Get_Relay_Data:
+ 677              	.LVL47:
+ 678              	.LFB88:
+1191:VS4210/TD5300.c **** 
+1192:VS4210/TD5300.c **** BYTE Get_Relay_Data(BYTE num,BYTE  relay_mask)
+1193:VS4210/TD5300.c **** {
+ 679              		.loc 1 1193 1 is_stmt 1 view -0
+ 680              		.cfi_startproc
+ 681              		@ args = 0, pretend = 0, frame = 0
+ 682              		@ frame_needed = 0, uses_anonymous_args = 0
+ 683              		.loc 1 1193 1 is_stmt 0 view .LVU132
+ 684 0000 38B5     		push	{r3, r4, r5, lr}
+ 685              	.LCFI3:
+ 686              		.cfi_def_cfa_offset 16
+ 687              		.cfi_offset 3, -16
+ 688              		.cfi_offset 4, -12
+ 689              		.cfi_offset 5, -8
+ 690              		.cfi_offset 14, -4
+ 691 0002 0D46     		mov	r5, r1
+1194:VS4210/TD5300.c **** #if 1
+1195:VS4210/TD5300.c ****     BYTE TPMS_offset=0,x;
+ 692              		.loc 1 1195 5 is_stmt 1 view .LVU133
+ 693              	.LVL48:
+1196:VS4210/TD5300.c ****     while(TPMS_offset<=98)
+ 694              		.loc 1 1196 5 view .LVU134
+1195:VS4210/TD5300.c ****     while(TPMS_offset<=98)
+ 695              		.loc 1 1195 10 is_stmt 0 view .LVU135
+ 696 0004 0023     		movs	r3, #0
+ 697              		.loc 1 1196 10 view .LVU136
+ 698 0006 01E0     		b	.L58
+ 699              	.LVL49:
+ 700              	.L59:
+1197:VS4210/TD5300.c ****     {
+1198:VS4210/TD5300.c **** 
+1199:VS4210/TD5300.c ****                   if(buf_tpms[TPMS_offset]=='$')
+1200:VS4210/TD5300.c **** 
+1201:VS4210/TD5300.c **** 
+1202:VS4210/TD5300.c **** 
+1203:VS4210/TD5300.c ****                              if(buf_tpms[TPMS_offset+3]==num)
+1204:VS4210/TD5300.c ****                                 {
+1205:VS4210/TD5300.c ****                                 x=AsciiToData(buf_tpms[TPMS_offset+5]);                    
+1206:VS4210/TD5300.c **** 
+1207:VS4210/TD5300.c ****                                  TPMS_Relay_Battery=(x>>3)&1;
+1208:VS4210/TD5300.c ****                                  
+1209:VS4210/TD5300.c ****                                    return (x&relay_mask);                 
+1210:VS4210/TD5300.c ****                                 }
+1211:VS4210/TD5300.c **** 
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 34
+
+
+1212:VS4210/TD5300.c ****                 TPMS_offset++;
+ 701              		.loc 1 1212 17 is_stmt 1 view .LVU137
+ 702              		.loc 1 1212 28 is_stmt 0 view .LVU138
+ 703 0008 0133     		adds	r3, r3, #1
+ 704              	.LVL50:
+ 705              		.loc 1 1212 28 view .LVU139
+ 706 000a DBB2     		uxtb	r3, r3
+ 707              	.LVL51:
+ 708              	.L58:
+1196:VS4210/TD5300.c ****     {
+ 709              		.loc 1 1196 10 is_stmt 1 view .LVU140
+ 710 000c 622B     		cmp	r3, #98
+ 711 000e 13D8     		bhi	.L63
+1199:VS4210/TD5300.c **** 
+ 712              		.loc 1 1199 19 view .LVU141
+1199:VS4210/TD5300.c **** 
+ 713              		.loc 1 1199 30 is_stmt 0 view .LVU142
+ 714 0010 1C46     		mov	r4, r3
+ 715 0012 0A4A     		ldr	r2, .L64
+ 716 0014 D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
+1199:VS4210/TD5300.c **** 
+ 717              		.loc 1 1199 21 view .LVU143
+ 718 0016 242A     		cmp	r2, #36
+ 719 0018 F6D1     		bne	.L59
+1203:VS4210/TD5300.c ****                                 {
+ 720              		.loc 1 1203 30 is_stmt 1 view .LVU144
+1203:VS4210/TD5300.c ****                                 {
+ 721              		.loc 1 1203 53 is_stmt 0 view .LVU145
+ 722 001a DA1C     		adds	r2, r3, #3
+1203:VS4210/TD5300.c ****                                 {
+ 723              		.loc 1 1203 41 view .LVU146
+ 724 001c 0749     		ldr	r1, .L64
+ 725 001e 8A5C     		ldrb	r2, [r1, r2]	@ zero_extendqisi2
+1203:VS4210/TD5300.c ****                                 {
+ 726              		.loc 1 1203 32 view .LVU147
+ 727 0020 8242     		cmp	r2, r0
+ 728 0022 F1D1     		bne	.L59
+1205:VS4210/TD5300.c **** 
+ 729              		.loc 1 1205 33 is_stmt 1 view .LVU148
+1205:VS4210/TD5300.c **** 
+ 730              		.loc 1 1205 67 is_stmt 0 view .LVU149
+ 731 0024 0534     		adds	r4, r4, #5
+1205:VS4210/TD5300.c **** 
+ 732              		.loc 1 1205 35 view .LVU150
+ 733 0026 085D     		ldrb	r0, [r1, r4]	@ zero_extendqisi2
+ 734              	.LVL52:
+1205:VS4210/TD5300.c **** 
+ 735              		.loc 1 1205 35 view .LVU151
+ 736 0028 FFF7FEFF 		bl	AsciiToData
+ 737              	.LVL53:
+1207:VS4210/TD5300.c ****                                  
+ 738              		.loc 1 1207 34 is_stmt 1 view .LVU152
+1207:VS4210/TD5300.c ****                                  
+ 739              		.loc 1 1207 59 is_stmt 0 view .LVU153
+ 740 002c C0F3C002 		ubfx	r2, r0, #3, #1
+1207:VS4210/TD5300.c ****                                  
+ 741              		.loc 1 1207 52 view .LVU154
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 35
+
+
+ 742 0030 034B     		ldr	r3, .L64+4
+ 743 0032 1A70     		strb	r2, [r3]
+1209:VS4210/TD5300.c ****                                 }
+ 744              		.loc 1 1209 36 is_stmt 1 view .LVU155
+1209:VS4210/TD5300.c ****                                 }
+ 745              		.loc 1 1209 45 is_stmt 0 view .LVU156
+ 746 0034 2840     		ands	r0, r0, r5
+ 747              	.LVL54:
+ 748              	.L60:
+1213:VS4210/TD5300.c ****   
+1214:VS4210/TD5300.c ****     }
+1215:VS4210/TD5300.c **** #endif    
+1216:VS4210/TD5300.c ****     return 0;
+1217:VS4210/TD5300.c **** }
+ 749              		.loc 1 1217 1 view .LVU157
+ 750 0036 38BD     		pop	{r3, r4, r5, pc}
+ 751              	.LVL55:
+ 752              	.L63:
+1216:VS4210/TD5300.c **** }
+ 753              		.loc 1 1216 12 view .LVU158
+ 754 0038 0020     		movs	r0, #0
+ 755              	.LVL56:
+1216:VS4210/TD5300.c **** }
+ 756              		.loc 1 1216 12 view .LVU159
+ 757 003a FCE7     		b	.L60
+ 758              	.L65:
+ 759              		.align	2
+ 760              	.L64:
+ 761 003c 00000000 		.word	buf_tpms
+ 762 0040 00000000 		.word	.LANCHOR2
+ 763              		.cfi_endproc
+ 764              	.LFE88:
+ 766              		.section	.text.Input,"ax",%progbits
+ 767              		.align	1
+ 768              		.global	Input
+ 769              		.syntax unified
+ 770              		.thumb
+ 771              		.thumb_func
+ 772              		.fpu softvfp
+ 774              	Input:
+ 775              	.LVL57:
+ 776              	.LFB89:
+1218:VS4210/TD5300.c **** 
+1219:VS4210/TD5300.c **** #if 0
+1220:VS4210/TD5300.c **** void Output(BYTE Select,BYTE d)
+1221:VS4210/TD5300.c **** {
+1222:VS4210/TD5300.c ****     BYTE T2;
+1223:VS4210/TD5300.c **** 
+1224:VS4210/TD5300.c ****     T2 = S2CON;
+1225:VS4210/TD5300.c **** 			
+1226:VS4210/TD5300.c **** 	  //while(TI == 0);   //Write transmitting has been finished
+1227:VS4210/TD5300.c ****         //TI = 0;
+1228:VS4210/TD5300.c ****     if(Select == 1)
+1229:VS4210/TD5300.c ****     {
+1230:VS4210/TD5300.c **** 				/*
+1231:VS4210/TD5300.c ****         if(d>9 & d<16)
+1232:VS4210/TD5300.c ****             SBUF = d + 0x37;
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 36
+
+
+1233:VS4210/TD5300.c ****         else if(d<10)
+1234:VS4210/TD5300.c ****             SBUF = d + 0x30;
+1235:VS4210/TD5300.c ****         else if(d==0xaa)    //NewLine
+1236:VS4210/TD5300.c ****             SBUF = 0x0a;
+1237:VS4210/TD5300.c ****         else if(d==0xdd)    //Return
+1238:VS4210/TD5300.c ****             SBUF = 0x0d;
+1239:VS4210/TD5300.c ****         else
+1240:VS4210/TD5300.c **** 					*/
+1241:VS4210/TD5300.c ****             SBUF = d;
+1242:VS4210/TD5300.c ****         while(TI == 0);   //Write transmitting has been finished
+1243:VS4210/TD5300.c ****         TI = 0;
+1244:VS4210/TD5300.c ****     }
+1245:VS4210/TD5300.c ****     else//2
+1246:VS4210/TD5300.c ****     {
+1247:VS4210/TD5300.c ****         S2BUF = d;
+1248:VS4210/TD5300.c ****         while(S2CON == T2);
+1249:VS4210/TD5300.c ****         S2CON = T2;
+1250:VS4210/TD5300.c ****     }
+1251:VS4210/TD5300.c **** }
+1252:VS4210/TD5300.c **** 
+1253:VS4210/TD5300.c **** #endif
+1254:VS4210/TD5300.c **** 
+1255:VS4210/TD5300.c **** 
+1256:VS4210/TD5300.c **** BYTE Input(BYTE Select)
+1257:VS4210/TD5300.c **** {	
+ 777              		.loc 1 1257 1 is_stmt 1 view -0
+ 778              		.cfi_startproc
+ 779              		@ args = 0, pretend = 0, frame = 0
+ 780              		@ frame_needed = 0, uses_anonymous_args = 0
+ 781              		@ link register save eliminated.
+1258:VS4210/TD5300.c **** /*
+1259:VS4210/TD5300.c **** 	BYTE temp;
+1260:VS4210/TD5300.c **** 	S2CON|=0x10;
+1261:VS4210/TD5300.c **** 	S2CON&=0xfe;
+1262:VS4210/TD5300.c **** 	temp=S2CON;
+1263:VS4210/TD5300.c **** 	
+1264:VS4210/TD5300.c **** 	 if(Select==1)
+1265:VS4210/TD5300.c ****     {
+1266:VS4210/TD5300.c **** 				RI=0;
+1267:VS4210/TD5300.c **** 				while(RI==0);
+1268:VS4210/TD5300.c **** 				return SBUF;
+1269:VS4210/TD5300.c **** 		}
+1270:VS4210/TD5300.c **** 		else
+1271:VS4210/TD5300.c **** 		{
+1272:VS4210/TD5300.c **** 				while(temp==S2CON);
+1273:VS4210/TD5300.c **** 				S2CON&=0xef;
+1274:VS4210/TD5300.c **** 				return S2BUF;
+1275:VS4210/TD5300.c **** 		}
+1276:VS4210/TD5300.c **** */
+1277:VS4210/TD5300.c **** return 0;	
+ 782              		.loc 1 1277 1 view .LVU161
+1278:VS4210/TD5300.c **** }
+ 783              		.loc 1 1278 1 is_stmt 0 view .LVU162
+ 784 0000 0020     		movs	r0, #0
+ 785              	.LVL58:
+ 786              		.loc 1 1278 1 view .LVU163
+ 787 0002 7047     		bx	lr
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 37
+
+
+ 788              		.cfi_endproc
+ 789              	.LFE89:
+ 791              		.section	.text.Read_RX,"ax",%progbits
+ 792              		.align	1
+ 793              		.global	Read_RX
+ 794              		.syntax unified
+ 795              		.thumb
+ 796              		.thumb_func
+ 797              		.fpu softvfp
+ 799              	Read_RX:
+ 800              	.LFB77:
+ 743:VS4210/TD5300.c **** 
+ 801              		.loc 1 743 1 is_stmt 1 view -0
+ 802              		.cfi_startproc
+ 803              		@ args = 0, pretend = 0, frame = 0
+ 804              		@ frame_needed = 0, uses_anonymous_args = 0
+ 805 0000 10B5     		push	{r4, lr}
+ 806              	.LCFI4:
+ 807              		.cfi_def_cfa_offset 8
+ 808              		.cfi_offset 4, -8
+ 809              		.cfi_offset 14, -4
+ 745:VS4210/TD5300.c **** 
+ 810              		.loc 1 745 2 view .LVU165
+ 748:VS4210/TD5300.c ****    
+ 811              		.loc 1 748 2 view .LVU166
+ 812              	.LVL59:
+ 750:VS4210/TD5300.c **** 	{		
+ 813              		.loc 1 750 2 view .LVU167
+ 748:VS4210/TD5300.c ****    
+ 814              		.loc 1 748 3 is_stmt 0 view .LVU168
+ 815 0002 0124     		movs	r4, #1
+ 816              	.LVL60:
+ 817              	.L70:
+ 750:VS4210/TD5300.c **** 	{		
+ 818              		.loc 1 750 7 is_stmt 1 view .LVU169
+ 819 0004 64B1     		cbz	r4, .L75
+ 752:VS4210/TD5300.c **** 		
+ 820              		.loc 1 752 4 view .LVU170
+ 752:VS4210/TD5300.c **** 		
+ 821              		.loc 1 752 6 is_stmt 0 view .LVU171
+ 822 0006 0220     		movs	r0, #2
+ 823 0008 FFF7FEFF 		bl	Input
+ 824              	.LVL61:
+ 754:VS4210/TD5300.c **** 			{
+ 825              		.loc 1 754 4 is_stmt 1 view .LVU172
+ 754:VS4210/TD5300.c **** 			{
+ 826              		.loc 1 754 6 is_stmt 0 view .LVU173
+ 827 000c 2328     		cmp	r0, #35
+ 828 000e F9D1     		bne	.L70
+ 757:VS4210/TD5300.c **** 					{	
+ 829              		.loc 1 757 11 view .LVU174
+ 830 0010 0023     		movs	r3, #0
+ 831              	.LVL62:
+ 832              	.L69:
+ 757:VS4210/TD5300.c **** 					{	
+ 833              		.loc 1 757 14 is_stmt 1 discriminator 1 view .LVU175
+ 765:VS4210/TD5300.c **** 			}
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 38
+
+
+ 834              		.loc 1 765 5 is_stmt 0 discriminator 1 view .LVU176
+ 835 0012 0024     		movs	r4, #0
+ 757:VS4210/TD5300.c **** 					{	
+ 836              		.loc 1 757 6 discriminator 1 view .LVU177
+ 837 0014 0E2B     		cmp	r3, #14
+ 838 0016 F5D8     		bhi	.L70
+ 759:VS4210/TD5300.c **** 						buf_tpms[z]=y;
+ 839              		.loc 1 759 7 is_stmt 1 view .LVU178
+ 760:VS4210/TD5300.c **** 						if(buf_tpms[z]=='#') z=14;
+ 840              		.loc 1 760 7 view .LVU179
+ 760:VS4210/TD5300.c **** 						if(buf_tpms[z]=='#') z=14;
+ 841              		.loc 1 760 18 is_stmt 0 view .LVU180
+ 842 0018 024A     		ldr	r2, .L76
+ 843 001a D054     		strb	r0, [r2, r3]
+ 761:VS4210/TD5300.c **** 					}
+ 844              		.loc 1 761 7 is_stmt 1 view .LVU181
+ 761:VS4210/TD5300.c **** 					}
+ 845              		.loc 1 761 28 view .LVU182
+ 846              	.LVL63:
+ 757:VS4210/TD5300.c **** 					{	
+ 847              		.loc 1 757 21 is_stmt 0 view .LVU183
+ 848 001c 0F23     		movs	r3, #15
+ 849 001e F8E7     		b	.L69
+ 850              	.LVL64:
+ 851              	.L75:
+ 772:VS4210/TD5300.c **** }
+ 852              		.loc 1 772 2 is_stmt 1 view .LVU184
+ 773:VS4210/TD5300.c **** 
+ 853              		.loc 1 773 1 is_stmt 0 view .LVU185
+ 854 0020 0120     		movs	r0, #1
+ 855 0022 10BD     		pop	{r4, pc}
+ 856              	.LVL65:
+ 857              	.L77:
+ 773:VS4210/TD5300.c **** 
+ 858              		.loc 1 773 1 view .LVU186
+ 859              		.align	2
+ 860              	.L76:
+ 861 0024 00000000 		.word	buf_tpms
+ 862              		.cfi_endproc
+ 863              	.LFE77:
+ 865              		.global	TPMS_Reset_Flag
+ 866              		.global	TPMS_LED
+ 867              		.global	SB_Work_Flag_F
+ 868              		.global	SB_Work_Flag
+ 869              		.global	SB_Work_Error_Flag
+ 870              		.global	SB_Press_Error_Flag
+ 871              		.global	SB_Temper_Error_Flag
+ 872              		.global	TPMS_OSD
+ 873              		.global	loop_flag
+ 874              		.global	TPMS_Setting_Mode
+ 875              		.global	TPMS_Cursor
+ 876              		.global	TPMS_Pop_Flag
+ 877              		.global	TPMS_Flag
+ 878              		.global	TPMS_Relay_Battery
+ 879              		.global	TPMS_val
+ 880              		.global	TPMS_Count
+ 881              		.global	TPMS_Start
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 39
+
+
+ 882              		.global	TPMS_Ready
+ 883              		.global	TPMS_P
+ 884              		.comm	buf_tpms,99,4
+ 885              		.global	sb_p_data_max
+ 886              		.global	sb_tp_data
+ 887              		.global	sb_data
+ 888              		.global	change_keyon
+ 889              		.global	cursor_p
+ 890              		.global	Device_Mask
+ 891              		.global	Ascii
+ 892              		.section	.bss.SB_Press_Error_Flag,"aw",%nobits
+ 895              	SB_Press_Error_Flag:
+ 896 0000 00       		.space	1
+ 897              		.section	.bss.SB_Temper_Error_Flag,"aw",%nobits
+ 900              	SB_Temper_Error_Flag:
+ 901 0000 00       		.space	1
+ 902              		.section	.bss.SB_Work_Error_Flag,"aw",%nobits
+ 905              	SB_Work_Error_Flag:
+ 906 0000 00       		.space	1
+ 907              		.section	.bss.SB_Work_Flag,"aw",%nobits
+ 910              	SB_Work_Flag:
+ 911 0000 00       		.space	1
+ 912              		.section	.bss.SB_Work_Flag_F,"aw",%nobits
+ 915              	SB_Work_Flag_F:
+ 916 0000 00       		.space	1
+ 917              		.section	.bss.TPMS_Count,"aw",%nobits
+ 920              	TPMS_Count:
+ 921 0000 00       		.space	1
+ 922              		.section	.bss.TPMS_Cursor,"aw",%nobits
+ 925              	TPMS_Cursor:
+ 926 0000 00       		.space	1
+ 927              		.section	.bss.TPMS_Flag,"aw",%nobits
+ 930              	TPMS_Flag:
+ 931 0000 00       		.space	1
+ 932              		.section	.bss.TPMS_LED,"aw",%nobits
+ 935              	TPMS_LED:
+ 936 0000 00       		.space	1
+ 937              		.section	.bss.TPMS_OSD,"aw",%nobits
+ 940              	TPMS_OSD:
+ 941 0000 00       		.space	1
+ 942              		.section	.bss.TPMS_P,"aw",%nobits
+ 945              	TPMS_P:
+ 946 0000 00       		.space	1
+ 947              		.section	.bss.TPMS_Pop_Flag,"aw",%nobits
+ 950              	TPMS_Pop_Flag:
+ 951 0000 00       		.space	1
+ 952              		.section	.bss.TPMS_Ready,"aw",%nobits
+ 955              	TPMS_Ready:
+ 956 0000 00       		.space	1
+ 957              		.section	.bss.TPMS_Relay_Battery,"aw",%nobits
+ 958              		.set	.LANCHOR2,. + 0
+ 961              	TPMS_Relay_Battery:
+ 962 0000 00       		.space	1
+ 963              		.section	.bss.TPMS_Reset_Flag,"aw",%nobits
+ 966              	TPMS_Reset_Flag:
+ 967 0000 00       		.space	1
+ 968              		.section	.bss.TPMS_Setting_Mode,"aw",%nobits
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 40
+
+
+ 971              	TPMS_Setting_Mode:
+ 972 0000 00       		.space	1
+ 973              		.section	.bss.TPMS_Start,"aw",%nobits
+ 976              	TPMS_Start:
+ 977 0000 00       		.space	1
+ 978              		.section	.bss.TPMS_val,"aw",%nobits
+ 981              	TPMS_val:
+ 982 0000 00       		.space	1
+ 983              		.section	.bss.change_keyon,"aw",%nobits
+ 986              	change_keyon:
+ 987 0000 00       		.space	1
+ 988              		.section	.bss.cursor_p,"aw",%nobits
+ 991              	cursor_p:
+ 992 0000 00       		.space	1
+ 993              		.section	.bss.loop_flag,"aw",%nobits
+ 996              	loop_flag:
+ 997 0000 00       		.space	1
+ 998              		.section	.bss.sb_data,"aw",%nobits
+ 999              		.align	2
+ 1002              	sb_data:
+ 1003 0000 000000   		.space	3
+ 1004              		.section	.data.Ascii,"aw"
+ 1005              		.align	2
+ 1008              	Ascii:
+ 1009 0000 30313233 		.ascii	"0123456789ABCDEF"
+ 1009      34353637 
+ 1009      38394142 
+ 1009      43444546 
+ 1010              		.section	.data.Device_Mask,"aw"
+ 1011              		.align	2
+ 1014              	Device_Mask:
+ 1015 0000 01020408 		.ascii	"\001\002\004\010\020 @\200"
+ 1015      10204080 
+ 1016              		.section	.data.sb_p_data_max,"aw"
+ 1017              		.align	2
+ 1018              		.set	.LANCHOR1,. + 0
+ 1021              	sb_p_data_max:
+ 1022 0000 2D2D2D2D 		.ascii	"------"
+ 1022      2D2D
+ 1023              		.section	.data.sb_tp_data,"aw"
+ 1024              		.align	2
+ 1025              		.set	.LANCHOR0,. + 0
+ 1028              	sb_tp_data:
+ 1029 0000 3C1E3C1E 		.ascii	"<\036<\036<\036<\036<\036<\036"
+ 1029      3C1E3C1E 
+ 1029      3C1E3C1E 
+ 1030              		.text
+ 1031              	.Letext0:
+ 1032              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 1033              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 1034              		.file 4 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 1035              		.file 5 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\lib\\gcc\\arm-none-eabi
+ 1036              		.file 6 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 1037              		.file 7 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 1038              		.file 8 "VS4210/VXIS_Extern_Define.h"
+ 1039              		.file 9 "Drivers/CMSIS/Include/core_cm3.h"
+ 1040              		.file 10 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h"
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 41
+
+
+ 1041              		.file 11 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ 1042              		.file 12 "VS4210/VX_OSD_Simple.h"
+ 1043              		.file 13 "sw_i2c/VX_swi2c.h"
+ 1044              		.file 14 "VS4210/VS4210_param_Mode88.h"
+ 1045              		.file 15 "VS4210/VS4210_param_Modex26.h"
+ 1046              		.file 16 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 42
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 TD5300.c
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:16     .text.TPMS_redraw:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:24     .text.TPMS_redraw:00000000 TPMS_redraw
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:39     .text.TPMS_Keyin_Mode:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:46     .text.TPMS_Keyin_Mode:00000000 TPMS_Keyin_Mode
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:64     .text.TPMS_Change_Mode:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:71     .text.TPMS_Change_Mode:00000000 TPMS_Change_Mode
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:85     .text.TPMS_Read_eeprom:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:92     .text.TPMS_Read_eeprom:00000000 TPMS_Read_eeprom
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:136    .text.TPMS_Read_eeprom:0000001c $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:141    .text.TPMS_Write_eeprom:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:148    .text.TPMS_Write_eeprom:00000000 TPMS_Write_eeprom
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:211    .text.TPMS_Write_eeprom:00000030 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:217    .text.TPMS_Default_Setting:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:224    .text.TPMS_Default_Setting:00000000 TPMS_Default_Setting
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:333    .text.TPMS_Default_Setting:00000058 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:339    .text.Init_TPMS_OSD:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:346    .text.Init_TPMS_OSD:00000000 Init_TPMS_OSD
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:359    .text.Display_TPMS_info:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:366    .text.Display_TPMS_info:00000000 Display_TPMS_info
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:380    .text.Draw_CAR:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:387    .text.Draw_CAR:00000000 Draw_CAR
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:400    .text.putch:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:407    .text.putch:00000000 putch
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:421    .text.getch:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:428    .text.getch:00000000 getch
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:443    .text.getche:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:450    .text.getche:00000000 getche
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:465    .text.GetData:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:472    .text.GetData:00000000 GetData
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:490    .text.AsciiToData:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:497    .text.AsciiToData:00000000 AsciiToData
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:543    .text.AsciiToData:0000001c $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:548    .text.DataToAscii:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:555    .text.DataToAscii:00000000 DataToAscii
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:573    .text.Check_Tire_Data:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:580    .text.Check_Tire_Data:00000000 Check_Tire_Data
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:598    .text.Check_Data:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:605    .text.Check_Data:00000000 Check_Data
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:619    .text.GetTireDatawhole:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:626    .text.GetTireDatawhole:00000000 GetTireDatawhole
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:644    .text.Get_Tire_Data:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:651    .text.Get_Tire_Data:00000000 Get_Tire_Data
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:669    .text.Get_Relay_Data:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:676    .text.Get_Relay_Data:00000000 Get_Relay_Data
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:761    .text.Get_Relay_Data:0000003c $d
+                            *COM*:00000063 buf_tpms
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:767    .text.Input:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:774    .text.Input:00000000 Input
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:792    .text.Read_RX:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:799    .text.Read_RX:00000000 Read_RX
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:861    .text.Read_RX:00000024 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:966    .bss.TPMS_Reset_Flag:00000000 TPMS_Reset_Flag
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:935    .bss.TPMS_LED:00000000 TPMS_LED
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:915    .bss.SB_Work_Flag_F:00000000 SB_Work_Flag_F
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:910    .bss.SB_Work_Flag:00000000 SB_Work_Flag
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s 			page 43
+
+
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:905    .bss.SB_Work_Error_Flag:00000000 SB_Work_Error_Flag
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:895    .bss.SB_Press_Error_Flag:00000000 SB_Press_Error_Flag
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:900    .bss.SB_Temper_Error_Flag:00000000 SB_Temper_Error_Flag
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:940    .bss.TPMS_OSD:00000000 TPMS_OSD
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:996    .bss.loop_flag:00000000 loop_flag
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:971    .bss.TPMS_Setting_Mode:00000000 TPMS_Setting_Mode
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:925    .bss.TPMS_Cursor:00000000 TPMS_Cursor
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:950    .bss.TPMS_Pop_Flag:00000000 TPMS_Pop_Flag
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:930    .bss.TPMS_Flag:00000000 TPMS_Flag
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:961    .bss.TPMS_Relay_Battery:00000000 TPMS_Relay_Battery
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:981    .bss.TPMS_val:00000000 TPMS_val
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:920    .bss.TPMS_Count:00000000 TPMS_Count
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:976    .bss.TPMS_Start:00000000 TPMS_Start
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:955    .bss.TPMS_Ready:00000000 TPMS_Ready
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:945    .bss.TPMS_P:00000000 TPMS_P
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:1021   .data.sb_p_data_max:00000000 sb_p_data_max
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:1028   .data.sb_tp_data:00000000 sb_tp_data
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:1002   .bss.sb_data:00000000 sb_data
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:986    .bss.change_keyon:00000000 change_keyon
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:991    .bss.cursor_p:00000000 cursor_p
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:1014   .data.Device_Mask:00000000 Device_Mask
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:1008   .data.Ascii:00000000 Ascii
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:896    .bss.SB_Press_Error_Flag:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:901    .bss.SB_Temper_Error_Flag:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:906    .bss.SB_Work_Error_Flag:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:911    .bss.SB_Work_Flag:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:916    .bss.SB_Work_Flag_F:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:921    .bss.TPMS_Count:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:926    .bss.TPMS_Cursor:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:931    .bss.TPMS_Flag:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:936    .bss.TPMS_LED:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:941    .bss.TPMS_OSD:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:946    .bss.TPMS_P:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:951    .bss.TPMS_Pop_Flag:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:956    .bss.TPMS_Ready:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:962    .bss.TPMS_Relay_Battery:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:967    .bss.TPMS_Reset_Flag:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:972    .bss.TPMS_Setting_Mode:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:977    .bss.TPMS_Start:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:982    .bss.TPMS_val:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:987    .bss.change_keyon:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:992    .bss.cursor_p:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:997    .bss.loop_flag:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:999    .bss.sb_data:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:1005   .data.Ascii:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:1011   .data.Device_Mask:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:1017   .data.sb_p_data_max:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc5rw25t.s:1024   .data.sb_tp_data:00000000 $d
+
+UNDEFINED SYMBOLS
+ReadEEP
+WriteEEP
+Hex

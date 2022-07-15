@@ -1,0 +1,21 @@
+---- VS4210_ResetCamMirror Matches (20 in 5 files) ----
+GT911.c (vs4210):773:														VS4210_ResetCamMirror(CH1);													
+GT911.c (vs4210):783:														VS4210_ResetCamMirror(CH2);
+GT911.c (vs4210):793:														VS4210_ResetCamMirror(CH3);	
+GT911.c (vs4210):803:														VS4210_ResetCamMirror(CH4);	
+GT911.h (vs4210):88:extern void VS4210_ResetCamMirror(tByte ch );
+VS4210.c (vs4210):587:void VS4210_ResetCamMirror(tByte ch)
+VS4210.h (vs4210):41:void VS4210_ResetCamMirror(tByte ch);
+VX_OSD_Simple.c (vs4210):1867:				VS4210_ResetCamMirror(CH1);
+VX_OSD_Simple.c (vs4210):1872:				VS4210_ResetCamMirror(CH2);
+VX_OSD_Simple.c (vs4210):1877:				VS4210_ResetCamMirror(CH3);
+VX_OSD_Simple.c (vs4210):1882:				VS4210_ResetCamMirror(CH4);
+VX_OSD_Simple.c (vs4210):3421:						VS4210_ResetCamMirror(CH1);
+VX_OSD_Simple.c (vs4210):3431:						VS4210_ResetCamMirror(CH2);
+VX_OSD_Simple.c (vs4210):3441:						VS4210_ResetCamMirror(CH3);
+VX_OSD_Simple.c (vs4210):3451:						VS4210_ResetCamMirror(CH4);
+VX_OSD_Simple.c (vs4210):3702:			VS4210_ResetCamMirror(CH1);
+VX_OSD_Simple.c (vs4210):3729:			VS4210_ResetCamMirror(CH2);
+VX_OSD_Simple.c (vs4210):3743:			VS4210_ResetCamMirror(CH3);
+VX_OSD_Simple.c (vs4210):3757:			VS4210_ResetCamMirror(CH4);
+VX_OSD_Simple.c (vs4210):3771:			VS4210_ResetCamMirror(CH4);

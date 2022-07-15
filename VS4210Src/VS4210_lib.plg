@@ -1,0 +1,18 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+D:\8051\VS4210\ITE66021rx\ITE 66021\VS4210\kvm\IT6604_66021rx_VS4210_IT66121tx\Lib\vs4210_lib\VS4210_LIB.uvproj
+Project File Date:  09/08/2017
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling VS4210.c...
+creating library VS4210_lib.LIB...
+TRANSFER
+"VS4210.obj" 
+TO "VS4210_lib.LIB"
+LIB51 LIBRARY MANAGER V4.24
+COPYRIGHT KEIL ELEKTRONIK GmbH 1987 - 2002
+"VS4210_lib.LIB" - 0 Error(s), 0 Warning(s).

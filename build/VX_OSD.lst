@@ -1,0 +1,1341 @@
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"VX_OSD.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.ClearDisplayedOSD,"ax",%progbits
+  16              		.align	1
+  17              		.global	ClearDisplayedOSD
+  18              		.arch armv7-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	ClearDisplayedOSD:
+  25              	.LVL0:
+  26              	.LFB3:
+  27              		.file 1 "VS4210/VX_OSD.c"
+   1:VS4210/VX_OSD.c **** /** @file VX_OSD.c
+   2:VS4210/VX_OSD.c ****  * @brief OSD font utility
+   3:VS4210/VX_OSD.c ****  *
+   4:VS4210/VX_OSD.c ****  * Input source or resolution displayed on the screen.
+   5:VS4210/VX_OSD.c ****  *
+   6:VS4210/VX_OSD.c ****  * @author Cunu-Yu
+   7:VS4210/VX_OSD.c ****  * @date 2018/06/19
+   8:VS4210/VX_OSD.c ****  */
+   9:VS4210/VX_OSD.c **** 
+  10:VS4210/VX_OSD.c **** #include "VXIS_Extern_Define.h"
+  11:VS4210/VX_OSD.c **** #include "VX_OSD.h"
+  12:VS4210/VX_OSD.c **** #include "VX_swi2c.h"
+  13:VS4210/VX_OSD.c **** 
+  14:VS4210/VX_OSD.c **** tByte DisplayedOSD = 0;
+  15:VS4210/VX_OSD.c **** 
+  16:VS4210/VX_OSD.c **** void ClearDisplayedOSD(BYTE newd)
+  17:VS4210/VX_OSD.c **** {
+  28              		.loc 1 17 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  18:VS4210/VX_OSD.c ****     DisplayedOSD &= (~(newd));
+  33              		.loc 1 18 5 view .LVU1
+  34              		.loc 1 18 18 is_stmt 0 view .LVU2
+  35 0000 024A     		ldr	r2, .L2
+  36 0002 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+  37 0004 23EA0003 		bic	r3, r3, r0
+  38 0008 1370     		strb	r3, [r2]
+  19:VS4210/VX_OSD.c **** }
+  39              		.loc 1 19 1 view .LVU3
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s 			page 2
+
+
+  40 000a 7047     		bx	lr
+  41              	.L3:
+  42              		.align	2
+  43              	.L2:
+  44 000c 00000000 		.word	.LANCHOR0
+  45              		.cfi_endproc
+  46              	.LFE3:
+  48              		.section	.text.SetDisplayedOSD,"ax",%progbits
+  49              		.align	1
+  50              		.global	SetDisplayedOSD
+  51              		.syntax unified
+  52              		.thumb
+  53              		.thumb_func
+  54              		.fpu softvfp
+  56              	SetDisplayedOSD:
+  57              	.LVL1:
+  58              	.LFB4:
+  20:VS4210/VX_OSD.c **** 
+  21:VS4210/VX_OSD.c **** void SetDisplayedOSD(BYTE newd)
+  22:VS4210/VX_OSD.c **** {
+  59              		.loc 1 22 1 is_stmt 1 view -0
+  60              		.cfi_startproc
+  61              		@ args = 0, pretend = 0, frame = 0
+  62              		@ frame_needed = 0, uses_anonymous_args = 0
+  63              		@ link register save eliminated.
+  23:VS4210/VX_OSD.c ****     DisplayedOSD |= newd;
+  64              		.loc 1 23 5 view .LVU5
+  65              		.loc 1 23 18 is_stmt 0 view .LVU6
+  66 0000 024B     		ldr	r3, .L5
+  67 0002 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+  68 0004 1043     		orrs	r0, r0, r2
+  69              	.LVL2:
+  70              		.loc 1 23 18 view .LVU7
+  71 0006 1870     		strb	r0, [r3]
+  24:VS4210/VX_OSD.c **** }
+  72              		.loc 1 24 1 view .LVU8
+  73 0008 7047     		bx	lr
+  74              	.L6:
+  75 000a 00BF     		.align	2
+  76              	.L5:
+  77 000c 00000000 		.word	.LANCHOR0
+  78              		.cfi_endproc
+  79              	.LFE4:
+  81              		.section	.text.GetDisplayedOSD,"ax",%progbits
+  82              		.align	1
+  83              		.global	GetDisplayedOSD
+  84              		.syntax unified
+  85              		.thumb
+  86              		.thumb_func
+  87              		.fpu softvfp
+  89              	GetDisplayedOSD:
+  90              	.LFB5:
+  25:VS4210/VX_OSD.c **** 
+  26:VS4210/VX_OSD.c **** BYTE GetDisplayedOSD(void)
+  27:VS4210/VX_OSD.c **** {
+  91              		.loc 1 27 1 is_stmt 1 view -0
+  92              		.cfi_startproc
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s 			page 3
+
+
+  93              		@ args = 0, pretend = 0, frame = 0
+  94              		@ frame_needed = 0, uses_anonymous_args = 0
+  95              		@ link register save eliminated.
+  28:VS4210/VX_OSD.c ****     return DisplayedOSD;
+  96              		.loc 1 28 5 view .LVU10
+  29:VS4210/VX_OSD.c **** }
+  97              		.loc 1 29 1 is_stmt 0 view .LVU11
+  98 0000 014B     		ldr	r3, .L8
+  99 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 100 0004 7047     		bx	lr
+ 101              	.L9:
+ 102 0006 00BF     		.align	2
+ 103              	.L8:
+ 104 0008 00000000 		.word	.LANCHOR0
+ 105              		.cfi_endproc
+ 106              	.LFE5:
+ 108              		.section	.text.SetOsdStartAddress,"ax",%progbits
+ 109              		.align	1
+ 110              		.global	SetOsdStartAddress
+ 111              		.syntax unified
+ 112              		.thumb
+ 113              		.thumb_func
+ 114              		.fpu softvfp
+ 116              	SetOsdStartAddress:
+ 117              	.LVL3:
+ 118              	.LFB6:
+  30:VS4210/VX_OSD.c **** 
+  31:VS4210/VX_OSD.c **** void SetOsdStartAddress(tByte block, tByte addr)
+  32:VS4210/VX_OSD.c **** {
+ 119              		.loc 1 32 1 is_stmt 1 view -0
+ 120              		.cfi_startproc
+ 121              		@ args = 0, pretend = 0, frame = 0
+ 122              		@ frame_needed = 0, uses_anonymous_args = 0
+ 123              		.loc 1 32 1 is_stmt 0 view .LVU13
+ 124 0000 08B5     		push	{r3, lr}
+ 125              	.LCFI0:
+ 126              		.cfi_def_cfa_offset 8
+ 127              		.cfi_offset 3, -8
+ 128              		.cfi_offset 14, -4
+  33:VS4210/VX_OSD.c ****     switch (block)
+ 129              		.loc 1 33 5 is_stmt 1 view .LVU14
+ 130 0002 0728     		cmp	r0, #7
+ 131 0004 07D8     		bhi	.L11
+ 132 0006 0428     		cmp	r0, #4
+ 133 0008 0BD2     		bcs	.L12
+ 134 000a 0328     		cmp	r0, #3
+ 135 000c 02D8     		bhi	.L10
+  34:VS4210/VX_OSD.c ****     {
+  35:VS4210/VX_OSD.c ****     case (_Title0):
+  36:VS4210/VX_OSD.c ****     case (_Title1):
+  37:VS4210/VX_OSD.c ****     case (_Title2):
+  38:VS4210/VX_OSD.c ****     case (_Title3):
+  39:VS4210/VX_OSD.c ****         VXISI2CWrite(0x52, addr);
+ 136              		.loc 1 39 9 view .LVU15
+ 137 000e 5220     		movs	r0, #82
+ 138              	.LVL4:
+ 139              		.loc 1 39 9 is_stmt 0 view .LVU16
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s 			page 4
+
+
+ 140 0010 FFF7FEFF 		bl	VXISI2CWrite
+ 141              	.LVL5:
+  40:VS4210/VX_OSD.c ****         break;
+ 142              		.loc 1 40 9 is_stmt 1 view .LVU17
+ 143              	.L10:
+  41:VS4210/VX_OSD.c **** 
+  42:VS4210/VX_OSD.c ****     case (_Content):
+  43:VS4210/VX_OSD.c ****         VXISI2CWrite(0x57, addr);
+  44:VS4210/VX_OSD.c ****         break;
+  45:VS4210/VX_OSD.c **** 
+  46:VS4210/VX_OSD.c ****     case (_Bar0):
+  47:VS4210/VX_OSD.c ****     case (_Bar1):
+  48:VS4210/VX_OSD.c ****     case (_Bar2):
+  49:VS4210/VX_OSD.c ****     case (_Bar3):
+  50:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5D, addr);
+  51:VS4210/VX_OSD.c ****         break;
+  52:VS4210/VX_OSD.c **** 
+  53:VS4210/VX_OSD.c ****     default:
+  54:VS4210/VX_OSD.c ****         break;
+  55:VS4210/VX_OSD.c ****     }
+  56:VS4210/VX_OSD.c **** }
+ 144              		.loc 1 56 1 is_stmt 0 view .LVU18
+ 145 0014 08BD     		pop	{r3, pc}
+ 146              	.LVL6:
+ 147              	.L11:
+  33:VS4210/VX_OSD.c ****     {
+ 148              		.loc 1 33 5 view .LVU19
+ 149 0016 0828     		cmp	r0, #8
+ 150 0018 FCD1     		bne	.L10
+  43:VS4210/VX_OSD.c ****         break;
+ 151              		.loc 1 43 9 is_stmt 1 view .LVU20
+ 152 001a 5720     		movs	r0, #87
+ 153              	.LVL7:
+  43:VS4210/VX_OSD.c ****         break;
+ 154              		.loc 1 43 9 is_stmt 0 view .LVU21
+ 155 001c FFF7FEFF 		bl	VXISI2CWrite
+ 156              	.LVL8:
+  44:VS4210/VX_OSD.c **** 
+ 157              		.loc 1 44 9 is_stmt 1 view .LVU22
+ 158 0020 F8E7     		b	.L10
+ 159              	.LVL9:
+ 160              	.L12:
+  50:VS4210/VX_OSD.c ****         break;
+ 161              		.loc 1 50 9 view .LVU23
+ 162 0022 5D20     		movs	r0, #93
+ 163              	.LVL10:
+  50:VS4210/VX_OSD.c ****         break;
+ 164              		.loc 1 50 9 is_stmt 0 view .LVU24
+ 165 0024 FFF7FEFF 		bl	VXISI2CWrite
+ 166              	.LVL11:
+  51:VS4210/VX_OSD.c **** 
+ 167              		.loc 1 51 9 is_stmt 1 view .LVU25
+ 168              		.loc 1 56 1 is_stmt 0 view .LVU26
+ 169 0028 F4E7     		b	.L10
+ 170              		.cfi_endproc
+ 171              	.LFE6:
+ 173              		.section	.text.SetOsdSize,"ax",%progbits
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s 			page 5
+
+
+ 174              		.align	1
+ 175              		.global	SetOsdSize
+ 176              		.syntax unified
+ 177              		.thumb
+ 178              		.thumb_func
+ 179              		.fpu softvfp
+ 181              	SetOsdSize:
+ 182              	.LVL12:
+ 183              	.LFB7:
+  57:VS4210/VX_OSD.c **** 
+  58:VS4210/VX_OSD.c **** //---------------------------------------------------------------------------
+  59:VS4210/VX_OSD.c **** void SetOsdSize(tByte block, tByte sizeX, tByte sizeY)
+  60:VS4210/VX_OSD.c **** {
+ 184              		.loc 1 60 1 is_stmt 1 view -0
+ 185              		.cfi_startproc
+ 186              		@ args = 0, pretend = 0, frame = 0
+ 187              		@ frame_needed = 0, uses_anonymous_args = 0
+ 188              		.loc 1 60 1 is_stmt 0 view .LVU28
+ 189 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 190              	.LCFI1:
+ 191              		.cfi_def_cfa_offset 24
+ 192              		.cfi_offset 3, -24
+ 193              		.cfi_offset 4, -20
+ 194              		.cfi_offset 5, -16
+ 195              		.cfi_offset 6, -12
+ 196              		.cfi_offset 7, -8
+ 197              		.cfi_offset 14, -4
+ 198 0002 0546     		mov	r5, r0
+ 199 0004 0C46     		mov	r4, r1
+ 200 0006 1746     		mov	r7, r2
+  61:VS4210/VX_OSD.c ****     tByte temp;
+ 201              		.loc 1 61 5 is_stmt 1 view .LVU29
+  62:VS4210/VX_OSD.c ****     tByte tempBar;
+ 202              		.loc 1 62 5 view .LVU30
+  63:VS4210/VX_OSD.c ****     tByte sizeX3f;
+ 203              		.loc 1 63 5 view .LVU31
+  64:VS4210/VX_OSD.c **** 
+  65:VS4210/VX_OSD.c ****     temp = VXISI2CRead(0x53) & 0x3f;
+ 204              		.loc 1 65 5 view .LVU32
+ 205              		.loc 1 65 12 is_stmt 0 view .LVU33
+ 206 0008 5320     		movs	r0, #83
+ 207              	.LVL13:
+ 208              		.loc 1 65 12 view .LVU34
+ 209 000a FFF7FEFF 		bl	VXISI2CRead
+ 210              	.LVL14:
+ 211              		.loc 1 65 10 view .LVU35
+ 212 000e 00F03F06 		and	r6, r0, #63
+ 213              	.LVL15:
+  66:VS4210/VX_OSD.c ****     tempBar = VXISI2CRead(0x5E) & 0x3f;
+ 214              		.loc 1 66 5 is_stmt 1 view .LVU36
+ 215              		.loc 1 66 15 is_stmt 0 view .LVU37
+ 216 0012 5E20     		movs	r0, #94
+ 217 0014 FFF7FEFF 		bl	VXISI2CRead
+ 218              	.LVL16:
+ 219              		.loc 1 66 13 view .LVU38
+ 220 0018 00F03F01 		and	r1, r0, #63
+ 221              	.LVL17:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s 			page 6
+
+
+  67:VS4210/VX_OSD.c ****     sizeX3f = sizeX & 0x3f;
+ 222              		.loc 1 67 5 is_stmt 1 view .LVU39
+ 223              		.loc 1 67 13 is_stmt 0 view .LVU40
+ 224 001c 04F03F04 		and	r4, r4, #63
+ 225              	.LVL18:
+  68:VS4210/VX_OSD.c **** 
+  69:VS4210/VX_OSD.c ****     switch (block)
+ 226              		.loc 1 69 5 is_stmt 1 view .LVU41
+ 227 0020 082D     		cmp	r5, #8
+ 228 0022 0ED8     		bhi	.L18
+ 229 0024 DFE805F0 		tbb	[pc, r5]
+ 230              	.L21:
+ 231 0028 05       		.byte	(.L29-.L21)/2
+ 232 0029 0E       		.byte	(.L28-.L21)/2
+ 233 002a 19       		.byte	(.L27-.L21)/2
+ 234 002b 24       		.byte	(.L26-.L21)/2
+ 235 002c 2F       		.byte	(.L25-.L21)/2
+ 236 002d 37       		.byte	(.L24-.L21)/2
+ 237 002e 42       		.byte	(.L23-.L21)/2
+ 238 002f 4D       		.byte	(.L22-.L21)/2
+ 239 0030 58       		.byte	(.L20-.L21)/2
+ 240 0031 00       		.p2align 1
+ 241              	.L29:
+  70:VS4210/VX_OSD.c ****     {
+  71:VS4210/VX_OSD.c ****     case _Title0:
+  72:VS4210/VX_OSD.c ****         // VXISI2CWrite(0x53,temp&0x3f);
+  73:VS4210/VX_OSD.c ****         // VXISI2CWrite(0x53,sizeX&0x3f);
+  74:VS4210/VX_OSD.c ****         VXISI2CWrite(0x53, temp);
+ 242              		.loc 1 74 9 view .LVU42
+ 243 0032 3146     		mov	r1, r6
+ 244              	.LVL19:
+ 245              		.loc 1 74 9 is_stmt 0 view .LVU43
+ 246 0034 5320     		movs	r0, #83
+ 247              	.LVL20:
+ 248              		.loc 1 74 9 view .LVU44
+ 249 0036 FFF7FEFF 		bl	VXISI2CWrite
+ 250              	.LVL21:
+  75:VS4210/VX_OSD.c ****         VXISI2CWrite(0x53, sizeX3f);
+ 251              		.loc 1 75 9 is_stmt 1 view .LVU45
+ 252 003a 2146     		mov	r1, r4
+ 253 003c 5320     		movs	r0, #83
+ 254 003e FFF7FEFF 		bl	VXISI2CWrite
+ 255              	.LVL22:
+  76:VS4210/VX_OSD.c ****         break;
+ 256              		.loc 1 76 9 view .LVU46
+ 257              	.L18:
+  77:VS4210/VX_OSD.c ****     case _Title1:
+  78:VS4210/VX_OSD.c ****         VXISI2CWrite(0x53, temp | 0x40);
+  79:VS4210/VX_OSD.c ****         VXISI2CWrite(0x53, sizeX3f | 0x40);
+  80:VS4210/VX_OSD.c ****         break;
+  81:VS4210/VX_OSD.c ****     case _Title2:
+  82:VS4210/VX_OSD.c ****         VXISI2CWrite(0x53, temp | 0x80);
+  83:VS4210/VX_OSD.c ****         VXISI2CWrite(0x53, sizeX3f | 0x80);
+  84:VS4210/VX_OSD.c ****         break;
+  85:VS4210/VX_OSD.c ****     case _Title3:
+  86:VS4210/VX_OSD.c ****         VXISI2CWrite(0x53, temp | 0xC0);
+  87:VS4210/VX_OSD.c ****         VXISI2CWrite(0x53, sizeX3f | 0xC0);
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s 			page 7
+
+
+  88:VS4210/VX_OSD.c ****         break;
+  89:VS4210/VX_OSD.c **** 
+  90:VS4210/VX_OSD.c ****     case _Bar0:
+  91:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5E, tempBar);
+  92:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5E, sizeX3f);
+  93:VS4210/VX_OSD.c ****         break;
+  94:VS4210/VX_OSD.c ****     case _Bar1:
+  95:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5E, tempBar | 0x40);
+  96:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5E, sizeX3f | 0x40);
+  97:VS4210/VX_OSD.c ****         break;
+  98:VS4210/VX_OSD.c ****     case _Bar2:
+  99:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5E, tempBar | 0x80);
+ 100:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5E, sizeX3f | 0x80);
+ 101:VS4210/VX_OSD.c ****         break;
+ 102:VS4210/VX_OSD.c ****     case _Bar3:
+ 103:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5E, tempBar | 0xC0);
+ 104:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5E, sizeX3f | 0xC0);
+ 105:VS4210/VX_OSD.c ****         break;
+ 106:VS4210/VX_OSD.c **** 
+ 107:VS4210/VX_OSD.c ****     case _Content:
+ 108:VS4210/VX_OSD.c ****         VXISI2CWrite(0x58, sizeX3f);
+ 109:VS4210/VX_OSD.c ****         VXISI2CWrite(0x59, sizeY & 0x1f);
+ 110:VS4210/VX_OSD.c ****         break;
+ 111:VS4210/VX_OSD.c ****     }
+ 112:VS4210/VX_OSD.c **** }
+ 258              		.loc 1 112 1 is_stmt 0 view .LVU47
+ 259 0042 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 260              	.LVL23:
+ 261              	.L28:
+  78:VS4210/VX_OSD.c ****         VXISI2CWrite(0x53, sizeX3f | 0x40);
+ 262              		.loc 1 78 9 is_stmt 1 view .LVU48
+ 263 0044 46F04001 		orr	r1, r6, #64
+ 264              	.LVL24:
+  78:VS4210/VX_OSD.c ****         VXISI2CWrite(0x53, sizeX3f | 0x40);
+ 265              		.loc 1 78 9 is_stmt 0 view .LVU49
+ 266 0048 5320     		movs	r0, #83
+ 267              	.LVL25:
+  78:VS4210/VX_OSD.c ****         VXISI2CWrite(0x53, sizeX3f | 0x40);
+ 268              		.loc 1 78 9 view .LVU50
+ 269 004a FFF7FEFF 		bl	VXISI2CWrite
+ 270              	.LVL26:
+  79:VS4210/VX_OSD.c ****         break;
+ 271              		.loc 1 79 9 is_stmt 1 view .LVU51
+ 272 004e 44F04001 		orr	r1, r4, #64
+ 273 0052 5320     		movs	r0, #83
+ 274 0054 FFF7FEFF 		bl	VXISI2CWrite
+ 275              	.LVL27:
+  80:VS4210/VX_OSD.c ****     case _Title2:
+ 276              		.loc 1 80 9 view .LVU52
+ 277 0058 F3E7     		b	.L18
+ 278              	.LVL28:
+ 279              	.L27:
+  82:VS4210/VX_OSD.c ****         VXISI2CWrite(0x53, sizeX3f | 0x80);
+ 280              		.loc 1 82 9 view .LVU53
+ 281 005a 46F08001 		orr	r1, r6, #128
+ 282              	.LVL29:
+  82:VS4210/VX_OSD.c ****         VXISI2CWrite(0x53, sizeX3f | 0x80);
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s 			page 8
+
+
+ 283              		.loc 1 82 9 is_stmt 0 view .LVU54
+ 284 005e 5320     		movs	r0, #83
+ 285              	.LVL30:
+  82:VS4210/VX_OSD.c ****         VXISI2CWrite(0x53, sizeX3f | 0x80);
+ 286              		.loc 1 82 9 view .LVU55
+ 287 0060 FFF7FEFF 		bl	VXISI2CWrite
+ 288              	.LVL31:
+  83:VS4210/VX_OSD.c ****         break;
+ 289              		.loc 1 83 9 is_stmt 1 view .LVU56
+ 290 0064 44F08001 		orr	r1, r4, #128
+ 291 0068 5320     		movs	r0, #83
+ 292 006a FFF7FEFF 		bl	VXISI2CWrite
+ 293              	.LVL32:
+  84:VS4210/VX_OSD.c ****     case _Title3:
+ 294              		.loc 1 84 9 view .LVU57
+ 295 006e E8E7     		b	.L18
+ 296              	.LVL33:
+ 297              	.L26:
+  86:VS4210/VX_OSD.c ****         VXISI2CWrite(0x53, sizeX3f | 0xC0);
+ 298              		.loc 1 86 9 view .LVU58
+ 299 0070 46F0C001 		orr	r1, r6, #192
+ 300              	.LVL34:
+  86:VS4210/VX_OSD.c ****         VXISI2CWrite(0x53, sizeX3f | 0xC0);
+ 301              		.loc 1 86 9 is_stmt 0 view .LVU59
+ 302 0074 5320     		movs	r0, #83
+ 303              	.LVL35:
+  86:VS4210/VX_OSD.c ****         VXISI2CWrite(0x53, sizeX3f | 0xC0);
+ 304              		.loc 1 86 9 view .LVU60
+ 305 0076 FFF7FEFF 		bl	VXISI2CWrite
+ 306              	.LVL36:
+  87:VS4210/VX_OSD.c ****         break;
+ 307              		.loc 1 87 9 is_stmt 1 view .LVU61
+ 308 007a 44F0C001 		orr	r1, r4, #192
+ 309 007e 5320     		movs	r0, #83
+ 310 0080 FFF7FEFF 		bl	VXISI2CWrite
+ 311              	.LVL37:
+  88:VS4210/VX_OSD.c **** 
+ 312              		.loc 1 88 9 view .LVU62
+ 313 0084 DDE7     		b	.L18
+ 314              	.LVL38:
+ 315              	.L25:
+  91:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5E, sizeX3f);
+ 316              		.loc 1 91 9 view .LVU63
+ 317 0086 5E20     		movs	r0, #94
+ 318 0088 FFF7FEFF 		bl	VXISI2CWrite
+ 319              	.LVL39:
+  92:VS4210/VX_OSD.c ****         break;
+ 320              		.loc 1 92 9 view .LVU64
+ 321 008c 2146     		mov	r1, r4
+ 322 008e 5E20     		movs	r0, #94
+ 323 0090 FFF7FEFF 		bl	VXISI2CWrite
+ 324              	.LVL40:
+  93:VS4210/VX_OSD.c ****     case _Bar1:
+ 325              		.loc 1 93 9 view .LVU65
+ 326 0094 D5E7     		b	.L18
+ 327              	.LVL41:
+ 328              	.L24:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s 			page 9
+
+
+  95:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5E, sizeX3f | 0x40);
+ 329              		.loc 1 95 9 view .LVU66
+ 330 0096 41F04001 		orr	r1, r1, #64
+ 331              	.LVL42:
+  95:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5E, sizeX3f | 0x40);
+ 332              		.loc 1 95 9 is_stmt 0 view .LVU67
+ 333 009a 5E20     		movs	r0, #94
+ 334              	.LVL43:
+  95:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5E, sizeX3f | 0x40);
+ 335              		.loc 1 95 9 view .LVU68
+ 336 009c FFF7FEFF 		bl	VXISI2CWrite
+ 337              	.LVL44:
+  96:VS4210/VX_OSD.c ****         break;
+ 338              		.loc 1 96 9 is_stmt 1 view .LVU69
+ 339 00a0 44F04001 		orr	r1, r4, #64
+ 340 00a4 5E20     		movs	r0, #94
+ 341 00a6 FFF7FEFF 		bl	VXISI2CWrite
+ 342              	.LVL45:
+  97:VS4210/VX_OSD.c ****     case _Bar2:
+ 343              		.loc 1 97 9 view .LVU70
+ 344 00aa CAE7     		b	.L18
+ 345              	.LVL46:
+ 346              	.L23:
+  99:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5E, sizeX3f | 0x80);
+ 347              		.loc 1 99 9 view .LVU71
+ 348 00ac 41F08001 		orr	r1, r1, #128
+ 349              	.LVL47:
+  99:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5E, sizeX3f | 0x80);
+ 350              		.loc 1 99 9 is_stmt 0 view .LVU72
+ 351 00b0 5E20     		movs	r0, #94
+ 352              	.LVL48:
+  99:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5E, sizeX3f | 0x80);
+ 353              		.loc 1 99 9 view .LVU73
+ 354 00b2 FFF7FEFF 		bl	VXISI2CWrite
+ 355              	.LVL49:
+ 100:VS4210/VX_OSD.c ****         break;
+ 356              		.loc 1 100 9 is_stmt 1 view .LVU74
+ 357 00b6 44F08001 		orr	r1, r4, #128
+ 358 00ba 5E20     		movs	r0, #94
+ 359 00bc FFF7FEFF 		bl	VXISI2CWrite
+ 360              	.LVL50:
+ 101:VS4210/VX_OSD.c ****     case _Bar3:
+ 361              		.loc 1 101 9 view .LVU75
+ 362 00c0 BFE7     		b	.L18
+ 363              	.LVL51:
+ 364              	.L22:
+ 103:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5E, sizeX3f | 0xC0);
+ 365              		.loc 1 103 9 view .LVU76
+ 366 00c2 41F0C001 		orr	r1, r1, #192
+ 367              	.LVL52:
+ 103:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5E, sizeX3f | 0xC0);
+ 368              		.loc 1 103 9 is_stmt 0 view .LVU77
+ 369 00c6 5E20     		movs	r0, #94
+ 370              	.LVL53:
+ 103:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5E, sizeX3f | 0xC0);
+ 371              		.loc 1 103 9 view .LVU78
+ 372 00c8 FFF7FEFF 		bl	VXISI2CWrite
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s 			page 10
+
+
+ 373              	.LVL54:
+ 104:VS4210/VX_OSD.c ****         break;
+ 374              		.loc 1 104 9 is_stmt 1 view .LVU79
+ 375 00cc 44F0C001 		orr	r1, r4, #192
+ 376 00d0 5E20     		movs	r0, #94
+ 377 00d2 FFF7FEFF 		bl	VXISI2CWrite
+ 378              	.LVL55:
+ 105:VS4210/VX_OSD.c **** 
+ 379              		.loc 1 105 9 view .LVU80
+ 380 00d6 B4E7     		b	.L18
+ 381              	.LVL56:
+ 382              	.L20:
+ 108:VS4210/VX_OSD.c ****         VXISI2CWrite(0x59, sizeY & 0x1f);
+ 383              		.loc 1 108 9 view .LVU81
+ 384 00d8 2146     		mov	r1, r4
+ 385              	.LVL57:
+ 108:VS4210/VX_OSD.c ****         VXISI2CWrite(0x59, sizeY & 0x1f);
+ 386              		.loc 1 108 9 is_stmt 0 view .LVU82
+ 387 00da 5820     		movs	r0, #88
+ 388              	.LVL58:
+ 108:VS4210/VX_OSD.c ****         VXISI2CWrite(0x59, sizeY & 0x1f);
+ 389              		.loc 1 108 9 view .LVU83
+ 390 00dc FFF7FEFF 		bl	VXISI2CWrite
+ 391              	.LVL59:
+ 109:VS4210/VX_OSD.c ****         break;
+ 392              		.loc 1 109 9 is_stmt 1 view .LVU84
+ 393 00e0 07F01F01 		and	r1, r7, #31
+ 394 00e4 5920     		movs	r0, #89
+ 395 00e6 FFF7FEFF 		bl	VXISI2CWrite
+ 396              	.LVL60:
+ 110:VS4210/VX_OSD.c ****     }
+ 397              		.loc 1 110 9 view .LVU85
+ 398              		.loc 1 112 1 is_stmt 0 view .LVU86
+ 399 00ea AAE7     		b	.L18
+ 400              		.cfi_endproc
+ 401              	.LFE7:
+ 403              		.section	.text.SetOsdPosition,"ax",%progbits
+ 404              		.align	1
+ 405              		.global	SetOsdPosition
+ 406              		.syntax unified
+ 407              		.thumb
+ 408              		.thumb_func
+ 409              		.fpu softvfp
+ 411              	SetOsdPosition:
+ 412              	.LVL61:
+ 413              	.LFB8:
+ 113:VS4210/VX_OSD.c **** 
+ 114:VS4210/VX_OSD.c **** //---------------------------------------------------------------------------
+ 115:VS4210/VX_OSD.c **** void SetOsdPosition(tByte block, tWord X_Pos, tWord Y_Pos)
+ 116:VS4210/VX_OSD.c **** {
+ 414              		.loc 1 116 1 is_stmt 1 view -0
+ 415              		.cfi_startproc
+ 416              		@ args = 0, pretend = 0, frame = 0
+ 417              		@ frame_needed = 0, uses_anonymous_args = 0
+ 418              		.loc 1 116 1 is_stmt 0 view .LVU88
+ 419 0000 38B5     		push	{r3, r4, r5, lr}
+ 420              	.LCFI2:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s 			page 11
+
+
+ 421              		.cfi_def_cfa_offset 16
+ 422              		.cfi_offset 3, -16
+ 423              		.cfi_offset 4, -12
+ 424              		.cfi_offset 5, -8
+ 425              		.cfi_offset 14, -4
+ 117:VS4210/VX_OSD.c ****     tByte XHighByte;
+ 426              		.loc 1 117 5 is_stmt 1 view .LVU89
+ 118:VS4210/VX_OSD.c ****     tByte XLowByte;
+ 427              		.loc 1 118 5 view .LVU90
+ 119:VS4210/VX_OSD.c ****     tByte YHighByte;
+ 428              		.loc 1 119 5 view .LVU91
+ 120:VS4210/VX_OSD.c ****     tByte YLowByte;
+ 429              		.loc 1 120 5 view .LVU92
+ 121:VS4210/VX_OSD.c **** 
+ 122:VS4210/VX_OSD.c ****     XLowByte = (tByte)(X_Pos & 0x00FF);
+ 430              		.loc 1 122 5 view .LVU93
+ 431              		.loc 1 122 14 is_stmt 0 view .LVU94
+ 432 0002 CCB2     		uxtb	r4, r1
+ 433              	.LVL62:
+ 123:VS4210/VX_OSD.c ****     XHighByte = ((tByte)((X_Pos >> 8) & 0x07)) << 4;
+ 434              		.loc 1 123 5 is_stmt 1 view .LVU95
+ 435              		.loc 1 123 39 is_stmt 0 view .LVU96
+ 436 0004 090A     		lsrs	r1, r1, #8
+ 437              	.LVL63:
+ 438              		.loc 1 123 48 view .LVU97
+ 439 0006 0901     		lsls	r1, r1, #4
+ 440              		.loc 1 123 15 view .LVU98
+ 441 0008 01F07001 		and	r1, r1, #112
+ 442              	.LVL64:
+ 124:VS4210/VX_OSD.c **** 
+ 125:VS4210/VX_OSD.c ****     YLowByte = (tByte)(Y_Pos & 0x00FF);
+ 443              		.loc 1 125 5 is_stmt 1 view .LVU99
+ 444              		.loc 1 125 14 is_stmt 0 view .LVU100
+ 445 000c D5B2     		uxtb	r5, r2
+ 446              	.LVL65:
+ 126:VS4210/VX_OSD.c ****     YHighByte = (tByte)((Y_Pos >> 8) & 0x07);
+ 447              		.loc 1 126 5 is_stmt 1 view .LVU101
+ 448              		.loc 1 126 15 is_stmt 0 view .LVU102
+ 449 000e C2F30222 		ubfx	r2, r2, #8, #3
+ 450              	.LVL66:
+ 127:VS4210/VX_OSD.c **** 
+ 128:VS4210/VX_OSD.c ****     switch (block)
+ 451              		.loc 1 128 5 is_stmt 1 view .LVU103
+ 452 0012 0728     		cmp	r0, #7
+ 453 0014 10D8     		bhi	.L32
+ 454 0016 0428     		cmp	r0, #4
+ 455 0018 1DD2     		bcs	.L33
+ 456 001a 0328     		cmp	r0, #3
+ 457 001c 0BD8     		bhi	.L31
+ 129:VS4210/VX_OSD.c ****     {
+ 130:VS4210/VX_OSD.c ****     case (_Title0):
+ 131:VS4210/VX_OSD.c ****     case (_Title1):
+ 132:VS4210/VX_OSD.c ****     case (_Title2):
+ 133:VS4210/VX_OSD.c ****     case (_Title3):
+ 134:VS4210/VX_OSD.c ****         VXISI2CWrite(0x54, XHighByte | YHighByte);
+ 458              		.loc 1 134 9 view .LVU104
+ 459 001e 1143     		orrs	r1, r1, r2
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s 			page 12
+
+
+ 460              	.LVL67:
+ 461              		.loc 1 134 9 is_stmt 0 view .LVU105
+ 462 0020 5420     		movs	r0, #84
+ 463              	.LVL68:
+ 464              		.loc 1 134 9 view .LVU106
+ 465 0022 FFF7FEFF 		bl	VXISI2CWrite
+ 466              	.LVL69:
+ 135:VS4210/VX_OSD.c ****         VXISI2CWrite(0x55, XLowByte);
+ 467              		.loc 1 135 9 is_stmt 1 view .LVU107
+ 468 0026 2146     		mov	r1, r4
+ 469 0028 5520     		movs	r0, #85
+ 470 002a FFF7FEFF 		bl	VXISI2CWrite
+ 471              	.LVL70:
+ 136:VS4210/VX_OSD.c ****         VXISI2CWrite(0x56, YLowByte);
+ 472              		.loc 1 136 9 view .LVU108
+ 473 002e 2946     		mov	r1, r5
+ 474 0030 5620     		movs	r0, #86
+ 475 0032 FFF7FEFF 		bl	VXISI2CWrite
+ 476              	.LVL71:
+ 137:VS4210/VX_OSD.c ****         break;
+ 477              		.loc 1 137 9 view .LVU109
+ 478              	.L31:
+ 138:VS4210/VX_OSD.c ****     case (_Content):
+ 139:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5A, XHighByte | YHighByte);
+ 140:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5B, XLowByte);
+ 141:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5C, YLowByte);
+ 142:VS4210/VX_OSD.c ****         break;
+ 143:VS4210/VX_OSD.c ****     case (_Bar0):
+ 144:VS4210/VX_OSD.c ****     case (_Bar1):
+ 145:VS4210/VX_OSD.c ****     case (_Bar2):
+ 146:VS4210/VX_OSD.c ****     case (_Bar3):
+ 147:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5F, XHighByte | YHighByte);
+ 148:VS4210/VX_OSD.c ****         VXISI2CWrite(0x60, XLowByte);
+ 149:VS4210/VX_OSD.c ****         VXISI2CWrite(0x61, YLowByte);
+ 150:VS4210/VX_OSD.c ****         break;
+ 151:VS4210/VX_OSD.c ****     }
+ 152:VS4210/VX_OSD.c **** }
+ 479              		.loc 1 152 1 is_stmt 0 view .LVU110
+ 480 0036 38BD     		pop	{r3, r4, r5, pc}
+ 481              	.LVL72:
+ 482              	.L32:
+ 128:VS4210/VX_OSD.c ****     {
+ 483              		.loc 1 128 5 view .LVU111
+ 484 0038 0828     		cmp	r0, #8
+ 485 003a FCD1     		bne	.L31
+ 139:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5B, XLowByte);
+ 486              		.loc 1 139 9 is_stmt 1 view .LVU112
+ 487 003c 1143     		orrs	r1, r1, r2
+ 488              	.LVL73:
+ 139:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5B, XLowByte);
+ 489              		.loc 1 139 9 is_stmt 0 view .LVU113
+ 490 003e 5A20     		movs	r0, #90
+ 491              	.LVL74:
+ 139:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5B, XLowByte);
+ 492              		.loc 1 139 9 view .LVU114
+ 493 0040 FFF7FEFF 		bl	VXISI2CWrite
+ 494              	.LVL75:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s 			page 13
+
+
+ 140:VS4210/VX_OSD.c ****         VXISI2CWrite(0x5C, YLowByte);
+ 495              		.loc 1 140 9 is_stmt 1 view .LVU115
+ 496 0044 2146     		mov	r1, r4
+ 497 0046 5B20     		movs	r0, #91
+ 498 0048 FFF7FEFF 		bl	VXISI2CWrite
+ 499              	.LVL76:
+ 141:VS4210/VX_OSD.c ****         break;
+ 500              		.loc 1 141 9 view .LVU116
+ 501 004c 2946     		mov	r1, r5
+ 502 004e 5C20     		movs	r0, #92
+ 503 0050 FFF7FEFF 		bl	VXISI2CWrite
+ 504              	.LVL77:
+ 142:VS4210/VX_OSD.c ****     case (_Bar0):
+ 505              		.loc 1 142 9 view .LVU117
+ 506 0054 EFE7     		b	.L31
+ 507              	.LVL78:
+ 508              	.L33:
+ 147:VS4210/VX_OSD.c ****         VXISI2CWrite(0x60, XLowByte);
+ 509              		.loc 1 147 9 view .LVU118
+ 510 0056 1143     		orrs	r1, r1, r2
+ 511              	.LVL79:
+ 147:VS4210/VX_OSD.c ****         VXISI2CWrite(0x60, XLowByte);
+ 512              		.loc 1 147 9 is_stmt 0 view .LVU119
+ 513 0058 5F20     		movs	r0, #95
+ 514              	.LVL80:
+ 147:VS4210/VX_OSD.c ****         VXISI2CWrite(0x60, XLowByte);
+ 515              		.loc 1 147 9 view .LVU120
+ 516 005a FFF7FEFF 		bl	VXISI2CWrite
+ 517              	.LVL81:
+ 148:VS4210/VX_OSD.c ****         VXISI2CWrite(0x61, YLowByte);
+ 518              		.loc 1 148 9 is_stmt 1 view .LVU121
+ 519 005e 2146     		mov	r1, r4
+ 520 0060 6020     		movs	r0, #96
+ 521 0062 FFF7FEFF 		bl	VXISI2CWrite
+ 522              	.LVL82:
+ 149:VS4210/VX_OSD.c ****         break;
+ 523              		.loc 1 149 9 view .LVU122
+ 524 0066 2946     		mov	r1, r5
+ 525 0068 6120     		movs	r0, #97
+ 526 006a FFF7FEFF 		bl	VXISI2CWrite
+ 527              	.LVL83:
+ 150:VS4210/VX_OSD.c ****     }
+ 528              		.loc 1 150 9 view .LVU123
+ 529              		.loc 1 152 1 is_stmt 0 view .LVU124
+ 530 006e E2E7     		b	.L31
+ 531              		.cfi_endproc
+ 532              	.LFE8:
+ 534              		.section	.text.OsdDumpString,"ax",%progbits
+ 535              		.align	1
+ 536              		.global	OsdDumpString
+ 537              		.syntax unified
+ 538              		.thumb
+ 539              		.thumb_func
+ 540              		.fpu softvfp
+ 542              	OsdDumpString:
+ 543              	.LVL84:
+ 544              	.LFB9:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s 			page 14
+
+
+ 153:VS4210/VX_OSD.c **** 
+ 154:VS4210/VX_OSD.c **** //---------------------------------------------------------------------------
+ 155:VS4210/VX_OSD.c **** void OsdDumpString(tByte OSDaddr, tcByte /* tByte*/ *Strdata)
+ 156:VS4210/VX_OSD.c **** {
+ 545              		.loc 1 156 1 is_stmt 1 view -0
+ 546              		.cfi_startproc
+ 547              		@ args = 0, pretend = 0, frame = 0
+ 548              		@ frame_needed = 0, uses_anonymous_args = 0
+ 549              		.loc 1 156 1 is_stmt 0 view .LVU126
+ 550 0000 70B5     		push	{r4, r5, r6, lr}
+ 551              	.LCFI3:
+ 552              		.cfi_def_cfa_offset 16
+ 553              		.cfi_offset 4, -16
+ 554              		.cfi_offset 5, -12
+ 555              		.cfi_offset 6, -8
+ 556              		.cfi_offset 14, -4
+ 557 0002 0546     		mov	r5, r0
+ 157:VS4210/VX_OSD.c ****     tByte Lan;
+ 558              		.loc 1 157 5 is_stmt 1 view .LVU127
+ 158:VS4210/VX_OSD.c ****     Lan = Strdata[0];
+ 559              		.loc 1 158 5 view .LVU128
+ 560              		.loc 1 158 9 is_stmt 0 view .LVU129
+ 561 0004 0C46     		mov	r4, r1
+ 562 0006 14F8016B 		ldrb	r6, [r4], #1	@ zero_extendqisi2
+ 563              	.LVL85:
+ 159:VS4210/VX_OSD.c ****     VXISI2CWrite(0xfd, 0x10);
+ 564              		.loc 1 159 5 is_stmt 1 view .LVU130
+ 565 000a 1021     		movs	r1, #16
+ 566              	.LVL86:
+ 567              		.loc 1 159 5 is_stmt 0 view .LVU131
+ 568 000c FD20     		movs	r0, #253
+ 569              	.LVL87:
+ 570              		.loc 1 159 5 view .LVU132
+ 571 000e FFF7FEFF 		bl	VXISI2CWrite
+ 572              	.LVL88:
+ 160:VS4210/VX_OSD.c ****     VXISI2CWrite(0xfe, OSDaddr);
+ 573              		.loc 1 160 5 is_stmt 1 view .LVU133
+ 574 0012 2946     		mov	r1, r5
+ 575 0014 FE20     		movs	r0, #254
+ 576 0016 FFF7FEFF 		bl	VXISI2CWrite
+ 577              	.LVL89:
+ 161:VS4210/VX_OSD.c ****     Strdata++;
+ 578              		.loc 1 161 5 view .LVU134
+ 162:VS4210/VX_OSD.c ****     I2CMultiWrite(VS4210_ADDR, 0xff, Lan, Strdata);
+ 579              		.loc 1 162 5 view .LVU135
+ 580 001a 044B     		ldr	r3, .L41
+ 581 001c 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 582 001e 2346     		mov	r3, r4
+ 583 0020 3246     		mov	r2, r6
+ 584 0022 FF21     		movs	r1, #255
+ 585 0024 FFF7FEFF 		bl	I2CMultiWrite
+ 586              	.LVL90:
+ 163:VS4210/VX_OSD.c **** }
+ 587              		.loc 1 163 1 is_stmt 0 view .LVU136
+ 588 0028 70BD     		pop	{r4, r5, r6, pc}
+ 589              	.LVL91:
+ 590              	.L42:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s 			page 15
+
+
+ 591              		.loc 1 163 1 view .LVU137
+ 592 002a 00BF     		.align	2
+ 593              	.L41:
+ 594 002c 00000000 		.word	VS4210_ADDR
+ 595              		.cfi_endproc
+ 596              	.LFE9:
+ 598              		.section	.text.OsdDumpAttribute,"ax",%progbits
+ 599              		.align	1
+ 600              		.global	OsdDumpAttribute
+ 601              		.syntax unified
+ 602              		.thumb
+ 603              		.thumb_func
+ 604              		.fpu softvfp
+ 606              	OsdDumpAttribute:
+ 607              	.LVL92:
+ 608              	.LFB10:
+ 164:VS4210/VX_OSD.c **** 
+ 165:VS4210/VX_OSD.c **** //---------------------------------------------------------------------------
+ 166:VS4210/VX_OSD.c **** void OsdDumpAttribute(tByte OSDaddr, tcByte /*tByte*/ *Strdata, tByte index)
+ 167:VS4210/VX_OSD.c **** {
+ 609              		.loc 1 167 1 is_stmt 1 view -0
+ 610              		.cfi_startproc
+ 611              		@ args = 0, pretend = 0, frame = 8
+ 612              		@ frame_needed = 0, uses_anonymous_args = 0
+ 613              		.loc 1 167 1 is_stmt 0 view .LVU139
+ 614 0000 30B5     		push	{r4, r5, lr}
+ 615              	.LCFI4:
+ 616              		.cfi_def_cfa_offset 12
+ 617              		.cfi_offset 4, -12
+ 618              		.cfi_offset 5, -8
+ 619              		.cfi_offset 14, -4
+ 620 0002 83B0     		sub	sp, sp, #12
+ 621              	.LCFI5:
+ 622              		.cfi_def_cfa_offset 24
+ 623 0004 0446     		mov	r4, r0
+ 624 0006 8DF80720 		strb	r2, [sp, #7]
+ 168:VS4210/VX_OSD.c ****     tByte Lan;
+ 625              		.loc 1 168 5 is_stmt 1 view .LVU140
+ 169:VS4210/VX_OSD.c ****     Lan = Strdata[0];
+ 626              		.loc 1 169 5 view .LVU141
+ 627              		.loc 1 169 9 is_stmt 0 view .LVU142
+ 628 000a 0D78     		ldrb	r5, [r1]	@ zero_extendqisi2
+ 629              	.LVL93:
+ 170:VS4210/VX_OSD.c ****     VXISI2CWrite(0xfd, 0x70);
+ 630              		.loc 1 170 5 is_stmt 1 view .LVU143
+ 631 000c 7021     		movs	r1, #112
+ 632              	.LVL94:
+ 633              		.loc 1 170 5 is_stmt 0 view .LVU144
+ 634 000e FD20     		movs	r0, #253
+ 635              	.LVL95:
+ 636              		.loc 1 170 5 view .LVU145
+ 637 0010 FFF7FEFF 		bl	VXISI2CWrite
+ 638              	.LVL96:
+ 171:VS4210/VX_OSD.c ****     VXISI2CWrite(0xfe, OSDaddr);
+ 639              		.loc 1 171 5 is_stmt 1 view .LVU146
+ 640 0014 2146     		mov	r1, r4
+ 641 0016 FE20     		movs	r0, #254
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s 			page 16
+
+
+ 642 0018 FFF7FEFF 		bl	VXISI2CWrite
+ 643              	.LVL97:
+ 172:VS4210/VX_OSD.c ****     I2CMultiAttribute(VS4210_ADDR, 0xff, Lan, &index);
+ 644              		.loc 1 172 5 view .LVU147
+ 645 001c 044B     		ldr	r3, .L45
+ 646 001e 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 647 0020 0DF10703 		add	r3, sp, #7
+ 648 0024 2A46     		mov	r2, r5
+ 649 0026 FF21     		movs	r1, #255
+ 650 0028 FFF7FEFF 		bl	I2CMultiAttribute
+ 651              	.LVL98:
+ 173:VS4210/VX_OSD.c **** }
+ 652              		.loc 1 173 1 is_stmt 0 view .LVU148
+ 653 002c 03B0     		add	sp, sp, #12
+ 654              	.LCFI6:
+ 655              		.cfi_def_cfa_offset 12
+ 656              		@ sp needed
+ 657 002e 30BD     		pop	{r4, r5, pc}
+ 658              	.LVL99:
+ 659              	.L46:
+ 660              		.loc 1 173 1 view .LVU149
+ 661              		.align	2
+ 662              	.L45:
+ 663 0030 00000000 		.word	VS4210_ADDR
+ 664              		.cfi_endproc
+ 665              	.LFE10:
+ 667              		.section	.text.OsdDumpAttributeHS,"ax",%progbits
+ 668              		.align	1
+ 669              		.global	OsdDumpAttributeHS
+ 670              		.syntax unified
+ 671              		.thumb
+ 672              		.thumb_func
+ 673              		.fpu softvfp
+ 675              	OsdDumpAttributeHS:
+ 676              	.LVL100:
+ 677              	.LFB11:
+ 174:VS4210/VX_OSD.c **** 
+ 175:VS4210/VX_OSD.c **** void OsdDumpAttributeHS(tByte OSDaddr, tcByte *Strdata, tByte index, tByte Len)
+ 176:VS4210/VX_OSD.c **** {
+ 678              		.loc 1 176 1 is_stmt 1 view -0
+ 679              		.cfi_startproc
+ 680              		@ args = 0, pretend = 0, frame = 8
+ 681              		@ frame_needed = 0, uses_anonymous_args = 0
+ 682              		.loc 1 176 1 is_stmt 0 view .LVU151
+ 683 0000 30B5     		push	{r4, r5, lr}
+ 684              	.LCFI7:
+ 685              		.cfi_def_cfa_offset 12
+ 686              		.cfi_offset 4, -12
+ 687              		.cfi_offset 5, -8
+ 688              		.cfi_offset 14, -4
+ 689 0002 83B0     		sub	sp, sp, #12
+ 690              	.LCFI8:
+ 691              		.cfi_def_cfa_offset 24
+ 692 0004 0546     		mov	r5, r0
+ 693 0006 1C46     		mov	r4, r3
+ 694 0008 8DF80720 		strb	r2, [sp, #7]
+ 177:VS4210/VX_OSD.c ****     tByte Lan;
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s 			page 17
+
+
+ 695              		.loc 1 177 5 is_stmt 1 view .LVU152
+ 178:VS4210/VX_OSD.c ****     Lan = Len;
+ 696              		.loc 1 178 5 view .LVU153
+ 697              	.LVL101:
+ 179:VS4210/VX_OSD.c ****     VXISI2CWrite(0xfd, 0x70);
+ 698              		.loc 1 179 5 view .LVU154
+ 699 000c 7021     		movs	r1, #112
+ 700              	.LVL102:
+ 701              		.loc 1 179 5 is_stmt 0 view .LVU155
+ 702 000e FD20     		movs	r0, #253
+ 703              	.LVL103:
+ 704              		.loc 1 179 5 view .LVU156
+ 705 0010 FFF7FEFF 		bl	VXISI2CWrite
+ 706              	.LVL104:
+ 180:VS4210/VX_OSD.c ****     VXISI2CWrite(0xfe, OSDaddr);
+ 707              		.loc 1 180 5 is_stmt 1 view .LVU157
+ 708 0014 2946     		mov	r1, r5
+ 709 0016 FE20     		movs	r0, #254
+ 710 0018 FFF7FEFF 		bl	VXISI2CWrite
+ 711              	.LVL105:
+ 181:VS4210/VX_OSD.c ****     I2CMultiAttribute(VS4210_ADDR, 0xff, Lan, &index);
+ 712              		.loc 1 181 5 view .LVU158
+ 713 001c 044B     		ldr	r3, .L49
+ 714 001e 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 715 0020 0DF10703 		add	r3, sp, #7
+ 716 0024 2246     		mov	r2, r4
+ 717 0026 FF21     		movs	r1, #255
+ 718 0028 FFF7FEFF 		bl	I2CMultiAttribute
+ 719              	.LVL106:
+ 182:VS4210/VX_OSD.c **** }
+ 720              		.loc 1 182 1 is_stmt 0 view .LVU159
+ 721 002c 03B0     		add	sp, sp, #12
+ 722              	.LCFI9:
+ 723              		.cfi_def_cfa_offset 12
+ 724              		@ sp needed
+ 725 002e 30BD     		pop	{r4, r5, pc}
+ 726              	.LVL107:
+ 727              	.L50:
+ 728              		.loc 1 182 1 view .LVU160
+ 729              		.align	2
+ 730              	.L49:
+ 731 0030 00000000 		.word	VS4210_ADDR
+ 732              		.cfi_endproc
+ 733              	.LFE11:
+ 735              		.section	.text.VXIS_fSetOsdOnOff,"ax",%progbits
+ 736              		.align	1
+ 737              		.global	VXIS_fSetOsdOnOff
+ 738              		.syntax unified
+ 739              		.thumb
+ 740              		.thumb_func
+ 741              		.fpu softvfp
+ 743              	VXIS_fSetOsdOnOff:
+ 744              	.LVL108:
+ 745              	.LFB12:
+ 183:VS4210/VX_OSD.c **** 
+ 184:VS4210/VX_OSD.c **** //---------------------------------------------------------------------------
+ 185:VS4210/VX_OSD.c **** void VXIS_fSetOsdOnOff(tByte ch, tByte block)
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s 			page 18
+
+
+ 186:VS4210/VX_OSD.c **** {
+ 746              		.loc 1 186 1 is_stmt 1 view -0
+ 747              		.cfi_startproc
+ 748              		@ args = 0, pretend = 0, frame = 0
+ 749              		@ frame_needed = 0, uses_anonymous_args = 0
+ 750              		.loc 1 186 1 is_stmt 0 view .LVU162
+ 751 0000 38B5     		push	{r3, r4, r5, lr}
+ 752              	.LCFI10:
+ 753              		.cfi_def_cfa_offset 16
+ 754              		.cfi_offset 3, -16
+ 755              		.cfi_offset 4, -12
+ 756              		.cfi_offset 5, -8
+ 757              		.cfi_offset 14, -4
+ 758 0002 0446     		mov	r4, r0
+ 759 0004 0D46     		mov	r5, r1
+ 187:VS4210/VX_OSD.c ****     tByte temp;
+ 760              		.loc 1 187 5 is_stmt 1 view .LVU163
+ 188:VS4210/VX_OSD.c ****     temp = VXISI2CRead(0x53);
+ 761              		.loc 1 188 5 view .LVU164
+ 762              		.loc 1 188 12 is_stmt 0 view .LVU165
+ 763 0006 5320     		movs	r0, #83
+ 764              	.LVL109:
+ 765              		.loc 1 188 12 view .LVU166
+ 766 0008 FFF7FEFF 		bl	VXISI2CRead
+ 767              	.LVL110:
+ 189:VS4210/VX_OSD.c ****     temp = (temp & 0x3F) | (ch << 6);
+ 768              		.loc 1 189 5 is_stmt 1 view .LVU167
+ 769              		.loc 1 189 18 is_stmt 0 view .LVU168
+ 770 000c 00F03F01 		and	r1, r0, #63
+ 771              		.loc 1 189 32 view .LVU169
+ 772 0010 A401     		lsls	r4, r4, #6
+ 773              		.loc 1 189 26 view .LVU170
+ 774 0012 64B2     		sxtb	r4, r4
+ 775 0014 2143     		orrs	r1, r1, r4
+ 776              	.LVL111:
+ 190:VS4210/VX_OSD.c ****     VXISI2CWrite(0x53, temp);
+ 777              		.loc 1 190 5 is_stmt 1 view .LVU171
+ 778 0016 C9B2     		uxtb	r1, r1
+ 779              		.loc 1 190 5 is_stmt 0 view .LVU172
+ 780 0018 5320     		movs	r0, #83
+ 781 001a FFF7FEFF 		bl	VXISI2CWrite
+ 782              	.LVL112:
+ 191:VS4210/VX_OSD.c **** 
+ 192:VS4210/VX_OSD.c ****     temp = VXISI2CRead(0x5E);
+ 783              		.loc 1 192 5 is_stmt 1 view .LVU173
+ 784              		.loc 1 192 12 is_stmt 0 view .LVU174
+ 785 001e 5E20     		movs	r0, #94
+ 786 0020 FFF7FEFF 		bl	VXISI2CRead
+ 787              	.LVL113:
+ 193:VS4210/VX_OSD.c ****     temp = (temp & 0x3F) | (ch << 6);
+ 788              		.loc 1 193 5 is_stmt 1 view .LVU175
+ 789              		.loc 1 193 18 is_stmt 0 view .LVU176
+ 790 0024 00F03F00 		and	r0, r0, #63
+ 791              	.LVL114:
+ 792              		.loc 1 193 26 view .LVU177
+ 793 0028 0443     		orrs	r4, r4, r0
+ 794              	.LVL115:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s 			page 19
+
+
+ 194:VS4210/VX_OSD.c ****     VXISI2CWrite(0x5E, temp);
+ 795              		.loc 1 194 5 is_stmt 1 view .LVU178
+ 796 002a E1B2     		uxtb	r1, r4
+ 797 002c 5E20     		movs	r0, #94
+ 798 002e FFF7FEFF 		bl	VXISI2CWrite
+ 799              	.LVL116:
+ 195:VS4210/VX_OSD.c **** 
+ 196:VS4210/VX_OSD.c ****     temp = VXISI2CRead(0x51);
+ 800              		.loc 1 196 5 view .LVU179
+ 801              		.loc 1 196 12 is_stmt 0 view .LVU180
+ 802 0032 5120     		movs	r0, #81
+ 803 0034 FFF7FEFF 		bl	VXISI2CRead
+ 804              	.LVL117:
+ 197:VS4210/VX_OSD.c ****     if ((block & WINZOOMx2) == 0)
+ 805              		.loc 1 197 5 is_stmt 1 view .LVU181
+ 806              		.loc 1 197 8 is_stmt 0 view .LVU182
+ 807 0038 15F0080F 		tst	r5, #8
+ 808 003c 01D1     		bne	.L52
+ 198:VS4210/VX_OSD.c ****         temp &= 0xf7;
+ 809              		.loc 1 198 9 is_stmt 1 view .LVU183
+ 810              		.loc 1 198 14 is_stmt 0 view .LVU184
+ 811 003e 00F0F700 		and	r0, r0, #247
+ 812              	.LVL118:
+ 813              	.L52:
+ 199:VS4210/VX_OSD.c ****     // temp=(temp&0xf8)|(block&0x07);//mask by ryan@20200523
+ 200:VS4210/VX_OSD.c **** 
+ 201:VS4210/VX_OSD.c ****     temp = (temp & 0xf8) | (block & 0x0F);
+ 814              		.loc 1 201 5 is_stmt 1 view .LVU185
+ 815              		.loc 1 201 18 is_stmt 0 view .LVU186
+ 816 0042 20F00700 		bic	r0, r0, #7
+ 817              	.LVL119:
+ 818              		.loc 1 201 18 view .LVU187
+ 819 0046 40B2     		sxtb	r0, r0
+ 820              		.loc 1 201 35 view .LVU188
+ 821 0048 05F00F01 		and	r1, r5, #15
+ 822              		.loc 1 201 26 view .LVU189
+ 823 004c 0143     		orrs	r1, r1, r0
+ 824              	.LVL120:
+ 202:VS4210/VX_OSD.c ****     VXISI2CWrite(0x51, temp);
+ 825              		.loc 1 202 5 is_stmt 1 view .LVU190
+ 826 004e C9B2     		uxtb	r1, r1
+ 827              		.loc 1 202 5 is_stmt 0 view .LVU191
+ 828 0050 5120     		movs	r0, #81
+ 829 0052 FFF7FEFF 		bl	VXISI2CWrite
+ 830              	.LVL121:
+ 203:VS4210/VX_OSD.c **** }
+ 831              		.loc 1 203 1 view .LVU192
+ 832 0056 38BD     		pop	{r3, r4, r5, pc}
+ 833              		.loc 1 203 1 view .LVU193
+ 834              		.cfi_endproc
+ 835              	.LFE12:
+ 837              		.section	.text.VXIS_fSetContentOsdOnOff,"ax",%progbits
+ 838              		.align	1
+ 839              		.global	VXIS_fSetContentOsdOnOff
+ 840              		.syntax unified
+ 841              		.thumb
+ 842              		.thumb_func
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s 			page 20
+
+
+ 843              		.fpu softvfp
+ 845              	VXIS_fSetContentOsdOnOff:
+ 846              	.LVL122:
+ 847              	.LFB13:
+ 204:VS4210/VX_OSD.c **** 
+ 205:VS4210/VX_OSD.c **** void VXIS_fSetContentOsdOnOff(tByte block)
+ 206:VS4210/VX_OSD.c **** {
+ 848              		.loc 1 206 1 is_stmt 1 view -0
+ 849              		.cfi_startproc
+ 850              		@ args = 0, pretend = 0, frame = 0
+ 851              		@ frame_needed = 0, uses_anonymous_args = 0
+ 852              		.loc 1 206 1 is_stmt 0 view .LVU195
+ 853 0000 10B5     		push	{r4, lr}
+ 854              	.LCFI11:
+ 855              		.cfi_def_cfa_offset 8
+ 856              		.cfi_offset 4, -8
+ 857              		.cfi_offset 14, -4
+ 858 0002 0446     		mov	r4, r0
+ 207:VS4210/VX_OSD.c ****     tByte temp;
+ 859              		.loc 1 207 5 is_stmt 1 view .LVU196
+ 208:VS4210/VX_OSD.c ****     temp = VXISI2CRead(0x51);
+ 860              		.loc 1 208 5 view .LVU197
+ 861              		.loc 1 208 12 is_stmt 0 view .LVU198
+ 862 0004 5120     		movs	r0, #81
+ 863              	.LVL123:
+ 864              		.loc 1 208 12 view .LVU199
+ 865 0006 FFF7FEFF 		bl	VXISI2CRead
+ 866              	.LVL124:
+ 209:VS4210/VX_OSD.c ****     temp = temp & 0xfD;
+ 867              		.loc 1 209 5 is_stmt 1 view .LVU200
+ 868              		.loc 1 209 10 is_stmt 0 view .LVU201
+ 869 000a 00F0FD01 		and	r1, r0, #253
+ 870              	.LVL125:
+ 210:VS4210/VX_OSD.c ****     if (block > 0)
+ 871              		.loc 1 210 5 is_stmt 1 view .LVU202
+ 872              		.loc 1 210 8 is_stmt 0 view .LVU203
+ 873 000e 0CB1     		cbz	r4, .L55
+ 211:VS4210/VX_OSD.c ****     {
+ 212:VS4210/VX_OSD.c ****         temp = temp | _ContentOn;
+ 874              		.loc 1 212 9 is_stmt 1 view .LVU204
+ 875              		.loc 1 212 14 is_stmt 0 view .LVU205
+ 876 0010 41F00201 		orr	r1, r1, #2
+ 877              	.LVL126:
+ 878              	.L55:
+ 213:VS4210/VX_OSD.c ****     }
+ 214:VS4210/VX_OSD.c ****     VXISI2CWrite(0x51, temp | WINZOOMx2);
+ 879              		.loc 1 214 5 is_stmt 1 view .LVU206
+ 880 0014 41F00801 		orr	r1, r1, #8
+ 881              	.LVL127:
+ 882              		.loc 1 214 5 is_stmt 0 view .LVU207
+ 883 0018 5120     		movs	r0, #81
+ 884 001a FFF7FEFF 		bl	VXISI2CWrite
+ 885              	.LVL128:
+ 215:VS4210/VX_OSD.c **** }
+ 886              		.loc 1 215 1 view .LVU208
+ 887 001e 10BD     		pop	{r4, pc}
+ 888              		.cfi_endproc
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s 			page 21
+
+
+ 889              	.LFE13:
+ 891              		.section	.text.setTransParentIndex,"ax",%progbits
+ 892              		.align	1
+ 893              		.global	setTransParentIndex
+ 894              		.syntax unified
+ 895              		.thumb
+ 896              		.thumb_func
+ 897              		.fpu softvfp
+ 899              	setTransParentIndex:
+ 900              	.LVL129:
+ 901              	.LFB14:
+ 216:VS4210/VX_OSD.c **** 
+ 217:VS4210/VX_OSD.c **** //---------------------------------------------------------------------------
+ 218:VS4210/VX_OSD.c **** /*
+ 219:VS4210/VX_OSD.c **** void VXIS_fSetOsdx2(bit OnOff)
+ 220:VS4210/VX_OSD.c **** {
+ 221:VS4210/VX_OSD.c ****     tByte temp=0;
+ 222:VS4210/VX_OSD.c ****     temp=VXISI2CRead(0x51);
+ 223:VS4210/VX_OSD.c ****     if (OnOff)
+ 224:VS4210/VX_OSD.c ****         temp=(temp&0xf7)|(0x08);
+ 225:VS4210/VX_OSD.c ****     else
+ 226:VS4210/VX_OSD.c ****         temp=temp&0xf7;
+ 227:VS4210/VX_OSD.c ****     VXISI2CWrite(0x51,temp);
+ 228:VS4210/VX_OSD.c **** }
+ 229:VS4210/VX_OSD.c **** */
+ 230:VS4210/VX_OSD.c **** //---------------------------------------------------------------------------
+ 231:VS4210/VX_OSD.c **** void setTransParentIndex(tByte index)
+ 232:VS4210/VX_OSD.c **** {
+ 902              		.loc 1 232 1 is_stmt 1 view -0
+ 903              		.cfi_startproc
+ 904              		@ args = 0, pretend = 0, frame = 0
+ 905              		@ frame_needed = 0, uses_anonymous_args = 0
+ 906              		.loc 1 232 1 is_stmt 0 view .LVU210
+ 907 0000 10B5     		push	{r4, lr}
+ 908              	.LCFI12:
+ 909              		.cfi_def_cfa_offset 8
+ 910              		.cfi_offset 4, -8
+ 911              		.cfi_offset 14, -4
+ 912 0002 0446     		mov	r4, r0
+ 233:VS4210/VX_OSD.c ****     tByte temp;
+ 913              		.loc 1 233 5 is_stmt 1 view .LVU211
+ 234:VS4210/VX_OSD.c ****     temp = VXISI2CRead(0x69);
+ 914              		.loc 1 234 5 view .LVU212
+ 915              		.loc 1 234 12 is_stmt 0 view .LVU213
+ 916 0004 6920     		movs	r0, #105
+ 917              	.LVL130:
+ 918              		.loc 1 234 12 view .LVU214
+ 919 0006 FFF7FEFF 		bl	VXISI2CRead
+ 920              	.LVL131:
+ 235:VS4210/VX_OSD.c ****     temp = (temp & 0x0f) | (index << 4);
+ 921              		.loc 1 235 5 is_stmt 1 view .LVU215
+ 922              		.loc 1 235 18 is_stmt 0 view .LVU216
+ 923 000a 00F00F01 		and	r1, r0, #15
+ 924              		.loc 1 235 26 view .LVU217
+ 925 000e 41EA0411 		orr	r1, r1, r4, lsl #4
+ 926              	.LVL132:
+ 236:VS4210/VX_OSD.c ****     VXISI2CWrite(0x69, temp);
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s 			page 22
+
+
+ 927              		.loc 1 236 5 is_stmt 1 view .LVU218
+ 928 0012 C9B2     		uxtb	r1, r1
+ 929              		.loc 1 236 5 is_stmt 0 view .LVU219
+ 930 0014 6920     		movs	r0, #105
+ 931 0016 FFF7FEFF 		bl	VXISI2CWrite
+ 932              	.LVL133:
+ 237:VS4210/VX_OSD.c ****     VXISI2CWrite(0x58, 0x0); // VS4210 //black content ryan@20200523
+ 933              		.loc 1 237 5 is_stmt 1 view .LVU220
+ 934 001a 0021     		movs	r1, #0
+ 935 001c 5820     		movs	r0, #88
+ 936 001e FFF7FEFF 		bl	VXISI2CWrite
+ 937              	.LVL134:
+ 238:VS4210/VX_OSD.c **** }
+ 938              		.loc 1 238 1 is_stmt 0 view .LVU221
+ 939 0022 10BD     		pop	{r4, pc}
+ 940              		.loc 1 238 1 view .LVU222
+ 941              		.cfi_endproc
+ 942              	.LFE14:
+ 944              		.global	DisplayedOSD
+ 945              		.section	.bss.DisplayedOSD,"aw",%nobits
+ 946              		.set	.LANCHOR0,. + 0
+ 949              	DisplayedOSD:
+ 950 0000 00       		.space	1
+ 951              		.text
+ 952              	.Letext0:
+ 953              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 954              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 955              		.file 4 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\lib\\gcc\\arm-none-eabi
+ 956              		.file 5 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 957              		.file 6 "VS4210/VXIS_Extern_Define.h"
+ 958              		.file 7 "sw_i2c/VX_swi2c.h"
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s 			page 23
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 VX_OSD.c
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:16     .text.ClearDisplayedOSD:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:24     .text.ClearDisplayedOSD:00000000 ClearDisplayedOSD
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:44     .text.ClearDisplayedOSD:0000000c $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:49     .text.SetDisplayedOSD:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:56     .text.SetDisplayedOSD:00000000 SetDisplayedOSD
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:77     .text.SetDisplayedOSD:0000000c $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:82     .text.GetDisplayedOSD:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:89     .text.GetDisplayedOSD:00000000 GetDisplayedOSD
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:104    .text.GetDisplayedOSD:00000008 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:109    .text.SetOsdStartAddress:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:116    .text.SetOsdStartAddress:00000000 SetOsdStartAddress
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:174    .text.SetOsdSize:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:181    .text.SetOsdSize:00000000 SetOsdSize
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:231    .text.SetOsdSize:00000028 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:404    .text.SetOsdPosition:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:411    .text.SetOsdPosition:00000000 SetOsdPosition
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:535    .text.OsdDumpString:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:542    .text.OsdDumpString:00000000 OsdDumpString
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:594    .text.OsdDumpString:0000002c $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:599    .text.OsdDumpAttribute:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:606    .text.OsdDumpAttribute:00000000 OsdDumpAttribute
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:663    .text.OsdDumpAttribute:00000030 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:668    .text.OsdDumpAttributeHS:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:675    .text.OsdDumpAttributeHS:00000000 OsdDumpAttributeHS
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:731    .text.OsdDumpAttributeHS:00000030 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:736    .text.VXIS_fSetOsdOnOff:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:743    .text.VXIS_fSetOsdOnOff:00000000 VXIS_fSetOsdOnOff
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:838    .text.VXIS_fSetContentOsdOnOff:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:845    .text.VXIS_fSetContentOsdOnOff:00000000 VXIS_fSetContentOsdOnOff
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:892    .text.setTransParentIndex:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:899    .text.setTransParentIndex:00000000 setTransParentIndex
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:949    .bss.DisplayedOSD:00000000 DisplayedOSD
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:950    .bss.DisplayedOSD:00000000 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:240    .text.SetOsdSize:00000031 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\cc2AsrEm.s:240    .text.SetOsdSize:00000032 $t
+
+UNDEFINED SYMBOLS
+VXISI2CWrite
+VXISI2CRead
+I2CMultiWrite
+VS4210_ADDR
+I2CMultiAttribute

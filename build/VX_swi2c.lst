@@ -1,0 +1,1692 @@
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"VX_swi2c.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.msleep,"ax",%progbits
+  16              		.align	1
+  17              		.global	msleep
+  18              		.arch armv7-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	msleep:
+  25              	.LVL0:
+  26              	.LFB68:
+  27              		.file 1 "sw_i2c/VX_swi2c.c"
+   1:sw_i2c/VX_swi2c.c **** #include "stm32f1xx_hal.h"
+   2:sw_i2c/VX_swi2c.c **** #include <stdio.h>
+   3:sw_i2c/VX_swi2c.c **** #include <unistd.h>
+   4:sw_i2c/VX_swi2c.c **** #include <string.h> /* memset */
+   5:sw_i2c/VX_swi2c.c **** 
+   6:sw_i2c/VX_swi2c.c **** #include <sw_i2c0.h>
+   7:sw_i2c/VX_swi2c.c **** #include <sw_i2c1.h>
+   8:sw_i2c/VX_swi2c.c **** #include <sw_i2c2.h>
+   9:sw_i2c/VX_swi2c.c **** #include "VX_swi2c.h"
+  10:sw_i2c/VX_swi2c.c **** 
+  11:sw_i2c/VX_swi2c.c **** extern tByte TVII2CAddress;
+  12:sw_i2c/VX_swi2c.c **** tByte gskipsleepflg;
+  13:sw_i2c/VX_swi2c.c **** extern WORD BAT_VOLTAGE, BAT_ADC;
+  14:sw_i2c/VX_swi2c.c **** 
+  15:sw_i2c/VX_swi2c.c **** #ifndef ITE66121_ADDR
+  16:sw_i2c/VX_swi2c.c **** #define ITE66121_ADDR 0x98
+  17:sw_i2c/VX_swi2c.c **** #endif
+  18:sw_i2c/VX_swi2c.c **** 
+  19:sw_i2c/VX_swi2c.c **** // Sleep
+  20:sw_i2c/VX_swi2c.c **** void msleep(unsigned int i)
+  21:sw_i2c/VX_swi2c.c **** {
+  28              		.loc 1 21 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 21 1 is_stmt 0 view .LVU1
+  33 0000 08B5     		push	{r3, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 3, -8
+  37              		.cfi_offset 14, -4
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 2
+
+
+  22:sw_i2c/VX_swi2c.c ****     if (gskipsleepflg == 0)
+  38              		.loc 1 22 5 is_stmt 1 view .LVU2
+  39              		.loc 1 22 23 is_stmt 0 view .LVU3
+  40 0002 034B     		ldr	r3, .L5
+  41 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  42              		.loc 1 22 8 view .LVU4
+  43 0006 03B1     		cbz	r3, .L4
+  44              	.LVL1:
+  45              	.L1:
+  23:sw_i2c/VX_swi2c.c ****     {
+  24:sw_i2c/VX_swi2c.c ****         HAL_Delay(i);
+  25:sw_i2c/VX_swi2c.c ****         // printf("VS4210_ADDR=0x%02x, msleep=%d\r\n",(int)VS4210_ADDR , i) ;
+  26:sw_i2c/VX_swi2c.c ****         // usleep(i*1000);
+  27:sw_i2c/VX_swi2c.c ****     }
+  28:sw_i2c/VX_swi2c.c **** }
+  46              		.loc 1 28 1 view .LVU5
+  47 0008 08BD     		pop	{r3, pc}
+  48              	.LVL2:
+  49              	.L4:
+  24:sw_i2c/VX_swi2c.c ****         // printf("VS4210_ADDR=0x%02x, msleep=%d\r\n",(int)VS4210_ADDR , i) ;
+  50              		.loc 1 24 9 is_stmt 1 view .LVU6
+  51 000a FFF7FEFF 		bl	HAL_Delay
+  52              	.LVL3:
+  53              		.loc 1 28 1 is_stmt 0 view .LVU7
+  54 000e FBE7     		b	.L1
+  55              	.L6:
+  56              		.align	2
+  57              	.L5:
+  58 0010 00000000 		.word	gskipsleepflg
+  59              		.cfi_endproc
+  60              	.LFE68:
+  62              		.section	.text.delayTX1ms,"ax",%progbits
+  63              		.align	1
+  64              		.global	delayTX1ms
+  65              		.syntax unified
+  66              		.thumb
+  67              		.thumb_func
+  68              		.fpu softvfp
+  70              	delayTX1ms:
+  71              	.LVL4:
+  72              	.LFB69:
+  29:sw_i2c/VX_swi2c.c **** 
+  30:sw_i2c/VX_swi2c.c **** void delayTX1ms(unsigned int i)
+  31:sw_i2c/VX_swi2c.c **** {
+  73              		.loc 1 31 1 is_stmt 1 view -0
+  74              		.cfi_startproc
+  75              		@ args = 0, pretend = 0, frame = 0
+  76              		@ frame_needed = 0, uses_anonymous_args = 0
+  77              		.loc 1 31 1 is_stmt 0 view .LVU9
+  78 0000 08B5     		push	{r3, lr}
+  79              	.LCFI1:
+  80              		.cfi_def_cfa_offset 8
+  81              		.cfi_offset 3, -8
+  82              		.cfi_offset 14, -4
+  32:sw_i2c/VX_swi2c.c ****     HAL_Delay(i);
+  83              		.loc 1 32 5 is_stmt 1 view .LVU10
+  84 0002 FFF7FEFF 		bl	HAL_Delay
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 3
+
+
+  85              	.LVL5:
+  33:sw_i2c/VX_swi2c.c **** }
+  86              		.loc 1 33 1 is_stmt 0 view .LVU11
+  87 0006 08BD     		pop	{r3, pc}
+  88              		.cfi_endproc
+  89              	.LFE69:
+  91              		.section	.text.VXISI2CRead,"ax",%progbits
+  92              		.align	1
+  93              		.global	VXISI2CRead
+  94              		.syntax unified
+  95              		.thumb
+  96              		.thumb_func
+  97              		.fpu softvfp
+  99              	VXISI2CRead:
+ 100              	.LVL6:
+ 101              	.LFB70:
+  34:sw_i2c/VX_swi2c.c **** 
+  35:sw_i2c/VX_swi2c.c **** uint8_t VXISI2CRead(uint8_t reg)
+  36:sw_i2c/VX_swi2c.c **** {
+ 102              		.loc 1 36 1 is_stmt 1 view -0
+ 103              		.cfi_startproc
+ 104              		@ args = 0, pretend = 0, frame = 0
+ 105              		@ frame_needed = 0, uses_anonymous_args = 0
+ 106              		.loc 1 36 1 is_stmt 0 view .LVU13
+ 107 0000 08B5     		push	{r3, lr}
+ 108              	.LCFI2:
+ 109              		.cfi_def_cfa_offset 8
+ 110              		.cfi_offset 3, -8
+ 111              		.cfi_offset 14, -4
+ 112 0002 0146     		mov	r1, r0
+  37:sw_i2c/VX_swi2c.c ****     uint8_t val = 0;
+ 113              		.loc 1 37 5 is_stmt 1 view .LVU14
+ 114              	.LVL7:
+  38:sw_i2c/VX_swi2c.c ****     val = SW_I2C1Read(VS4210_ADDR, reg);
+ 115              		.loc 1 38 5 view .LVU15
+ 116              		.loc 1 38 11 is_stmt 0 view .LVU16
+ 117 0004 024B     		ldr	r3, .L11
+ 118 0006 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 119              	.LVL8:
+ 120              		.loc 1 38 11 view .LVU17
+ 121 0008 FFF7FEFF 		bl	SW_I2C1Read
+ 122              	.LVL9:
+  39:sw_i2c/VX_swi2c.c ****     //    printf("R 0x%02x,0x%02x,0x%02x\r\n",(int)VS4210_ADDR, (int)reg,(int)val) ;
+  40:sw_i2c/VX_swi2c.c ****     return val;
+ 123              		.loc 1 40 5 is_stmt 1 view .LVU18
+  41:sw_i2c/VX_swi2c.c **** }
+ 124              		.loc 1 41 1 is_stmt 0 view .LVU19
+ 125 000c 08BD     		pop	{r3, pc}
+ 126              	.L12:
+ 127 000e 00BF     		.align	2
+ 128              	.L11:
+ 129 0010 00000000 		.word	VS4210_ADDR
+ 130              		.cfi_endproc
+ 131              	.LFE70:
+ 133              		.section	.text.VXISI2CWrite,"ax",%progbits
+ 134              		.align	1
+ 135              		.global	VXISI2CWrite
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 4
+
+
+ 136              		.syntax unified
+ 137              		.thumb
+ 138              		.thumb_func
+ 139              		.fpu softvfp
+ 141              	VXISI2CWrite:
+ 142              	.LVL10:
+ 143              	.LFB71:
+  42:sw_i2c/VX_swi2c.c **** 
+  43:sw_i2c/VX_swi2c.c **** void VXISI2CWrite(uint8_t reg, uint8_t val)
+  44:sw_i2c/VX_swi2c.c **** {
+ 144              		.loc 1 44 1 is_stmt 1 view -0
+ 145              		.cfi_startproc
+ 146              		@ args = 0, pretend = 0, frame = 0
+ 147              		@ frame_needed = 0, uses_anonymous_args = 0
+ 148              		.loc 1 44 1 is_stmt 0 view .LVU21
+ 149 0000 08B5     		push	{r3, lr}
+ 150              	.LCFI3:
+ 151              		.cfi_def_cfa_offset 8
+ 152              		.cfi_offset 3, -8
+ 153              		.cfi_offset 14, -4
+ 154 0002 0A46     		mov	r2, r1
+  45:sw_i2c/VX_swi2c.c ****     SW_I2C1Write(VS4210_ADDR, reg, val);
+ 155              		.loc 1 45 5 is_stmt 1 view .LVU22
+ 156 0004 034B     		ldr	r3, .L15
+ 157 0006 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 158 0008 0146     		mov	r1, r0
+ 159              	.LVL11:
+ 160              		.loc 1 45 5 is_stmt 0 view .LVU23
+ 161 000a 1846     		mov	r0, r3
+ 162              	.LVL12:
+ 163              		.loc 1 45 5 view .LVU24
+ 164 000c FFF7FEFF 		bl	SW_I2C1Write
+ 165              	.LVL13:
+  46:sw_i2c/VX_swi2c.c **** }
+ 166              		.loc 1 46 1 view .LVU25
+ 167 0010 08BD     		pop	{r3, pc}
+ 168              	.L16:
+ 169 0012 00BF     		.align	2
+ 170              	.L15:
+ 171 0014 00000000 		.word	VS4210_ADDR
+ 172              		.cfi_endproc
+ 173              	.LFE71:
+ 175              		.section	.text.VS8812Read,"ax",%progbits
+ 176              		.align	1
+ 177              		.global	VS8812Read
+ 178              		.syntax unified
+ 179              		.thumb
+ 180              		.thumb_func
+ 181              		.fpu softvfp
+ 183              	VS8812Read:
+ 184              	.LVL14:
+ 185              	.LFB72:
+  47:sw_i2c/VX_swi2c.c **** 
+  48:sw_i2c/VX_swi2c.c **** uint8_t VS8812Read(uint8_t reg)
+  49:sw_i2c/VX_swi2c.c **** {
+ 186              		.loc 1 49 1 is_stmt 1 view -0
+ 187              		.cfi_startproc
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 5
+
+
+ 188              		@ args = 0, pretend = 0, frame = 0
+ 189              		@ frame_needed = 0, uses_anonymous_args = 0
+ 190              		.loc 1 49 1 is_stmt 0 view .LVU27
+ 191 0000 08B5     		push	{r3, lr}
+ 192              	.LCFI4:
+ 193              		.cfi_def_cfa_offset 8
+ 194              		.cfi_offset 3, -8
+ 195              		.cfi_offset 14, -4
+ 196 0002 0146     		mov	r1, r0
+  50:sw_i2c/VX_swi2c.c ****     uint8_t val = 0;
+ 197              		.loc 1 50 5 is_stmt 1 view .LVU28
+ 198              	.LVL15:
+  51:sw_i2c/VX_swi2c.c ****     val = SW_I2C1Read(VS8812_ADDR, reg);
+ 199              		.loc 1 51 5 view .LVU29
+ 200              		.loc 1 51 11 is_stmt 0 view .LVU30
+ 201 0004 024B     		ldr	r3, .L19
+ 202 0006 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 203              	.LVL16:
+ 204              		.loc 1 51 11 view .LVU31
+ 205 0008 FFF7FEFF 		bl	SW_I2C1Read
+ 206              	.LVL17:
+  52:sw_i2c/VX_swi2c.c ****     //    printf("R 0x%02x,0x%02x,0x%02x\r\n",(int)VS4210_ADDR, (int)reg,(int)val) ;
+  53:sw_i2c/VX_swi2c.c ****     return val;
+ 207              		.loc 1 53 5 is_stmt 1 view .LVU32
+  54:sw_i2c/VX_swi2c.c **** }
+ 208              		.loc 1 54 1 is_stmt 0 view .LVU33
+ 209 000c 08BD     		pop	{r3, pc}
+ 210              	.L20:
+ 211 000e 00BF     		.align	2
+ 212              	.L19:
+ 213 0010 00000000 		.word	VS8812_ADDR
+ 214              		.cfi_endproc
+ 215              	.LFE72:
+ 217              		.section	.text.VS8812Write,"ax",%progbits
+ 218              		.align	1
+ 219              		.global	VS8812Write
+ 220              		.syntax unified
+ 221              		.thumb
+ 222              		.thumb_func
+ 223              		.fpu softvfp
+ 225              	VS8812Write:
+ 226              	.LVL18:
+ 227              	.LFB73:
+  55:sw_i2c/VX_swi2c.c **** 
+  56:sw_i2c/VX_swi2c.c **** void VS8812Write(uint8_t reg, uint8_t val)
+  57:sw_i2c/VX_swi2c.c **** {
+ 228              		.loc 1 57 1 is_stmt 1 view -0
+ 229              		.cfi_startproc
+ 230              		@ args = 0, pretend = 0, frame = 0
+ 231              		@ frame_needed = 0, uses_anonymous_args = 0
+ 232              		.loc 1 57 1 is_stmt 0 view .LVU35
+ 233 0000 08B5     		push	{r3, lr}
+ 234              	.LCFI5:
+ 235              		.cfi_def_cfa_offset 8
+ 236              		.cfi_offset 3, -8
+ 237              		.cfi_offset 14, -4
+ 238 0002 0A46     		mov	r2, r1
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 6
+
+
+  58:sw_i2c/VX_swi2c.c ****     SW_I2C1Write(VS8812_ADDR, reg, val);
+ 239              		.loc 1 58 5 is_stmt 1 view .LVU36
+ 240 0004 034B     		ldr	r3, .L23
+ 241 0006 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 242 0008 0146     		mov	r1, r0
+ 243              	.LVL19:
+ 244              		.loc 1 58 5 is_stmt 0 view .LVU37
+ 245 000a 1846     		mov	r0, r3
+ 246              	.LVL20:
+ 247              		.loc 1 58 5 view .LVU38
+ 248 000c FFF7FEFF 		bl	SW_I2C1Write
+ 249              	.LVL21:
+  59:sw_i2c/VX_swi2c.c **** }
+ 250              		.loc 1 59 1 view .LVU39
+ 251 0010 08BD     		pop	{r3, pc}
+ 252              	.L24:
+ 253 0012 00BF     		.align	2
+ 254              	.L23:
+ 255 0014 00000000 		.word	VS8812_ADDR
+ 256              		.cfi_endproc
+ 257              	.LFE73:
+ 259              		.section	.text.ReadEEP,"ax",%progbits
+ 260              		.align	1
+ 261              		.global	ReadEEP
+ 262              		.syntax unified
+ 263              		.thumb
+ 264              		.thumb_func
+ 265              		.fpu softvfp
+ 267              	ReadEEP:
+ 268              	.LVL22:
+ 269              	.LFB74:
+  60:sw_i2c/VX_swi2c.c **** 
+  61:sw_i2c/VX_swi2c.c **** unsigned char ReadEEP(unsigned int reg)
+  62:sw_i2c/VX_swi2c.c **** {
+ 270              		.loc 1 62 1 is_stmt 1 view -0
+ 271              		.cfi_startproc
+ 272              		@ args = 0, pretend = 0, frame = 0
+ 273              		@ frame_needed = 0, uses_anonymous_args = 0
+ 274              		.loc 1 62 1 is_stmt 0 view .LVU41
+ 275 0000 08B5     		push	{r3, lr}
+ 276              	.LCFI6:
+ 277              		.cfi_def_cfa_offset 8
+ 278              		.cfi_offset 3, -8
+ 279              		.cfi_offset 14, -4
+  63:sw_i2c/VX_swi2c.c ****     unsigned char val = 0;
+ 280              		.loc 1 63 5 is_stmt 1 view .LVU42
+ 281              	.LVL23:
+  64:sw_i2c/VX_swi2c.c ****     val = EEPRead(reg);
+ 282              		.loc 1 64 5 view .LVU43
+ 283              		.loc 1 64 11 is_stmt 0 view .LVU44
+ 284 0002 FFF7FEFF 		bl	EEPRead
+ 285              	.LVL24:
+  65:sw_i2c/VX_swi2c.c ****     //    printf("R 0x%02x,0x%02x,0x%02x\r\n",(int)VS4210_ADDR, (int)reg,(int)val) ;
+  66:sw_i2c/VX_swi2c.c ****     return val;
+ 286              		.loc 1 66 5 is_stmt 1 view .LVU45
+  67:sw_i2c/VX_swi2c.c **** }
+ 287              		.loc 1 67 1 is_stmt 0 view .LVU46
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 7
+
+
+ 288 0006 08BD     		pop	{r3, pc}
+ 289              		.cfi_endproc
+ 290              	.LFE74:
+ 292              		.section	.text.WriteEEP,"ax",%progbits
+ 293              		.align	1
+ 294              		.global	WriteEEP
+ 295              		.syntax unified
+ 296              		.thumb
+ 297              		.thumb_func
+ 298              		.fpu softvfp
+ 300              	WriteEEP:
+ 301              	.LVL25:
+ 302              	.LFB75:
+  68:sw_i2c/VX_swi2c.c **** 
+  69:sw_i2c/VX_swi2c.c **** void WriteEEP(unsigned int reg, unsigned char val)
+  70:sw_i2c/VX_swi2c.c **** {
+ 303              		.loc 1 70 1 is_stmt 1 view -0
+ 304              		.cfi_startproc
+ 305              		@ args = 0, pretend = 0, frame = 0
+ 306              		@ frame_needed = 0, uses_anonymous_args = 0
+ 307              		.loc 1 70 1 is_stmt 0 view .LVU48
+ 308 0000 08B5     		push	{r3, lr}
+ 309              	.LCFI7:
+ 310              		.cfi_def_cfa_offset 8
+ 311              		.cfi_offset 3, -8
+ 312              		.cfi_offset 14, -4
+  71:sw_i2c/VX_swi2c.c ****     EEPWrite(reg, val);
+ 313              		.loc 1 71 5 is_stmt 1 view .LVU49
+ 314 0002 FFF7FEFF 		bl	EEPWrite
+ 315              	.LVL26:
+  72:sw_i2c/VX_swi2c.c **** }
+ 316              		.loc 1 72 1 is_stmt 0 view .LVU50
+ 317 0006 08BD     		pop	{r3, pc}
+ 318              		.cfi_endproc
+ 319              	.LFE75:
+ 321              		.section	.text.I2CMultiWrite,"ax",%progbits
+ 322              		.align	1
+ 323              		.global	I2CMultiWrite
+ 324              		.syntax unified
+ 325              		.thumb
+ 326              		.thumb_func
+ 327              		.fpu softvfp
+ 329              	I2CMultiWrite:
+ 330              	.LVL27:
+ 331              	.LFB76:
+  73:sw_i2c/VX_swi2c.c **** 
+  74:sw_i2c/VX_swi2c.c **** void I2CMultiWrite(unsigned char maddr, unsigned char saddr, unsigned char number, const unsigned c
+  75:sw_i2c/VX_swi2c.c **** {
+ 332              		.loc 1 75 1 is_stmt 1 view -0
+ 333              		.cfi_startproc
+ 334              		@ args = 0, pretend = 0, frame = 0
+ 335              		@ frame_needed = 0, uses_anonymous_args = 0
+ 336              		.loc 1 75 1 is_stmt 0 view .LVU52
+ 337 0000 10B5     		push	{r4, lr}
+ 338              	.LCFI8:
+ 339              		.cfi_def_cfa_offset 8
+ 340              		.cfi_offset 4, -8
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 8
+
+
+ 341              		.cfi_offset 14, -4
+ 342 0002 1446     		mov	r4, r2
+ 343 0004 1A46     		mov	r2, r3
+ 344              	.LVL28:
+  76:sw_i2c/VX_swi2c.c ****     SW_I2C1WriteNByte(maddr, saddr, value, number);
+ 345              		.loc 1 76 5 is_stmt 1 view .LVU53
+ 346 0006 2346     		mov	r3, r4
+ 347              	.LVL29:
+ 348              		.loc 1 76 5 is_stmt 0 view .LVU54
+ 349 0008 FFF7FEFF 		bl	SW_I2C1WriteNByte
+ 350              	.LVL30:
+  77:sw_i2c/VX_swi2c.c **** }
+ 351              		.loc 1 77 1 view .LVU55
+ 352 000c 10BD     		pop	{r4, pc}
+ 353              		.cfi_endproc
+ 354              	.LFE76:
+ 356              		.section	.text.I2CMultiAttribute,"ax",%progbits
+ 357              		.align	1
+ 358              		.global	I2CMultiAttribute
+ 359              		.syntax unified
+ 360              		.thumb
+ 361              		.thumb_func
+ 362              		.fpu softvfp
+ 364              	I2CMultiAttribute:
+ 365              	.LVL31:
+ 366              	.LFB77:
+  78:sw_i2c/VX_swi2c.c **** 
+  79:sw_i2c/VX_swi2c.c **** void I2CMultiAttribute(unsigned char maddr, unsigned char saddr, unsigned char number, unsigned cha
+  80:sw_i2c/VX_swi2c.c **** {
+ 367              		.loc 1 80 1 is_stmt 1 view -0
+ 368              		.cfi_startproc
+ 369              		@ args = 0, pretend = 0, frame = 32
+ 370              		@ frame_needed = 0, uses_anonymous_args = 0
+ 371              		.loc 1 80 1 is_stmt 0 view .LVU57
+ 372 0000 70B5     		push	{r4, r5, r6, lr}
+ 373              	.LCFI9:
+ 374              		.cfi_def_cfa_offset 16
+ 375              		.cfi_offset 4, -16
+ 376              		.cfi_offset 5, -12
+ 377              		.cfi_offset 6, -8
+ 378              		.cfi_offset 14, -4
+ 379 0002 88B0     		sub	sp, sp, #32
+ 380              	.LCFI10:
+ 381              		.cfi_def_cfa_offset 48
+ 382 0004 0446     		mov	r4, r0
+ 383 0006 0D46     		mov	r5, r1
+ 384 0008 1646     		mov	r6, r2
+  81:sw_i2c/VX_swi2c.c ****     uint8_t aAttribute[32];
+ 385              		.loc 1 81 5 is_stmt 1 view .LVU58
+  82:sw_i2c/VX_swi2c.c ****     memset(aAttribute, value[0], number);
+ 386              		.loc 1 82 5 view .LVU59
+ 387 000a 1978     		ldrb	r1, [r3]	@ zero_extendqisi2
+ 388              	.LVL32:
+ 389              		.loc 1 82 5 is_stmt 0 view .LVU60
+ 390 000c 6846     		mov	r0, sp
+ 391              	.LVL33:
+ 392              		.loc 1 82 5 view .LVU61
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 9
+
+
+ 393 000e FFF7FEFF 		bl	memset
+ 394              	.LVL34:
+  83:sw_i2c/VX_swi2c.c ****     SW_I2C1WriteNByte(maddr, saddr, &aAttribute[0], number);
+ 395              		.loc 1 83 5 is_stmt 1 view .LVU62
+ 396 0012 3346     		mov	r3, r6
+ 397 0014 6A46     		mov	r2, sp
+ 398 0016 2946     		mov	r1, r5
+ 399 0018 2046     		mov	r0, r4
+ 400 001a FFF7FEFF 		bl	SW_I2C1WriteNByte
+ 401              	.LVL35:
+  84:sw_i2c/VX_swi2c.c **** }
+ 402              		.loc 1 84 1 is_stmt 0 view .LVU63
+ 403 001e 08B0     		add	sp, sp, #32
+ 404              	.LCFI11:
+ 405              		.cfi_def_cfa_offset 16
+ 406              		@ sp needed
+ 407 0020 70BD     		pop	{r4, r5, r6, pc}
+ 408              		.cfi_endproc
+ 409              	.LFE77:
+ 411              		.section	.text.osd_cont_write,"ax",%progbits
+ 412              		.align	1
+ 413              		.global	osd_cont_write
+ 414              		.syntax unified
+ 415              		.thumb
+ 416              		.thumb_func
+ 417              		.fpu softvfp
+ 419              	osd_cont_write:
+ 420              	.LVL36:
+ 421              	.LFB78:
+  85:sw_i2c/VX_swi2c.c **** 
+  86:sw_i2c/VX_swi2c.c **** void osd_cont_write(unsigned char cw_dest, unsigned char init_addr, unsigned short num_of_data, con
+  87:sw_i2c/VX_swi2c.c **** {                                                                                                  
+ 422              		.loc 1 87 1 is_stmt 1 view -0
+ 423              		.cfi_startproc
+ 424              		@ args = 0, pretend = 0, frame = 256
+ 425              		@ frame_needed = 0, uses_anonymous_args = 0
+ 426              		.loc 1 87 1 is_stmt 0 view .LVU65
+ 427 0000 10B5     		push	{r4, lr}
+ 428              	.LCFI12:
+ 429              		.cfi_def_cfa_offset 8
+ 430              		.cfi_offset 4, -8
+ 431              		.cfi_offset 14, -4
+ 432 0002 C0B0     		sub	sp, sp, #256
+ 433              	.LCFI13:
+ 434              		.cfi_def_cfa_offset 264
+ 435 0004 1446     		mov	r4, r2
+  88:sw_i2c/VX_swi2c.c ****     unsigned char wbuf[255];
+ 436              		.loc 1 88 5 is_stmt 1 view .LVU66
+  89:sw_i2c/VX_swi2c.c ****     wbuf[0] = cw_dest;
+ 437              		.loc 1 89 5 view .LVU67
+ 438              		.loc 1 89 13 is_stmt 0 view .LVU68
+ 439 0006 8DF80000 		strb	r0, [sp]
+  90:sw_i2c/VX_swi2c.c ****     wbuf[1] = init_addr;
+ 440              		.loc 1 90 5 is_stmt 1 view .LVU69
+ 441              		.loc 1 90 13 is_stmt 0 view .LVU70
+ 442 000a 8DF80110 		strb	r1, [sp, #1]
+  91:sw_i2c/VX_swi2c.c ****     memcpy(&wbuf[2], buf_data, num_of_data);
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 10
+
+
+ 443              		.loc 1 91 5 is_stmt 1 view .LVU71
+ 444 000e 1946     		mov	r1, r3
+ 445              	.LVL37:
+ 446              		.loc 1 91 5 is_stmt 0 view .LVU72
+ 447 0010 0DF10200 		add	r0, sp, #2
+ 448              	.LVL38:
+ 449              		.loc 1 91 5 view .LVU73
+ 450 0014 FFF7FEFF 		bl	memcpy
+ 451              	.LVL39:
+  92:sw_i2c/VX_swi2c.c ****     SW_I2C1WriteNByte(VS4210_ADDR, 0xFD, &wbuf[0], num_of_data + 2);
+ 452              		.loc 1 92 5 is_stmt 1 view .LVU74
+ 453 0018 044B     		ldr	r3, .L35
+ 454 001a 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 455 001c A31C     		adds	r3, r4, #2
+ 456 001e DBB2     		uxtb	r3, r3
+ 457 0020 6A46     		mov	r2, sp
+ 458 0022 FD21     		movs	r1, #253
+ 459 0024 FFF7FEFF 		bl	SW_I2C1WriteNByte
+ 460              	.LVL40:
+  93:sw_i2c/VX_swi2c.c **** }
+ 461              		.loc 1 93 1 is_stmt 0 view .LVU75
+ 462 0028 40B0     		add	sp, sp, #256
+ 463              	.LCFI14:
+ 464              		.cfi_def_cfa_offset 8
+ 465              		@ sp needed
+ 466 002a 10BD     		pop	{r4, pc}
+ 467              	.L36:
+ 468              		.align	2
+ 469              	.L35:
+ 470 002c 00000000 		.word	VS4210_ADDR
+ 471              		.cfi_endproc
+ 472              	.LFE78:
+ 474              		.section	.text.delay,"ax",%progbits
+ 475              		.align	1
+ 476              		.global	delay
+ 477              		.syntax unified
+ 478              		.thumb
+ 479              		.thumb_func
+ 480              		.fpu softvfp
+ 482              	delay:
+ 483              	.LVL41:
+ 484              	.LFB79:
+  94:sw_i2c/VX_swi2c.c **** 
+  95:sw_i2c/VX_swi2c.c **** // RX
+  96:sw_i2c/VX_swi2c.c **** void delay(unsigned int i)
+  97:sw_i2c/VX_swi2c.c **** { // 5ms
+ 485              		.loc 1 97 1 is_stmt 1 view -0
+ 486              		.cfi_startproc
+ 487              		@ args = 0, pretend = 0, frame = 0
+ 488              		@ frame_needed = 0, uses_anonymous_args = 0
+ 489              		.loc 1 97 1 is_stmt 0 view .LVU77
+ 490 0000 38B5     		push	{r3, r4, r5, lr}
+ 491              	.LCFI15:
+ 492              		.cfi_def_cfa_offset 16
+ 493              		.cfi_offset 3, -16
+ 494              		.cfi_offset 4, -12
+ 495              		.cfi_offset 5, -8
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 11
+
+
+ 496              		.cfi_offset 14, -4
+ 497 0002 0546     		mov	r5, r0
+  98:sw_i2c/VX_swi2c.c ****     tWord j;
+ 498              		.loc 1 98 5 is_stmt 1 view .LVU78
+  99:sw_i2c/VX_swi2c.c ****     for (j = 0; j < i; j++)
+ 499              		.loc 1 99 5 view .LVU79
+ 500              	.LVL42:
+ 501              		.loc 1 99 12 is_stmt 0 view .LVU80
+ 502 0004 0024     		movs	r4, #0
+ 503              	.LVL43:
+ 504              	.L38:
+ 505              		.loc 1 99 17 is_stmt 1 discriminator 1 view .LVU81
+ 506              		.loc 1 99 5 is_stmt 0 discriminator 1 view .LVU82
+ 507 0006 AC42     		cmp	r4, r5
+ 508 0008 05D2     		bcs	.L41
+ 100:sw_i2c/VX_swi2c.c ****     {
+ 101:sw_i2c/VX_swi2c.c ****         HAL_Delay(5);
+ 509              		.loc 1 101 9 is_stmt 1 discriminator 3 view .LVU83
+ 510 000a 0520     		movs	r0, #5
+ 511 000c FFF7FEFF 		bl	HAL_Delay
+ 512              	.LVL44:
+  99:sw_i2c/VX_swi2c.c ****     for (j = 0; j < i; j++)
+ 513              		.loc 1 99 24 discriminator 3 view .LVU84
+  99:sw_i2c/VX_swi2c.c ****     for (j = 0; j < i; j++)
+ 514              		.loc 1 99 25 is_stmt 0 discriminator 3 view .LVU85
+ 515 0010 0134     		adds	r4, r4, #1
+ 516              	.LVL45:
+  99:sw_i2c/VX_swi2c.c ****     for (j = 0; j < i; j++)
+ 517              		.loc 1 99 25 discriminator 3 view .LVU86
+ 518 0012 A4B2     		uxth	r4, r4
+ 519              	.LVL46:
+  99:sw_i2c/VX_swi2c.c ****     for (j = 0; j < i; j++)
+ 520              		.loc 1 99 25 discriminator 3 view .LVU87
+ 521 0014 F7E7     		b	.L38
+ 522              	.L41:
+ 102:sw_i2c/VX_swi2c.c ****     }
+ 103:sw_i2c/VX_swi2c.c **** }
+ 523              		.loc 1 103 1 view .LVU88
+ 524 0016 38BD     		pop	{r3, r4, r5, pc}
+ 525              		.loc 1 103 1 view .LVU89
+ 526              		.cfi_endproc
+ 527              	.LFE79:
+ 529              		.section	.text.tp28xx_byte_read,"ax",%progbits
+ 530              		.align	1
+ 531              		.global	tp28xx_byte_read
+ 532              		.syntax unified
+ 533              		.thumb
+ 534              		.thumb_func
+ 535              		.fpu softvfp
+ 537              	tp28xx_byte_read:
+ 538              	.LVL47:
+ 539              	.LFB80:
+ 104:sw_i2c/VX_swi2c.c **** 
+ 105:sw_i2c/VX_swi2c.c **** tByte tp28xx_byte_read(tByte index)
+ 106:sw_i2c/VX_swi2c.c **** {
+ 540              		.loc 1 106 1 is_stmt 1 view -0
+ 541              		.cfi_startproc
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 12
+
+
+ 542              		@ args = 0, pretend = 0, frame = 0
+ 543              		@ frame_needed = 0, uses_anonymous_args = 0
+ 544              		.loc 1 106 1 is_stmt 0 view .LVU91
+ 545 0000 08B5     		push	{r3, lr}
+ 546              	.LCFI16:
+ 547              		.cfi_def_cfa_offset 8
+ 548              		.cfi_offset 3, -8
+ 549              		.cfi_offset 14, -4
+ 550 0002 0146     		mov	r1, r0
+ 107:sw_i2c/VX_swi2c.c ****     tByte val;
+ 551              		.loc 1 107 5 is_stmt 1 view .LVU92
+ 108:sw_i2c/VX_swi2c.c ****     val = I2C0_Read(TVII2CAddress, index);
+ 552              		.loc 1 108 5 view .LVU93
+ 553              		.loc 1 108 11 is_stmt 0 view .LVU94
+ 554 0004 024B     		ldr	r3, .L44
+ 555 0006 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 556              	.LVL48:
+ 557              		.loc 1 108 11 view .LVU95
+ 558 0008 FFF7FEFF 		bl	I2C0_Read
+ 559              	.LVL49:
+ 109:sw_i2c/VX_swi2c.c **** 
+ 110:sw_i2c/VX_swi2c.c ****     return val;
+ 560              		.loc 1 110 5 is_stmt 1 view .LVU96
+ 111:sw_i2c/VX_swi2c.c **** }
+ 561              		.loc 1 111 1 is_stmt 0 view .LVU97
+ 562 000c 08BD     		pop	{r3, pc}
+ 563              	.L45:
+ 564 000e 00BF     		.align	2
+ 565              	.L44:
+ 566 0010 00000000 		.word	TVII2CAddress
+ 567              		.cfi_endproc
+ 568              	.LFE80:
+ 570              		.section	.text.tp28xx_byte_write,"ax",%progbits
+ 571              		.align	1
+ 572              		.global	tp28xx_byte_write
+ 573              		.syntax unified
+ 574              		.thumb
+ 575              		.thumb_func
+ 576              		.fpu softvfp
+ 578              	tp28xx_byte_write:
+ 579              	.LVL50:
+ 580              	.LFB81:
+ 112:sw_i2c/VX_swi2c.c **** 
+ 113:sw_i2c/VX_swi2c.c **** void tp28xx_byte_write(tByte index, tByte val)
+ 114:sw_i2c/VX_swi2c.c **** {
+ 581              		.loc 1 114 1 is_stmt 1 view -0
+ 582              		.cfi_startproc
+ 583              		@ args = 0, pretend = 0, frame = 0
+ 584              		@ frame_needed = 0, uses_anonymous_args = 0
+ 585              		.loc 1 114 1 is_stmt 0 view .LVU99
+ 586 0000 08B5     		push	{r3, lr}
+ 587              	.LCFI17:
+ 588              		.cfi_def_cfa_offset 8
+ 589              		.cfi_offset 3, -8
+ 590              		.cfi_offset 14, -4
+ 591 0002 0A46     		mov	r2, r1
+ 115:sw_i2c/VX_swi2c.c ****     I2C0_Write(TVII2CAddress, index, val);
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 13
+
+
+ 592              		.loc 1 115 5 is_stmt 1 view .LVU100
+ 593 0004 0146     		mov	r1, r0
+ 594              	.LVL51:
+ 595              		.loc 1 115 5 is_stmt 0 view .LVU101
+ 596 0006 024B     		ldr	r3, .L48
+ 597 0008 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 598              	.LVL52:
+ 599              		.loc 1 115 5 view .LVU102
+ 600 000a FFF7FEFF 		bl	I2C0_Write
+ 601              	.LVL53:
+ 116:sw_i2c/VX_swi2c.c **** }
+ 602              		.loc 1 116 1 view .LVU103
+ 603 000e 08BD     		pop	{r3, pc}
+ 604              	.L49:
+ 605              		.align	2
+ 606              	.L48:
+ 607 0010 00000000 		.word	TVII2CAddress
+ 608              		.cfi_endproc
+ 609              	.LFE81:
+ 611              		.section	.text.delay1ms,"ax",%progbits
+ 612              		.align	1
+ 613              		.global	delay1ms
+ 614              		.syntax unified
+ 615              		.thumb
+ 616              		.thumb_func
+ 617              		.fpu softvfp
+ 619              	delay1ms:
+ 620              	.LVL54:
+ 621              	.LFB82:
+ 117:sw_i2c/VX_swi2c.c **** 
+ 118:sw_i2c/VX_swi2c.c **** // HDMI_TX
+ 119:sw_i2c/VX_swi2c.c **** 
+ 120:sw_i2c/VX_swi2c.c **** void delay1ms(unsigned int i)
+ 121:sw_i2c/VX_swi2c.c **** {
+ 622              		.loc 1 121 1 is_stmt 1 view -0
+ 623              		.cfi_startproc
+ 624              		@ args = 0, pretend = 0, frame = 0
+ 625              		@ frame_needed = 0, uses_anonymous_args = 0
+ 626              		.loc 1 121 1 is_stmt 0 view .LVU105
+ 627 0000 08B5     		push	{r3, lr}
+ 628              	.LCFI18:
+ 629              		.cfi_def_cfa_offset 8
+ 630              		.cfi_offset 3, -8
+ 631              		.cfi_offset 14, -4
+ 122:sw_i2c/VX_swi2c.c ****     HAL_Delay(i);
+ 632              		.loc 1 122 5 is_stmt 1 view .LVU106
+ 633 0002 FFF7FEFF 		bl	HAL_Delay
+ 634              	.LVL55:
+ 123:sw_i2c/VX_swi2c.c **** }
+ 635              		.loc 1 123 1 is_stmt 0 view .LVU107
+ 636 0006 08BD     		pop	{r3, pc}
+ 637              		.cfi_endproc
+ 638              	.LFE82:
+ 640              		.section	.text.HDMITX_ReadI2C_Byte,"ax",%progbits
+ 641              		.align	1
+ 642              		.global	HDMITX_ReadI2C_Byte
+ 643              		.syntax unified
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 14
+
+
+ 644              		.thumb
+ 645              		.thumb_func
+ 646              		.fpu softvfp
+ 648              	HDMITX_ReadI2C_Byte:
+ 649              	.LVL56:
+ 650              	.LFB83:
+ 124:sw_i2c/VX_swi2c.c **** 
+ 125:sw_i2c/VX_swi2c.c **** tByte HDMITX_ReadI2C_Byte(tByte RegAddr)
+ 126:sw_i2c/VX_swi2c.c **** {
+ 651              		.loc 1 126 1 is_stmt 1 view -0
+ 652              		.cfi_startproc
+ 653              		@ args = 0, pretend = 0, frame = 0
+ 654              		@ frame_needed = 0, uses_anonymous_args = 0
+ 655              		.loc 1 126 1 is_stmt 0 view .LVU109
+ 656 0000 08B5     		push	{r3, lr}
+ 657              	.LCFI19:
+ 658              		.cfi_def_cfa_offset 8
+ 659              		.cfi_offset 3, -8
+ 660              		.cfi_offset 14, -4
+ 661 0002 0146     		mov	r1, r0
+ 127:sw_i2c/VX_swi2c.c ****     tByte val;
+ 662              		.loc 1 127 5 is_stmt 1 view .LVU110
+ 128:sw_i2c/VX_swi2c.c ****     val = SW_I2C2Read(ITE66121_ADDR, RegAddr);
+ 663              		.loc 1 128 5 view .LVU111
+ 664              		.loc 1 128 11 is_stmt 0 view .LVU112
+ 665 0004 9820     		movs	r0, #152
+ 666              	.LVL57:
+ 667              		.loc 1 128 11 view .LVU113
+ 668 0006 FFF7FEFF 		bl	SW_I2C2Read
+ 669              	.LVL58:
+ 129:sw_i2c/VX_swi2c.c **** 
+ 130:sw_i2c/VX_swi2c.c ****     return val;
+ 670              		.loc 1 130 5 is_stmt 1 view .LVU114
+ 131:sw_i2c/VX_swi2c.c **** }
+ 671              		.loc 1 131 1 is_stmt 0 view .LVU115
+ 672 000a 08BD     		pop	{r3, pc}
+ 673              		.cfi_endproc
+ 674              	.LFE83:
+ 676              		.section	.text.HDMITX_WriteI2C_Byte,"ax",%progbits
+ 677              		.align	1
+ 678              		.global	HDMITX_WriteI2C_Byte
+ 679              		.syntax unified
+ 680              		.thumb
+ 681              		.thumb_func
+ 682              		.fpu softvfp
+ 684              	HDMITX_WriteI2C_Byte:
+ 685              	.LVL59:
+ 686              	.LFB84:
+ 132:sw_i2c/VX_swi2c.c **** 
+ 133:sw_i2c/VX_swi2c.c **** int HDMITX_WriteI2C_Byte(tByte RegAddr, tByte d)
+ 134:sw_i2c/VX_swi2c.c **** {
+ 687              		.loc 1 134 1 is_stmt 1 view -0
+ 688              		.cfi_startproc
+ 689              		@ args = 0, pretend = 0, frame = 0
+ 690              		@ frame_needed = 0, uses_anonymous_args = 0
+ 691              		.loc 1 134 1 is_stmt 0 view .LVU117
+ 692 0000 08B5     		push	{r3, lr}
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 15
+
+
+ 693              	.LCFI20:
+ 694              		.cfi_def_cfa_offset 8
+ 695              		.cfi_offset 3, -8
+ 696              		.cfi_offset 14, -4
+ 697 0002 0A46     		mov	r2, r1
+ 135:sw_i2c/VX_swi2c.c ****     // tByte val ;
+ 136:sw_i2c/VX_swi2c.c ****     SW_I2C2Write(ITE66121_ADDR, RegAddr, d);
+ 698              		.loc 1 136 5 is_stmt 1 view .LVU118
+ 699 0004 0146     		mov	r1, r0
+ 700              	.LVL60:
+ 701              		.loc 1 136 5 is_stmt 0 view .LVU119
+ 702 0006 9820     		movs	r0, #152
+ 703              	.LVL61:
+ 704              		.loc 1 136 5 view .LVU120
+ 705 0008 FFF7FEFF 		bl	SW_I2C2Write
+ 706              	.LVL62:
+ 137:sw_i2c/VX_swi2c.c **** 
+ 138:sw_i2c/VX_swi2c.c ****     //    HAL_Delay(5 );
+ 139:sw_i2c/VX_swi2c.c ****     //    val = SW_I2C2Read(ITE66121_ADDR, RegAddr)  ;
+ 140:sw_i2c/VX_swi2c.c ****     //    printf("R 0x%02x,0x%02x,W=0x%02x,R=0x%02x\r\n",(int)ITE66121_ADDR, (int)RegAddr,(int)d, (
+ 141:sw_i2c/VX_swi2c.c **** 
+ 142:sw_i2c/VX_swi2c.c ****     return 0;
+ 707              		.loc 1 142 5 is_stmt 1 view .LVU121
+ 143:sw_i2c/VX_swi2c.c **** }
+ 708              		.loc 1 143 1 is_stmt 0 view .LVU122
+ 709 000c 0020     		movs	r0, #0
+ 710 000e 08BD     		pop	{r3, pc}
+ 711              		.cfi_endproc
+ 712              	.LFE84:
+ 714              		.section	.text.HDMITX_ReadI2C_ByteN,"ax",%progbits
+ 715              		.align	1
+ 716              		.global	HDMITX_ReadI2C_ByteN
+ 717              		.syntax unified
+ 718              		.thumb
+ 719              		.thumb_func
+ 720              		.fpu softvfp
+ 722              	HDMITX_ReadI2C_ByteN:
+ 723              	.LVL63:
+ 724              	.LFB85:
+ 144:sw_i2c/VX_swi2c.c **** 
+ 145:sw_i2c/VX_swi2c.c **** // HDCP
+ 146:sw_i2c/VX_swi2c.c **** 
+ 147:sw_i2c/VX_swi2c.c **** //#ifdef SUPPORT_HDCP
+ 148:sw_i2c/VX_swi2c.c **** int HDMITX_ReadI2C_ByteN(tByte RegAddr, tByte *pData, int N)
+ 149:sw_i2c/VX_swi2c.c **** {
+ 725              		.loc 1 149 1 is_stmt 1 view -0
+ 726              		.cfi_startproc
+ 727              		@ args = 0, pretend = 0, frame = 0
+ 728              		@ frame_needed = 0, uses_anonymous_args = 0
+ 729              		.loc 1 149 1 is_stmt 0 view .LVU124
+ 730 0000 08B5     		push	{r3, lr}
+ 731              	.LCFI21:
+ 732              		.cfi_def_cfa_offset 8
+ 733              		.cfi_offset 3, -8
+ 734              		.cfi_offset 14, -4
+ 150:sw_i2c/VX_swi2c.c ****     SW_I2C2nRead(ITE66121_ADDR, RegAddr, pData, N);
+ 735              		.loc 1 150 5 is_stmt 1 view .LVU125
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 16
+
+
+ 736 0002 D3B2     		uxtb	r3, r2
+ 737 0004 0A46     		mov	r2, r1
+ 738              	.LVL64:
+ 739              		.loc 1 150 5 is_stmt 0 view .LVU126
+ 740 0006 0146     		mov	r1, r0
+ 741              	.LVL65:
+ 742              		.loc 1 150 5 view .LVU127
+ 743 0008 9820     		movs	r0, #152
+ 744              	.LVL66:
+ 745              		.loc 1 150 5 view .LVU128
+ 746 000a FFF7FEFF 		bl	SW_I2C2nRead
+ 747              	.LVL67:
+ 151:sw_i2c/VX_swi2c.c ****     return 0;
+ 748              		.loc 1 151 5 is_stmt 1 view .LVU129
+ 152:sw_i2c/VX_swi2c.c **** }
+ 749              		.loc 1 152 1 is_stmt 0 view .LVU130
+ 750 000e 0020     		movs	r0, #0
+ 751 0010 08BD     		pop	{r3, pc}
+ 752              		.cfi_endproc
+ 753              	.LFE85:
+ 755              		.section	.text.HDMITX_SetI2C_Byte,"ax",%progbits
+ 756              		.align	1
+ 757              		.global	HDMITX_SetI2C_Byte
+ 758              		.syntax unified
+ 759              		.thumb
+ 760              		.thumb_func
+ 761              		.fpu softvfp
+ 763              	HDMITX_SetI2C_Byte:
+ 764              	.LVL68:
+ 765              	.LFB86:
+ 153:sw_i2c/VX_swi2c.c **** //#endif
+ 154:sw_i2c/VX_swi2c.c **** 
+ 155:sw_i2c/VX_swi2c.c **** int HDMITX_SetI2C_Byte(tByte Reg, tByte Mask, tByte Value)
+ 156:sw_i2c/VX_swi2c.c **** {
+ 766              		.loc 1 156 1 is_stmt 1 view -0
+ 767              		.cfi_startproc
+ 768              		@ args = 0, pretend = 0, frame = 0
+ 769              		@ frame_needed = 0, uses_anonymous_args = 0
+ 770              		.loc 1 156 1 is_stmt 0 view .LVU132
+ 771 0000 70B5     		push	{r4, r5, r6, lr}
+ 772              	.LCFI22:
+ 773              		.cfi_def_cfa_offset 16
+ 774              		.cfi_offset 4, -16
+ 775              		.cfi_offset 5, -12
+ 776              		.cfi_offset 6, -8
+ 777              		.cfi_offset 14, -4
+ 778 0002 0646     		mov	r6, r0
+ 779 0004 1446     		mov	r4, r2
+ 157:sw_i2c/VX_swi2c.c ****     tByte Temp;
+ 780              		.loc 1 157 5 is_stmt 1 view .LVU133
+ 158:sw_i2c/VX_swi2c.c ****     if (Mask != 0xFF)
+ 781              		.loc 1 158 5 view .LVU134
+ 782              		.loc 1 158 8 is_stmt 0 view .LVU135
+ 783 0006 FF29     		cmp	r1, #255
+ 784 0008 05D1     		bne	.L61
+ 785              	.LVL69:
+ 786              	.L59:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 17
+
+
+ 159:sw_i2c/VX_swi2c.c ****     {
+ 160:sw_i2c/VX_swi2c.c ****         Temp = HDMITX_ReadI2C_Byte(Reg);
+ 161:sw_i2c/VX_swi2c.c ****         Temp &= (~Mask);
+ 162:sw_i2c/VX_swi2c.c ****         Temp |= Value & Mask;
+ 163:sw_i2c/VX_swi2c.c ****     }
+ 164:sw_i2c/VX_swi2c.c ****     else
+ 165:sw_i2c/VX_swi2c.c ****     {
+ 166:sw_i2c/VX_swi2c.c ****         Temp = Value;
+ 167:sw_i2c/VX_swi2c.c ****     }
+ 168:sw_i2c/VX_swi2c.c ****     HDMITX_WriteI2C_Byte(Reg, Temp);
+ 787              		.loc 1 168 5 is_stmt 1 view .LVU136
+ 788 000a 2146     		mov	r1, r4
+ 789 000c 3046     		mov	r0, r6
+ 790 000e FFF7FEFF 		bl	HDMITX_WriteI2C_Byte
+ 791              	.LVL70:
+ 169:sw_i2c/VX_swi2c.c ****     return 0;
+ 792              		.loc 1 169 5 view .LVU137
+ 170:sw_i2c/VX_swi2c.c **** }
+ 793              		.loc 1 170 1 is_stmt 0 view .LVU138
+ 794 0012 0020     		movs	r0, #0
+ 795 0014 70BD     		pop	{r4, r5, r6, pc}
+ 796              	.LVL71:
+ 797              	.L61:
+ 798              		.loc 1 170 1 view .LVU139
+ 799 0016 0D46     		mov	r5, r1
+ 160:sw_i2c/VX_swi2c.c ****         Temp &= (~Mask);
+ 800              		.loc 1 160 9 is_stmt 1 view .LVU140
+ 160:sw_i2c/VX_swi2c.c ****         Temp &= (~Mask);
+ 801              		.loc 1 160 16 is_stmt 0 view .LVU141
+ 802 0018 FFF7FEFF 		bl	HDMITX_ReadI2C_Byte
+ 803              	.LVL72:
+ 161:sw_i2c/VX_swi2c.c ****         Temp |= Value & Mask;
+ 804              		.loc 1 161 9 is_stmt 1 view .LVU142
+ 161:sw_i2c/VX_swi2c.c ****         Temp |= Value & Mask;
+ 805              		.loc 1 161 14 is_stmt 0 view .LVU143
+ 806 001c 20EA0500 		bic	r0, r0, r5
+ 807              	.LVL73:
+ 161:sw_i2c/VX_swi2c.c ****         Temp |= Value & Mask;
+ 808              		.loc 1 161 14 view .LVU144
+ 809 0020 C0B2     		uxtb	r0, r0
+ 810              	.LVL74:
+ 162:sw_i2c/VX_swi2c.c ****     }
+ 811              		.loc 1 162 9 is_stmt 1 view .LVU145
+ 162:sw_i2c/VX_swi2c.c ****     }
+ 812              		.loc 1 162 14 is_stmt 0 view .LVU146
+ 813 0022 2C40     		ands	r4, r4, r5
+ 814 0024 0443     		orrs	r4, r4, r0
+ 815              	.LVL75:
+ 162:sw_i2c/VX_swi2c.c ****     }
+ 816              		.loc 1 162 14 view .LVU147
+ 817 0026 F0E7     		b	.L59
+ 818              		.cfi_endproc
+ 819              	.LFE86:
+ 821              		.section	.text.GET_PCA9554PW,"ax",%progbits
+ 822              		.align	1
+ 823              		.global	GET_PCA9554PW
+ 824              		.syntax unified
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 18
+
+
+ 825              		.thumb
+ 826              		.thumb_func
+ 827              		.fpu softvfp
+ 829              	GET_PCA9554PW:
+ 830              	.LVL76:
+ 831              	.LFB87:
+ 171:sw_i2c/VX_swi2c.c **** 
+ 172:sw_i2c/VX_swi2c.c **** BYTE GET_PCA9554PW(BYTE reg)
+ 173:sw_i2c/VX_swi2c.c **** {
+ 832              		.loc 1 173 1 is_stmt 1 view -0
+ 833              		.cfi_startproc
+ 834              		@ args = 0, pretend = 0, frame = 0
+ 835              		@ frame_needed = 0, uses_anonymous_args = 0
+ 836              		.loc 1 173 1 is_stmt 0 view .LVU149
+ 837 0000 08B5     		push	{r3, lr}
+ 838              	.LCFI23:
+ 839              		.cfi_def_cfa_offset 8
+ 840              		.cfi_offset 3, -8
+ 841              		.cfi_offset 14, -4
+ 842 0002 0146     		mov	r1, r0
+ 174:sw_i2c/VX_swi2c.c ****     BYTE ret = 0;
+ 843              		.loc 1 174 5 is_stmt 1 view .LVU150
+ 844              	.LVL77:
+ 175:sw_i2c/VX_swi2c.c **** 
+ 176:sw_i2c/VX_swi2c.c ****     ret = ReadI2C(PCA9554PW_addr, reg); // Modified. David. 20180130
+ 845              		.loc 1 176 5 view .LVU151
+ 846              		.loc 1 176 11 is_stmt 0 view .LVU152
+ 847 0004 4020     		movs	r0, #64
+ 848              	.LVL78:
+ 849              		.loc 1 176 11 view .LVU153
+ 850 0006 FFF7FEFF 		bl	ReadI2C
+ 851              	.LVL79:
+ 177:sw_i2c/VX_swi2c.c **** 
+ 178:sw_i2c/VX_swi2c.c ****     return ret;
+ 852              		.loc 1 178 5 is_stmt 1 view .LVU154
+ 179:sw_i2c/VX_swi2c.c **** }
+ 853              		.loc 1 179 1 is_stmt 0 view .LVU155
+ 854 000a 08BD     		pop	{r3, pc}
+ 855              		.cfi_endproc
+ 856              	.LFE87:
+ 858              		.section	.text.SET_PCA9554PW,"ax",%progbits
+ 859              		.align	1
+ 860              		.global	SET_PCA9554PW
+ 861              		.syntax unified
+ 862              		.thumb
+ 863              		.thumb_func
+ 864              		.fpu softvfp
+ 866              	SET_PCA9554PW:
+ 867              	.LVL80:
+ 868              	.LFB88:
+ 180:sw_i2c/VX_swi2c.c **** 
+ 181:sw_i2c/VX_swi2c.c **** void SET_PCA9554PW(BYTE addr, BYTE val)
+ 182:sw_i2c/VX_swi2c.c **** {
+ 869              		.loc 1 182 1 is_stmt 1 view -0
+ 870              		.cfi_startproc
+ 871              		@ args = 0, pretend = 0, frame = 0
+ 872              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 19
+
+
+ 873              		.loc 1 182 1 is_stmt 0 view .LVU157
+ 874 0000 38B5     		push	{r3, r4, r5, lr}
+ 875              	.LCFI24:
+ 876              		.cfi_def_cfa_offset 16
+ 877              		.cfi_offset 3, -16
+ 878              		.cfi_offset 4, -12
+ 879              		.cfi_offset 5, -8
+ 880              		.cfi_offset 14, -4
+ 881 0002 0446     		mov	r4, r0
+ 882 0004 0D46     		mov	r5, r1
+ 183:sw_i2c/VX_swi2c.c ****     BYTE ret = 0;
+ 883              		.loc 1 183 5 is_stmt 1 view .LVU158
+ 884              	.LVL81:
+ 184:sw_i2c/VX_swi2c.c ****     ret = ReadI2C(PCA9554PW_addr, PCA9554PW_reg1);
+ 885              		.loc 1 184 5 view .LVU159
+ 886              		.loc 1 184 11 is_stmt 0 view .LVU160
+ 887 0006 0121     		movs	r1, #1
+ 888              	.LVL82:
+ 889              		.loc 1 184 11 view .LVU161
+ 890 0008 4020     		movs	r0, #64
+ 891              	.LVL83:
+ 892              		.loc 1 184 11 view .LVU162
+ 893 000a FFF7FEFF 		bl	ReadI2C
+ 894              	.LVL84:
+ 185:sw_i2c/VX_swi2c.c **** 
+ 186:sw_i2c/VX_swi2c.c ****     switch (addr)
+ 895              		.loc 1 186 5 is_stmt 1 view .LVU163
+ 896 000e 402C     		cmp	r4, #64
+ 897 0010 26D0     		beq	.L65
+ 898 0012 0DD8     		bhi	.L66
+ 899 0014 102C     		cmp	r4, #16
+ 900 0016 17D0     		beq	.L67
+ 901 0018 202C     		cmp	r4, #32
+ 902 001a 20D1     		bne	.L64
+ 187:sw_i2c/VX_swi2c.c ****     {
+ 188:sw_i2c/VX_swi2c.c ****     case _COL_PW_5V:
+ 189:sw_i2c/VX_swi2c.c ****         ret &= ~(_COL_PW_5V);
+ 190:sw_i2c/VX_swi2c.c ****         WriteI2C(PCA9554PW_addr, PCA9554PW_reg1, (ret | ((val ^ 1) << 4)));
+ 191:sw_i2c/VX_swi2c.c ****         break;
+ 192:sw_i2c/VX_swi2c.c ****     case _PCON5V_AUDIO:
+ 193:sw_i2c/VX_swi2c.c ****         ret &= ~(_PCON5V_AUDIO);
+ 903              		.loc 1 193 9 view .LVU164
+ 904              		.loc 1 193 13 is_stmt 0 view .LVU165
+ 905 001c 00F0DF00 		and	r0, r0, #223
+ 906              	.LVL85:
+ 194:sw_i2c/VX_swi2c.c ****         WriteI2C(PCA9554PW_addr, PCA9554PW_reg1, (ret | (val << 5)));
+ 907              		.loc 1 194 9 is_stmt 1 view .LVU166
+ 908              		.loc 1 194 55 is_stmt 0 view .LVU167
+ 909 0020 40EA4512 		orr	r2, r0, r5, lsl #5
+ 910              		.loc 1 194 9 view .LVU168
+ 911 0024 D2B2     		uxtb	r2, r2
+ 912 0026 0121     		movs	r1, #1
+ 913 0028 4020     		movs	r0, #64
+ 914              	.LVL86:
+ 915              		.loc 1 194 9 view .LVU169
+ 916 002a FFF7FEFF 		bl	WriteI2C
+ 917              	.LVL87:
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 20
+
+
+ 195:sw_i2c/VX_swi2c.c ****         break;
+ 918              		.loc 1 195 9 is_stmt 1 view .LVU170
+ 919 002e 16E0     		b	.L64
+ 920              	.LVL88:
+ 921              	.L66:
+ 186:sw_i2c/VX_swi2c.c ****     {
+ 922              		.loc 1 186 5 is_stmt 0 view .LVU171
+ 923 0030 802C     		cmp	r4, #128
+ 924 0032 14D1     		bne	.L64
+ 196:sw_i2c/VX_swi2c.c ****     case _CCD12_SW:
+ 197:sw_i2c/VX_swi2c.c ****         ret &= ~(_CCD12_SW);
+ 198:sw_i2c/VX_swi2c.c ****         WriteI2C(PCA9554PW_addr, PCA9554PW_reg1, (ret | (val << 6)));
+ 199:sw_i2c/VX_swi2c.c ****         break;
+ 200:sw_i2c/VX_swi2c.c ****     case _Shutter_SW:
+ 201:sw_i2c/VX_swi2c.c ****         ret &= ~(_Shutter_SW);
+ 925              		.loc 1 201 9 is_stmt 1 view .LVU172
+ 926              		.loc 1 201 13 is_stmt 0 view .LVU173
+ 927 0034 00F07F00 		and	r0, r0, #127
+ 928              	.LVL89:
+ 202:sw_i2c/VX_swi2c.c ****         WriteI2C(PCA9554PW_addr, PCA9554PW_reg1, (ret | (val << 7)));
+ 929              		.loc 1 202 9 is_stmt 1 view .LVU174
+ 930              		.loc 1 202 55 is_stmt 0 view .LVU175
+ 931 0038 40EAC512 		orr	r2, r0, r5, lsl #7
+ 932              		.loc 1 202 9 view .LVU176
+ 933 003c D2B2     		uxtb	r2, r2
+ 934 003e 0121     		movs	r1, #1
+ 935 0040 4020     		movs	r0, #64
+ 936              	.LVL90:
+ 937              		.loc 1 202 9 view .LVU177
+ 938 0042 FFF7FEFF 		bl	WriteI2C
+ 939              	.LVL91:
+ 203:sw_i2c/VX_swi2c.c ****         break;
+ 940              		.loc 1 203 9 is_stmt 1 view .LVU178
+ 204:sw_i2c/VX_swi2c.c ****     }
+ 205:sw_i2c/VX_swi2c.c **** }
+ 941              		.loc 1 205 1 is_stmt 0 view .LVU179
+ 942 0046 0AE0     		b	.L64
+ 943              	.LVL92:
+ 944              	.L67:
+ 189:sw_i2c/VX_swi2c.c ****         WriteI2C(PCA9554PW_addr, PCA9554PW_reg1, (ret | ((val ^ 1) << 4)));
+ 945              		.loc 1 189 9 is_stmt 1 view .LVU180
+ 189:sw_i2c/VX_swi2c.c ****         WriteI2C(PCA9554PW_addr, PCA9554PW_reg1, (ret | ((val ^ 1) << 4)));
+ 946              		.loc 1 189 13 is_stmt 0 view .LVU181
+ 947 0048 00F0EF00 		and	r0, r0, #239
+ 948              	.LVL93:
+ 190:sw_i2c/VX_swi2c.c ****         break;
+ 949              		.loc 1 190 9 is_stmt 1 view .LVU182
+ 190:sw_i2c/VX_swi2c.c ****         break;
+ 950              		.loc 1 190 63 is_stmt 0 view .LVU183
+ 951 004c 85F00102 		eor	r2, r5, #1
+ 190:sw_i2c/VX_swi2c.c ****         break;
+ 952              		.loc 1 190 55 view .LVU184
+ 953 0050 40EA0212 		orr	r2, r0, r2, lsl #4
+ 190:sw_i2c/VX_swi2c.c ****         break;
+ 954              		.loc 1 190 9 view .LVU185
+ 955 0054 D2B2     		uxtb	r2, r2
+ 956 0056 0121     		movs	r1, #1
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 21
+
+
+ 957 0058 4020     		movs	r0, #64
+ 958              	.LVL94:
+ 190:sw_i2c/VX_swi2c.c ****         break;
+ 959              		.loc 1 190 9 view .LVU186
+ 960 005a FFF7FEFF 		bl	WriteI2C
+ 961              	.LVL95:
+ 191:sw_i2c/VX_swi2c.c ****     case _PCON5V_AUDIO:
+ 962              		.loc 1 191 9 is_stmt 1 view .LVU187
+ 963              	.L64:
+ 964              		.loc 1 205 1 is_stmt 0 view .LVU188
+ 965 005e 38BD     		pop	{r3, r4, r5, pc}
+ 966              	.LVL96:
+ 967              	.L65:
+ 197:sw_i2c/VX_swi2c.c ****         WriteI2C(PCA9554PW_addr, PCA9554PW_reg1, (ret | (val << 6)));
+ 968              		.loc 1 197 9 is_stmt 1 view .LVU189
+ 197:sw_i2c/VX_swi2c.c ****         WriteI2C(PCA9554PW_addr, PCA9554PW_reg1, (ret | (val << 6)));
+ 969              		.loc 1 197 13 is_stmt 0 view .LVU190
+ 970 0060 00F0BF00 		and	r0, r0, #191
+ 971              	.LVL97:
+ 198:sw_i2c/VX_swi2c.c ****         break;
+ 972              		.loc 1 198 9 is_stmt 1 view .LVU191
+ 198:sw_i2c/VX_swi2c.c ****         break;
+ 973              		.loc 1 198 55 is_stmt 0 view .LVU192
+ 974 0064 40EA8512 		orr	r2, r0, r5, lsl #6
+ 198:sw_i2c/VX_swi2c.c ****         break;
+ 975              		.loc 1 198 9 view .LVU193
+ 976 0068 D2B2     		uxtb	r2, r2
+ 977 006a 0121     		movs	r1, #1
+ 978 006c 4020     		movs	r0, #64
+ 979              	.LVL98:
+ 198:sw_i2c/VX_swi2c.c ****         break;
+ 980              		.loc 1 198 9 view .LVU194
+ 981 006e FFF7FEFF 		bl	WriteI2C
+ 982              	.LVL99:
+ 199:sw_i2c/VX_swi2c.c ****     case _Shutter_SW:
+ 983              		.loc 1 199 9 is_stmt 1 view .LVU195
+ 984 0072 F4E7     		b	.L64
+ 985              		.cfi_endproc
+ 986              	.LFE88:
+ 988              		.section	.text.GET_LTC2451,"ax",%progbits
+ 989              		.align	1
+ 990              		.global	GET_LTC2451
+ 991              		.syntax unified
+ 992              		.thumb
+ 993              		.thumb_func
+ 994              		.fpu softvfp
+ 996              	GET_LTC2451:
+ 997              	.LVL100:
+ 998              	.LFB89:
+ 206:sw_i2c/VX_swi2c.c **** 
+ 207:sw_i2c/VX_swi2c.c **** WORD GET_LTC2451(BYTE reg)
+ 208:sw_i2c/VX_swi2c.c **** {
+ 999              		.loc 1 208 1 view -0
+ 1000              		.cfi_startproc
+ 1001              		@ args = 0, pretend = 0, frame = 0
+ 1002              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1003              		.loc 1 208 1 is_stmt 0 view .LVU197
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 22
+
+
+ 1004 0000 08B5     		push	{r3, lr}
+ 1005              	.LCFI25:
+ 1006              		.cfi_def_cfa_offset 8
+ 1007              		.cfi_offset 3, -8
+ 1008              		.cfi_offset 14, -4
+ 1009 0002 0146     		mov	r1, r0
+ 209:sw_i2c/VX_swi2c.c ****     WORD ret = 0;
+ 1010              		.loc 1 209 5 is_stmt 1 view .LVU198
+ 1011              	.LVL101:
+ 210:sw_i2c/VX_swi2c.c ****     WORD val1, val2;
+ 1012              		.loc 1 210 5 view .LVU199
+ 211:sw_i2c/VX_swi2c.c **** 
+ 212:sw_i2c/VX_swi2c.c ****     ret = ReadI2C4(LTC2451_addr, reg); // Modified. David. 20180130
+ 1013              		.loc 1 212 5 view .LVU200
+ 1014              		.loc 1 212 11 is_stmt 0 view .LVU201
+ 1015 0004 2820     		movs	r0, #40
+ 1016              	.LVL102:
+ 1017              		.loc 1 212 11 view .LVU202
+ 1018 0006 FFF7FEFF 		bl	ReadI2C4
+ 1019              	.LVL103:
+ 213:sw_i2c/VX_swi2c.c **** 
+ 214:sw_i2c/VX_swi2c.c ****     BAT_ADC = ret;
+ 1020              		.loc 1 214 5 is_stmt 1 view .LVU203
+ 1021              		.loc 1 214 13 is_stmt 0 view .LVU204
+ 1022 000a 0F4B     		ldr	r3, .L74
+ 1023 000c 1860     		str	r0, [r3]
+ 215:sw_i2c/VX_swi2c.c ****     val1 = ((BAT_ADC / 10) * 5) / 10;
+ 1024              		.loc 1 215 5 is_stmt 1 view .LVU205
+ 1025              		.loc 1 215 22 is_stmt 0 view .LVU206
+ 1026 000e 0F4A     		ldr	r2, .L74+4
+ 1027 0010 A2FB0013 		umull	r1, r3, r2, r0
+ 1028 0014 DB08     		lsrs	r3, r3, #3
+ 1029              		.loc 1 215 28 view .LVU207
+ 1030 0016 03EB8303 		add	r3, r3, r3, lsl #2
+ 1031              		.loc 1 215 10 view .LVU208
+ 1032 001a A2FB0312 		umull	r1, r2, r2, r3
+ 1033              	.LVL104:
+ 216:sw_i2c/VX_swi2c.c ****     val2 = ((BAT_ADC % 10) * 5) / 100;
+ 1034              		.loc 1 216 5 is_stmt 1 view .LVU209
+ 1035              		.loc 1 216 22 is_stmt 0 view .LVU210
+ 1036 001e A0EB4300 		sub	r0, r0, r3, lsl #1
+ 1037              	.LVL105:
+ 1038              		.loc 1 216 28 view .LVU211
+ 1039 0022 00EB8000 		add	r0, r0, r0, lsl #2
+ 1040              		.loc 1 216 10 view .LVU212
+ 1041 0026 0A4B     		ldr	r3, .L74+8
+ 1042 0028 A3FB0010 		umull	r1, r0, r3, r0
+ 1043 002c 4009     		lsrs	r0, r0, #5
+ 1044              	.LVL106:
+ 217:sw_i2c/VX_swi2c.c ****     val1 = ((val1 + val2) * (75)) / 100;
+ 1045              		.loc 1 217 5 is_stmt 1 view .LVU213
+ 1046              		.loc 1 217 19 is_stmt 0 view .LVU214
+ 1047 002e 00EBD200 		add	r0, r0, r2, lsr #3
+ 1048              	.LVL107:
+ 1049              		.loc 1 217 27 view .LVU215
+ 1050 0032 00EB8000 		add	r0, r0, r0, lsl #2
+ 1051 0036 C0EB0010 		rsb	r0, r0, r0, lsl #4
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 23
+
+
+ 1052              		.loc 1 217 10 view .LVU216
+ 1053 003a A3FB0030 		umull	r3, r0, r3, r0
+ 1054              	.LVL108:
+ 1055              		.loc 1 217 10 view .LVU217
+ 1056 003e 4009     		lsrs	r0, r0, #5
+ 1057              	.LVL109:
+ 218:sw_i2c/VX_swi2c.c ****     BAT_VOLTAGE = val1;
+ 1058              		.loc 1 218 5 is_stmt 1 view .LVU218
+ 1059              		.loc 1 218 17 is_stmt 0 view .LVU219
+ 1060 0040 044B     		ldr	r3, .L74+12
+ 1061 0042 1860     		str	r0, [r3]
+ 219:sw_i2c/VX_swi2c.c **** 
+ 220:sw_i2c/VX_swi2c.c ****     ret = BAT_VOLTAGE;
+ 1062              		.loc 1 220 5 is_stmt 1 view .LVU220
+ 1063              	.LVL110:
+ 221:sw_i2c/VX_swi2c.c **** 
+ 222:sw_i2c/VX_swi2c.c ****     return ret;
+ 1064              		.loc 1 222 5 view .LVU221
+ 223:sw_i2c/VX_swi2c.c **** }
+ 1065              		.loc 1 223 1 is_stmt 0 view .LVU222
+ 1066 0044 08BD     		pop	{r3, pc}
+ 1067              	.L75:
+ 1068 0046 00BF     		.align	2
+ 1069              	.L74:
+ 1070 0048 00000000 		.word	BAT_ADC
+ 1071 004c CDCCCCCC 		.word	-858993459
+ 1072 0050 1F85EB51 		.word	1374389535
+ 1073 0054 00000000 		.word	BAT_VOLTAGE
+ 1074              		.cfi_endproc
+ 1075              	.LFE89:
+ 1077              		.section	.text.SET_LTC2451,"ax",%progbits
+ 1078              		.align	1
+ 1079              		.global	SET_LTC2451
+ 1080              		.syntax unified
+ 1081              		.thumb
+ 1082              		.thumb_func
+ 1083              		.fpu softvfp
+ 1085              	SET_LTC2451:
+ 1086              	.LVL111:
+ 1087              	.LFB90:
+ 224:sw_i2c/VX_swi2c.c **** 
+ 225:sw_i2c/VX_swi2c.c **** void SET_LTC2451(BYTE addr, BYTE val)
+ 226:sw_i2c/VX_swi2c.c **** {
+ 1088              		.loc 1 226 1 is_stmt 1 view -0
+ 1089              		.cfi_startproc
+ 1090              		@ args = 0, pretend = 0, frame = 0
+ 1091              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1092              		@ link register save eliminated.
+ 227:sw_i2c/VX_swi2c.c ****     //	BYTE ret=0;
+ 228:sw_i2c/VX_swi2c.c ****     //	ret=ReadI2C3(PCA9554PW_addr, PCA9554PW_reg1);
+ 229:sw_i2c/VX_swi2c.c **** 
+ 230:sw_i2c/VX_swi2c.c ****     /*
+ 231:sw_i2c/VX_swi2c.c ****         switch(addr)
+ 232:sw_i2c/VX_swi2c.c ****             {
+ 233:sw_i2c/VX_swi2c.c ****              case _COL_PW_5V:   	ret&=~(_COL_PW_5V); 		WriteI2C( PCA9554PW_addr, PCA9554PW_reg1, (r
+ 234:sw_i2c/VX_swi2c.c ****              case _PCON5V_AUDIO:	ret&=~(_PCON5V_AUDIO); 	WriteI2C( PCA9554PW_addr, PCA9554PW_reg1, 
+ 235:sw_i2c/VX_swi2c.c ****              case _CCD12_SW:		ret&=~(_CCD12_SW); 		WriteI2C( PCA9554PW_addr, PCA9554PW_reg1, (ret|(
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 24
+
+
+ 236:sw_i2c/VX_swi2c.c ****              case _Shutter_SW:		ret&=~(_Shutter_SW); 		WriteI2C( PCA9554PW_addr, PCA9554PW_reg1, (r
+ 237:sw_i2c/VX_swi2c.c ****             }
+ 238:sw_i2c/VX_swi2c.c ****         */
+ 239:sw_i2c/VX_swi2c.c **** }
+ 1093              		.loc 1 239 1 view .LVU224
+ 1094 0000 7047     		bx	lr
+ 1095              		.cfi_endproc
+ 1096              	.LFE90:
+ 1098              		.section	.text.GET_ALC122,"ax",%progbits
+ 1099              		.align	1
+ 1100              		.global	GET_ALC122
+ 1101              		.syntax unified
+ 1102              		.thumb
+ 1103              		.thumb_func
+ 1104              		.fpu softvfp
+ 1106              	GET_ALC122:
+ 1107              	.LVL112:
+ 1108              	.LFB91:
+ 240:sw_i2c/VX_swi2c.c **** 
+ 241:sw_i2c/VX_swi2c.c **** WORD GET_ALC122(BYTE reg)
+ 242:sw_i2c/VX_swi2c.c **** {
+ 1109              		.loc 1 242 1 view -0
+ 1110              		.cfi_startproc
+ 1111              		@ args = 0, pretend = 0, frame = 0
+ 1112              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1113              		.loc 1 242 1 is_stmt 0 view .LVU226
+ 1114 0000 08B5     		push	{r3, lr}
+ 1115              	.LCFI26:
+ 1116              		.cfi_def_cfa_offset 8
+ 1117              		.cfi_offset 3, -8
+ 1118              		.cfi_offset 14, -4
+ 1119 0002 0146     		mov	r1, r0
+ 243:sw_i2c/VX_swi2c.c ****     WORD ret = 0;
+ 1120              		.loc 1 243 5 is_stmt 1 view .LVU227
+ 1121              	.LVL113:
+ 244:sw_i2c/VX_swi2c.c **** 
+ 245:sw_i2c/VX_swi2c.c ****     ret = ReadI2C3(ALC122_addr, reg);
+ 1122              		.loc 1 245 5 view .LVU228
+ 1123              		.loc 1 245 11 is_stmt 0 view .LVU229
+ 1124 0004 4A20     		movs	r0, #74
+ 1125              	.LVL114:
+ 1126              		.loc 1 245 11 view .LVU230
+ 1127 0006 FFF7FEFF 		bl	ReadI2C3
+ 1128              	.LVL115:
+ 246:sw_i2c/VX_swi2c.c **** 
+ 247:sw_i2c/VX_swi2c.c ****     return ret;
+ 1129              		.loc 1 247 5 is_stmt 1 view .LVU231
+ 248:sw_i2c/VX_swi2c.c **** }
+ 1130              		.loc 1 248 1 is_stmt 0 view .LVU232
+ 1131 000a 08BD     		pop	{r3, pc}
+ 1132              		.cfi_endproc
+ 1133              	.LFE91:
+ 1135              		.section	.text.SET_ALC122,"ax",%progbits
+ 1136              		.align	1
+ 1137              		.global	SET_ALC122
+ 1138              		.syntax unified
+ 1139              		.thumb
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 25
+
+
+ 1140              		.thumb_func
+ 1141              		.fpu softvfp
+ 1143              	SET_ALC122:
+ 1144              	.LVL116:
+ 1145              	.LFB92:
+ 249:sw_i2c/VX_swi2c.c **** 
+ 250:sw_i2c/VX_swi2c.c **** void SET_ALC122(BYTE addr, WORD val)
+ 251:sw_i2c/VX_swi2c.c **** {
+ 1146              		.loc 1 251 1 is_stmt 1 view -0
+ 1147              		.cfi_startproc
+ 1148              		@ args = 0, pretend = 0, frame = 0
+ 1149              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1150              		.loc 1 251 1 is_stmt 0 view .LVU234
+ 1151 0000 08B5     		push	{r3, lr}
+ 1152              	.LCFI27:
+ 1153              		.cfi_def_cfa_offset 8
+ 1154              		.cfi_offset 3, -8
+ 1155              		.cfi_offset 14, -4
+ 1156 0002 0A46     		mov	r2, r1
+ 252:sw_i2c/VX_swi2c.c ****     WriteI2C3(ALC122_addr, addr, val);
+ 1157              		.loc 1 252 5 is_stmt 1 view .LVU235
+ 1158 0004 0146     		mov	r1, r0
+ 1159              	.LVL117:
+ 1160              		.loc 1 252 5 is_stmt 0 view .LVU236
+ 1161 0006 4A20     		movs	r0, #74
+ 1162              	.LVL118:
+ 1163              		.loc 1 252 5 view .LVU237
+ 1164 0008 FFF7FEFF 		bl	WriteI2C3
+ 1165              	.LVL119:
+ 253:sw_i2c/VX_swi2c.c **** }
+ 1166              		.loc 1 253 1 view .LVU238
+ 1167 000c 08BD     		pop	{r3, pc}
+ 1168              		.cfi_endproc
+ 1169              	.LFE92:
+ 1171              		.section	.text.GET_nGT911,"ax",%progbits
+ 1172              		.align	1
+ 1173              		.global	GET_nGT911
+ 1174              		.syntax unified
+ 1175              		.thumb
+ 1176              		.thumb_func
+ 1177              		.fpu softvfp
+ 1179              	GET_nGT911:
+ 1180              	.LVL120:
+ 1181              	.LFB93:
+ 254:sw_i2c/VX_swi2c.c **** 
+ 255:sw_i2c/VX_swi2c.c **** void GET_nGT911(WORD Reg, BYTE *pData, BYTE N)
+ 256:sw_i2c/VX_swi2c.c **** {
+ 1182              		.loc 1 256 1 is_stmt 1 view -0
+ 1183              		.cfi_startproc
+ 1184              		@ args = 0, pretend = 0, frame = 0
+ 1185              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1186              		.loc 1 256 1 is_stmt 0 view .LVU240
+ 1187 0000 08B5     		push	{r3, lr}
+ 1188              	.LCFI28:
+ 1189              		.cfi_def_cfa_offset 8
+ 1190              		.cfi_offset 3, -8
+ 1191              		.cfi_offset 14, -4
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 26
+
+
+ 1192 0002 1346     		mov	r3, r2
+ 257:sw_i2c/VX_swi2c.c ****     // WORD ret=0;
+ 258:sw_i2c/VX_swi2c.c **** 
+ 259:sw_i2c/VX_swi2c.c ****     //	ret=I2C3_nRead(GT911_addr, Reg, pData, N);
+ 260:sw_i2c/VX_swi2c.c ****     // ret=
+ 261:sw_i2c/VX_swi2c.c ****     I2C4_nRead(GT911_addr, Reg, pData, N);
+ 1193              		.loc 1 261 5 is_stmt 1 view .LVU241
+ 1194 0004 0A46     		mov	r2, r1
+ 1195              	.LVL121:
+ 1196              		.loc 1 261 5 is_stmt 0 view .LVU242
+ 1197 0006 0146     		mov	r1, r0
+ 1198              	.LVL122:
+ 1199              		.loc 1 261 5 view .LVU243
+ 1200 0008 2820     		movs	r0, #40
+ 1201              	.LVL123:
+ 1202              		.loc 1 261 5 view .LVU244
+ 1203 000a FFF7FEFF 		bl	I2C4_nRead
+ 1204              	.LVL124:
+ 262:sw_i2c/VX_swi2c.c **** 
+ 263:sw_i2c/VX_swi2c.c ****     // return ret;
+ 264:sw_i2c/VX_swi2c.c **** }
+ 1205              		.loc 1 264 1 view .LVU245
+ 1206 000e 08BD     		pop	{r3, pc}
+ 1207              		.cfi_endproc
+ 1208              	.LFE93:
+ 1210              		.section	.text.SET_nGT911,"ax",%progbits
+ 1211              		.align	1
+ 1212              		.global	SET_nGT911
+ 1213              		.syntax unified
+ 1214              		.thumb
+ 1215              		.thumb_func
+ 1216              		.fpu softvfp
+ 1218              	SET_nGT911:
+ 1219              	.LVL125:
+ 1220              	.LFB94:
+ 265:sw_i2c/VX_swi2c.c **** 
+ 266:sw_i2c/VX_swi2c.c **** void SET_nGT911(WORD Reg, BYTE *pData, BYTE N)
+ 267:sw_i2c/VX_swi2c.c **** {
+ 1221              		.loc 1 267 1 is_stmt 1 view -0
+ 1222              		.cfi_startproc
+ 1223              		@ args = 0, pretend = 0, frame = 0
+ 1224              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1225              		.loc 1 267 1 is_stmt 0 view .LVU247
+ 1226 0000 08B5     		push	{r3, lr}
+ 1227              	.LCFI29:
+ 1228              		.cfi_def_cfa_offset 8
+ 1229              		.cfi_offset 3, -8
+ 1230              		.cfi_offset 14, -4
+ 1231 0002 1346     		mov	r3, r2
+ 268:sw_i2c/VX_swi2c.c ****     I2C3_WriteNByte(GT911_addr, Reg, pData, N);
+ 1232              		.loc 1 268 5 is_stmt 1 view .LVU248
+ 1233 0004 0A46     		mov	r2, r1
+ 1234              	.LVL126:
+ 1235              		.loc 1 268 5 is_stmt 0 view .LVU249
+ 1236 0006 0146     		mov	r1, r0
+ 1237              	.LVL127:
+ 1238              		.loc 1 268 5 view .LVU250
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 27
+
+
+ 1239 0008 2820     		movs	r0, #40
+ 1240              	.LVL128:
+ 1241              		.loc 1 268 5 view .LVU251
+ 1242 000a FFF7FEFF 		bl	I2C3_WriteNByte
+ 1243              	.LVL129:
+ 269:sw_i2c/VX_swi2c.c **** }
+ 1244              		.loc 1 269 1 view .LVU252
+ 1245 000e 08BD     		pop	{r3, pc}
+ 1246              		.cfi_endproc
+ 1247              	.LFE94:
+ 1249              		.comm	gskipsleepflg,1,1
+ 1250              		.text
+ 1251              	.Letext0:
+ 1252              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 1253              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 1254              		.file 4 "Drivers/CMSIS/Include/core_cm3.h"
+ 1255              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h"
+ 1256              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ 1257              		.file 7 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 1258              		.file 8 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 1259              		.file 9 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\lib\\gcc\\arm-none-eabi
+ 1260              		.file 10 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include
+ 1261              		.file 11 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include
+ 1262              		.file 12 "VS4210/VXIS_Extern_Define.h"
+ 1263              		.file 13 "sw_i2c/VX_swi2c.h"
+ 1264              		.file 14 "sw_i2c/sw_i2c2.h"
+ 1265              		.file 15 "sw_i2c/sw_i2c0.h"
+ 1266              		.file 16 "sw_i2c/sw_i2c1.h"
+ 1267              		.file 17 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include
+ 1268              		.file 18 "<built-in>"
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 28
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 VX_swi2c.c
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:16     .text.msleep:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:24     .text.msleep:00000000 msleep
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:58     .text.msleep:00000010 $d
+                            *COM*:00000001 gskipsleepflg
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:63     .text.delayTX1ms:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:70     .text.delayTX1ms:00000000 delayTX1ms
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:92     .text.VXISI2CRead:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:99     .text.VXISI2CRead:00000000 VXISI2CRead
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:129    .text.VXISI2CRead:00000010 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:134    .text.VXISI2CWrite:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:141    .text.VXISI2CWrite:00000000 VXISI2CWrite
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:171    .text.VXISI2CWrite:00000014 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:176    .text.VS8812Read:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:183    .text.VS8812Read:00000000 VS8812Read
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:213    .text.VS8812Read:00000010 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:218    .text.VS8812Write:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:225    .text.VS8812Write:00000000 VS8812Write
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:255    .text.VS8812Write:00000014 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:260    .text.ReadEEP:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:267    .text.ReadEEP:00000000 ReadEEP
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:293    .text.WriteEEP:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:300    .text.WriteEEP:00000000 WriteEEP
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:322    .text.I2CMultiWrite:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:329    .text.I2CMultiWrite:00000000 I2CMultiWrite
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:357    .text.I2CMultiAttribute:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:364    .text.I2CMultiAttribute:00000000 I2CMultiAttribute
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:412    .text.osd_cont_write:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:419    .text.osd_cont_write:00000000 osd_cont_write
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:470    .text.osd_cont_write:0000002c $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:475    .text.delay:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:482    .text.delay:00000000 delay
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:530    .text.tp28xx_byte_read:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:537    .text.tp28xx_byte_read:00000000 tp28xx_byte_read
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:566    .text.tp28xx_byte_read:00000010 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:571    .text.tp28xx_byte_write:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:578    .text.tp28xx_byte_write:00000000 tp28xx_byte_write
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:607    .text.tp28xx_byte_write:00000010 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:612    .text.delay1ms:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:619    .text.delay1ms:00000000 delay1ms
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:641    .text.HDMITX_ReadI2C_Byte:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:648    .text.HDMITX_ReadI2C_Byte:00000000 HDMITX_ReadI2C_Byte
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:677    .text.HDMITX_WriteI2C_Byte:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:684    .text.HDMITX_WriteI2C_Byte:00000000 HDMITX_WriteI2C_Byte
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:715    .text.HDMITX_ReadI2C_ByteN:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:722    .text.HDMITX_ReadI2C_ByteN:00000000 HDMITX_ReadI2C_ByteN
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:756    .text.HDMITX_SetI2C_Byte:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:763    .text.HDMITX_SetI2C_Byte:00000000 HDMITX_SetI2C_Byte
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:822    .text.GET_PCA9554PW:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:829    .text.GET_PCA9554PW:00000000 GET_PCA9554PW
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:859    .text.SET_PCA9554PW:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:866    .text.SET_PCA9554PW:00000000 SET_PCA9554PW
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:989    .text.GET_LTC2451:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:996    .text.GET_LTC2451:00000000 GET_LTC2451
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:1070   .text.GET_LTC2451:00000048 $d
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:1078   .text.SET_LTC2451:00000000 $t
+ARM GAS  C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s 			page 29
+
+
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:1085   .text.SET_LTC2451:00000000 SET_LTC2451
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:1099   .text.GET_ALC122:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:1106   .text.GET_ALC122:00000000 GET_ALC122
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:1136   .text.SET_ALC122:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:1143   .text.SET_ALC122:00000000 SET_ALC122
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:1172   .text.GET_nGT911:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:1179   .text.GET_nGT911:00000000 GET_nGT911
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:1211   .text.SET_nGT911:00000000 $t
+C:\Users\ryanc.HS\AppData\Local\Temp\ccbC3ZRA.s:1218   .text.SET_nGT911:00000000 SET_nGT911
+
+UNDEFINED SYMBOLS
+HAL_Delay
+SW_I2C1Read
+VS4210_ADDR
+SW_I2C1Write
+VS8812_ADDR
+EEPRead
+EEPWrite
+SW_I2C1WriteNByte
+memset
+memcpy
+I2C0_Read
+TVII2CAddress
+I2C0_Write
+SW_I2C2Read
+SW_I2C2Write
+SW_I2C2nRead
+ReadI2C
+WriteI2C
+ReadI2C4
+BAT_ADC
+BAT_VOLTAGE
+ReadI2C3
+WriteI2C3
+I2C4_nRead
+I2C3_WriteNByte
